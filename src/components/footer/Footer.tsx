@@ -1,11 +1,13 @@
 import styled from "styled-components";
+import { useState } from "react";
 import { FooterCompany } from "./FooterCompany";
 import { FooterLogin } from "./FooterLogin";
 
 export const Footer = () => {
+  const [isLogin, setIsLogin] = useState(false);
   return (
     <Wrapper>
-      <FooterLogin />
+      {!isLogin && <FooterLogin />}
       <FooterCompany />
     </Wrapper>
   );
