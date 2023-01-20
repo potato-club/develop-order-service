@@ -48,7 +48,7 @@ const Menu = styled.div`
   align-items: center;
   gap: 0 68px;
 `;
-const MainButton = styled.div`
+const MainButton = styled.button`
   display: flex;
   flex-direction: row;
   font-size: 16px;
@@ -56,4 +56,7 @@ const MainButton = styled.div`
   color: ${customColor.white};
   gap: 0 8px;
   align-items: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
 `;
