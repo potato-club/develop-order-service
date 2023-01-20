@@ -25,6 +25,7 @@ const Button = styled.button`
   border: none;
   color: ${customColor.white};
   font-size: 14px;
+  cursor: pointer;
   &:after {
     display: flex;
     position: absolute;
@@ -35,6 +36,7 @@ const Button = styled.button`
     right: -20px;
     top: 50%;
     transform: translate(0, -50%);
+    cursor: default;
   }
 `;
 const LastButton = styled.div`
@@ -44,4 +46,5 @@ const LastButton = styled.div`
   border: none;
   color: ${customColor.white};
   font-size: 14px;
+  cursor: pointer;
 `;
