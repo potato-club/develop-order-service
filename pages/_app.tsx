@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import styled from "styled-components";
 import type { AppProps } from "next/app";
 import { Header } from "../src/components/header/Header";
+import { Footer } from "../src/components/footer/Footer";
 import { Layout } from "../src/components/layout/Layout";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -11,6 +12,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Layout>
         <Component {...pageProps} />
       </Layout>
+      <Footer />
     </Wrapper>
   );
 }
