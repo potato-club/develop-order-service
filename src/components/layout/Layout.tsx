@@ -15,7 +15,9 @@ export const Layout = ({ children }: Props) => {
 
 const Wrapper = styled.div`
   display: flex;
+  flex: auto;
   width: 100%;
+  height: 100%;
   justify-content: center;
   background: ${customColor.lightGray};
 `;
@@ -23,5 +25,6 @@ const Wrapper = styled.div`
 const WrapperInner = styled.div`
   display: flex;
   width: 1024px;
+  min-height: 100%;
   background: ${customColor.white};
 `;
