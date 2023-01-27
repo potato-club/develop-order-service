@@ -1,3 +1,5 @@
+import { LoginPage } from "../src/components/LoginPage/LoginPage";
+
 export default function Home() {
-  return <>메인페이지</>;
+  return <LoginPage />;
 }
