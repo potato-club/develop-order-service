@@ -24,6 +24,7 @@ const Wrapper = styled.div`
 
 const WrapperInner = styled.div`
   display: flex;
+  flex-direction: column;
   width: 1024px;
   min-height: 100%;
   background: ${customColor.white};
