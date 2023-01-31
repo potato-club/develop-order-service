@@ -55,7 +55,7 @@ const Img = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  background: ${customColor.lightGray};
+  background: ${customColor.gray};
   border-radius: 50%;
 `;
 const LogAction = styled.div<ButtonProps>`
