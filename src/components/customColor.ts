@@ -15,9 +15,9 @@ export type customColorType = {
 export const customColor: customColorType = {
   white: "#FFFFFF",
   black: "#000000",
+  darkGray: "#6D6D6D",
   gray: "#999999",
-  lightGray: "#BCBCBC",
-  darkGray: "#ECECEC",
+  lightGray: "#ECECEC",
 
   blue: "#91D8F7",
   blue_: "#BBEFFD48",
