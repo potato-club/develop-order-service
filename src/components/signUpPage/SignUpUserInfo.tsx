@@ -1,15 +1,22 @@
 import styled from "styled-components";
-import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+import {
+  Control,
+  FieldErrors,
+  FieldValues,
+  UseFormRegister,
+} from "react-hook-form";
 import { customColor } from "../customColor";
 import { HiOutlineUser } from "react-icons/hi";
 import { FormInput } from "./components/FormInput";
+import { FormPhone } from "./components/FormPhone";
 
 interface Props {
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors<FieldValues>;
+  control: Control<FieldValues, any>;
 }
 
-export const SignUpUserInfo = ({ register, errors }: Props) => {
+export const SignUpUserInfo = ({ register, errors, control }: Props) => {
   return (
     <Content>
       <Lbel>
@@ -29,6 +36,7 @@ export const SignUpUserInfo = ({ register, errors }: Props) => {
               type="text"
               register={register}
               errors={errors}
+              required={true}
             />
           </FormItemContent>
         </FormItem>
@@ -41,30 +49,31 @@ export const SignUpUserInfo = ({ register, errors }: Props) => {
               type="email"
               register={register}
               errors={errors}
+              required={true}
             />
           </FormItemContent>
         </FormItem>
         <FormItem>
           <FormItemLabel>*전화번호1</FormItemLabel>
           <FormItemContent>
-            <FormInput
-              placeholder="김도스 또는 (주)도스"
-              value="userName"
-              type="text"
-              register={register}
+            <FormPhone
+              placeholder="010-1234-5678"
+              value="userPhone1"
+              control={control}
               errors={errors}
+              required={true}
             />
           </FormItemContent>
         </FormItem>
         <FormItem>
           <FormItemLabel>전화번호2</FormItemLabel>
           <FormItemContent>
-            <FormInput
-              placeholder="김도스 또는 (주)도스"
-              value="userName"
-              type="text"
-              register={register}
+            <FormPhone
+              placeholder="010-1234-5678"
+              value="userPhone2"
+              control={control}
               errors={errors}
+              required={false}
             />
           </FormItemContent>
         </FormItem>
@@ -82,7 +91,7 @@ const Content = styled.div`
 `;
 const Lbel = styled.p`
   display: flex;
-  width: 156px;
+  width: 120px;
   font-size: 18px;
   color: ${customColor.black};
   letter-spacing: -0.5px;

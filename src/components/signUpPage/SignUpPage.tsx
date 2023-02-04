@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useCallback } from "react";
 import styled from "styled-components";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { customColor } from "../customColor";
 import { AiOutlineForm } from "react-icons/ai";
 import { SignUpUserInfo } from "./SignUpUserInfo";
@@ -10,8 +10,17 @@ import { SignUpAddInfo } from "./SignUpAddInfo";
 export const SignUpPage = () => {
   const {
     register,
+    unregister,
     formState: { errors },
+    control,
+    handleSubmit,
+    watch,
   } = useForm();
+
+  const submit = useCallback((data: FieldValues) => {
+    console.log(data);
+  }, []);
+
   return (
     <Container>
       <Head>
@@ -23,11 +32,23 @@ export const SignUpPage = () => {
           원활한 발주 작업을 위해, 필요한 정보를 기입해 주세요
         </SubTitle>
       </Head>
-      <Body>
-        <Division />
-        <SignUpUserInfo register={register} errors={errors} />
-        <SignUpSiteInfo register={register} errors={errors} />
-        <SignUpAddInfo register={register} errors={errors} />
+      <Body onSubmit={handleSubmit(submit)}>
+        <BodyInner>
+          <Division />
+          <SignUpUserInfo
+            register={register}
+            errors={errors}
+            control={control}
+          />
+          <SignUpSiteInfo register={register} errors={errors} />
+          <SignUpAddInfo
+            register={register}
+            errors={errors}
+            watch={watch}
+            unregister={unregister}
+          />
+        </BodyInner>
+        <SubmitButton type="submit">신청하기</SubmitButton>
       </Body>
     </Container>
   );
@@ -64,11 +85,17 @@ const SubTitle = styled.div`
 const Body = styled.form`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  gap: 180px 0;
+  align-items: center;
+`;
+const BodyInner = styled.div`
+  display: flex;
+  flex-direction: column;
   position: relative;
   padding: 8px 76px;
   width: 100%;
   gap: 56px 0;
-  margin-bottom: 180px;
 `;
 const Division = styled.div`
   display: flex;
@@ -77,7 +104,19 @@ const Division = styled.div`
   height: 100%;
   background: ${customColor.darkGray};
   border-radius: 1px;
-  left: 248px;
+  left: 212px;
   top: 50%;
   transform: translate(0, -50%);
+`;
+const SubmitButton = styled.button`
+  display: flex;
+  width: 252px;
+  height: 72px;
+  background: ${customColor.indigo3};
+  color: ${customColor.white};
+  font-size: 20px;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 128px;
 `;
