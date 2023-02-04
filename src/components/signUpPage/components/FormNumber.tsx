@@ -12,7 +12,7 @@ interface Props {
   required: boolean;
 }
 
-export const FormInput = (props: Props) => {
+export const FormNumber = (props: Props) => {
   return (
     <Wrapper>
       <Input

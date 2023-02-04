@@ -1,26 +1,26 @@
 import styled from "styled-components";
-import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+import { Control, FieldErrors, FieldValues } from "react-hook-form";
+import PhoneInput from "react-phone-number-input/react-hook-form-input";
 import { customColor } from "../../customColor";
 import { Error } from "./Error";
 
 interface Props {
   placeholder: string;
   value: string;
-  type: string;
-  register: UseFormRegister<FieldValues>;
+  control: Control<FieldValues, any>;
   errors: FieldErrors<FieldValues>;
   required: boolean;
 }
 
-export const FormInput = (props: Props) => {
+export const FormPhone = (props: Props) => {
   return (
     <Wrapper>
       <Input
-        type={props.type}
+        country="KR"
+        control={props.control}
+        name={props.value}
+        rules={{ required: props.required }}
         placeholder={props.placeholder}
-        {...props.register(props.value, {
-          required: `${props.required}`,
-        })}
       />
       {props.errors[props.value] && <Error />}
     </Wrapper>
@@ -30,11 +30,8 @@ export const FormInput = (props: Props) => {
 const Wrapper = styled.article`
   display: flex;
   width: 100%;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0 4px;
 `;
-const Input = styled.input`
+const Input = styled(PhoneInput)`
   display: flex;
   flex: auto;
   font-size: 16px;
