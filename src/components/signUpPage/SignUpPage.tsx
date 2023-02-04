@@ -18,7 +18,20 @@ export const SignUpPage = () => {
   } = useForm();
 
   const submit = useCallback((data: FieldValues) => {
-    console.log(data);
+    // let temp = Object.keys(data).filter(
+    //   (i) => !i.includes("addColorA" || "addColorB")
+    // );
+    let tempColor1 = Object.keys(data)
+      .filter((i) => i.includes("addColorA"))
+      .map((item) => data[item]);
+    let tempColor2 = Object.keys(data)
+      .filter((i) => i.includes("addColorB"))
+      .map((item) => data[item]);
+    let obj = Object.entries(data).filter(
+      (i) => !i[0].includes("addColorA" || "addColorB")
+    );
+    obj.push(["addColorA", tempColor1], ["addColorB", tempColor2]);
+    console.log(obj);
   }, []);
 
   return (
@@ -100,6 +113,7 @@ const BodyInner = styled.div`
 const Division = styled.div`
   display: flex;
   position: absolute;
+  z-index: 1;
   width: 2px;
   height: 100%;
   background: ${customColor.darkGray};
