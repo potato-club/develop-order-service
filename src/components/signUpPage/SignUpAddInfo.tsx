@@ -11,6 +11,9 @@ import { MdTune } from "react-icons/md";
 import { QuestionLabel } from "./components/QuestionLabel";
 import { FormColor } from "./components/FormColor";
 import { FormRadioButtons } from "./components/FormRadioButtons";
+import { FormNumber } from "./components/FormNumber";
+import { InfoLabel } from "./components/InfoLabel";
+import { FormTextarea } from "./components/FormTextarea";
 
 interface Props {
   register: UseFormRegister<FieldValues>;
@@ -36,16 +39,13 @@ export const SignUpAddInfo = ({
           <FormItemLabel>
             <Question>
               브랜드 컬러1
-              <QuestionLabel
-                content="사이트의 대표색들을 알려주세요"
-                width={158}
-              />
+              <QuestionLabel content="사이트의 대표색" width={86} />
             </Question>
             <EssentialInfo>*는 필수로 적어야하는 정보입니다</EssentialInfo>
           </FormItemLabel>
           <FormItemContent>
             <FormColor
-              value="addColor1"
+              value="addColorA"
               register={register}
               unregister={unregister}
               errors={errors}
@@ -57,7 +57,7 @@ export const SignUpAddInfo = ({
           <FormItemLabel>브랜드 컬러2</FormItemLabel>
           <FormItemContent>
             <FormColor
-              value="addColor2"
+              value="addColorB"
               register={register}
               unregister={unregister}
               errors={errors}
@@ -70,15 +70,32 @@ export const SignUpAddInfo = ({
             <Question>
               페이지 수
               <QuestionLabel
-                content="페이지는 URL의 변화를 기준으로 합니다. "
-                width={0}
+                content="URL의 변화를 기준으로 하되, 한 페이지 내에 많은 기능이 있을 시 여러 페이지로 간주"
+                width={386}
               />
             </Question>
           </FormItemLabel>
-          <FormItemContent>김도스 또는 (주)도스</FormItemContent>
+          <FormItemContent>
+            <FormNumber
+              placeholder="03"
+              value="addPage"
+              register={register}
+              errors={errors}
+              required={false}
+            />
+          </FormItemContent>
+          <InfoLabel content="페이지는 3개 초과 시 추가요금이 발생합니다" />
         </FormItem>
         <FormItem>
-          <FormItemLabel>로그인 필요 유무</FormItemLabel>
+          <FormItemLabel>
+            <Question>
+              로그인 필요 유무
+              <QuestionLabel
+                content="소셜(카카오, 구글 등)로그인, 사이트 자체적 로그인"
+                width={236}
+              />
+            </Question>
+          </FormItemLabel>
           <FormItemContent>
             <FormRadioButtons
               name1="예"
@@ -89,9 +106,18 @@ export const SignUpAddInfo = ({
               required={false}
             />
           </FormItemContent>
+          <InfoLabel content="로그인 기능 추가 시 추가요금이 발생합니다" />
         </FormItem>
         <FormItem>
-          <FormItemLabel>DB 필요 유무</FormItemLabel>
+          <FormItemLabel>
+            <Question>
+              DB 필요 유무
+              <QuestionLabel
+                content="서버에 정보 저장, 많은 정보를 다루기 위해 필수"
+                width={222}
+              />
+            </Question>
+          </FormItemLabel>
           <FormItemContent>
             <FormRadioButtons
               name1="예"
@@ -102,10 +128,33 @@ export const SignUpAddInfo = ({
               required={false}
             />
           </FormItemContent>
+          <InfoLabel content="DB 기능 추가 시 추가요금이 발생합니다" />
         </FormItem>
         <FormItem>
           <FormItemLabel>사이트 컨셉 참고자료 첨부</FormItemLabel>
-          <FormItemContent>김도스 또는 (주)도스</FormItemContent>
+          <FormItemContent>
+            {/* <FormInput
+              placeholder="김도스 또는 (주)도스"
+              value="userName"
+              type="file"
+              register={register}
+              errors={errors}
+              required={true}
+            /> */}
+          </FormItemContent>
+        </FormItem>
+        <FormItem>
+          <FormItemLabel>기타사항</FormItemLabel>
+          <FormItemContent>
+            <FormTextarea
+              placeholder="dos.com 사이트를 참고하려고 합니다!"
+              value="userName"
+              type="text"
+              register={register}
+              errors={errors}
+              required={true}
+            />
+          </FormItemContent>
         </FormItem>
         <FormItem>
           <FormItemLabel>*첫 미팅 희망날짜</FormItemLabel>
@@ -144,6 +193,7 @@ const Form = styled.div`
 const FormItem = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
   gap: 6px 0;
 `;
 const FormItemLabel = styled.div`
@@ -154,6 +204,7 @@ const FormItemLabel = styled.div`
   padding-left: 12px;
   justify-content: space-between;
   align-items: flex-end;
+  white-space: nowrap;
 `;
 const EssentialInfo = styled.p`
   display: flex;
@@ -180,4 +231,5 @@ const Question = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 0 6px;
+  white-space: nowrap;
 `;

@@ -120,6 +120,7 @@ const FormItemLabel = styled.div`
   padding-left: 12px;
   justify-content: space-between;
   align-items: flex-end;
+  white-space: nowrap;
 `;
 const EssentialInfo = styled.p`
   display: flex;
