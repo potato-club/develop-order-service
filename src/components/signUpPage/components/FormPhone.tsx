@@ -41,6 +41,6 @@ const Input = styled(PhoneInput)`
   outline: none;
   letter-spacing: -0.5px;
   ::placeholder {
-    color: ${customColor.darkGray};
+    color: ${customColor.gray};
   }
 `;

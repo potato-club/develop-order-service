@@ -62,10 +62,10 @@ export const FormColor = (props: Props) => {
                   onMouseLeave(id);
                 }}
               >
-                {props.watch(props.value + `-${i}`)}
+                {props.watch(props.value + `${i}`)}
                 <ColorInput
                   type="color"
-                  {...props.register(props.value + `-${i}`)}
+                  {...props.register(props.value + `${i}`)}
                 />
                 <ColorDelete
                   isHover={isHover[id]}

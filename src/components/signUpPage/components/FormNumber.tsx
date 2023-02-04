@@ -6,7 +6,6 @@ import { Error } from "./Error";
 interface Props {
   placeholder: string;
   value: string;
-  type: string;
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors<FieldValues>;
   required: boolean;
@@ -16,10 +15,12 @@ export const FormNumber = (props: Props) => {
   return (
     <Wrapper>
       <Input
-        type={props.type}
+        type="number"
+        max="99"
+        min="1"
         placeholder={props.placeholder}
         {...props.register(props.value, {
-          required: `${props.required}`,
+          required: props.required,
         })}
       />
       {props.errors[props.value] && <Error />}
@@ -36,14 +37,19 @@ const Wrapper = styled.article`
 `;
 const Input = styled.input`
   display: flex;
-  flex: auto;
   font-size: 16px;
+  width: 100%;
+  height: 100%;
   color: ${customColor.black};
-  border: none;
   background: transparent;
   outline: none;
+  border: none;
   letter-spacing: -0.5px;
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
   ::placeholder {
-    color: ${customColor.darkGray};
+    color: ${customColor.gray};
   }
 `;

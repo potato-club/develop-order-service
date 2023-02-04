@@ -20,7 +20,7 @@ export const FormRadioButtons = (props: Props) => {
         <RadioButtons>
           <RadioButton
             {...props.register(props.value, {
-              required: `${props.required}`,
+              required: props.required,
             })}
             type="radio"
             value={props.name1}
@@ -30,7 +30,7 @@ export const FormRadioButtons = (props: Props) => {
         <RadioButtons>
           <RadioButton
             {...props.register(props.value, {
-              required: `${props.required}`,
+              required: props.required,
             })}
             type="radio"
             value={props.name3}
@@ -41,7 +41,7 @@ export const FormRadioButtons = (props: Props) => {
           <RadioButtons>
             <RadioButton
               {...props.register(props.value, {
-                required: `${props.required}`,
+                required: props.required,
               })}
               type="radio"
               value={props.name3}

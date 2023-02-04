@@ -19,7 +19,7 @@ export const FormInput = (props: Props) => {
         type={props.type}
         placeholder={props.placeholder}
         {...props.register(props.value, {
-          required: `${props.required}`,
+          required: props.required,
         })}
       />
       {props.errors[props.value] && <Error />}
@@ -44,6 +44,6 @@ const Input = styled.input`
   outline: none;
   letter-spacing: -0.5px;
   ::placeholder {
-    color: ${customColor.darkGray};
+    color: ${customColor.gray};
   }
 `;
