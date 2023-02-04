@@ -32,7 +32,7 @@ html::-webkit-scrollbar-button:start:decrement {
 }
 html::-webkit-scrollbar-button:end:increment {
   background-color: transparent;
-  height: 192px;
+  height: 188px;
 }
 html {
   overflow: overlay;
