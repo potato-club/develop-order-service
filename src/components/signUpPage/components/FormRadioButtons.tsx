@@ -82,7 +82,7 @@ const RadioButtons = styled.div`
 const RadioButton = styled.input`
   display: flex;
   position: relative;
-  border: 2px solid ${customColor.darkGray};
+  border: 1px solid ${customColor.darkGray};
   border-radius: 4px;
   width: 18px;
   height: 18px;
@@ -95,8 +95,8 @@ const RadioButton = styled.input`
     display: flex;
     position: absolute;
     content: "";
-    width: 9px;
-    height: 9px;
+    width: 10px;
+    height: 10px;
     background: ${customColor.black};
     top: 50%;
     left: 50%;

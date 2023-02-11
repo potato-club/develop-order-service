@@ -80,7 +80,7 @@ export const FormColor = (props: Props) => {
           })}
         </ColorList>
         <ColorPlus onClick={handlePlusBtn}>
-          <BsPlusLg />
+          <BsPlusLg size={10} />
         </ColorPlus>
       </Box>
       {props.errors[props.value] && <Error />}
@@ -113,7 +113,7 @@ const ColorPlus = styled.button`
   height: 26px;
   color: ${customColor.darkGray};
   font-size: 14px;
-  border: 2px solid ${customColor.darkGray};
+  border: 1px solid ${customColor.darkGray};
   border-radius: 4px;
   align-items: center;
   justify-content: center;
@@ -125,10 +125,10 @@ const ColorBox = styled.div`
   margin-right: 26px;
   width: 94px;
   height: 26px;
-  border: 2px solid ${customColor.darkGray};
+  border: 1px solid ${customColor.darkGray};
   border-radius: 4px;
   padding-right: 28px;
-  padding-left: 4px;
+  padding-left: 5px;
   font-size: 14px;
   align-items: center;
 `;
@@ -144,10 +144,11 @@ const ColorInput = styled.input`
   height: 26px;
   padding: 0;
   width: 24px;
-  right: 0;
+  right: 1px;
   top: 50%;
   transform: translate(0, -50%);
-  border-left: 2px solid ${customColor.darkGray};
+  border-left: 1px solid ${customColor.darkGray};
+  padding-left: 1px;
 `;
 const ColorDelete = styled.button<StyleProps>`
   display: flex;

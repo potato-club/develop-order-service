@@ -77,7 +77,7 @@ export const SignUpAddInfo = ({
           </FormItemLabel>
           <FormItemContent>
             <FormNumber
-              placeholder="03"
+              placeholder="3"
               value="addPage"
               register={register}
               errors={errors}
@@ -152,7 +152,7 @@ export const SignUpAddInfo = ({
               type="text"
               register={register}
               errors={errors}
-              required={true}
+              required={false}
             />
           </FormItemContent>
         </FormItem>
