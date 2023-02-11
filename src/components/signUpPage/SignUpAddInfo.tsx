@@ -229,6 +229,7 @@ const FormItemContent = styled.div`
 const Question = styled.div`
   display: flex;
   flex-direction: row;
+  flex: auto;
   align-items: center;
   gap: 0 6px;
   white-space: nowrap;

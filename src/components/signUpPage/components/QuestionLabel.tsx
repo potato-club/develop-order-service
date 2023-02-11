@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { AiFillQuestionCircle } from "react-icons/ai";
 import { customColor } from "../../customColor";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Props {
   content: string;
@@ -10,14 +10,32 @@ interface Props {
 interface PropsStyle {
   isHover: boolean;
   width: number;
+  isOver?: boolean;
 }
 
 export const QuestionLabel = ({ content, width }: Props) => {
+  const w = useRef<HTMLElement>(null);
+  const t = useRef<HTMLParagraphElement>(null);
   const [isHover, setIsHover] = useState(false);
+  const [isOver, setIsOver] = useState<boolean>();
+  useEffect(() => {
+    setIsOver(w.current?.offsetWidth < t.current?.offsetWidth + 22);
+    console.log(
+      width,
+      ":",
+      w.current?.offsetWidth,
+      t.current?.offsetWidth,
+      isOver
+    );
+  }, [w.current, t.current]);
   return (
-    <Wrapper>
+    <Wrapper ref={w}>
       <Content isHover={isHover} width={width}>
-        {content}
+        <ContentInner>
+          <Text isHover={isHover} width={width} isOver={isOver} ref={t}>
+            {content}
+          </Text>
+        </ContentInner>
       </Content>
       <Icon
         onMouseEnter={() => {
@@ -33,9 +51,19 @@ export const QuestionLabel = ({ content, width }: Props) => {
   );
 };
 
+const moveText = keyframes`
+  15% {
+    transform: translate(0,0);
+  }
+  100% {
+    
+    transform: translate(-50%,0);
+  }
+`;
 const Wrapper = styled.article`
   display: flex;
   position: relative;
+  width: 100%;
 `;
 const Icon = styled.div`
   display: flex;
@@ -53,14 +81,36 @@ const Content = styled.div<PropsStyle>`
   background: ${customColor.lightGray};
   height: 16px;
   width: ${(props) => (props.isHover ? props.width : 0)}px;
+  max-width: calc(100% - 14px);
   top: 50%;
   left: 9px;
   transform: translate(0, -50%);
-  letter-spacing: -0.5px;
-  font-size: 12px;
   white-space: nowrap;
   align-items: center;
   padding: ${(props) => props.isHover && "0 4px 0 10px"};
   overflow: hidden;
   transition: all 0.4s ease;
+`;
+const ContentInner = styled.div`
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  align-items: center;
+`;
+const Text = styled.p<PropsStyle>`
+  display: flex;
+  position: absolute;
+  right: 0;
+  letter-spacing: -0.5px;
+  font-size: 12px;
+  left: 0;
+  width: max-content;
+  ${(props) =>
+    props.isHover &&
+    props.isOver &&
+    css`
+      animation: ${moveText} ${props.width / 50}s linear infinite;
+    `};
 `;
