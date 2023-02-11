@@ -14,6 +14,7 @@ import { FormRadioButtons } from "./components/FormRadioButtons";
 import { FormNumber } from "./components/FormNumber";
 import { InfoLabel } from "./components/InfoLabel";
 import { FormTextarea } from "./components/FormTextarea";
+import { FormFile } from "./components/FormFile";
 
 interface Props {
   register: UseFormRegister<FieldValues>;
@@ -133,14 +134,12 @@ export const SignUpAddInfo = ({
         <FormItem>
           <FormItemLabel>사이트 컨셉 참고자료 첨부</FormItemLabel>
           <FormItemContent>
-            {/* <FormInput
-              placeholder="김도스 또는 (주)도스"
-              value="userName"
-              type="file"
+            <FormFile
+              value="addFile"
               register={register}
               errors={errors}
-              required={true}
-            /> */}
+              required={false}
+            />
           </FormItemContent>
         </FormItem>
         <FormItem>
