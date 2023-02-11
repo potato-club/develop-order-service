@@ -33,7 +33,7 @@ export const FormRadioButtons = (props: Props) => {
               required: props.required,
             })}
             type="radio"
-            value={props.name3}
+            value={props.name2}
           />
           {props.name2}
         </RadioButtons>

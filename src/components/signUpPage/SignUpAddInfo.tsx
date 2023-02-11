@@ -148,7 +148,7 @@ export const SignUpAddInfo = ({
           <FormItemContent>
             <FormTextarea
               placeholder="dos.com 사이트를 참고하려고 합니다!"
-              value="userName"
+              value="addEtc"
               type="text"
               register={register}
               errors={errors}
