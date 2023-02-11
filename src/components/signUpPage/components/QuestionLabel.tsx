@@ -11,6 +11,7 @@ interface PropsStyle {
   isHover: boolean;
   width: number;
   isOver?: boolean;
+  dif?: number;
 }
 
 export const QuestionLabel = ({ content, width }: Props) => {
@@ -18,21 +19,22 @@ export const QuestionLabel = ({ content, width }: Props) => {
   const t = useRef<HTMLParagraphElement>(null);
   const [isHover, setIsHover] = useState(false);
   const [isOver, setIsOver] = useState<boolean>();
+  const [dif, setDif] = useState<number>();
   useEffect(() => {
-    setIsOver(w.current?.offsetWidth < t.current?.offsetWidth + 22);
-    console.log(
-      width,
-      ":",
-      w.current?.offsetWidth,
-      t.current?.offsetWidth,
-      isOver
-    );
+    setIsOver(w.current?.offsetWidth < t.current?.offsetWidth + 23);
+    isOver && setDif(t.current?.offsetWidth - w.current?.offsetWidth + 23);
   }, [w.current, t.current]);
   return (
     <Wrapper ref={w}>
       <Content isHover={isHover} width={width}>
         <ContentInner>
-          <Text isHover={isHover} width={width} isOver={isOver} ref={t}>
+          <Text
+            isHover={isHover}
+            width={width}
+            isOver={isOver}
+            dif={dif}
+            ref={t}
+          >
             {content}
           </Text>
         </ContentInner>
@@ -51,13 +53,13 @@ export const QuestionLabel = ({ content, width }: Props) => {
   );
 };
 
-const moveText = keyframes`
+const moveText = (dif: number) => keyframes`
   15% {
     transform: translate(0,0);
   }
-  100% {
+  90% {
     
-    transform: translate(-50%,0);
+    transform: translate(-${dif + 8}px,0);
   }
 `;
 const Wrapper = styled.article`
@@ -111,6 +113,7 @@ const Text = styled.p<PropsStyle>`
     props.isHover &&
     props.isOver &&
     css`
-      animation: ${moveText} ${props.width / 50}s linear infinite;
+      animation: ${moveText(props.dif || 0)} ${(props.dif + 20) / 30}s linear
+        infinite;
     `};
 `;
