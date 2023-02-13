@@ -15,6 +15,7 @@ import { FormNumber } from "./components/FormNumber";
 import { InfoLabel } from "./components/InfoLabel";
 import { FormTextarea } from "./components/FormTextarea";
 import { FormFile } from "./components/FormFile";
+import { FormCalendar } from "./components/FormCalendar";
 
 interface Props {
   register: UseFormRegister<FieldValues>;
@@ -157,7 +158,10 @@ export const SignUpAddInfo = ({
         </FormItem>
         <FormItem>
           <FormItemLabel>*첫 미팅 희망날짜</FormItemLabel>
-          <FormItemContent>김도스 또는 (주)도스</FormItemContent>
+          <FormItemContent>
+            <FormCalendar />
+          </FormItemContent>
+          <InfoLabel content="회의는 최대 2시간동안 진행됩니다" />
         </FormItem>
       </Form>
     </Content>
