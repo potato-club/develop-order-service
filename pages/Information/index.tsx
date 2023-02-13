@@ -1,19 +1,8 @@
-import "../styles/globals.css";
-import styled from "styled-components";
-import type { AppProps } from "next/app";
-import { Header } from "../../src/components";
-import { Footer } from "../../src/components/footer/Footer";
-import { Layout } from "../../src/components/layout/Layout";
-const info = () => {
-    return (
-        <div>
-            <Header />
-            
-            <Footer />
-        </div>
-    );
+import type { NextPage } from "next";
+import InformationPage from "../../src/infoPage/InformationPage";
+
+const Information : NextPage = () => {
+  return <InformationPage />;
 };
 
-
-const Wrapper  = styled.div`
-`
+export default Information;
