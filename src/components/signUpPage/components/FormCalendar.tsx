@@ -1,25 +1,29 @@
-import { EventContentArg } from "@fullcalendar/core";
+import moment from "moment";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interaction, { DateClickArg } from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
+import { EventContentArg } from "@fullcalendar/core";
 import styled from "styled-components";
 import { customColor } from "../../customColor";
+import { BsFillCaretRightFill } from "react-icons/bs";
+import { BsFillCaretLeftFill } from "react-icons/bs";
 
 export const FormCalendar = () => {
   const renderEvent = (info: EventContentArg) => {
     return <Item>{info.event.title}</Item>;
   };
   const handleClickDay = (info: DateClickArg) => {
-    // let today = new Date();
+    let today = moment().format("YYYY-MM-DD");
     let date = info.dateStr;
-    let calendar = info.view.calendar;
-    let events = calendar
+    let events = info.view.calendar
       .getEventSources()[0]
       .internalEventSource.meta.filter(
         (i: { date: string; title: string }) => i.date === date
       );
     let event = events;
     console.log(event, today);
+    (today > date || moment(date).day() === 0 || moment(date).day() === 6) &&
+      console.log("앙");
   };
   return (
     <Wrapper>
@@ -60,11 +64,14 @@ export const FormCalendar = () => {
         eventContent={renderEvent}
         dateClick={handleClickDay}
       />
+      <PrevIcon />
+      <NextIcon />
     </Wrapper>
   );
 };
 
 const Wrapper = styled.article`
+  position: relative;
   width: 100%;
   height: auto;
   min-height: 530px;
@@ -80,6 +87,22 @@ const Item = styled.div`
   padding: 0 2px;
   overflow: hidden;
 `;
-function moment() {
-  throw new Error("Function not implemented.");
-}
+const PrevIcon = styled(BsFillCaretLeftFill)`
+  position: absolute;
+  top: 28px;
+  color: ${customColor.white};
+  right: 60px;
+  font-size: 12px;
+  z-index: 2;
+  pointer-events: none;
+`;
+const NextIcon = styled(BsFillCaretRightFill)`
+  position: absolute;
+  top: 28px;
+  color: ${customColor.white};
+  right: 32px;
+  font-size: 12px;
+  z-index: 2;
+  cursor: pointer;
+  pointer-events: none;
+`;
