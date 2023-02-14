@@ -116,4 +116,14 @@ height:20px;
   color:${customColor.black};
   filter: grayscale(0%);
 }
+/* react-transition-group */
+.modal-enter{
+  opacity: 0;
+  transform: translate(-50%,12px);
+}
+.modal-enter-active {
+  opacity: 1;
+  transform: translate(-50%,0);
+  transition: all 0.3s ease;
+}
 `;
