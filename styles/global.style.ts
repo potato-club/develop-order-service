@@ -59,4 +59,13 @@ button {
   -ms-user-select: none;
   user-select: none;
 }
+.modal-enter{
+  opacity: 0;
+  transform: translate(-50%,12px);
+}
+.modal-enter-active {
+  opacity: 1;
+  transform: translate(-50%,0);
+  transition: all 0.3s ease;
+}
 `;
