@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { customColor } from "../customColor";
+import { CSSTransition } from "react-transition-group";
+import { useRef } from "react";
 
 interface Props {
   content: string;
@@ -11,16 +13,25 @@ interface StyleProps {
 }
 
 export const Alert = ({ content, isOpen, closeModal }: Props) => {
+  const modalRef = useRef(null);
   return (
-    <Wrapper isOpen={isOpen}>
-      <Content>{content}</Content>
-      <Button onClick={closeModal}>닫기</Button>
-    </Wrapper>
+    <CSSTransition
+      in={isOpen}
+      timeout={400}
+      nodeRef={modalRef}
+      classNames="modal"
+    >
+      <Wrapper isOpen={isOpen} ref={modalRef}>
+        <Content>{content}</Content>
+        <Button onClick={closeModal}>닫기</Button>
+      </Wrapper>
+    </CSSTransition>
   );
 };
 
 const Wrapper = styled.article<StyleProps>`
   display: ${(props) => (props.isOpen ? "flex" : "none")};
+  /* display: flex; */
   flex-direction: column;
   position: fixed;
   box-shadow: 1px 2px 4px 2px ${customColor.black + "33"};

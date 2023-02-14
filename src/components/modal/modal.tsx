@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { customColor } from "../customColor";
+import { CSSTransition } from "react-transition-group";
+import { useRef } from "react";
 
 interface Props {
   content: string;
@@ -12,15 +14,23 @@ interface StyleProps {
 }
 
 export const Modal = ({ content, isOpen, closeModal, event }: Props) => {
+  const modalRef = useRef(null);
   return (
-    <Wrapper isOpen={isOpen}>
-      <Content>{content}</Content>
-      <Buttons>
-        <Division />
-        <Button onClick={event}>네</Button>
-        <Button onClick={closeModal}>아니요</Button>
-      </Buttons>
-    </Wrapper>
+    <CSSTransition
+      in={isOpen}
+      timeout={400}
+      nodeRef={modalRef}
+      classNames="modal"
+    >
+      <Wrapper isOpen={isOpen} ref={modalRef}>
+        <Content>{content}</Content>
+        <Buttons>
+          <Division />
+          <Button onClick={event}>네</Button>
+          <Button onClick={closeModal}>아니요</Button>
+        </Buttons>
+      </Wrapper>
+    </CSSTransition>
   );
 };
 
