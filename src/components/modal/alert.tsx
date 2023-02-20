@@ -23,7 +23,9 @@ export const Alert = ({ content, isOpen, closeModal }: Props) => {
     >
       <Wrapper isOpen={isOpen} ref={modalRef}>
         <Content>{content}</Content>
-        <Button onClick={closeModal}>닫기</Button>
+        <Button type="button" onClick={closeModal}>
+          닫기
+        </Button>
       </Wrapper>
     </CSSTransition>
   );

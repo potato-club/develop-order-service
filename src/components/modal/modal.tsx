@@ -8,12 +8,19 @@ interface Props {
   isOpen: boolean;
   closeModal: () => void;
   event: () => void;
+  eventBtnType: "button" | "submit" | "reset";
 }
 interface StyleProps {
   isOpen: boolean;
 }
 
-export const Modal = ({ content, isOpen, closeModal, event }: Props) => {
+export const Modal = ({
+  content,
+  isOpen,
+  closeModal,
+  event,
+  eventBtnType,
+}: Props) => {
   const modalRef = useRef(null);
   return (
     <CSSTransition
@@ -26,8 +33,12 @@ export const Modal = ({ content, isOpen, closeModal, event }: Props) => {
         <Content>{content}</Content>
         <Buttons>
           <Division />
-          <Button onClick={event}>네</Button>
-          <Button onClick={closeModal}>아니요</Button>
+          <Button type={eventBtnType} onClick={event}>
+            네
+          </Button>
+          <Button type="button" onClick={closeModal}>
+            아니요
+          </Button>
         </Buttons>
       </Wrapper>
     </CSSTransition>
