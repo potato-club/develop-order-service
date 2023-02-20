@@ -96,7 +96,7 @@ export const FormCalendar = ({ setValue, register, value }: Props) => {
         }}
         titleFormat={{ year: "numeric", month: "narrow" }}
         locale="ko"
-        height={520}
+        height={524}
         eventColor={customColor.blue}
         eventTextColor={customColor.black}
         events={[
@@ -152,7 +152,6 @@ const Wrapper = styled.article`
 const Item = styled.div`
   height: 14px;
   width: 100%;
-  /* margin-bottom: 6px; */
   font-size: 12px;
   color: ${customColor.black};
   padding: 0 2px;

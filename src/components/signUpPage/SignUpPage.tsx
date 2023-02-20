@@ -48,12 +48,12 @@ export const SignUpPage = () => {
       <Body onSubmit={handleSubmit(submit)}>
         <BodyInner>
           <Division />
-          {/* <SignUpUserInfo
+          <SignUpUserInfo
             register={register}
             errors={errors}
             control={control}
           />
-          <SignUpSiteInfo register={register} errors={errors} /> */}
+          <SignUpSiteInfo register={register} errors={errors} />
           <SignUpAddInfo
             register={register}
             errors={errors}
@@ -92,7 +92,7 @@ const Title = styled.div`
 const SubTitle = styled.div`
   padding-left: 36px;
   font-size: 16px;
-  color: ${customColor.darkGray};
+  color: ${customColor.gray};
   letter-spacing: -0.5px;
   font-weight: bold;
 `;
@@ -117,7 +117,7 @@ const Division = styled.div`
   z-index: 1;
   width: 2px;
   height: 100%;
-  background: ${customColor.darkGray};
+  background: ${customColor.gray};
   border-radius: 1px;
   left: 212px;
   top: 50%;
