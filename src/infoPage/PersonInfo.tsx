@@ -9,7 +9,7 @@ import Image from "next/image";
 import information from "../assets/img/information/information.png"
 const PersonInfo = () => {
   return (
-    <Wrrapper>
+    <Wrapper>
       <InfoHead>
         <Image src ={information}  alt = {""} width = {50}  />
         <HeadText>직원정보</HeadText>
@@ -26,12 +26,12 @@ const PersonInfo = () => {
         <Junhyung />
       </StickWrapper>
     
-    </Wrrapper>
+    </Wrapper>
   );
 };
 
 export default PersonInfo;
-const Wrrapper = styled.div`
+const Wrapper = styled.div`
   
 `;
 const InfoHead = styled.div`
