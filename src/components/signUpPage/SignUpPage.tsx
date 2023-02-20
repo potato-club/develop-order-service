@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import styled from "styled-components";
 import { FieldValues, useForm } from "react-hook-form";
 import { customColor } from "../customColor";
@@ -15,9 +15,11 @@ export const SignUpPage = () => {
     control,
     handleSubmit,
     watch,
+    setValue,
   } = useForm();
 
-  const submit = useCallback((data: FieldValues) => {
+  const submit = (data: FieldValues) => {
+    // data.addFile.pop();
     let tempColor1 = Object.keys(data)
       .filter((i) => i.includes("addColorA"))
       .map((item) => data[item]);
@@ -30,7 +32,7 @@ export const SignUpPage = () => {
     obj.push(["addColorA", tempColor1], ["addColorB", tempColor2]);
     let send = Object.fromEntries(obj);
     console.log(send);
-  }, []);
+  };
 
   return (
     <Container>
@@ -46,17 +48,18 @@ export const SignUpPage = () => {
       <Body onSubmit={handleSubmit(submit)}>
         <BodyInner>
           <Division />
-          <SignUpUserInfo
+          {/* <SignUpUserInfo
             register={register}
             errors={errors}
             control={control}
           />
-          <SignUpSiteInfo register={register} errors={errors} />
+          <SignUpSiteInfo register={register} errors={errors} /> */}
           <SignUpAddInfo
             register={register}
             errors={errors}
             watch={watch}
             unregister={unregister}
+            setValue={setValue}
           />
         </BodyInner>
         <SubmitButton type="submit">신청하기</SubmitButton>

@@ -3,6 +3,7 @@ import {
   FieldErrors,
   FieldValues,
   UseFormRegister,
+  UseFormSetValue,
   UseFormUnregister,
   UseFormWatch,
 } from "react-hook-form";
@@ -22,6 +23,7 @@ interface Props {
   unregister: UseFormUnregister<FieldValues>;
   errors: FieldErrors<FieldValues>;
   watch: UseFormWatch<FieldValues>;
+  setValue: UseFormSetValue<FieldValues>;
 }
 
 export const SignUpAddInfo = ({
@@ -29,6 +31,7 @@ export const SignUpAddInfo = ({
   unregister,
   errors,
   watch,
+  setValue,
 }: Props) => {
   return (
     <Content>
@@ -159,9 +162,13 @@ export const SignUpAddInfo = ({
         <FormItem>
           <FormItemLabel>*첫 미팅 희망날짜</FormItemLabel>
           <FormItemContent>
-            <FormCalendar />
+            <FormCalendar
+              setValue={setValue}
+              register={register}
+              value="addDate"
+            />
           </FormItemContent>
-          <InfoLabel content="회의는 최대 2시간동안 진행됩니다" />
+          <InfoLabel content={"회의는 최대 2시간동안 진행됩니다"} />
         </FormItem>
       </Form>
     </Content>
@@ -227,7 +234,7 @@ const FormItemContent = styled.div`
   padding-left: 32px;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
-  overflow: hidden;
+  /* overflow: hidden; */
 `;
 const Question = styled.div`
   display: flex;
