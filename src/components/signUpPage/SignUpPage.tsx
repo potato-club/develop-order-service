@@ -48,12 +48,12 @@ export const SignUpPage = () => {
       <Body onSubmit={handleSubmit(submit)}>
         <BodyInner>
           <Division />
-          {/* <SignUpUserInfo
+          <SignUpUserInfo
             register={register}
             errors={errors}
             control={control}
           />
-          <SignUpSiteInfo register={register} errors={errors} /> */}
+          <SignUpSiteInfo register={register} errors={errors} />
           <SignUpAddInfo
             register={register}
             errors={errors}
