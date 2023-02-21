@@ -10,8 +10,6 @@ export default function OrderReview() {
   // "period": "6",
   // "progress": 100
 
-  console.log(orderData.data);
-
   return (
     <Wrapper>
       <ReviewTop />
