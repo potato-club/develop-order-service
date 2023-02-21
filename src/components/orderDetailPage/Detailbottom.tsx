@@ -5,9 +5,10 @@ import heartIcon from "../../assets/img/detail/heart.png";
 
 export const DetailBottm = () => {
   const like = detailData.data2.like;
+  const progress = detailData.data1.progress;
   return (
     <BottomWrapper>
-      <LikeButton>
+      <LikeButton progress={progress}>
         좋아요
         <LikeButtonP>
           <ImageContainer>
@@ -39,7 +40,8 @@ const ListButton = styled.button`
   border: 1px solid black;
 `;
 
-const LikeButton = styled.button`
+const LikeButton = styled.button<{ progress: String }>`
+  display: ${(props) => (props.progress === "ongoing" ? "none" : "")};
   width: 150px;
   height: 80px;
   border-radius: 10px;
