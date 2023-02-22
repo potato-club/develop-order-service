@@ -21,27 +21,27 @@ export const SelectTime = ({ isOpen, xy, time, setTime }: Props) => {
       <Buttons>
         <Button
           type="button"
-          btnValue={time === "10"}
+          btnValue={time === "10:00"}
           onClick={() => {
-            setTime("10");
+            setTime("10:00");
           }}
         >
           10:00
         </Button>
         <Button
           type="button"
-          btnValue={time === "13"}
+          btnValue={time === "13:00"}
           onClick={() => {
-            setTime("13");
+            setTime("13:00");
           }}
         >
           13:00
         </Button>
         <Button
           type="button"
-          btnValue={time === "16"}
+          btnValue={time === "16:00"}
           onClick={() => {
-            setTime("16");
+            setTime("16:00");
           }}
         >
           16:00
@@ -88,7 +88,7 @@ const Button = styled.button<StyleProps>`
   box-shadow: ${(props) =>
     props.btnValue
       ? `1px 2px 4px 2px ${customColor.black + "33"},0px 0px 4px 2px ${
-          customColor.blue
+          customColor.blue + "bb"
         }`
       : `1px 2px 4px 2px ${customColor.black + "33"}`};
   border-radius: 10px;
@@ -96,4 +96,5 @@ const Button = styled.button<StyleProps>`
   justify-content: center;
   font-size: 14px;
   letter-spacing: -0.3px;
+  background: ${(props) => (props.btnValue ? `${customColor.blue_}` : "none")};
 `;

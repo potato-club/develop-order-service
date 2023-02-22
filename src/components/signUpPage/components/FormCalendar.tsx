@@ -74,8 +74,8 @@ export const FormCalendar = ({ setValue, register, value }: Props) => {
   };
 
   useEffect(() => {
-    setValue(value, [date, time]);
-  }, [time]);
+    setValue(value, date + " " + time);
+  }, [time, date]);
 
   return (
     <Wrapper ref={wrapper}>
