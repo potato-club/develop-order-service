@@ -100,6 +100,7 @@ height:20px;
 }
 .fc-day{
   cursor: pointer;
+  background: ${customColor.lightGray};
 }
 .fc .fc-daygrid-event{
   margin-top: 2px;
@@ -109,17 +110,15 @@ height:20px;
 }
 .fc-day-past, .fc-day-sun, .fc-day-sat{
   color:${customColor.gray};
-  filter: grayscale(70%);
+  filter: brightness(94%);
 }
 .fc-col-header-cell{
   background: ${customColor.lightGray};
   color:${customColor.black};
-  filter: grayscale(0%);
+  filter: brightness(100%);
 }
 .selected{
-  box-shadow:1px 2px 4px 2px ${customColor.black + "33"}, 0px 0px 4px 2px ${
-  customColor.blue
-} !important;
+  filter:drop-shadow(0px 0px 6px ${customColor.blue});
 }
 /* react-transition-group */
 .modal-enter{
