@@ -130,4 +130,11 @@ height:20px;
   transform: translate(-50%,0);
   transition: all 0.3s ease;
 }
+.time_modal-enter {
+  width:1px;
+  }
+  .time_modal-enter-active {
+    width:137px;
+    transition: all 0.4s ease-out;
+  }
 `;
