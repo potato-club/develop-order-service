@@ -40,7 +40,9 @@ export const FormCalendar = ({ setValue, register, value }: Props) => {
       .internalEventSource.meta.filter(
         (i: { date: string; title: string }) => i.date === date
       );
-    if (today > date || moment(date).day() === 0 || moment(date).day() === 6) {
+    setIsOpen(false);
+    remove?.classList.remove("selected");
+    if (today >= date || moment(date).day() === 0 || moment(date).day() === 6) {
       setContent("선택할 수 없는 날짜입니다");
       setModal(true);
     } else if (events.length >= 3) {
@@ -60,7 +62,6 @@ export const FormCalendar = ({ setValue, register, value }: Props) => {
           info.jsEvent.y - wrapper.current.getBoundingClientRect().y,
         ]);
       // 'selected' class 설정
-      remove?.classList.remove("selected");
       selectedElement?.classList.add("selected");
       selectedElement && setRemove(selectedElement);
     }

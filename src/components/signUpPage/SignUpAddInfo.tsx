@@ -172,7 +172,10 @@ export const SignUpAddInfo = ({
               value="meeting"
             />
           </FormItemContent>
-          <InfoLabel content={"회의는 최대 2시간동안 진행됩니다"} />
+          <InfoLabel
+            content={"당일과 주말은 예약할 수 없습니다"}
+            content2={`회의는 최대 2시간동안 진행됩니다`}
+          />
         </FormItem>
       </Form>
     </Content>
