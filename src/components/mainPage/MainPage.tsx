@@ -9,6 +9,7 @@ export const MainPage = () => {
         <Title />
         <SiteRanking />
       </Head>
+      <Body></Body>
     </Container>
   );
 };
@@ -21,4 +22,9 @@ const Head = styled.div`
   display: flex;
   flex-direction: column;
   height: calc(100vh - 80px);
+`;
+const Body = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 1000px;
 `;

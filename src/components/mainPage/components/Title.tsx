@@ -3,18 +3,9 @@ import styled from "styled-components";
 import { customColor } from "../../customColor";
 import website from "../../../assets/img/main/website.png";
 
-interface Props {
-  x: number;
-  y: number;
-}
-interface StyleProps {
-  x: number;
-  y: number;
-}
-
-export const Title = ({ x, y }: Props) => {
+export const Title = () => {
   return (
-    <Wrapper x={x} y={y}>
+    <Wrapper>
       <LeftTitle>
         당신의 웹 페이지를 원하시나요?
         <Content>
@@ -39,7 +30,7 @@ export const Title = ({ x, y }: Props) => {
   );
 };
 
-const Wrapper = styled.div<StyleProps>`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
