@@ -5,11 +5,16 @@ import Image from "next/image";
 import email from "../assets/img/information/email.png";
 import phone from "../assets/img/information/phone.png";
 import imac from "../assets/img/information/imac.png";
+import character from "../assets/img/information/character.png"
 const Cheongjo = () => {
+
+  
   return (
     <Wrapper>
       <InfoBox>
-        <Circle />
+      <Circle>
+          <Image src={character} alt = {''} width={80} />
+        </Circle>
         <Name>박 청 조</Name>
         <TaskBox>
           <Image src={imac} alt={""} width={35} />
@@ -33,6 +38,7 @@ export default Cheongjo;
 const Wrapper = styled.div`
   position: relative;
   display: flex;
+  
 `;
 const InfoBox = styled.div`
   width: 150px;
@@ -48,6 +54,9 @@ const Circle = styled.div`
   margin: auto;
   margin-top: 19.5px;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Name = styled.p`
