@@ -1,0 +1,28 @@
+{
+  "data1" :
+  {
+    "id": 1,
+    "title": "1번 웹사이트",
+    "purpose": "상품 판매",
+    "startDate": "2023/02/18",
+    "endDate": "2023/02/19",
+    "progress": "ongoing"
+  },
+  "data2" : 
+  {
+  "id": 1,
+  "title": "1번 웹사이트",
+  "purpose": "상품 판매",
+  "startDate": "2023/02/18",
+  "endDate": "2023/02/19",
+  "progress": "finished",
+  "additional": {
+    "page" : true,
+    "login" : true,
+    "db" : false
+  },
+  "starRating": 4,
+  "like" : 131
+  }
+}
+
