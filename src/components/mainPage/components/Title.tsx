@@ -1,7 +1,6 @@
 import Image from "next/image";
 import styled from "styled-components";
 import { customColor } from "../../customColor";
-import website from "../../../assets/img/main/website.png";
 
 export const Title = () => {
   return (
@@ -24,7 +23,12 @@ export const Title = () => {
         </Content>
       </LeftTitle>
       <RightTitle>
-        <Image src={website} alt="website" width={140} height={140} />
+        <Image
+          src={"/img/main/website.png"}
+          alt="website"
+          width={140}
+          height={140}
+        />
       </RightTitle>
     </Wrapper>
   );
