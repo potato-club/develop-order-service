@@ -5,8 +5,6 @@ import { DetailBottm } from "../src/components/orderDetailPage/Detailbottom";
 import detailData from "../src/assets/data2.json";
 
 export default function OrderDetail() {
-  const dataProps = {};
-
   return (
     <Wrapper>
       <DetailTop />
