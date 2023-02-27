@@ -11,12 +11,12 @@ export default function OrderDetail() {
     <Wrapper>
       <DetailTop />
       <DetailContnets
-        title={detailData.data1.title}
-        id={detailData.data1.id}
-        purpose={detailData.data1.purpose}
-        startDate={detailData.data1.startDate}
-        endDate={detailData.data1.endDate}
-        progress={detailData.data1.progress}
+        title={detailData.data2.title}
+        id={detailData.data2.id}
+        purpose={detailData.data2.purpose}
+        startDate={detailData.data2.startDate}
+        endDate={detailData.data2.endDate}
+        progress={detailData.data2.progress}
         // page login db starRating 등의 데이터는 완료되지 않은 발주에서는 존재하지 않음
         page={detailData.data2.additional.page}
         login={detailData.data2.additional.login}
