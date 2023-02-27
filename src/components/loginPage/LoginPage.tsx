@@ -1,7 +1,5 @@
 import styled from "styled-components";
 import Image from "next/image";
-import kakaoLogin from "../../assets/img/login/kakaoLogin.png";
-import google from "../../assets/img/login/google.png";
 import { customColor } from "../customColor";
 
 export const LoginPage = () => {
@@ -14,14 +12,14 @@ export const LoginPage = () => {
         <Logins>
           <KakaoLogin>
             <Image
-              src={kakaoLogin}
+              src={"/img/login/kakaoLogin.png"}
               fill
               alt="kakaoLogin"
               style={{ objectFit: "cover" }}
             />
           </KakaoLogin>
           <GoogleLogin>
-            <Image src={google} width={20} alt="googleLogin" />
+            <Image src={"/img/login/google.png"} width={20} alt="googleLogin" />
             <GoogleText>구글 로그인</GoogleText>
           </GoogleLogin>
         </Logins>

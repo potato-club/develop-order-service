@@ -2,7 +2,6 @@ import { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import Image from "next/image";
 import { customColor } from "../../customColor";
-import www from "../../../assets/img/www.png";
 
 interface ButtonProps {
   isHover?: boolean;
@@ -32,7 +31,9 @@ export const MyInfo = () => {
             <ActionButton>로그인</ActionButton>
           )}
         </LogAction>
-        <Img>{isLogin && <Image src={www} fill alt="my_image" />}</Img>
+        <Img>
+          {isLogin && <Image src={"/img/www.png"} fill alt="my_image" />}
+        </Img>
       </MyImg>
     </Wrapper>
   );

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Image from "next/image";
 import { customColor } from "../customColor";
 import { TbWorld } from "react-icons/tb";
 import { MenuButtons } from "./components/MenuButtons";
