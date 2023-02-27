@@ -13,6 +13,7 @@
     "@fullcalendar/daygrid": "^6.1.4",
     "@fullcalendar/interaction": "^6.1.4",
     "@fullcalendar/react": "^6.1.4",
+    "@mobiscroll/react": "https://npm.mobiscroll.com/@mobiscroll/react-trial/-/react-trial-5.22.1.tgz",
     "@next/font": "13.1.1",
     "@types/node": "18.11.18",
     "@types/react": "18.0.26",
