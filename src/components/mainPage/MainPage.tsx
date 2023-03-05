@@ -3,8 +3,8 @@ import { BsChevronCompactDown } from "react-icons/bs";
 import { Link, scroller, animateScroll } from "react-scroll";
 import ScrollWheelHandler from "react-scroll-wheel-handler";
 import { useEffect, useState } from "react";
-import { SiteRanking } from "./components/SiteRanking";
 import { Title } from "./components/Title";
+import { SiteRanking } from "./components/SiteRanking";
 import { DesignMeeting } from "./components/DesignMeeting";
 import { Publishing } from "./components/Publishing";
 import { Feating } from "./components/Feating";
@@ -39,7 +39,6 @@ export const MainPage = () => {
       setScrollID(scrollIDArray[index + 1]);
     }
   };
-  //observer
   return (
     <ScrollWheelHandler
       upHandler={(e) => scrollUp(e)}
@@ -50,6 +49,9 @@ export const MainPage = () => {
           <Title />
           <SiteRanking />
           <Link to="design_meeting" smooth spy>
+            <ScrollContent>
+              웹 페이지가 만들어지는 과정이 궁금하신가요?
+            </ScrollContent>
             <ScrollButton onClick={() => setScrollID("design_meeting")}>
               스크롤하세요
               <BsChevronCompactDown size={18} />
@@ -89,6 +91,16 @@ const Head = styled.div`
   flex-direction: column;
   height: calc(100vh - 80px);
 `;
+const ScrollContent = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 54px;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: -0.5px;
+`;
 const ScrollButton = styled.button`
   display: flex;
   flex-direction: column;
@@ -100,6 +112,7 @@ const ScrollButton = styled.button`
   align-items: center;
   justify-content: center;
   font-size: 14px;
+  letter-spacing: -0.5px;
   animation: ${moveText} 1s infinite;
 `;
 const Body = styled.div`
