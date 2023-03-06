@@ -7,6 +7,10 @@ import { RightTalkBubble } from "./RightTalkBubble";
 import { IoSquareSharp } from "react-icons/io5";
 import { RiDoubleQuotesL, RiDoubleQuotesR } from "react-icons/ri";
 
+interface StyleProps {
+  delay: number;
+}
+
 export const DesignMeeting = () => {
   const { ref, inView, entry } = useInView({
     threshold: 0.5,
@@ -22,21 +26,39 @@ export const DesignMeeting = () => {
         </Explain>
       </Title>
       <Conversation>
-        <ConversationLeftInner
-          className={inView ? "design_meeting" : "design_meeting2"}
-        >
-          <LeftTalkBubble content="어떤 목적의 사이트인가요?" />
-          <LeftTalkBubble content="좋아요! 생각해두신 사이트의 대표색이 있을까요?" />
+        <ConversationLeftInner>
+          <Talk
+            className={inView ? "design_meeting" : "design_meeting2"}
+            delay={0.5}
+          >
+            <LeftTalkBubble content="어떤 목적의 사이트인가요?" />
+          </Talk>
+          <Talk
+            className={inView ? "design_meeting" : "design_meeting2"}
+            delay={0.7}
+          >
+            <LeftTalkBubble content="좋아요! 생각해두신 사이트의 대표색이 있을까요?" />
+          </Talk>
+          <FinalTalk className={inView ? "design_meeting" : "design_meeting2"}>
+            <LeftTalkBubble content="고객님이 원하시는 느낌을 최대한 살려 초기 디자인을 진행하겠습니다!" />
+            <LeftTalkBubble content="웹페이지를 만드는 도중에도 디자인은 바꿀 수 있으니 언제나 편하게 말씀해주세요!😊" />
+          </FinalTalk>
         </ConversationLeftInner>
-        <ConversationRightInner
-          className={inView ? "design_meeting" : "design_meeting2_"}
-        >
-          <RightTalkBubble content="동글동글하고 귀여운 느낌의 사이트를 만들고 싶어요!" />
-          <RightTalkBubble content="저만의 다이어리 사이트를 생각하고 있어요" />
-          <ExColor>
-            <ExPhotoImg
-              className={inView ? "design_meeting" : "design_meeting3_"}
-            >
+        <ConversationRightInner>
+          <Talk
+            className={inView ? "design_meeting" : "design_meeting2_"}
+            delay={0.4}
+          >
+            <RightTalkBubble content="동글동글하고 귀여운 느낌의 사이트를 만들고 싶어요!" />
+          </Talk>
+          <Talk
+            className={inView ? "design_meeting" : "design_meeting2_"}
+            delay={0.6}
+          >
+            <RightTalkBubble content="저만의 다이어리 사이트를 생각하고 있어요" />
+          </Talk>
+          <ExColor className={inView ? "design_meeting" : "design_meeting2_"}>
+            <ExPhotoImg>
               <Image
                 src="/img/main/ex-photo.jpg"
                 alt="ex-photo"
@@ -46,9 +68,7 @@ export const DesignMeeting = () => {
             </ExPhotoImg>
             <RightTalkBubble content="#91D8F7 색상이 좋을 것 같아요" />
             <RightTalkBubble content="#91D8F7 이런 느낌으로 원하고 있어요!" />
-            <ExColorIcon
-              className={inView ? "design_meeting" : "design_meeting3"}
-            />
+            <ExColorIcon />
           </ExColor>
         </ConversationRightInner>
       </Conversation>
@@ -79,14 +99,6 @@ const Wrapper = styled.section`
     opacity: 0;
     transform: translate(20px, 12px);
   }
-  .design_meeting3 {
-    opacity: 0;
-    transform: translate(10px, 6px);
-  }
-  .design_meeting3_ {
-    opacity: 0;
-    transform: translate(calc(-100% + 10px), 6px);
-  }
 `;
 const Title = styled.div`
   display: flex;
@@ -113,9 +125,8 @@ const ConversationLeftInner = styled.div`
   flex-direction: column;
   width: 50%;
   gap: 40px;
-  padding-top: 45px;
+  padding-top: 60px;
   align-items: flex-start;
-  transition: all 0.6s ease 0.6s;
 `;
 const ConversationRightInner = styled.div`
   display: flex;
@@ -124,15 +135,26 @@ const ConversationRightInner = styled.div`
   align-items: flex-end;
   width: 50%;
   gap: 40px;
-  transition: all 0.6s ease 0.6s;
+`;
+const Talk = styled.div<StyleProps>`
+  transition: all 0.6s ease ${(props) => props.delay}s;
+`;
+const FinalTalk = styled.div`
+  padding-top: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+  transition: all 0.6s ease 0.9s;
 `;
 const ExColor = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  margin-bottom: 180px;
+  margin-bottom: 250px;
   gap: 12px;
   align-items: flex-end;
+  transition: all 0.6s ease 0.8s;
 `;
 const ExColorIcon = styled(IoSquareSharp)`
   display: flex;
@@ -148,9 +170,8 @@ const ExColorIcon = styled(IoSquareSharp)`
 const ExPhotoImg = styled.div`
   display: flex;
   position: absolute;
-  top: 50px;
-  left: 90px;
-  transform: translateX(-100%);
+  top: 120px;
+  left: -20px;
   transition: all 0.6s ease 0.9s;
 `;
 const Explain = styled.div`
