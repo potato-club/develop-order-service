@@ -187,7 +187,7 @@ const Explain = styled.div`
   text-align: center;
   transition: all 0.6s ease 0.3s;
   padding: 12px 8px;
-  margin: 20px 20px 20px auto;
+  margin: 40px 20px 40px auto;
 `;
 const DoubleQuotesL = styled(RiDoubleQuotesL)`
   display: flex;
