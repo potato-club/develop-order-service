@@ -19,7 +19,7 @@ export const DesignMeeting = () => {
     <Wrapper id="design_meeting" ref={ref}>
       <Title className={inView ? "design_meeting" : "design_meeting1"}>
         #디자인 미팅
-        <Explain className={inView ? "design_meeting" : "design_meeting2"}>
+        <Explain className={inView ? "design_meeting" : "design_meeting1"}>
           <DoubleQuotesL />
           디자이너와의 상담을 통해 웹의 전체적인 디자인을 구체적으로 구성합니다
           <DoubleQuotesR />
@@ -84,7 +84,6 @@ const Wrapper = styled.section`
   align-items: center;
   justify-content: center;
   padding: 0 60px;
-  gap: 40px;
   .design_meeting {
     opacity: 1;
   }
