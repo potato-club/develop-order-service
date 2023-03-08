@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Image from "next/image";
-import arrowIcon from "../../assets/img/review/arrow.png";
+import arrowIcon from "../../../public/img/review/arrow.png";
 import { useState } from "react";
 
 export const Pagenation = () => {
