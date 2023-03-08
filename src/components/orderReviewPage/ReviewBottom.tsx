@@ -4,7 +4,7 @@ import arrowIcon from "../../../public/img/review/arrow.png";
 import { useEffect, useState } from "react";
 
 type getPageStateProps = {
-  getPageState: (state: number) => void;
+  getPageState: (pageState: number) => void;
 };
 
 export const ReviewBottm = ({ getPageState }: getPageStateProps) => {

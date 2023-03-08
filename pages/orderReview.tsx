@@ -6,16 +6,38 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function OrderReview() {
-  const [pageState, setPageState] = useState<number>();
-  function getPageState(state: number) {
-    setPageState(state);
+  const [pageState, setPageState] = useState<number>(1);
+  const [contentsFilterState, setContentsFilterState] = useState<string>("");
+  const [sortOptionState, setSortOptionState] = useState<string>("");
+  const [conceptOptionState, setConceptOptionState] = useState<string>("");
+  function getPageState(pageState: number) {
+    setPageState(pageState);
   }
+  function getContentsFilterState(contentFilterState: string) {
+    setContentsFilterState(contentFilterState);
+  }
+
+  function getsortOptionState(sortOptionState: string) {
+    setSortOptionState(sortOptionState);
+  }
+
+  function getConceptOptionState(conceptOptionState: string) {
+    setConceptOptionState(conceptOptionState);
+  }
+
   useEffect(() => {
     console.log(pageState);
-  }, [pageState]);
+    console.log(contentsFilterState);
+    console.log(sortOptionState);
+    console.log(conceptOptionState);
+  }, [pageState, contentsFilterState, sortOptionState, conceptOptionState]);
   return (
     <Wrapper>
-      <ReviewTop />
+      <ReviewTop
+        getContentsFilterState={getContentsFilterState}
+        getsortOptionState={getsortOptionState}
+        getConceptOptionState={getConceptOptionState}
+      />
       <ReviewContnets />
       <ReviewBottm getPageState={getPageState} />
     </Wrapper>
