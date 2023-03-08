@@ -1,9 +1,13 @@
 import styled from "styled-components";
 import Image from "next/image";
 import arrowIcon from "../../../public/img/review/arrow.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export const ReviewBottm = () => {
+type getPageStateProps = {
+  getPageState: (state: number) => void;
+};
+
+export const ReviewBottm = ({ getPageState }: getPageStateProps) => {
   const [pageNumState, setPageNumState] = useState(1);
   const prevPageButton = () => {
     setPageNumState(pageNumState - 1);
@@ -11,7 +15,12 @@ export const ReviewBottm = () => {
 
   const nextPageButton = () => {
     setPageNumState(pageNumState + 1);
+    getPageState(pageNumState);
   };
+
+  useEffect(() => {
+    getPageState(pageNumState);
+  }, [getPageState, pageNumState]);
   return (
     <BottomWrapper>
       <PagenationDiv>
