@@ -10,7 +10,10 @@ export const LoginPage = () => {
     const refreshToken = new URL(window.location.href).searchParams.get(
       "refresh"
     );
-    console.log(token, refreshToken);
+    if (token && refreshToken) {
+      localStorage.setItem("token", token);
+      localStorage.setItem("refreshToken", refreshToken);
+    }
   }, []);
   return (
     <Wrapper>
