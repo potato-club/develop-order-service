@@ -4,10 +4,14 @@ import arrowIcon from "../../../public/img/review/arrow.png";
 import { useEffect, useState } from "react";
 
 type getPageStateProps = {
+  contentsData: any;
   getPageState: (pageState: number) => void;
 };
 
-export const ReviewBottm = ({ getPageState }: getPageStateProps) => {
+export const ReviewBottm = ({
+  getPageState,
+  contentsData,
+}: getPageStateProps) => {
   const [pageNumState, setPageNumState] = useState(1);
   const prevPageButton = () => {
     setPageNumState(pageNumState - 1);
@@ -24,7 +28,11 @@ export const ReviewBottm = ({ getPageState }: getPageStateProps) => {
   return (
     <BottomWrapper>
       <PagenationDiv>
-        <ArrowImgDiv arrow={"left"} pageNumState={pageNumState}>
+        <ArrowImgDiv
+          arrow={"left"}
+          pageNumState={pageNumState}
+          totalPages={contentsData.totalPages}
+        >
           <ArrowA onClick={prevPageButton}>
             <Image
               src={arrowIcon}
@@ -37,7 +45,11 @@ export const ReviewBottm = ({ getPageState }: getPageStateProps) => {
         <PageNumberDiv>
           <PageNumberP>{pageNumState}</PageNumberP>
         </PageNumberDiv>
-        <ArrowImgDiv arrow={"right"} pageNumState={pageNumState}>
+        <ArrowImgDiv
+          arrow={"right"}
+          pageNumState={pageNumState}
+          totalPages={contentsData.totalPages}
+        >
           <ArrowA onClick={nextPageButton}>
             <Image
               src={arrowIcon}
@@ -65,14 +77,22 @@ const PagenationDiv = styled.div`
   margin: 0 auto;
 `;
 
-const ArrowImgDiv = styled.div<{ arrow: String; pageNumState: Number }>`
+const ArrowImgDiv = styled.div<{
+  arrow: String;
+  pageNumState: Number;
+  totalPages: Number;
+}>`
   width: 36px;
   height: 100%;
   float: left;
   transform: ${(props) => (props.arrow === "right" ? "rotate(180deg)" : "")};
   cursor: pointer;
   visibility: ${(props) =>
-    props.arrow === "left" && props.pageNumState === 1 ? "hidden" : ""};
+    (props.arrow === "left" && props.pageNumState === 1) ||
+    (props.arrow === "right" && props.pageNumState === props.totalPages) ||
+    props.totalPages === 0
+      ? "hidden"
+      : ""};
 `;
 
 const ArrowA = styled.a``;
