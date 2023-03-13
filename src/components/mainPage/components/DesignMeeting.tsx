@@ -66,8 +66,8 @@ export const DesignMeeting = () => {
                 height={260}
               />
             </ExPhotoImg>
-            <RightTalkBubble content="#91D8F7 색상이 좋을 것 같아요" />
-            <RightTalkBubble content="#91D8F7 이런 느낌으로 원하고 있어요!" />
+            <RightTalkBubble content="#EEE 색상이 좋을 것 같아요" />
+            <RightTalkBubble content="이런 느낌으로 원하고 있어요!" />
             <ExColorIcon />
           </ExColor>
         </ConversationRightInner>
@@ -158,9 +158,9 @@ const ExColor = styled.div`
 const ExColorIcon = styled(IoSquareSharp)`
   display: flex;
   position: absolute;
-  color: ${customColor.blue};
+  color: #eee;
   top: -10px;
-  right: 218px;
+  right: 200px;
   font-size: 32px;
   transform: rotate(10deg);
   filter: drop-shadow(1px 1px 2px ${customColor.black + "33"});

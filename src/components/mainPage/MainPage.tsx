@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import { BsChevronCompactDown } from "react-icons/bs";
-import { Link, scroller, animateScroll } from "react-scroll";
+import { Events, Link, scroller } from "react-scroll";
 import ScrollWheelHandler from "react-scroll-wheel-handler";
 import { useEffect, useState } from "react";
 import { Title } from "./components/Title";
@@ -39,6 +39,17 @@ export const MainPage = () => {
       setScrollID(scrollIDArray[index + 1]);
     }
   };
+
+  useEffect(() => {
+    window.addEventListener(
+      "wheel",
+      function (e) {
+        e.preventDefault();
+      },
+      { passive: false }
+    );
+  }, []);
+
   return (
     <ScrollWheelHandler
       upHandler={(e) => scrollUp(e)}
