@@ -5,7 +5,13 @@ import Link from "next/link";
 import { useEffect } from "react";
 
 export const LoginPage = () => {
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const token = new URL(window.location.href).searchParams.get("accesstoken");
+    const refreshToken = new URL(window.location.href).searchParams.get(
+      "refresh"
+    );
+    console.log(token, refreshToken);
+  }, []);
   return (
     <Wrapper>
       <Content>
