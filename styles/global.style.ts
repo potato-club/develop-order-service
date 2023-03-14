@@ -107,7 +107,7 @@ height:20px;
 .fc .fc-daygrid-day.fc-day-today{
   background: ${customColor.yellow_};
 }
-.fc-day-past, .fc-day-sun, .fc-day-sat,{
+.fc-day-past, .fc-day-sun, .fc-day-sat{
   color:${customColor.gray};
   filter: grayscale(70%);
 }

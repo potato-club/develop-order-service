@@ -56,26 +56,28 @@ export const MainPage = () => {
       downHandler={(e) => scrollDown(e)}
     >
       <Container>
-        <Head id="head">
-          <Title />
-          <SiteRanking />
-          <Link to="design_meeting" smooth spy>
-            <ScrollContent>
-              웹 페이지가 만들어지는 과정이 궁금하신가요?
-            </ScrollContent>
-            <ScrollButton onClick={() => setScrollID("design_meeting")}>
-              스크롤하세요
-              <BsChevronCompactDown size={18} />
-            </ScrollButton>
-          </Link>
-        </Head>
-        <Body>
-          <DesignMeeting />
-          <Publishing />
-          <Feating />
-          <FinalEdit />
-          <Finish />
-        </Body>
+        <ContainerInner>
+          <Head id="head">
+            <Title />
+            <SiteRanking />
+            <Link to="design_meeting" smooth spy>
+              <ScrollContent>
+                웹 페이지가 만들어지는 과정이 궁금하신가요?
+              </ScrollContent>
+              <ScrollButton onClick={() => setScrollID("design_meeting")}>
+                스크롤하세요
+                <BsChevronCompactDown size={18} />
+              </ScrollButton>
+            </Link>
+          </Head>
+          <Body>
+            <DesignMeeting />
+            <Publishing />
+            <Feating />
+            <FinalEdit />
+            <Finish />
+          </Body>
+        </ContainerInner>
       </Container>
     </ScrollWheelHandler>
   );
@@ -94,7 +96,15 @@ const moveText = keyframes`
 `;
 const Container = styled.section`
   display: flex;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+`;
+const ContainerInner = styled.div`
+  display: flex;
   flex-direction: column;
+  max-width: 1024px;
+  width: 100%;
 `;
 const Head = styled.div`
   display: flex;
