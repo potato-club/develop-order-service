@@ -1,14 +1,16 @@
 import styled from "styled-components";
 
+const isFinished = false;
+
 export const ReviewContnets = () => {
   return (
     <WrapperContents>
       <ContentDiv>
         <PreviewImg />
         <OrderTitleH2>#4 웹사이트 제목</OrderTitleH2>
-        <OrderInfoP>사용 목적 : </OrderInfoP>
-        <OrderInfoP>제작 기간 : </OrderInfoP>
-        <OrderInfoP>진행도(%) : </OrderInfoP>
+        <OrderInfoP>사용 목적 </OrderInfoP>
+        <OrderInfoP>제작 기간 </OrderInfoP>
+        <OrderInfoP2 isFinished={isFinished}>진행도 </OrderInfoP2>
       </ContentDiv>
     </WrapperContents>
   );
@@ -43,6 +45,12 @@ const OrderTitleH2 = styled.h2`
 `;
 
 const OrderInfoP = styled.p`
+  font-size: 20px;
+  line-height: 50px;
+`;
+
+const OrderInfoP2 = styled.p<{ isFinished: boolean }>`
+  display: ${(props) => (props.isFinished === true ? "none" : "")};
   font-size: 20px;
   line-height: 50px;
 `;

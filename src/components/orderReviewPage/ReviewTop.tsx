@@ -1,45 +1,56 @@
 import styled from "styled-components";
-import Image from "next/image";
-import { customColor } from "../customColor";
-import reviewIcon from "../../assets/img/review/review.png";
-import { useState } from "react";
+import { Title } from "../orderDetailPage/Title";
+import React, { useState } from "react";
 
 export const ReviewTop = () => {
+  const PAGETITLE = "발주 현황 및 후기";
+  const EXPLAIN = "발주 현황을 확인하고 완료된 발주에 평가를 남겨보세요";
+
+  const [selectedOption, setSelectedOption] = useState("concept");
   const [buttonState, setButtonState] = useState<String>("selectButton1");
-  const [myOrderButtonState, setMyOrderButtonState] = useState<Boolean>(false);
+
+  function handleFilterChange(event: React.ChangeEvent<HTMLSelectElement>) {
+    setSelectedOption(event.target.value);
+  }
 
   const onGoingOrderButton = () => {
     setButtonState("selectButton1");
+    setSelectedOption("concept");
   };
   const finishedOrderButton = () => {
     setButtonState("selectButton2");
+    setSelectedOption("concept");
   };
   const myOrderButton = () => {
-    if (myOrderButtonState === false) {
-      setMyOrderButtonState(true);
-    } else {
-      setMyOrderButtonState(false);
-    }
+    setButtonState("selectButton3");
+    setSelectedOption("concept");
   };
 
   return (
     <WrapperTop>
-      <TitleDiv>
-        <TitleTopDiv>
-          <ImgDiv>
-            <Image
-              src={reviewIcon}
-              alt="reviewIcon"
-              width={30}
-              height={30}
-            ></Image>
-          </ImgDiv>
-          <TitleH2>발주 현황 및 후기</TitleH2>
-        </TitleTopDiv>
-        <TitleBottomDiv>
-          <TitleP>발주 현황을 확인하고 완료된 발주에 평가를 남겨보세요</TitleP>
-        </TitleBottomDiv>
-      </TitleDiv>
+      <Title pageTitle={PAGETITLE} explain={EXPLAIN} />
+      <FilterWrapper>
+        <FilterDiv>
+          <FilterLabelP>정렬</FilterLabelP>
+          <FilterSelect value={selectedOption} onChange={handleFilterChange}>
+            <option value={"concept"}>컨셉별</option>
+            <FilterOption value={"starRate"} buttonState={buttonState}>
+              별점 순
+            </FilterOption>
+            <FilterOption value={"like"} buttonState={buttonState}>
+              좋아요 순
+            </FilterOption>
+          </FilterSelect>
+        </FilterDiv>
+        <FilterDiv2 selectedOption={selectedOption}>
+          <FilterSelect2>
+            <option value={"concept1"}>컨셉1</option>
+            <option value={"concept2"}>컨셉2</option>
+            <option value={"concept3"}>컨셉3</option>
+            <option value={"concept4"}>컨셉4</option>
+          </FilterSelect2>
+        </FilterDiv2>
+      </FilterWrapper>
       <ButtonDiv>
         <Button1 onClick={onGoingOrderButton} buttonState={buttonState}>
           진행중
@@ -47,10 +58,7 @@ export const ReviewTop = () => {
         <Button2 onClick={finishedOrderButton} buttonState={buttonState}>
           완료
         </Button2>
-        <Button3
-          onClick={myOrderButton}
-          myOrderButtonState={myOrderButtonState}
-        >
+        <Button3 onClick={myOrderButton} buttonState={buttonState}>
           내 발주
         </Button3>
       </ButtonDiv>
@@ -66,37 +74,63 @@ const WrapperTop = styled.div`
   position: relative;
 `;
 
-const TitleDiv = styled.div`
-  width: 432px;
-  height: 74px;
-  margin-left: 41px;
+const FilterWrapper = styled.div`
+  height: 40px;
+  position: absolute;
+  bottom: 15px;
 `;
 
-const TitleTopDiv = styled.div`
-  width: 100%;
-  height: 30px;
-`;
-
-const TitleBottomDiv = styled.div`
-  width: 100%;
-  height: 44px;
-  padding-left: 26px;
-`;
-
-const ImgDiv = styled.div`
-  display: block;
+const FilterDiv = styled.div`
+  width: 200px;
+  height: 40px;
+  border: 1px solid black;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
   float: left;
-  margin-right: 9px;
+  margin-right: 29px;
 `;
 
-const TitleH2 = styled.h2`
-  font-size: 24px;
+const FilterDiv2 = styled.div<{ selectedOption: string }>`
+  display: ${(props) => (props.selectedOption !== "concept" ? "none" : "flex")};
+  min-width: 100px;
+  height: 40px;
+  border: 1px solid black;
+  border-radius: 7px;
+  align-items: center;
+  padding: 0 auto;
 `;
 
-const TitleP = styled.p`
-  margin-top: 15px;
-  font-size: 18px;
-  color: ${customColor.gray};
+const FilterSelect = styled.select`
+  width: 140px;
+  height: 30px;
+  border: none;
+  appearance: none;
+  font-size: 20px;
+  margin-left: 10px;
+`;
+
+const FilterSelect2 = styled.select`
+  min-width: 100px;
+  height: 30px;
+  border: none;
+  appearance: none;
+  text-align: center;
+  font-size: 20px;
+`;
+
+const FilterLabelP = styled.p`
+  display: block;
+  width: 50px;
+  height: 30px;
+  border-right: 1px solid black;
+  font-size: 20px;
+  text-align: center;
+  line-height: 30px;
+`;
+
+const FilterOption = styled.option<{ buttonState: String }>`
+  display: ${(props) => (props.buttonState !== "selectButton1" ? "" : "none")};
 `;
 
 const ButtonDiv = styled.div`
@@ -131,12 +165,13 @@ const Button2 = styled.button<{ buttonState: String }>`
   color: ${(props) => (props.buttonState === "selectButton2" ? "white" : "")};
 `;
 
-const Button3 = styled.button<{ myOrderButtonState: Boolean }>`
+const Button3 = styled.button<{ buttonState: String }>`
   width: 100px;
   height: 60px;
   font-size: 20px;
   border-top-right-radius: 7px;
   border-bottom-right-radius: 7px;
-  background-color: ${(props) => (props.myOrderButtonState ? "black" : "")};
-  color: ${(props) => (props.myOrderButtonState ? "white" : "")};
+  background-color: ${(props) =>
+    props.buttonState === "selectButton3" ? "black" : ""};
+  color: ${(props) => (props.buttonState === "selectButton3" ? "white" : "")};
 `;
