@@ -28,4 +28,6 @@ const WrapperInner = styled.div`
   width: 1024px;
   min-height: 100%;
   background: ${customColor.white};
+  justify-content: center;
+  align-items: center;
 `;

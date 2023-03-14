@@ -17,30 +17,30 @@ export const GlobalStyle = createGlobalStyle`
   font-family: "Pretendard-Regular";
 }
 
-html::-webkit-scrollbar {
+html {
+  overflow: overlay;
+  scroll-behavior: smooth;
+  ::-webkit-scrollbar {
   width: 14px;
-}
-html::-webkit-scrollbar-thumb {
+  }
+  ::-webkit-scrollbar-thumb {
   background-color: ${customColor.indigo1};
   border-radius: 10px;
   background-clip: padding-box;
   border: 4px solid transparent;
-}
-html::-webkit-scrollbar-track {
+  }
+  ::-webkit-scrollbar-track {
   background-color: transparent;
   border-radius: 10px;
-}
-html::-webkit-scrollbar-button:start:decrement {
+  }
+  ::-webkit-scrollbar-button:start:decrement {
   background-color: transparent;
   height: 80px;
-}
-html::-webkit-scrollbar-button:end:increment {
+  }
+  ::-webkit-scrollbar-button:end:increment {
   background-color: transparent;
   height: 188px;
-}
-html {
-  overflow: overlay;
-  scroll-behavior: smooth;
+  }
 }
 
 html,
