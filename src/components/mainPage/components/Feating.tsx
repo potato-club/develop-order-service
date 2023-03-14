@@ -163,7 +163,7 @@ export const Feating = () => {
               >
                 {dayjs().format("YYYY년 MM월 DD일")}
               </Date_>
-              <Content
+              <Content_
                 className={inView ? "feating" : "feating2"}
                 style={{ textAlign: "right", right: 40 }}
               >
@@ -172,7 +172,7 @@ export const Feating = () => {
                 외계인처럼 보이는 선글라스....
                 <br />
                 탐난다..!
-              </Content>
+              </Content_>
             </BodyInner>
           </BodyRight>
         </Body>
@@ -358,13 +358,33 @@ const Content = styled.div`
   font-size: 18px;
   font-weight: bold;
   top: 72px;
+  left: 60px;
   line-height: 30px;
   white-space: nowrap;
+  text-align: left;
   text-decoration: underline 2px wavy ${customColor.blue};
   text-shadow: 1px 1px 0px ${customColor.black + "33"};
   text-underline-position: under;
   transition: all 0.8s ease 1.6s;
   width: 215px;
+  overflow: hidden;
+`;
+const Content_ = styled.div`
+  display: flex;
+  position: absolute;
+  font-size: 18px;
+  font-weight: bold;
+  top: 72px;
+  right: 40px;
+  line-height: 30px;
+  white-space: nowrap;
+  text-align: right;
+  text-decoration: underline 2px wavy ${customColor.blue};
+  text-shadow: 1px 1px 0px ${customColor.black + "33"};
+  text-underline-position: under;
+  transition: all 0.8s ease 1.6s;
+  width: 215px;
+  overflow: hidden;
 `;
 const ExplainText = styled.div`
   display: flex;
