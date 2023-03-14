@@ -90,10 +90,7 @@ export const Feating = () => {
               <Date_ className={inView ? "feating" : "feating2"}>
                 {dayjs().subtract(1, "day").format("YYYY년 MM월 DD일")}
               </Date_>
-              <Content
-                className={inView ? "feating" : "feating2"}
-                style={{ left: 60 }}
-              >
+              <Content className={inView ? "feating" : "feating2"}>
                 가방이랑 옷을 샀다! <br />
                 빨리왔으면 좋 ! 겠 ! 다 !
               </Content>
@@ -163,10 +160,7 @@ export const Feating = () => {
               >
                 {dayjs().format("YYYY년 MM월 DD일")}
               </Date_>
-              <Content_
-                className={inView ? "feating" : "feating2"}
-                style={{ textAlign: "right", right: 40 }}
-              >
+              <Content_ className={inView ? "feating" : "feating2"}>
                 외계인 영화를 봤다...
                 <br />
                 외계인처럼 보이는 선글라스....
