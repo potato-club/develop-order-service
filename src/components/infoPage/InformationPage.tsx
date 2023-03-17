@@ -1,29 +1,12 @@
 import styled from "styled-components";
 import React from "react";
-import Hyoseong from "./Hyoseong";
-import Geumju from "./Geumju";
-import Cheongjo from "./Cheongjo";
-import Haeyeon from "./Haeyeon";
-import Junhyung from "./Junhyung";
 import Image from "next/image";
 import information from "../../assets/img/information/information.png";
 import schedule from "../../assets/img/information/schedule.png";
-import Scheduler from "./Scheduler"
-
-
-
-
-
-
-
-
+import Scheduler from "./Scheduler";
+import InfoCard from "./InfoCard";
 
 const InformationPage = () => {
-
-
-
-
-
   return (
     <Wrapper>
       <InfoHead>
@@ -31,15 +14,40 @@ const InformationPage = () => {
         <InfoHeadText>직원정보</InfoHeadText>
       </InfoHead>
       <StickWrapper>
-        <Hyoseong  />
+        <InfoCard
+          name="김 효 성"
+          task="Front"
+          number="010-3388-3951"
+          emailAdress="smwfkim2@naver.com"
+        />
 
-        <Geumju />
+        <InfoCard
+          name="조 금 주"
+          task="Front"
+          number="010-0000-0000"
+          emailAdress="aaaaaaa@naver.com"
+        />
 
-        <Cheongjo />
+        <InfoCard
+          name="박 청 조"
+          task="Back"
+          number="010-0000-0000"
+          emailAdress="aaaaaaa@naver.com"
+        />
 
-        <Haeyeon />
+        <InfoCard
+          name="박 해 연"
+          task="Back"
+          number="010-0000-0000"
+          emailAdress="aaaaaaa@naver.com"
+        />
 
-        <Junhyung />
+        <InfoCard
+          name="최 준 형 "
+          task="Front"
+          number="010-0000-0000"
+          emailAdress="aaaaaaa@naver.com"
+        />
       </StickWrapper>
       <ScheduleHead>
         <Image src={schedule} alt={""} width={50} />
@@ -47,10 +55,7 @@ const InformationPage = () => {
       </ScheduleHead>
       <ScheduleBox>
         <Scheduler />
-        
       </ScheduleBox>
-
-      
     </Wrapper>
   );
 };
@@ -84,11 +89,4 @@ const ScheduleHeadText = styled.div`
   font-weight: bolder;
   margin-left: 20px;
 `;
-const ScheduleBox = styled.div`
-
-
-`;
-
-
-
-
+const ScheduleBox = styled.div``;
