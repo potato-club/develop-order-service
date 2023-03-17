@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import detailData from "../../assets/data2.json";
 import Image from "next/image";
-import checkIcon from "../../assets/img/detail/check.png";
+import checkIcon from "../../../public/img/detail/check.png";
 import { PreviewSwiper } from "./PreviewSwiper";
 
 // 상위 컴포넌트 orderDetail에서 데이터 받아오도록 변경하자
