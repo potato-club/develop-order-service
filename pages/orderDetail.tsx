@@ -3,8 +3,29 @@ import { DetailTop } from "../src/components/orderDetailPage/DetailTop";
 import { DetailContnets } from "../src/components/orderDetailPage/DetailContents";
 import { DetailBottm } from "../src/components/orderDetailPage/Detailbottom";
 import detailData from "../src/assets/data2.json";
+import { useRouter } from "next/router";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function OrderDetail() {
+  const router = useRouter();
+  const id = router.query.id;
+  const [detailDataState, setDetailDataState] = useState<object>();
+  const getDetailData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/orders/detail/${id}`
+      );
+      console.log(response.data);
+    } catch (error) {}
+  };
+  console.log(id);
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    getDetailData();
+  }, [router.isReady]);
+
   return (
     <Wrapper>
       <DetailTop />
