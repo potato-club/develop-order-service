@@ -1,22 +1,26 @@
 import React from "react";
 import styled from "styled-components";
-import { customColor } from "../components/customColor";
+import { customColor } from "../customColor";
 import Image from "next/image";
-import email from "../assets/img/information/email.png";
-import phone from "../assets/img/information/phone.png";
-import imac from "../assets/img/information/imac.png";
-import character from '../assets/img/information/character.png';
-const Geumju = () => {
+import email from "../../assets/img/information/email.png"
+import phone from "../../assets/img/information/phone.png";
+import imac from "../../assets/img/information/imac.png";
+import character from "../../assets/img/information/character.png"
+
+const Cheongjo = () => {
+
+
+  
   return (
     <Wrapper>
       <InfoBox>
-        <Circle>
+      <Circle>
           <Image src={character} alt = {''} width={80} />
         </Circle>
-        <Name>조 금 주</Name>
+        <Name>박 청 조</Name>
         <TaskBox>
           <Image src={imac} alt={""} width={35} />
-          <Task>Design</Task>
+          <Task>Back</Task>
         </TaskBox>
         <NumberBox>
           <Image src={phone} alt={""} width={20} />
@@ -24,18 +28,19 @@ const Geumju = () => {
         </NumberBox>
         <EmailBox>
           <Image src={email} alt={""} width={20} />
-          <Email>aaaaaaaaa@naver.com</Email>
+          <Email>aaaaaaa@naver.com</Email>
         </EmailBox>
       </InfoBox>
     </Wrapper>
   );
 };
 
-export default Geumju;
+export default Cheongjo;
 
 const Wrapper = styled.div`
   position: relative;
   display: flex;
+  
 `;
 const InfoBox = styled.div`
   width: 150px;

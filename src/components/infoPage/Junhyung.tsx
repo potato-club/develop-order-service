@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { customColor } from "../components/customColor";
+import { customColor } from "../customColor";
 import Image from "next/image";
-import email from "../assets/img/information/email.png";
-import phone from "../assets/img/information/phone.png";
-import imac from "../assets/img/information/imac.png";
-import character from "../assets/img/information/character.png"
+import email from "../../assets/img/information/email.png"
+import phone from "../../assets/img/information/phone.png";
+import imac from "../../assets/img/information/imac.png";
+import character from "../../assets/img/information/character.png"
 const Junhyung = () => {
   return (
     <Wrapper>

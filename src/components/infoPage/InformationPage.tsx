@@ -6,11 +6,24 @@ import Cheongjo from "./Cheongjo";
 import Haeyeon from "./Haeyeon";
 import Junhyung from "./Junhyung";
 import Image from "next/image";
-import information from "../assets/img/information/information.png";
-import schedule from "../assets/img/information/schedule.png";
-import character from "../assets/img/information/character.png";
+import information from "../../assets/img/information/information.png";
+import schedule from "../../assets/img/information/schedule.png";
+import Scheduler from "./Scheduler"
+
+
+
+
+
+
+
+
 
 const InformationPage = () => {
+
+
+
+
+
   return (
     <Wrapper>
       <InfoHead>
@@ -18,7 +31,7 @@ const InformationPage = () => {
         <InfoHeadText>직원정보</InfoHeadText>
       </InfoHead>
       <StickWrapper>
-        <Hyoseong />
+        <Hyoseong  />
 
         <Geumju />
 
@@ -33,8 +46,8 @@ const InformationPage = () => {
         <ScheduleHeadText>스케쥴</ScheduleHeadText>
       </ScheduleHead>
       <ScheduleBox>
+        <Scheduler />
         
-      
       </ScheduleBox>
 
       
@@ -58,7 +71,7 @@ const StickWrapper = styled.div`
   position: relative;
   display: flex;
   justify-content: space-around;
-  margin-bottom: 150px;
+  margin-bottom: 80px;
 `;
 const ScheduleHead = styled.div`
   display: flex;
@@ -72,6 +85,8 @@ const ScheduleHeadText = styled.div`
   margin-left: 20px;
 `;
 const ScheduleBox = styled.div`
+
+
 `;
 
 

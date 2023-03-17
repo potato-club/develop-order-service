@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import InformationPage from "../../src/infoPage/InformationPage";
+import InformationPage from "../../src/components/infoPage/InformationPage";
 
 const Information : NextPage = () => {
   return <InformationPage />;
