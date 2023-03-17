@@ -6,36 +6,42 @@ import email from "../../assets/img/information/email.png"
 import phone from "../../assets/img/information/phone.png";
 import imac from "../../assets/img/information/imac.png";
 import character from "../../assets/img/information/character.png"
-const Junhyung = () => {
-  return (
-    <Wrapper>
-      <InfoBox>
-      <Circle>
-          <Image src={character} alt = {''} width={80} />
-        </Circle>
-        <Name>최 준 형</Name>
-        <TaskBox>
-          <Image src={imac} alt={""} width={35} />
-          <Task>Front</Task>
-        </TaskBox>
-        <NumberBox>
-          <Image src={phone} alt={""} width={20} />
-          <Number>010-0000-0000</Number>
-        </NumberBox>
-        <EmailBox>
-          <Image src={email} alt={""} width={20} />
-          <Email>aaaaaaa@naver.com</Email>
-        </EmailBox>
-      </InfoBox>
-    </Wrapper>
-  );
+
+type InfoProps = {
+  name: string;
+  task: string;
+  number: string;
+  emailAdress: string;
 };
 
-export default Junhyung;
+const InfoCard = ({ name, task, number, emailAdress }: InfoProps) => (
+  <InfoBox>
+    <Circle>
+      <Image src={character} alt={''} width={80} />
+    </Circle>
+    <Name>{name}</Name>
+    <TaskBox>
+      <Image src={imac} alt={''} width={35} />
+      <Task>{task}</Task>
+    </TaskBox>
+    <NumberBox>
+      <Image src={phone} alt={''} width={20} />
+      <Number>{number}</Number>
+    </NumberBox>
+    <EmailBox>
+      <Image src={email} alt={''} width={20}/>
+      <Email>{emailAdress}</Email>
+    </EmailBox>
+  </InfoBox>
+);
 
+
+
+export default InfoCard;
 const Wrapper = styled.div`
   position: relative;
   display: flex;
+  
 `;
 const InfoBox = styled.div`
   width: 150px;
