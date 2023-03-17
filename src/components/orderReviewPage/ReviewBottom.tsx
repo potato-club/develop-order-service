@@ -4,6 +4,7 @@ import arrowIcon from "../../../public/img/review/arrow.png";
 import { useEffect, useState } from "react";
 
 type getPageStateProps = {
+  pageState: number;
   contentsData: any;
   getPageState: (pageState: number) => void;
 };
@@ -11,26 +12,22 @@ type getPageStateProps = {
 export const ReviewBottm = ({
   getPageState,
   contentsData,
+  pageState,
 }: getPageStateProps) => {
-  const [pageNumState, setPageNumState] = useState(1);
   const prevPageButton = () => {
-    setPageNumState(pageNumState - 1);
+    getPageState(pageState - 1);
   };
 
   const nextPageButton = () => {
-    setPageNumState(pageNumState + 1);
-    getPageState(pageNumState);
+    getPageState(pageState + 1);
   };
 
-  useEffect(() => {
-    getPageState(pageNumState);
-  }, [getPageState, pageNumState]);
   return (
     <BottomWrapper>
       <PagenationDiv>
         <ArrowImgDiv
           arrow={"left"}
-          pageNumState={pageNumState}
+          pageState={pageState}
           totalPages={contentsData.totalPages}
         >
           <ArrowA onClick={prevPageButton}>
@@ -43,11 +40,11 @@ export const ReviewBottm = ({
           </ArrowA>
         </ArrowImgDiv>
         <PageNumberDiv>
-          <PageNumberP>{pageNumState}</PageNumberP>
+          <PageNumberP>{pageState}</PageNumberP>
         </PageNumberDiv>
         <ArrowImgDiv
           arrow={"right"}
-          pageNumState={pageNumState}
+          pageState={pageState}
           totalPages={contentsData.totalPages}
         >
           <ArrowA onClick={nextPageButton}>
@@ -79,7 +76,7 @@ const PagenationDiv = styled.div`
 
 const ArrowImgDiv = styled.div<{
   arrow: String;
-  pageNumState: Number;
+  pageState: Number;
   totalPages: Number;
 }>`
   width: 36px;
@@ -88,8 +85,8 @@ const ArrowImgDiv = styled.div<{
   transform: ${(props) => (props.arrow === "right" ? "rotate(180deg)" : "")};
   cursor: pointer;
   visibility: ${(props) =>
-    (props.arrow === "left" && props.pageNumState === 1) ||
-    (props.arrow === "right" && props.pageNumState === props.totalPages) ||
+    (props.arrow === "left" && props.pageState === 1) ||
+    (props.arrow === "right" && props.pageState === props.totalPages) ||
     props.totalPages === 0
       ? "hidden"
       : ""};

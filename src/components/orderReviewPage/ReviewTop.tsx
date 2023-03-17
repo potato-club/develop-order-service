@@ -4,63 +4,52 @@ import React, { useEffect, useState } from "react";
 
 type stateProps = {
   getContentsFilterState: (contentFilterState: string) => void;
-  getsortOptionState: (sortOptionState: string) => void;
+  getSortOptionState: (sortOptionState: string) => void;
   getConceptOptionState: (conceptOptionState: string) => void;
+  getPageState: (pageState: number) => void;
+  contentsFilterState: string;
+  sortOptionState: string;
+  conceptOptionState: string;
 };
 
 export const ReviewTop = ({
   getContentsFilterState,
-  getsortOptionState,
+  getSortOptionState,
   getConceptOptionState,
+  getPageState,
+  contentsFilterState,
+  sortOptionState,
+  conceptOptionState,
 }: stateProps) => {
   const PAGETITLE = "발주 현황 및 후기";
   const EXPLAIN = "발주 현황을 확인하고 완료된 발주에 평가를 남겨보세요";
 
-  const [selectedSortOptionState, setSelectedSortOptionState] =
-    useState<string>("dontSort");
-
-  const [contentsFilterState, setContentsFilterState] =
-    useState<string>("onGoing");
-
-  const [conceptOptionState, setConceptOptionState] =
-    useState<string>("concept1");
-
   function handleFilterChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    setSelectedSortOptionState(event.target.value);
+    getSortOptionState(event.target.value);
   }
 
   function handleConceptChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    setConceptOptionState(event.target.value);
+    getConceptOptionState(event.target.value);
   }
 
   const onGoingOrderButton = () => {
-    setContentsFilterState("onGoing");
-    setSelectedSortOptionState("dontSort");
-    setConceptOptionState("concept1");
+    getContentsFilterState("onGoing");
+    getSortOptionState("noSort");
+    getConceptOptionState("concept1");
+    getPageState(1);
   };
   const finishedOrderButton = () => {
-    setContentsFilterState("finished");
-    setSelectedSortOptionState("dontSort");
-    setConceptOptionState("concept1");
+    getContentsFilterState("finished");
+    getSortOptionState("noSort");
+    getConceptOptionState("concept1");
+    getPageState(1);
   };
   const myOrderButton = () => {
-    setContentsFilterState("myOrder");
-    setSelectedSortOptionState("dontSort");
-    setConceptOptionState("concept1");
+    getContentsFilterState("myOrder");
+    getSortOptionState("noSort");
+    getConceptOptionState("concept1");
+    getPageState(1);
   };
-
-  useEffect(() => {
-    getContentsFilterState(contentsFilterState);
-    getsortOptionState(selectedSortOptionState);
-    getConceptOptionState(conceptOptionState);
-  }, [
-    getContentsFilterState,
-    getsortOptionState,
-    getConceptOptionState,
-    contentsFilterState,
-    selectedSortOptionState,
-    conceptOptionState,
-  ]);
 
   return (
     <WrapperTop>
@@ -68,11 +57,8 @@ export const ReviewTop = ({
       <FilterWrapper>
         <FilterDiv>
           <FilterLabelP>정렬</FilterLabelP>
-          <FilterSelect
-            value={selectedSortOptionState}
-            onChange={handleFilterChange}
-          >
-            <option value={"dontSort"}>정렬 없음</option>
+          <FilterSelect value={sortOptionState} onChange={handleFilterChange}>
+            <option value={"noSort"}>정렬 없음</option>
             <option value={"concept"}>컨셉별</option>
             <FilterOption
               value={"starRate"}
@@ -88,7 +74,7 @@ export const ReviewTop = ({
             </FilterOption>
           </FilterSelect>
         </FilterDiv>
-        <FilterDiv2 selectedSortOptionState={selectedSortOptionState}>
+        <FilterDiv2 selectedSortOptionState={sortOptionState}>
           <FilterSelect2
             value={conceptOptionState}
             onChange={handleConceptChange}

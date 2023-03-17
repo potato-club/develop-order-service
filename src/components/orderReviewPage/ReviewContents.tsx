@@ -6,6 +6,7 @@ const isFinished = false;
 
 export const ReviewContnets = ({ contentsData }: { contentsData: any }) => {
   // 추가로 할것 : 진행중, 완료, 내발주 버튼 클릭시 페이지가 1페이지로 이동하도록 할것
+  // 일단 getPageState를 ReviewTop으로 보내서 임의로 수정하는 방식을 사용해봤는데 뭔가 좀 이상했음
   return (
     <WrapperContents>
       {contentsData.numberOfElements === 0 ? (

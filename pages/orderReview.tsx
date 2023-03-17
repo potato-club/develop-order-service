@@ -13,13 +13,15 @@ export default function OrderReview() {
   const [pageState, setPageState] = useState<number>(1);
 
   // 컨텐츠 필터 state, ReviewTop에서 값을 받아옴
-  const [contentsFilterState, setContentsFilterState] = useState<string>("");
+  const [contentsFilterState, setContentsFilterState] =
+    useState<string>("onGoing");
 
   // 정렬 옵션 state, ReviewTop에서 값을 받아옴
-  const [sortOptionState, setSortOptionState] = useState<string>("");
+  const [sortOptionState, setSortOptionState] = useState<string>("noSort");
 
   // 컨셉 옵션 state, ReviewTop에서 값을 받아옴
-  const [conceptOptionState, setConceptOptionState] = useState<string>("");
+  const [conceptOptionState, setConceptOptionState] =
+    useState<string>("concept1");
 
   // 하위 컴포넌트들에서 state 값을 받아오기 위한 getState 함수들
   function getPageState(pageState: number) {
@@ -28,7 +30,7 @@ export default function OrderReview() {
   function getContentsFilterState(contentFilterState: string) {
     setContentsFilterState(contentFilterState);
   }
-  function getsortOptionState(sortOptionState: string) {
+  function getSortOptionState(sortOptionState: string) {
     setSortOptionState(sortOptionState);
   }
   function getConceptOptionState(conceptOptionState: string) {
@@ -40,11 +42,12 @@ export default function OrderReview() {
       const response = await axios.get(
         `http://localhost:8080/orders/detail${
           (pageState !== 1 ? "?page=" + pageState : "") +
-          (contentsFilterState === "finished" ? "?state=complete" : "")
+          (contentsFilterState === "finished" ? "?state=complete" : "") +
+          (contentsFilterState === "myOrder" ? "?state=myOrder" : "")
         }`
       );
       setContentsDataState(response.data);
-      console.log(response.data);
+      console.log(response);
     } catch (err) {
       console.log(err);
     }
@@ -62,11 +65,16 @@ export default function OrderReview() {
     <Wrapper>
       <ReviewTop
         getContentsFilterState={getContentsFilterState}
-        getsortOptionState={getsortOptionState}
+        getSortOptionState={getSortOptionState}
         getConceptOptionState={getConceptOptionState}
+        getPageState={getPageState}
+        contentsFilterState={contentsFilterState}
+        sortOptionState={sortOptionState}
+        conceptOptionState={conceptOptionState}
       />
       <ReviewContnets contentsData={contentsDataState} />
       <ReviewBottm
+        pageState={pageState}
         getPageState={getPageState}
         contentsData={contentsDataState}
       />
