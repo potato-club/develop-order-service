@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import { BsFillBookmarkFill } from "react-icons/bs";
 import Image from "next/image";
 import { customColor } from "../../customColor";
+import Confetti from "react-confetti";
 
 export const Finish = () => {
   const { ref, inView, entry } = useInView({
@@ -12,6 +13,23 @@ export const Finish = () => {
   });
   return (
     <Wrapper id="finish" ref={ref}>
+      {inView && (
+        <CustomConfetti
+          width={1024}
+          height={900}
+          numberOfPieces={300}
+          recycle={false}
+          gravity={0.07}
+          colors={[
+            customColor.blue,
+            customColor.indigo3,
+            customColor.lightGray,
+            customColor.gray,
+            customColor.yellow_,
+          ]}
+        />
+      )}
+
       <Title className={inView ? "finish" : "finish1"}>#완성</Title>
       <WrapperInner className={inView ? "final_edit" : "final_edit1"}>
         <Header>
@@ -24,7 +42,7 @@ export const Finish = () => {
               <Image
                 src="/img/main/stickers/sticker10.png"
                 alt="sticker"
-                width={400}
+                width={1024}
                 height={420}
                 style={{
                   position: "absolute",
@@ -165,6 +183,7 @@ export const Finish = () => {
 
 const Wrapper = styled.section`
   display: flex;
+  position: relative;
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
@@ -316,4 +335,10 @@ const BookMarkIcons = styled(BsFillBookmarkFill)`
   font-size: 24px;
   color: #a44;
   transform: translateY(6px);
+`;
+const CustomConfetti = styled(Confetti)`
+  display: flex;
+  position: absolute;
+  height: 100%;
+  width: 100%;
 `;
