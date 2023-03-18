@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import detailData from "../../assets/data2.json";
 import Image from "next/image";
-import heartIcon from "../../assets/img/detail/heart.png";
+import heartIcon from "../../../public/img/detail/heart.png";
 
 export const DetailBottm = ({
   like,

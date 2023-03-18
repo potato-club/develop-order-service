@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Image from "next/image";
 import { customColor } from "../customColor";
-import reviewIcon from "../../assets/img/review/review.png";
+import reviewIcon from "../../../public/img/review/review.png";
 
 export const Title = ({
   pageTitle,
