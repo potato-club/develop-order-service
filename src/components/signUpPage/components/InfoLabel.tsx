@@ -3,11 +3,16 @@ import { customColor } from "../../customColor";
 
 interface Props {
   content: string;
+  content2?: string;
 }
-export const InfoLabel = ({ content }: Props) => {
+export const InfoLabel = ({ content, content2 }: Props) => {
   return (
     <Wrapper>
-      <Content>{content}</Content>
+      <Content>
+        {content}
+        {content2 && <br />}
+        {content2}
+      </Content>
     </Wrapper>
   );
 };
@@ -20,6 +25,8 @@ const Wrapper = styled.article`
   transform: translate(0, 100%);
 `;
 const Content = styled.p`
+  display: flex;
   font-size: 12px;
   color: ${customColor.darkGray};
+  text-align: end;
 `;
