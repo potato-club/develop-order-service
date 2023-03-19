@@ -1,16 +1,21 @@
 import styled from "styled-components";
-import Image from "next/image";
 import { customColor } from "../customColor";
 import { TbWorld } from "react-icons/tb";
 import { MenuButtons } from "./components/MenuButtons";
 import { MyInfo } from "./components/MyInfo";
+import Router from "next/router";
+import { pathName } from "../../config/pathName";
 
 export const HeaderMenu = () => {
   return (
     <Wrapper>
       <WrapperInner>
         <Menu>
-          <MainButton>
+          <MainButton
+            onClick={() => {
+              Router.push(pathName.MAIN);
+            }}
+          >
             <TbWorld fontSize={20} />
             DOS
           </MainButton>
