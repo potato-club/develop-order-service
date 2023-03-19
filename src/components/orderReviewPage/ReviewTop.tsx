@@ -1,29 +1,54 @@
 import styled from "styled-components";
 import { Title } from "../orderDetailPage/Title";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-export const ReviewTop = () => {
+type stateProps = {
+  getContentsFilterState: (contentFilterState: string) => void;
+  getSortOptionState: (sortOptionState: string) => void;
+  getConceptOptionState: (conceptOptionState: string) => void;
+  getPageState: (pageState: number) => void;
+  contentsFilterState: string;
+  sortOptionState: string;
+  conceptOptionState: string;
+};
+
+export const ReviewTop = ({
+  getContentsFilterState,
+  getSortOptionState,
+  getConceptOptionState,
+  getPageState,
+  contentsFilterState,
+  sortOptionState,
+  conceptOptionState,
+}: stateProps) => {
   const PAGETITLE = "발주 현황 및 후기";
   const EXPLAIN = "발주 현황을 확인하고 완료된 발주에 평가를 남겨보세요";
 
-  const [selectedOption, setSelectedOption] = useState("concept");
-  const [buttonState, setButtonState] = useState<String>("selectButton1");
-
   function handleFilterChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    setSelectedOption(event.target.value);
+    getSortOptionState(event.target.value);
+  }
+
+  function handleConceptChange(event: React.ChangeEvent<HTMLSelectElement>) {
+    getConceptOptionState(event.target.value);
   }
 
   const onGoingOrderButton = () => {
-    setButtonState("selectButton1");
-    setSelectedOption("concept");
+    getContentsFilterState("onGoing");
+    getSortOptionState("noSort");
+    getConceptOptionState("concept1");
+    getPageState(1);
   };
   const finishedOrderButton = () => {
-    setButtonState("selectButton2");
-    setSelectedOption("concept");
+    getContentsFilterState("finished");
+    getSortOptionState("noSort");
+    getConceptOptionState("concept1");
+    getPageState(1);
   };
   const myOrderButton = () => {
-    setButtonState("selectButton3");
-    setSelectedOption("concept");
+    getContentsFilterState("myOrder");
+    getSortOptionState("noSort");
+    getConceptOptionState("concept1");
+    getPageState(1);
   };
 
   return (
@@ -32,18 +57,28 @@ export const ReviewTop = () => {
       <FilterWrapper>
         <FilterDiv>
           <FilterLabelP>정렬</FilterLabelP>
-          <FilterSelect value={selectedOption} onChange={handleFilterChange}>
+          <FilterSelect value={sortOptionState} onChange={handleFilterChange}>
+            <option value={"noSort"}>정렬 없음</option>
             <option value={"concept"}>컨셉별</option>
-            <FilterOption value={"starRate"} buttonState={buttonState}>
+            <FilterOption
+              value={"starRate"}
+              contentsFilterState={contentsFilterState}
+            >
               별점 순
             </FilterOption>
-            <FilterOption value={"like"} buttonState={buttonState}>
+            <FilterOption
+              value={"like"}
+              contentsFilterState={contentsFilterState}
+            >
               좋아요 순
             </FilterOption>
           </FilterSelect>
         </FilterDiv>
-        <FilterDiv2 selectedOption={selectedOption}>
-          <FilterSelect2>
+        <FilterDiv2 selectedSortOptionState={sortOptionState}>
+          <FilterSelect2
+            value={conceptOptionState}
+            onChange={handleConceptChange}
+          >
             <option value={"concept1"}>컨셉1</option>
             <option value={"concept2"}>컨셉2</option>
             <option value={"concept3"}>컨셉3</option>
@@ -52,13 +87,22 @@ export const ReviewTop = () => {
         </FilterDiv2>
       </FilterWrapper>
       <ButtonDiv>
-        <Button1 onClick={onGoingOrderButton} buttonState={buttonState}>
+        <Button1
+          onClick={onGoingOrderButton}
+          contentsFilterState={contentsFilterState}
+        >
           진행중
         </Button1>
-        <Button2 onClick={finishedOrderButton} buttonState={buttonState}>
+        <Button2
+          onClick={finishedOrderButton}
+          contentsFilterState={contentsFilterState}
+        >
           완료
         </Button2>
-        <Button3 onClick={myOrderButton} buttonState={buttonState}>
+        <Button3
+          onClick={myOrderButton}
+          contentsFilterState={contentsFilterState}
+        >
           내 발주
         </Button3>
       </ButtonDiv>
@@ -91,8 +135,9 @@ const FilterDiv = styled.div`
   margin-right: 29px;
 `;
 
-const FilterDiv2 = styled.div<{ selectedOption: string }>`
-  display: ${(props) => (props.selectedOption !== "concept" ? "none" : "flex")};
+const FilterDiv2 = styled.div<{ selectedSortOptionState: string }>`
+  display: ${(props) =>
+    props.selectedSortOptionState !== "concept" ? "none" : "flex"};
   min-width: 100px;
   height: 40px;
   border: 1px solid black;
@@ -129,8 +174,9 @@ const FilterLabelP = styled.p`
   line-height: 30px;
 `;
 
-const FilterOption = styled.option<{ buttonState: String }>`
-  display: ${(props) => (props.buttonState !== "selectButton1" ? "" : "none")};
+const FilterOption = styled.option<{ contentsFilterState: String }>`
+  display: ${(props) =>
+    props.contentsFilterState !== "onGoing" ? "" : "none"};
 `;
 
 const ButtonDiv = styled.div`
@@ -143,7 +189,7 @@ const ButtonDiv = styled.div`
   right: 0;
 `;
 
-const Button1 = styled.button<{ buttonState: String }>`
+const Button1 = styled.button<{ contentsFilterState: String }>`
   width: 99px;
   height: 60px;
   font-size: 20px;
@@ -151,27 +197,28 @@ const Button1 = styled.button<{ buttonState: String }>`
   border-top-left-radius: 7px;
   border-bottom-left-radius: 7px;
   background-color: ${(props) =>
-    props.buttonState === "selectButton1" ? "black" : ""};
-  color: ${(props) => (props.buttonState === "selectButton1" ? "white" : "")};
+    props.contentsFilterState === "onGoing" ? "black" : ""};
+  color: ${(props) => (props.contentsFilterState === "onGoing" ? "white" : "")};
 `;
 
-const Button2 = styled.button<{ buttonState: String }>`
+const Button2 = styled.button<{ contentsFilterState: String }>`
   width: 99px;
   height: 60px;
   font-size: 20px;
   border-right: 1px solid black;
   background-color: ${(props) =>
-    props.buttonState === "selectButton2" ? "black" : ""};
-  color: ${(props) => (props.buttonState === "selectButton2" ? "white" : "")};
+    props.contentsFilterState === "finished" ? "black" : ""};
+  color: ${(props) =>
+    props.contentsFilterState === "finished" ? "white" : ""};
 `;
 
-const Button3 = styled.button<{ buttonState: String }>`
+const Button3 = styled.button<{ contentsFilterState: String }>`
   width: 100px;
   height: 60px;
   font-size: 20px;
   border-top-right-radius: 7px;
   border-bottom-right-radius: 7px;
   background-color: ${(props) =>
-    props.buttonState === "selectButton3" ? "black" : ""};
-  color: ${(props) => (props.buttonState === "selectButton3" ? "white" : "")};
+    props.contentsFilterState === "myOrder" ? "black" : ""};
+  color: ${(props) => (props.contentsFilterState === "myOrder" ? "white" : "")};
 `;
