@@ -101,6 +101,7 @@ height:20px;
 .fc-day{
   cursor: pointer;
   background: ${customColor.lightGray};
+  height:76px;
 }
 .fc .fc-daygrid-event{
   margin-top: 2px;
@@ -110,12 +111,13 @@ height:20px;
 }
 .fc-day-past, .fc-day-sun, .fc-day-sat{
   color:${customColor.gray};
-  filter: brightness(94%);
+  filter: brightness(94%) grayscale(50%);
 }
 .fc-col-header-cell{
   background: ${customColor.lightGray};
   color:${customColor.black};
-  filter: brightness(100%);
+  filter: grayscale(0%);
+  height:max-content;
 }
 .selected{
   filter:drop-shadow(0px 0px 6px ${customColor.blue});
