@@ -100,6 +100,7 @@ height:20px;
 }
 .fc-day{
   cursor: pointer;
+  height:76px;
 }
 .fc .fc-daygrid-event{
   margin-top: 2px;
@@ -115,6 +116,7 @@ height:20px;
   background: ${customColor.lightGray};
   color:${customColor.black};
   filter: grayscale(0%);
+  height:max-content;
 }
 .selected{
   box-shadow:1px 2px 4px 2px ${customColor.black + "33"}, 0px 0px 4px 2px ${
