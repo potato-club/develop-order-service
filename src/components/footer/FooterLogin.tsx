@@ -1,4 +1,6 @@
+import Router from "next/router";
 import styled from "styled-components";
+import { pathName } from "../../config/pathName";
 import { customColor } from "../customColor";
 
 export const FooterLogin = () => {
@@ -6,7 +8,10 @@ export const FooterLogin = () => {
     <Wrapper>
       <WrapperInner>
         <Content>
-          발주신청을 하고싶다면?<LoginButton>로그인하기</LoginButton>
+          발주신청을 하고싶다면?
+          <LoginButton onClick={() => Router.push(pathName.LOGIN)}>
+            로그인하기
+          </LoginButton>
         </Content>
       </WrapperInner>
     </Wrapper>
