@@ -22,7 +22,7 @@ export const SignUpPage = () => {
 
   const submit = (data: FieldValues) => {
     if (data.meeting.length < 12) {
-      setError("meeting", "meeting에러");
+      setError("meeting", {});
     } else {
       let tempColor1 = Object.keys(data)
         .filter((i) => i.includes("mainColor"))
@@ -88,6 +88,8 @@ export const SignUpPage = () => {
 const Container = styled.section`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  padding-top: 80px;
 `;
 const Head = styled.div`
   display: flex;
