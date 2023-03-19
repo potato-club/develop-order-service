@@ -110,7 +110,8 @@ const Head = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
-  height: calc(100vh - 80px);
+  height: 100vh;
+  padding-top: 80px;
 `;
 const ScrollContent = styled.div`
   display: flex;

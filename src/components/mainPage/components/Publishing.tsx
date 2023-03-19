@@ -152,10 +152,11 @@ const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  max-height: 100vh;
   width: 100%;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  padding: 80px 0 0;
   .publishing {
     opacity: 1;
   }

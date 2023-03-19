@@ -20,6 +20,7 @@ export const Finish = () => {
           numberOfPieces={300}
           recycle={false}
           gravity={0.07}
+          tweenDuration={6000}
           colors={[
             customColor.blue,
             customColor.indigo3,
@@ -186,11 +187,11 @@ const Wrapper = styled.section`
   position: relative;
   flex-direction: column;
   min-height: 100vh;
+  max-height: 100vh;
   width: 100%;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  padding: 0 60px;
+  padding: 80px 60px 0;
   .finish {
     opacity: 1;
   }
