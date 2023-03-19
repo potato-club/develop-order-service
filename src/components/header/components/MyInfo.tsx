@@ -2,6 +2,8 @@ import { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import Image from "next/image";
 import { customColor } from "../../customColor";
+import Router from "next/router";
+import { pathName } from "../../../config/pathName";
 
 interface ButtonProps {
   isHover?: boolean;
@@ -11,6 +13,11 @@ interface ButtonProps {
 export const MyInfo = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [isHover, setIsHover] = useState(false);
+
+  const handleRouter = (router: string) => {
+    Router.push(router);
+  };
+
   return (
     <Wrapper>
       <MyImg
@@ -28,7 +35,9 @@ export const MyInfo = () => {
               <ActionButton isHover={isHover}>내정보</ActionButton>
             </>
           ) : (
-            <ActionButton>로그인</ActionButton>
+            <ActionButton onClick={() => handleRouter(pathName.LOGIN)}>
+              로그인
+            </ActionButton>
           )}
         </LogAction>
         <Img>
