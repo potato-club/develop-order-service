@@ -19,7 +19,12 @@ export const LoginPage = () => {
             />
           </KakaoLogin>
           <GoogleLogin>
-            <Image src={"/img/login/google.png"} width={20} alt="googleLogin" />
+            <Image
+              src={"/img/login/google.png"}
+              width={20}
+              height={20}
+              alt="googleLogin"
+            />
             <GoogleText>구글 로그인</GoogleText>
           </GoogleLogin>
         </Logins>
@@ -92,7 +97,5 @@ const GoogleText = styled.p`
   color: ${customColor.black + "aa"};
   transform: translate(calc(-50% + 10px), -50%);
   letter-spacing: -0.5px;
-  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; */
   font-family: Roboto;
 `;

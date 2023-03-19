@@ -39,7 +39,7 @@ html {
   }
   ::-webkit-scrollbar-button:end:increment {
   background-color: transparent;
-  height: 188px;
+  height: 185px;
   }
 }
 
