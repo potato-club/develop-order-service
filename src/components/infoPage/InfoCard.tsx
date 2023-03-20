@@ -38,11 +38,6 @@ const InfoCard = ({ name, task, number, emailAdress }: InfoProps) => (
 
 
 export default InfoCard;
-const Wrapper = styled.div`
-  position: relative;
-  display: flex;
-  
-`;
 const InfoBox = styled.div`
   width: 150px;
   height: 360px;
