@@ -1,21 +1,26 @@
 import styled from "styled-components";
-import detailData from "../../assets/data2.json";
 import Image from "next/image";
-import heartIcon from "../../assets/img/detail/heart.png";
+import heartIcon from "../../../public/img/detail/heart.png";
 
-export const DetailBottm = () => {
-  const like = detailData.data2.like;
+export const DetailBottm = ({
+  like,
+  progress,
+}: {
+  like: number;
+  progress: string;
+}) => {
   return (
     <BottomWrapper>
-      <LikeButton>
+      <LikeButton progress={progress}>
         좋아요
         <LikeButtonP>
-          <ImageContainer>
-            <Image src={heartIcon} alt="icon" width={23} height={23}></Image>
-          </ImageContainer>
+          {/* <VerticalContainer></VerticalContainer> */}
+          {/* 원래는 VerticalContainer 안에 Image를 넣어놓는 형식이지만 VerticalContainer에서 오류가 발생해서 일단 */}
+          <Image src={heartIcon} alt="icon" width={23} height={23}></Image>
           {like}
         </LikeButtonP>
       </LikeButton>
+      {/* usenavigate를 이용해서 목록으로 돌아갈 예정 */}
       <ListButton>목록</ListButton>
     </BottomWrapper>
   );
@@ -39,7 +44,8 @@ const ListButton = styled.button`
   border: 1px solid black;
 `;
 
-const LikeButton = styled.button`
+const LikeButton = styled.button<{ progress: String }>`
+  display: ${(props) => (props.progress === "WORKING" ? "none" : "")};
   width: 150px;
   height: 80px;
   border-radius: 10px;
@@ -52,7 +58,10 @@ const LikeButtonP = styled.p`
   line-height: 23px;
 `;
 
-const ImageContainer = styled.div`
+// 현재 이 컴포넌트를 활성화시키면 버그가 발생함
+const VerticalContainer = styled.div`
+  width: auto;
+  height: auto;
   display: inline-block;
   vertical-align: middle;
 `;

@@ -1,37 +1,33 @@
 import styled from "styled-components";
-import detailData from "../../assets/data2.json";
 import Image from "next/image";
-import checkIcon from "../../assets/img/detail/check.png";
+import checkIcon from "../../../public/img/detail/check.png";
+import { PreviewSwiper } from "./PreviewSwiper";
 
-export const DetailContnets = () => {
-  // data1 완료되지 않은 발주
-  // data2 완료된 발주
-  // "data2" :
-  // {
-  // "id": 1,
-  // "title": "1번 웹사이트",
-  // "purpose": "상품 판매",
-  // "startDate": "2023/02/18",
-  // "endDate": "2023/02/19",
-  // "progress": "finished",
-  // "additional": {
-  //   "page" : true,
-  //   "login" : true,
-  //   "db" : false
-  // },
-  // "starRating": 4,
-  // "like" : 131
-  // }
-
-  const title = detailData.data2.title;
-  const purpose = detailData.data2.purpose;
-  const startDate = detailData.data2.startDate;
-  const endDate = detailData.data2.endDate;
-  const progress = detailData.data2.progress;
-  const additional = detailData.data2.additional;
-  const starRating = detailData.data2.starRating;
-  const like = detailData.data2.like;
-
+// 상위 컴포넌트 orderDetail에서 데이터 받아오도록 변경하자
+// review.png arrow.png 경로 public으로변경됐다고 함
+export const DetailContnets = ({
+  title,
+  id,
+  purpose,
+  startDate,
+  endDate,
+  progress,
+  page,
+  login,
+  db,
+  starRating,
+}: {
+  title: any;
+  id: number;
+  purpose: string;
+  startDate: string;
+  endDate: string;
+  progress: string;
+  page: any;
+  login: any;
+  db: any;
+  starRating: any;
+}) => {
   return (
     <WrapperContents>
       <OrderTitleDiv>
@@ -71,7 +67,7 @@ export const DetailContnets = () => {
             <OrderInfoP>페이지 추가</OrderInfoP>
           </DataLabelDiv>
           <CheckBoxDiv>
-            <CheckImgDiv additional={additional.page}>
+            <CheckImgDiv additional={page}>
               <Image src={checkIcon} alt="icon" width={16} height={16}></Image>
             </CheckImgDiv>
           </CheckBoxDiv>
@@ -81,7 +77,7 @@ export const DetailContnets = () => {
             <OrderInfoP>로그인 기능</OrderInfoP>
           </DataLabelDiv>
           <CheckBoxDiv>
-            <CheckImgDiv additional={additional.login}>
+            <CheckImgDiv additional={login}>
               <Image src={checkIcon} alt="icon" width={16} height={16}></Image>
             </CheckImgDiv>
           </CheckBoxDiv>
@@ -91,7 +87,7 @@ export const DetailContnets = () => {
             <OrderInfoP>DB</OrderInfoP>
           </DataLabelDiv>
           <CheckBoxDiv>
-            <CheckImgDiv additional={additional.db}>
+            <CheckImgDiv additional={db}>
               <Image src={checkIcon} alt="icon" width={16} height={16}></Image>
             </CheckImgDiv>
           </CheckBoxDiv>
@@ -108,6 +104,7 @@ export const DetailContnets = () => {
           <OrderInfoP>웹페이지 미리보기</OrderInfoP>
         </PreviewLabelDiv>
       </OrderInfoDiv>
+      <PreviewSwiper></PreviewSwiper>
     </WrapperContents>
   );
 };
@@ -133,7 +130,7 @@ const OrderTitleH2 = styled.h2`
 `;
 
 const OrderInfoDiv = styled.div<{ data: String }>`
-  display: ${(props) => (props.data === "ongoing" ? "none" : "")};
+  display: ${(props) => (props.data === "WORKING" ? "none" : "")};
   width: 100%;
   height: 50px;
   border-top: 1px solid black;

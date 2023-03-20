@@ -40,7 +40,9 @@ export const FormCalendar = ({ setValue, register, value }: Props) => {
       .internalEventSource.meta.filter(
         (i: { date: string; title: string }) => i.date === date
       );
-    if (today > date || moment(date).day() === 0 || moment(date).day() === 6) {
+    setIsOpen(false);
+    remove?.classList.remove("selected");
+    if (today >= date || moment(date).day() === 0 || moment(date).day() === 6) {
       setContent("선택할 수 없는 날짜입니다");
       setModal(true);
     } else if (events.length >= 3) {
@@ -60,7 +62,6 @@ export const FormCalendar = ({ setValue, register, value }: Props) => {
           info.jsEvent.y - wrapper.current.getBoundingClientRect().y,
         ]);
       // 'selected' class 설정
-      remove?.classList.remove("selected");
       selectedElement?.classList.add("selected");
       selectedElement && setRemove(selectedElement);
     }
@@ -74,8 +75,8 @@ export const FormCalendar = ({ setValue, register, value }: Props) => {
   };
 
   useEffect(() => {
-    setValue(value, [date, time]);
-  }, [time]);
+    setValue(value, date + " " + time);
+  }, [time, date]);
 
   return (
     <Wrapper ref={wrapper}>
@@ -96,7 +97,7 @@ export const FormCalendar = ({ setValue, register, value }: Props) => {
         }}
         titleFormat={{ year: "numeric", month: "narrow" }}
         locale="ko"
-        height={520}
+        height={524}
         eventColor={customColor.blue}
         eventTextColor={customColor.black}
         events={[
@@ -152,7 +153,6 @@ const Wrapper = styled.article`
 const Item = styled.div`
   height: 14px;
   width: 100%;
-  /* margin-bottom: 6px; */
   font-size: 12px;
   color: ${customColor.black};
   padding: 0 2px;

@@ -6,6 +6,7 @@ import { AiOutlineForm } from "react-icons/ai";
 import { SignUpUserInfo } from "./SignUpUserInfo";
 import { SignUpSiteInfo } from "./SignUpSiteInfo";
 import { SignUpAddInfo } from "./SignUpAddInfo";
+import axios from "axios";
 
 export const SignUpPage = () => {
   const {
@@ -16,24 +17,40 @@ export const SignUpPage = () => {
     handleSubmit,
     watch,
     setValue,
+    setError,
   } = useForm();
 
   const submit = (data: FieldValues) => {
-    // data.addFile.pop();
-    let tempColor1 = Object.keys(data)
-      .filter((i) => i.includes("addColorA"))
-      .map((item) => data[item]);
-    let tempColor2 = Object.keys(data)
-      .filter((i) => i.includes("addColorB"))
-      .map((item) => data[item]);
-    let obj = Object.entries(data).filter(
-      (i) => !i[0].includes("addColorA" || "addColorB")
-    );
-    obj.push(["addColorA", tempColor1], ["addColorB", tempColor2]);
-    let send = Object.fromEntries(obj);
-    console.log(send);
+    if (data.meeting.length < 12) {
+      setError("meeting", {});
+    } else {
+      let tempColor1 = Object.keys(data)
+        .filter((i) => i.includes("mainColor"))
+        .map((item) => data[item]);
+      let tempColor2 = Object.keys(data)
+        .filter((i) => i.includes("subColor"))
+        .map((item) => data[item]);
+      let obj = Object.entries(data).filter(
+        (i) => !i[0].includes("mainColor") && !i[0].includes("subColor")
+      );
+      obj.push(["mainColor", tempColor1], ["subColor", tempColor2]);
+      let send = Object.fromEntries(obj);
+      const formData = new FormData();
+      for (let i = 0; i < send.file.length; i++) {
+        formData.append("files", send.file[i]);
+      }
+      delete send.file;
+      send.database =
+        send.database === null ? null : send.database === "예" ? true : false;
+      send.login =
+        send.database === null ? null : send.login === "예" ? true : false;
+      formData.append(
+        "orderDto",
+        new Blob([JSON.stringify(send)], { type: "application/json" })
+      );
+      axios.post("http://localhost:8080/orders", formData);
+    }
   };
-
   return (
     <Container>
       <Head>
@@ -48,12 +65,12 @@ export const SignUpPage = () => {
       <Body onSubmit={handleSubmit(submit)}>
         <BodyInner>
           <Division />
-          {/* <SignUpUserInfo
+          <SignUpUserInfo
             register={register}
             errors={errors}
             control={control}
           />
-          <SignUpSiteInfo register={register} errors={errors} /> */}
+          <SignUpSiteInfo register={register} errors={errors} />
           <SignUpAddInfo
             register={register}
             errors={errors}
@@ -71,6 +88,8 @@ export const SignUpPage = () => {
 const Container = styled.section`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  padding-top: 80px;
 `;
 const Head = styled.div`
   display: flex;
