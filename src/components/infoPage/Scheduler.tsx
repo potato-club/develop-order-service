@@ -2,9 +2,6 @@ import React from "react";
 import "@mobiscroll/react/dist/css/mobiscroll.min.css";
 import {
   Eventcalendar,
-  getJson,
-  toast,
-  MbscCalendarEvent,
   MbscEventcalendarView,
   setOptions,
   CalendarNav,
@@ -25,13 +22,11 @@ setOptions({
 });
 
 const Scheduler: React.FC = () => {
- 
-  const [hyoseong, setHyoseong] = React.useState(false);
-  const [geumju, setGeumju] = React.useState(false);
-  const [haeyeon, setHaeyeon] = React.useState(false);
-  const [cheongjo, setCheongjo] = React.useState(false);
-  const [junhyung, setJunhyung] = React.useState(false);
-
+  const [hyoseong, setHyoseong] = React.useState(true);
+  const [geumju, setGeumju] = React.useState(true);
+  const [haeyeon, setHaeyeon] = React.useState(true);
+  const [cheongjo, setCheongjo] = React.useState(true);
+  const [junhyung, setJunhyung] = React.useState(true);
 
   function hyoseongClick() {
     setHyoseong(!hyoseong);
@@ -40,20 +35,20 @@ const Scheduler: React.FC = () => {
     setGeumju(!geumju);
   }
 
-  function haeyeonClick(){
+  function haeyeonClick() {
     setHaeyeon(!haeyeon);
   }
 
-  function cheongjoClick(){
+  function cheongjoClick() {
     setCheongjo(!cheongjo);
   }
 
-  function junhyungClick(){
+  function junhyungClick() {
     setJunhyung(!junhyung);
   }
+  
 
-
-  const [selected, setSelected] = React.useState<any>({ 1: true });
+  const [selected, setSelected] = React.useState<any>(1);
 
   const [calView, setCalView] = React.useState<MbscEventcalendarView>({
     schedule: {
@@ -65,13 +60,8 @@ const Scheduler: React.FC = () => {
     },
   });
 
-  const filter = (ev: any) => {
-    const value = ev.target.value;
-    const checked = ev.target.checked;
-
-    selected[value] = checked;
-
-    setSelected(selected);
+  const filter = (ev: any, value: number) => {
+    setSelected(value);
   };
 
   const customWithNavButtons = () => {
@@ -79,12 +69,12 @@ const Scheduler: React.FC = () => {
       <React.Fragment>
         <CalendarNav />
         <div>
-          <SegmentedGroup select="multiple">
+          <SegmentedGroup select="single">
             <SegmentedItem
               value={1}
-              checked={selected[1]}
+              checked={selected === 1}
               onChange={(ev: any) => {
-                filter(ev);
+                filter(ev, 1);
                 hyoseongClick();
               }}
             >
@@ -93,33 +83,45 @@ const Scheduler: React.FC = () => {
             </SegmentedItem>
             <SegmentedItem
               value={2}
-              checked={selected[2]}
+              checked={selected === 2}
               onChange={(ev: any) => {
-                filter(ev);
+                filter(ev, 2);
                 geumjuClick();
               }}
             >
               <Image src={character} alt={""} width={25} />
               <span>조금주</span>
             </SegmentedItem>
-            <SegmentedItem value={3} checked={selected[3]}onChange={(ev: any) => {
-                filter(ev);
+            <SegmentedItem
+              value={3}
+              checked={selected === 3}
+              onChange={(ev: any) => {
+                filter(ev, 3);
                 cheongjoClick();
-              }}>
+              }}
+            >
               <Image src={character} alt={""} width={25} />
               <span>박청조</span>
             </SegmentedItem>
-            <SegmentedItem value={4} checked={selected[4]}onChange={(ev: any) => {
-                filter(ev);
+            <SegmentedItem
+              value={4}
+              checked={selected === 4}
+              onChange={(ev: any) => {
+                filter(ev, 4);
                 haeyeonClick();
-              }}>
+              }}
+            >
               <Image src={character} alt={""} width={25} />
               <span>박해연</span>
             </SegmentedItem>
-            <SegmentedItem value={5} checked={selected[5]} onChange={(ev: any) => {
-                filter(ev);
+            <SegmentedItem
+              value={5}
+              checked={selected === 5}
+              onChange={(ev: any) => {
+                filter(ev, 5);
                 junhyungClick();
-              }}>
+              }}
+            >
               <Image src={character} alt={""} width={25} />
               <span>최준형</span>
             </SegmentedItem>
@@ -139,43 +141,67 @@ const Scheduler: React.FC = () => {
         data={[
           {
             id: "hyoseong",
-            start: "2023-03-17T08:00:00.000Z",
-            end: "2023-03-17T17:00:00.000Z",
+            start: "2023-03-24T08:00:00.000Z",
+            end: "2023-03-24T17:00:00.000Z",
             title: "이것저것 합니다..",
             color: "#328e39",
-            cssClass: hyoseong ? "active" : "",
+            cssClass: selected === 1 ? "" : "active",
+          },
+          {
+            id: "hyoseong",
+            start: "2023-03-20T08:00:00.000Z",
+            end: "2023-03-20T13:00:00.000Z",
+            title: "이것저것 합니다..",
+            color: "#328e39",
+            cssClass: selected === 1 ? "" : "active",
           },
           {
             id: "geumju",
-            start: "2023-03-16T08:00:00.000Z",
-            end: "2023-03-16T17:00:00.000Z",
+            start: "2023-03-20T08:00:00.000Z",
+            end: "2023-03-20T17:00:00.000Z",
             title: "이것저것 합니다..",
             color: "#00aabb",
-            cssClass: !geumju ? "active" : "",
+            cssClass: selected === 2 ? "" : "active",
+          },
+          {
+            id: "geumju",
+            start: "2023-03-21T08:00:00.000Z",
+            end: "2023-03-21T13:00:00.000Z",
+            title: "이것저것 합니다..",
+            color: "#00aabb",
+            cssClass: selected === 2 ? "" : "active",
           },
           {
             id: "cheongjo",
-            start: "2023-03-15T08:00:00.000Z",
-            end: "2023-03-15T17:00:00.000Z",
+            start: "2023-03-21T08:00:00.000Z",
+            end: "2023-03-21T17:00:00.000Z",
             title: "이것저것 합니다..",
             color: " #ea72c0",
-            cssClass: !cheongjo ? "active" : "",
-          }, 
-          {
-            id: "cheongjo",
-            start: "2023-03-14T08:00:00.000Z",
-            end: "2023-03-14T17:00:00.000Z",
-            title: "이것저것 합니다..",
-            color: " #eae125",
-            cssClass: !haeyeon ? "active" : "",
+            cssClass: selected === 3 ? "" : "active",
           },
           {
             id: "cheongjo",
-            start: "2023-03-13T08:00:00.000Z",
-            end: "2023-03-13T17:00:00.000Z",
+            start: "2023-03-22T17:00:00.000Z",
+            end: "2023-03-22T22:00:00.000Z",
+            title: "이것저것 합니다..",
+            color: " #ea72c0",
+            cssClass: selected === 3 ? "" : "active",
+          },
+          {
+            id: "cheongjo",
+            start: "2023-03-22T08:00:00.000Z",
+            end: "2023-03-22T17:00:00.000Z",
+            title: "이것저것 합니다..",
+            color: " #eae125",
+            cssClass: selected === 4 ? "" : "active",
+          },
+          {
+            id: "cheongjo",
+            start: "2023-03-23T08:00:00.000Z",
+            end: "2023-03-23T17:00:00.000Z",
             title: "이것저것 합니다..",
             color: " #adf123",
-            cssClass: !junhyung ? "active" : "",
+            cssClass: selected === 5 ? "" : "active",
           },
         ]}
         cssClass="md-custom-header-filtering"
@@ -277,5 +303,4 @@ const Wrapper = styled.div`
   .active {
     display: none;
   }
-
 `;
