@@ -4,7 +4,6 @@ import { ReviewContnets } from "../src/components/orderReviewPage/ReviewContents
 import { ReviewBottm } from "../src/components/orderReviewPage/ReviewBottom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { finished } from "stream";
 
 export default function OrderReview() {
   const [contentsDataState, setContentsDataState] = useState<object>({});
@@ -88,4 +87,5 @@ const Wrapper = styled.div`
   width: 1024px;
   height: 1800px;
   padding: 0 12px;
+  margin-top: 80px;
 `;
