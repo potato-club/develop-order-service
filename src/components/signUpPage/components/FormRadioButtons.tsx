@@ -7,10 +7,13 @@ interface Props {
   name1: string;
   name2: string;
   name3?: string;
-  value: string;
+  name: string;
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors<FieldValues>;
   required: boolean;
+  value1: string;
+  value2: string;
+  value3?: string;
 }
 
 export const FormRadioButtons = (props: Props) => {
@@ -19,38 +22,38 @@ export const FormRadioButtons = (props: Props) => {
       <Box>
         <RadioButtons>
           <RadioButton
-            {...props.register(props.value, {
+            {...props.register(props.name, {
               required: props.required,
             })}
             type="radio"
-            value={props.name1}
+            value={props.value1}
           />
           {props.name1}
         </RadioButtons>
         <RadioButtons>
           <RadioButton
-            {...props.register(props.value, {
+            {...props.register(props.name, {
               required: props.required,
             })}
             type="radio"
-            value={props.name2}
+            value={props.value2}
           />
           {props.name2}
         </RadioButtons>
         {props.name3 && (
           <RadioButtons>
             <RadioButton
-              {...props.register(props.value, {
+              {...props.register(props.name, {
                 required: props.required,
               })}
               type="radio"
-              value={props.name3}
+              value={props.value3}
             />
             {props.name3}
           </RadioButtons>
         )}
       </Box>
-      {props.errors[props.value] && <Error_ />}
+      {props.errors[props.name] && <Error_ />}
     </Wrapper>
   );
 };

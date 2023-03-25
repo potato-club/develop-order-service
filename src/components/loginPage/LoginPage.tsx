@@ -125,8 +125,6 @@ const GoogleText = styled.p`
   color: ${customColor.black + "aa"};
   transform: translate(calc(-50% + 10px), -50%);
   letter-spacing: -0.5px;
-  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; */
   font-family: Roboto;
 `;
 const EmployeeLogin = styled.button`

@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import detailData from "../../assets/data2.json";
 import Image from "next/image";
-import heartIcon from "../../assets/img/detail/heart.png";
+import heartIcon from "../../../public/img/detail/heart.png";
 
 export const DetailBottm = ({
   like,
@@ -21,6 +20,7 @@ export const DetailBottm = ({
           {like}
         </LikeButtonP>
       </LikeButton>
+      {/* usenavigate를 이용해서 목록으로 돌아갈 예정 */}
       <ListButton>목록</ListButton>
     </BottomWrapper>
   );
@@ -45,7 +45,7 @@ const ListButton = styled.button`
 `;
 
 const LikeButton = styled.button<{ progress: String }>`
-  display: ${(props) => (props.progress === "ongoing" ? "none" : "")};
+  display: ${(props) => (props.progress === "WORKING" ? "none" : "")};
   width: 150px;
   height: 80px;
   border-radius: 10px;

@@ -17,30 +17,30 @@ export const GlobalStyle = createGlobalStyle`
   font-family: "Pretendard-Regular";
 }
 
-html::-webkit-scrollbar {
+html {
+  overflow: overlay;
+  scroll-behavior: smooth;
+  ::-webkit-scrollbar {
   width: 14px;
-}
-html::-webkit-scrollbar-thumb {
+  }
+  ::-webkit-scrollbar-thumb {
   background-color: ${customColor.indigo1};
   border-radius: 10px;
   background-clip: padding-box;
   border: 4px solid transparent;
-}
-html::-webkit-scrollbar-track {
+  }
+  ::-webkit-scrollbar-track {
   background-color: transparent;
   border-radius: 10px;
-}
-html::-webkit-scrollbar-button:start:decrement {
+  }
+  ::-webkit-scrollbar-button:start:decrement {
   background-color: transparent;
   height: 80px;
-}
-html::-webkit-scrollbar-button:end:increment {
+  }
+  ::-webkit-scrollbar-button:end:increment {
   background-color: transparent;
-  height: 188px;
-}
-html {
-  overflow: overlay;
-  scroll-behavior: smooth;
+  height: 185px;
+  }
 }
 
 html,
@@ -100,6 +100,8 @@ height:20px;
 }
 .fc-day{
   cursor: pointer;
+  background: ${customColor.lightGray};
+  height:76px;
 }
 .fc .fc-daygrid-event{
   margin-top: 2px;
@@ -109,17 +111,16 @@ height:20px;
 }
 .fc-day-past, .fc-day-sun, .fc-day-sat{
   color:${customColor.gray};
-  filter: grayscale(70%);
+  filter: brightness(94%) grayscale(50%);
 }
 .fc-col-header-cell{
   background: ${customColor.lightGray};
   color:${customColor.black};
   filter: grayscale(0%);
+  height:max-content;
 }
 .selected{
-  box-shadow:1px 2px 4px 2px ${customColor.black + "33"}, 0px 0px 4px 2px ${
-  customColor.blue
-} !important;
+  filter:drop-shadow(0px 0px 6px ${customColor.blue});
 }
 /* react-transition-group */
 .modal-enter{
@@ -139,4 +140,11 @@ height:20px;
   transform: translate(-50%,-50%);
   transition: all 0.3s ease;
 }
+.time_modal-enter {
+  width:1px;
+  }
+  .time_modal-enter-active {
+    width:137px;
+    transition: all 0.4s ease-out;
+  }
 `;
