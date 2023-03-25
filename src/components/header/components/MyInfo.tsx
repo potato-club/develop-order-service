@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import Image from "next/image";
 import { customColor } from "../../customColor";
@@ -17,6 +17,12 @@ export const MyInfo = () => {
   const handleRouter = (router: string) => {
     Router.push(router);
   };
+
+  useEffect(() => {
+    localStorage.getItem("token") !== undefined
+      ? setIsLogin(true)
+      : setIsLogin(false);
+  }, []);
 
   return (
     <Wrapper>
@@ -85,6 +91,7 @@ const LogAction = styled.div<ButtonProps>`
   color: ${customColor.black};
   background: ${customColor.white};
   align-items: center;
+  justify-content: center;
   overflow: hidden;
   right: 0;
   padding: ${(props) => (props.isHover ? "0 27px 0 20px" : "0")};

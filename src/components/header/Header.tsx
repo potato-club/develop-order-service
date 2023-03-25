@@ -5,11 +5,9 @@ import { HeaderMenu } from "./HeaderMenu";
 import { HeaderTitle } from "./HeaderTitle";
 
 export const Header = () => {
-  const [isScrolled, setIsScrolled] = useState<boolean>(false);
-
   return (
     <Wrapper>
-      {!isScrolled && <HeaderTitle />}
+      <HeaderTitle />
       <HeaderMenu />
     </Wrapper>
   );
