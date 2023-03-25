@@ -14,9 +14,10 @@ export const PreviewSwiper = () => {
 
   SwiperCore.use([Navigation, Pagination]);
   const settings = {
-    spaceBetween: 20,
-    navigation: {},
-    slidesPerView: 1,
+    navigation: true,
+    spaceBetween: 50,
+    slidesPerView: 3,
+    centeredSlides: true,
     loop: true,
   };
 
@@ -82,7 +83,7 @@ const StyledRoot = styled.div`
   .swiper {
     &-wrapper,
     &-container {
-      width: 450px;
+      width: 1000px;
       height: 600px;
       margin: 0 auto;
     }
