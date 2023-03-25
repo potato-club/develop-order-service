@@ -107,7 +107,7 @@ height:20px;
 .fc .fc-daygrid-day.fc-day-today{
   background: ${customColor.yellow_};
 }
-.fc-day-past, .fc-day-sun, .fc-day-sat,{
+.fc-day-past, .fc-day-sun, .fc-day-sat{
   color:${customColor.gray};
   filter: grayscale(70%);
 }
@@ -129,6 +129,14 @@ height:20px;
 .modal-enter-active {
   opacity: 1;
   transform: translate(-50%,0);
+  transition: all 0.3s ease;
+}.loginModal-enter{
+  opacity: 0;
+  transform: translate(-50%,calc(-50% + 16px));
+}
+.loginModal-enter-active {
+  opacity: 1;
+  transform: translate(-50%,-50%);
   transition: all 0.3s ease;
 }
 `;
