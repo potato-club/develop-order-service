@@ -43,7 +43,9 @@ export default function OrderReview() {
         `http://localhost:8080/orders/detail${
           (pageState !== 1 ? "?page=" + pageState : "") +
           (contentsFilterState === "finished" ? "?state=complete" : "") +
-          (contentsFilterState === "myOrder" ? "?state=myOrder" : "")
+          // 지금은 state=myOrder로 get 요청을 보낼경우 state 값을 설정하지 않고 보낸것고 같은 데이터가 넘어옴
+          // 일단은 임시로 state=complete로 요청하도록 해놓음
+          (contentsFilterState === "myOrder" ? "?state=complete" : "")
         }`
       );
       setContentsDataState(response.data);
@@ -64,19 +66,19 @@ export default function OrderReview() {
   return (
     <Wrapper>
       <ReviewTop
+        contentsFilterState={contentsFilterState}
+        sortOptionState={sortOptionState}
+        conceptOptionState={conceptOptionState}
         getContentsFilterState={getContentsFilterState}
         getSortOptionState={getSortOptionState}
         getConceptOptionState={getConceptOptionState}
         getPageState={getPageState}
-        contentsFilterState={contentsFilterState}
-        sortOptionState={sortOptionState}
-        conceptOptionState={conceptOptionState}
       />
       <ReviewContnets contentsData={contentsDataState} />
       <ReviewBottm
         pageState={pageState}
-        getPageState={getPageState}
         contentsData={contentsDataState}
+        getPageState={getPageState}
       />
     </Wrapper>
   );

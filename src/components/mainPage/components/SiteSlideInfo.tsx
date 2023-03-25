@@ -77,6 +77,7 @@ const Title = styled.p`
   top: -16px;
   left: 50%;
   font-size: 18px;
+  letter-spacing: -0.5px;
   white-space: nowrap;
   color: white;
   transform: translateX(calc(-50%));
