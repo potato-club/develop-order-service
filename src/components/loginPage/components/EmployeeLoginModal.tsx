@@ -32,6 +32,7 @@ export const EmployeeLoginModal = ({ isOpen, closeModal }: Props) => {
             <WWW />
             <Font>DOS</Font>
           </Logo>
+          <Title>직원 로그인</Title>
           <Login>
             <LoginBox>
               <Label>아이디</Label>
@@ -82,6 +83,15 @@ const CloseButton = styled.button`
 const Logo = styled.div`
   display: flex;
   position: relative;
+`;
+const Title = styled.div`
+  display: flex;
+  position: absolute;
+  right: 54px;
+  top: 78px;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: -0.5px;
 `;
 const WWW = styled(TbWorld)`
   display: flex;
