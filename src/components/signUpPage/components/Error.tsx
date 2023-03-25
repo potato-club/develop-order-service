@@ -20,4 +20,5 @@ const Wrapper = styled.article`
   background: ${customColor.lightGray};
   padding-right: 20px;
   white-space: nowrap;
+  align-items: center;
 `;

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import detailData from "../../assets/data2.json";
 import Image from "next/image";
 import checkIcon from "../../../public/img/detail/check.png";
 import { PreviewSwiper } from "./PreviewSwiper";
@@ -18,7 +17,7 @@ export const DetailContnets = ({
   db,
   starRating,
 }: {
-  title: string;
+  title: any;
   id: number;
   purpose: string;
   startDate: string;
@@ -131,7 +130,7 @@ const OrderTitleH2 = styled.h2`
 `;
 
 const OrderInfoDiv = styled.div<{ data: String }>`
-  display: ${(props) => (props.data === "ongoing" ? "none" : "")};
+  display: ${(props) => (props.data === "WORKING" ? "none" : "")};
   width: 100%;
   height: 50px;
   border-top: 1px solid black;

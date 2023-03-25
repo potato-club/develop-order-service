@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import detailData from "../../assets/data2.json";
 import Image from "next/image";
 import heartIcon from "../../../public/img/detail/heart.png";
 
@@ -46,7 +45,7 @@ const ListButton = styled.button`
 `;
 
 const LikeButton = styled.button<{ progress: String }>`
-  display: ${(props) => (props.progress === "ongoing" ? "none" : "")};
+  display: ${(props) => (props.progress === "WORKING" ? "none" : "")};
   width: 150px;
   height: 80px;
   border-radius: 10px;

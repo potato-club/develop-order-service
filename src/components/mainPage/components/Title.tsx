@@ -39,7 +39,7 @@ const Wrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 60px 130px;
+  padding: 40px 130px 20px;
 `;
 const LeftTitle = styled.div`
   display: flex;
@@ -48,6 +48,7 @@ const LeftTitle = styled.div`
   font-size: 24px;
   font-weight: bold;
   height: 100%;
+  letter-spacing: -0.5px;
 `;
 const RightTitle = styled.div`
   display: flex;
@@ -70,15 +71,17 @@ const Bar = styled.div`
 const ContentInner = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 20px;
 `;
 const Text = styled.div`
   display: flex;
   font-size: 16px;
-  line-height: 26px;
+  line-height: 22px;
   font-weight: normal;
+  letter-spacing: -0.5px;
 `;
 const BlueText = styled.div`
   color: ${customColor.blue};
   font-weight: bold;
+  padding-right: 2px;
 `;

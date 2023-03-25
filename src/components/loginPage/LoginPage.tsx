@@ -1,27 +1,59 @@
 import styled from "styled-components";
 import Image from "next/image";
 import { customColor } from "../customColor";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { EmployeeLoginModal } from "./components/EmployeeLoginModal";
 
 export const LoginPage = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    const token = new URL(window.location.href).searchParams.get("accesstoken");
+    const refreshToken = new URL(window.location.href).searchParams.get(
+      "refresh"
+    );
+    if (token && refreshToken) {
+      localStorage.setItem("token", token);
+      localStorage.setItem("refreshToken", refreshToken);
+    }
+  }, []);
+
   return (
     <Wrapper>
+      <EmployeeLoginModal
+        isOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+      />
       <Content>
         간편하게 로그인하고
         <br />
         다양한 서비스를 이용하세요
         <Logins>
-          <KakaoLogin>
-            <Image
-              src={"/img/login/kakaoLogin.png"}
-              fill
-              alt="kakaoLogin"
-              style={{ objectFit: "cover" }}
-            />
-          </KakaoLogin>
-          <GoogleLogin>
-            <Image src={"/img/login/google.png"} width={20} alt="googleLogin" />
-            <GoogleText>구글 로그인</GoogleText>
-          </GoogleLogin>
+          <Link href="http://localhost:8080/oauth2/authorization/kakao">
+            <KakaoLogin>
+              <Image
+                src={"/img/login/kakaoLogin.png"}
+                fill
+                alt="kakaoLogin"
+                style={{ objectFit: "cover" }}
+              />
+            </KakaoLogin>
+          </Link>
+          <Link href="http://localhost:8080/oauth2/authorization/google">
+            <GoogleLogin>
+              <Image
+                src={"/img/login/google.png"}
+                width={20}
+                height={20}
+                alt="googleLogin"
+              />
+              <GoogleText>구글 로그인</GoogleText>
+            </GoogleLogin>
+          </Link>
+          <EmployeeLogin onClick={() => setIsModalOpen(true)}>
+            직원 로그인
+          </EmployeeLogin>
         </Logins>
       </Content>
     </Wrapper>
@@ -58,6 +90,7 @@ const Logins = styled.div`
   display: flex;
   flex-direction: column;
   gap: 32px 0;
+  align-items: center;
 `;
 const KakaoLogin = styled.button`
   display: flex;
@@ -92,7 +125,15 @@ const GoogleText = styled.p`
   color: ${customColor.black + "aa"};
   transform: translate(calc(-50% + 10px), -50%);
   letter-spacing: -0.5px;
-  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; */
   font-family: Roboto;
+`;
+const EmployeeLogin = styled.button`
+  display: flex;
+  width: max-content;
+  font-size: 14px;
+  color: ${customColor.darkGray};
+  justify-content: center;
+  padding: 0 4px;
+  border-bottom: 1px solid ${customColor.darkGray};
+  margin-top: 20px;
 `;
