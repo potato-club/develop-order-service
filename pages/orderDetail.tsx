@@ -77,4 +77,5 @@ const Wrapper = styled.div`
   width: 1024px;
   height: 1800px;
   padding: 0 12px;
+  margin-top: 80px;
 `;
