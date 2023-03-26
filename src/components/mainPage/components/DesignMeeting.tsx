@@ -21,7 +21,7 @@ export const DesignMeeting = () => {
         #디자인 미팅
         <Explain className={inView ? "design_meeting" : "design_meeting1"}>
           <DoubleQuotesL />
-          디자이너와의 상담을 통해 웹의 전체적인 디자인을 구체적으로 구성합니다
+          디자이너와의 상담을 통해 웹의 전체적인 디자인을 구성합니다
           <DoubleQuotesR />
         </Explain>
       </Title>
@@ -62,8 +62,8 @@ export const DesignMeeting = () => {
               <Image
                 src="/img/main/ex-photo.jpg"
                 alt="ex-photo"
-                width={260}
-                height={260}
+                width={200}
+                height={200}
               />
             </ExPhotoImg>
             <RightTalkBubble content="#EEE 색상이 좋을 것 같아요" />
@@ -151,7 +151,7 @@ const ExColor = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  margin-bottom: 250px;
+  margin-bottom: 190px;
   gap: 12px;
   align-items: flex-end;
   transition: all 0.6s ease 0.8s;
@@ -171,7 +171,7 @@ const ExPhotoImg = styled.div`
   display: flex;
   position: absolute;
   top: 120px;
-  left: -20px;
+  left: 16px;
   transition: all 0.6s ease 0.9s;
 `;
 const Explain = styled.div`
@@ -188,17 +188,17 @@ const Explain = styled.div`
   text-align: center;
   transition: all 0.6s ease 0.3s;
   padding: 12px 8px;
-  margin: 40px 20px 40px auto;
+  margin: 20px 20px 12px auto;
 `;
 const DoubleQuotesL = styled(RiDoubleQuotesL)`
   display: flex;
   position: absolute;
-  top: 0;
-  left: -24px;
+  top: 12px;
+  left: -20px;
 `;
 const DoubleQuotesR = styled(RiDoubleQuotesR)`
   display: flex;
   position: absolute;
-  top: 0;
-  right: -24px;
+  top: 12px;
+  right: -20px;
 `;
