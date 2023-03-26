@@ -4,22 +4,26 @@ import { customColor } from "../customColor";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { EmployeeLoginModal } from "./components/EmployeeLoginModal";
-import { useSetRecoilState } from "recoil";
-import { isLoginState } from "../../recoil/userInfo";
+import Router from "next/router";
 
 export const LoginPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const setIsLogin = useSetRecoilState(isLoginState);
 
   useEffect(() => {
-    const token = new URL(window.location.href).searchParams.get("accesstoken");
-    const refreshToken = new URL(window.location.href).searchParams.get(
-      "refresh"
-    );
-    if (token && refreshToken) {
-      localStorage.setItem("token", token);
-      localStorage.setItem("refreshToken", refreshToken);
-      localStorage.getItem("token") !== undefined && setIsLogin(true);
+    if (localStorage.getItem("token") !== undefined) {
+      Router.back();
+    } else {
+      const token = new URL(window.location.href).searchParams.get(
+        "accesstoken"
+      );
+      const refreshToken = new URL(window.location.href).searchParams.get(
+        "refresh"
+      );
+      if (token && refreshToken) {
+        localStorage.setItem("token", token);
+        localStorage.setItem("refreshToken", refreshToken);
+        Router.back();
+      }
     }
   }, []);
 

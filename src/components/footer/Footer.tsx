@@ -1,14 +1,21 @@
 import styled from "styled-components";
-import { useState } from "react";
 import { FooterCompany } from "./FooterCompany";
 import { FooterLogin } from "./FooterLogin";
 import { customColor } from "../customColor";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export const Footer = () => {
-  const [isLogin, setIsLogin] = useState(false);
+  const isLoginPage = useRouter().pathname === "/login";
+  const [isLogin, setIsLogin] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsLogin(localStorage?.getItem("token") !== undefined);
+  }, []);
+
   return (
     <Wrapper>
-      {!isLogin && <FooterLogin />}
+      {!isLogin && !isLoginPage && <FooterLogin />}
       <FooterCompany />
     </Wrapper>
   );

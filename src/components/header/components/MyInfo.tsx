@@ -1,5 +1,5 @@
-import { useState } from "react";
-import styled, { keyframes } from "styled-components";
+import { useEffect, useState } from "react";
+import styled from "styled-components";
 import Image from "next/image";
 import { customColor } from "../../customColor";
 import Router from "next/router";
@@ -11,12 +11,12 @@ interface ButtonProps {
 }
 
 export const MyInfo = () => {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState<boolean>(false);
   const [isHover, setIsHover] = useState(false);
 
-  const handleRouter = (router: string) => {
-    Router.push(router);
-  };
+  useEffect(() => {
+    setIsLogin(localStorage?.getItem("token") !== undefined);
+  }, []);
 
   return (
     <Wrapper>
@@ -35,7 +35,9 @@ export const MyInfo = () => {
               <ActionButton isHover={isHover}>내정보</ActionButton>
             </>
           ) : (
-            <ActionButton onClick={() => handleRouter(pathName.LOGIN)}>
+            <ActionButton
+              onClick={() => Router.replace(pathName.LOGIN, Router.pathname)}
+            >
               로그인
             </ActionButton>
           )}
