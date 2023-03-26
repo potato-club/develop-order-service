@@ -14,6 +14,8 @@ import {
 import styled from "styled-components";
 import character from "../../../assets/img/information/character.png";
 import Image from "next/image";
+import { useRecoilState } from "recoil";
+import { personState,PersonState } from "../../../recoil/infoCard";
 
 setOptions({
   locale: localeKo,
@@ -21,38 +23,28 @@ setOptions({
   themeVariant: "light",
 });
 
-export interface State {
-  hyoseong: boolean;
-  geumju: boolean;
-  cheongjo: boolean;
-  haeyeon: boolean;
-  junhyung: boolean;
-}
 
 const Scheduler = () => {
-  const [state, setState] = React.useState<State>({
-    hyoseong: true,
-    geumju: false,
-    haeyeon: false,
-    cheongjo: false,
-    junhyung: false,
-  });
+  const [state, setState] = useRecoilState<PersonState>(personState);
 
-  
-  function toggleState(key: keyof State) {
-    setState((prevState) => ({ ...prevState, [key]: !prevState[key] }));
-  }
+    function toggleState(key: keyof PersonState) {
+      setState((prevState) => ({ ...prevState, [key]: !prevState[key] }));
+    }
 
-
-  function InfoToggleState(key: keyof State) {
-    setState((prevState) => {
-      const newState = { ...prevState };
-      Object.keys(newState).forEach((k) => {
-        newState[k as keyof State] = k === key ? true : false;
+    function InfotoggleState(key: keyof PersonState) {
+      setState((prevState) => {
+        const newState = { ...prevState };
+        Object.keys(newState).forEach((k) => {
+          if (k !== key) {
+            newState[k as keyof PersonState] = false;
+          }
+        });
+        newState[key] = !prevState[key];
+        return newState;
       });
-      return newState;
-    });
-  }
+    } 
+    
+
 
   const [calView] = React.useState<MbscEventcalendarView>({
     schedule: {

@@ -2,41 +2,44 @@ import React from "react";
 import styled from "styled-components";
 import { customColor } from "../../customColor";
 import Image from "next/image";
-import email from "../../../assets/img/information/email.png"
+import email from "../../../assets/img/information/email.png";
 import phone from "../../../assets/img/information/phone.png";
 import imac from "../../../assets/img/information/imac.png";
-import character from "../../../assets/img/information/character.png"
+import character from "../../../assets/img/information/character.png";
+
 
 type InfoProps = {
   name: string;
   task: string;
   number: string;
   emailAdress: string;
-
+  onClick : any
 };
 
-const InfoCard = ({ name, task, number, emailAdress}: InfoProps) => (
-  <InfoBox  >
-    <Circle>
-      <Image src={character} alt={''} width={80} />
-    </Circle>
-    <Name>{name}</Name>
-    <TaskBox>
-      <Image src={imac} alt={''} width={35} />
-      <Task>{task}</Task>
-    </TaskBox>
-    <NumberBox>
-      <Image src={phone} alt={''} width={20} />
-      <Number>{number}</Number>
-    </NumberBox>
-    <EmailBox>
-      <Image src={email} alt={''} width={20}/>
-      <Email>{emailAdress}</Email>
-    </EmailBox>
-  </InfoBox>
-);
+const InfoCard = ({ name, task, number, emailAdress,onClick }: InfoProps) => {
 
 
+  return (
+    <InfoBox>
+      <Circle onClick={onClick}>
+        <Image src={character} alt={""} width={80} />
+      </Circle>
+      <Name>{name}</Name>
+      <TaskBox>
+        <Image src={imac} alt={""} width={35} />
+        <Task>{task}</Task>
+      </TaskBox>
+      <NumberBox>
+        <Image src={phone} alt={""} width={20} />
+        <Number>{number}</Number>
+      </NumberBox>
+      <EmailBox>
+        <Image src={email} alt={""} width={20} />
+        <Email>{emailAdress}</Email>
+      </EmailBox>
+    </InfoBox>
+  );
+};
 
 export default InfoCard;
 const InfoBox = styled.div`
