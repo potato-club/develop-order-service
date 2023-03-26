@@ -32,7 +32,7 @@ export const SignUpUserInfo = ({ register, errors, control }: Props) => {
           <FormItemContent>
             <FormInput
               placeholder="김도스 또는 (주)도스"
-              value="userName"
+              value="name"
               type="text"
               register={register}
               errors={errors}
@@ -45,7 +45,7 @@ export const SignUpUserInfo = ({ register, errors, control }: Props) => {
           <FormItemContent>
             <FormInput
               placeholder="develop-order-service@gmail.com"
-              value="userEmail"
+              value="email"
               type="email"
               register={register}
               errors={errors}
@@ -58,7 +58,7 @@ export const SignUpUserInfo = ({ register, errors, control }: Props) => {
           <FormItemContent>
             <FormPhone
               placeholder="010-1234-5678"
-              value="userPhone1"
+              value="hotLine"
               control={control}
               errors={errors}
               required={true}
@@ -70,7 +70,7 @@ export const SignUpUserInfo = ({ register, errors, control }: Props) => {
           <FormItemContent>
             <FormPhone
               placeholder="010-1234-5678"
-              value="userPhone2"
+              value="subLine"
               control={control}
               errors={errors}
               required={false}

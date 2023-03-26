@@ -50,7 +50,7 @@ export const SignUpAddInfo = ({
           </FormItemLabel>
           <FormItemContent>
             <FormColor
-              value="addColorA"
+              value="mainColor"
               register={register}
               unregister={unregister}
               errors={errors}
@@ -62,7 +62,7 @@ export const SignUpAddInfo = ({
           <FormItemLabel>브랜드 컬러2</FormItemLabel>
           <FormItemContent>
             <FormColor
-              value="addColorB"
+              value="subColor"
               register={register}
               unregister={unregister}
               errors={errors}
@@ -83,7 +83,7 @@ export const SignUpAddInfo = ({
           <FormItemContent>
             <FormNumber
               placeholder="3"
-              value="addPage"
+              value="page"
               register={register}
               errors={errors}
               required={false}
@@ -105,10 +105,12 @@ export const SignUpAddInfo = ({
             <FormRadioButtons
               name1="예"
               name2="아니요"
-              value="addLogin"
+              name="login"
               register={register}
               errors={errors}
               required={false}
+              value1="예"
+              value2="아니요"
             />
           </FormItemContent>
           <InfoLabel content="로그인 기능 추가 시 추가요금이 발생합니다" />
@@ -127,10 +129,12 @@ export const SignUpAddInfo = ({
             <FormRadioButtons
               name1="예"
               name2="아니요"
-              value="addDB"
+              name="database"
               register={register}
               errors={errors}
               required={false}
+              value1="예"
+              value2="아니요"
             />
           </FormItemContent>
           <InfoLabel content="DB 기능 추가 시 추가요금이 발생합니다" />
@@ -139,7 +143,7 @@ export const SignUpAddInfo = ({
           <FormItemLabel>사이트 컨셉 참고자료 첨부</FormItemLabel>
           <FormItemContent>
             <FormFile
-              value="addFile"
+              value="file"
               register={register}
               errors={errors}
               required={false}
@@ -165,10 +169,13 @@ export const SignUpAddInfo = ({
             <FormCalendar
               setValue={setValue}
               register={register}
-              value="addDate"
+              value="meeting"
             />
           </FormItemContent>
-          <InfoLabel content={"회의는 최대 2시간동안 진행됩니다"} />
+          <InfoLabel
+            content={"당일과 주말은 예약할 수 없습니다"}
+            content2={`회의는 최대 2시간동안 진행됩니다`}
+          />
         </FormItem>
       </Form>
     </Content>

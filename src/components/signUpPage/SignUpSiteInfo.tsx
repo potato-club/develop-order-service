@@ -39,7 +39,7 @@ export const SignUpSiteInfo = ({ register, errors }: Props) => {
           <FormItemContent>
             <FormInput
               placeholder="사람들에게 웹사이트 발주 신청을 받아 회사를 운영하기"
-              value="sitePurpose"
+              value="purpose"
               type="text"
               register={register}
               errors={errors}
@@ -54,10 +54,13 @@ export const SignUpSiteInfo = ({ register, errors }: Props) => {
               name1="회사"
               name2="공공단체"
               name3="개인"
-              value="siteAdmin"
+              name="owner"
               register={register}
               errors={errors}
               required={true}
+              value1="COMPANY"
+              value2="PUBLIC"
+              value3="PERSONAL"
             />
           </FormItemContent>
         </FormItem>

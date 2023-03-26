@@ -100,6 +100,7 @@ height:20px;
 }
 .fc-day{
   cursor: pointer;
+  background: ${customColor.lightGray};
   height:76px;
 }
 .fc .fc-daygrid-event{
@@ -110,7 +111,7 @@ height:20px;
 }
 .fc-day-past, .fc-day-sun, .fc-day-sat{
   color:${customColor.gray};
-  filter: grayscale(70%);
+  filter: brightness(94%) grayscale(50%);
 }
 .fc-col-header-cell{
   background: ${customColor.lightGray};
@@ -119,9 +120,7 @@ height:20px;
   height:max-content;
 }
 .selected{
-  box-shadow:1px 2px 4px 2px ${customColor.black + "33"}, 0px 0px 4px 2px ${
-  customColor.blue
-} !important;
+  filter:drop-shadow(0px 0px 6px ${customColor.blue});
 }
 /* react-transition-group */
 .modal-enter{
@@ -132,5 +131,20 @@ height:20px;
   opacity: 1;
   transform: translate(-50%,0);
   transition: all 0.3s ease;
+}.loginModal-enter{
+  opacity: 0;
+  transform: translate(-50%,calc(-50% + 16px));
 }
+.loginModal-enter-active {
+  opacity: 1;
+  transform: translate(-50%,-50%);
+  transition: all 0.3s ease;
+}
+.time_modal-enter {
+  width:1px;
+  }
+  .time_modal-enter-active {
+    width:137px;
+    transition: all 0.4s ease-out;
+  }
 `;
