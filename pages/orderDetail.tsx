@@ -7,13 +7,21 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function OrderDetail() {
+  // 토큰값은 로그인 할때마다 갱신해주기
+  const TOKEN =
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3bnNndWRkbDU3M0BuYXZlci5jb20iLCJyb2xlIjoiVVNFUiIsImV4cCI6MTY3OTkyNDc0N30.QmDIr7NG3-CtxOm3vzWZ46rbDhNNitd4L2ewr70qCGE";
   const router = useRouter();
   const id = router.query.id;
   const [detailDataState, setDetailDataState] = useState<any>();
   const getDetailData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/orders/detail/${id}`
+        `http://localhost:8080/orders/detail/${id}`,
+        {
+          headers: {
+            Authorization: `${TOKEN}`,
+          },
+        }
       );
       console.log(response.data);
       setDetailDataState(response.data);
