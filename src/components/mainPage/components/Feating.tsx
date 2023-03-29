@@ -223,19 +223,19 @@ const Explain = styled.div`
   text-align: center;
   transition: all 0.6s ease 0.3s;
   padding: 12px 8px;
-  margin: 40px 20px 20px auto;
+  margin: 20px 20px 12px auto;
 `;
 const DoubleQuotesL = styled(RiDoubleQuotesL)`
   display: flex;
   position: absolute;
-  top: 0;
-  left: -24px;
+  top: 12px;
+  left: -20px;
 `;
 const DoubleQuotesR = styled(RiDoubleQuotesR)`
   display: flex;
   position: absolute;
-  top: 0;
-  right: -24px;
+  top: 12px;
+  right: -20px;
 `;
 const WrapperInner = styled.div`
   display: flex;
