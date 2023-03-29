@@ -15,7 +15,7 @@ import styled from "styled-components";
 import character from "../../../assets/img/information/character.png";
 import Image from "next/image";
 import { useRecoilState } from "recoil";
-import { personState,PersonState } from "../../../recoil/infoCard";
+import { personState, PersonState } from "../../../recoil/infoCard";
 
 setOptions({
   locale: localeKo,
@@ -23,28 +23,12 @@ setOptions({
   themeVariant: "light",
 });
 
-
 const Scheduler = () => {
   const [state, setState] = useRecoilState<PersonState>(personState);
 
-    function toggleState(key: keyof PersonState) {
-      setState((prevState) => ({ ...prevState, [key]: !prevState[key] }));
-    }
-
-    function InfotoggleState(key: keyof PersonState) {
-      setState((prevState) => {
-        const newState = { ...prevState };
-        Object.keys(newState).forEach((k) => {
-          if (k !== key) {
-            newState[k as keyof PersonState] = false;
-          }
-        });
-        newState[key] = !prevState[key];
-        return newState;
-      });
-    } 
-    
-
+  function toggleState(key: keyof PersonState) {
+    setState((prevState) => ({ ...prevState, [key]: !prevState[key] }));
+  }
 
   const [calView] = React.useState<MbscEventcalendarView>({
     schedule: {
@@ -117,7 +101,6 @@ const Scheduler = () => {
 
   return (
     <Wrapper>
-      <Btn />
       <Eventcalendar
         renderHeader={customWithNavButtons}
         view={calView}
@@ -194,8 +177,6 @@ const Scheduler = () => {
 };
 
 export default Scheduler;
-
-const Btn = styled.button``;
 
 const Wrapper = styled.div`
   .md-header-filter-controls {
