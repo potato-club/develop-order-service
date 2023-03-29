@@ -3,13 +3,23 @@ import React from "react";
 import InfoCard from "./InfoCard";
 import { useRecoilState } from "recoil";
 import { personState, PersonState } from "../../../recoil/infoCard";
-import { useEffect } from "react";
 
 const InfoCardWrapp = () => {
 
-    const test = () => {
-      console.log("test");
-    };
+  const [state, setState] = useRecoilState<PersonState>(personState);
+
+
+  const test = (name: string) => {
+    let dummy: any = {};
+    Object.keys(state).map((i) => {
+      if (i === name) {
+        dummy[i] = true;
+      } else {
+        dummy[i] = false;
+      }
+    });
+    setState(dummy);
+  };
     
 
     return (
@@ -20,7 +30,7 @@ const InfoCardWrapp = () => {
           task="Front"
           number="010-3388-3951"
           emailAdress="smwfkim2@naver.com"
-          onClick={test}
+          onClick={()=>test("hyoseong")}
         />
 
         <InfoCard
@@ -28,7 +38,7 @@ const InfoCardWrapp = () => {
           task="Front"
           number="010-0000-0000"
           emailAdress="aaaaaaa@naver.com"
-          onClick={test}
+          onClick={()=>test("geumju")}
         />
 
         <InfoCard
@@ -36,7 +46,7 @@ const InfoCardWrapp = () => {
           task="Back"
           number="010-0000-0000"
           emailAdress="aaaaaaa@naver.com"
-          onClick={test}
+          onClick={()=>test("cheongjo")}
         />
 
         <InfoCard
@@ -44,7 +54,7 @@ const InfoCardWrapp = () => {
           task="Back"
           number="010-0000-0000"
           emailAdress="aaaaaaa@naver.com"
-          onClick={test}
+          onClick={()=>test("haeyeon")}
         />
 
         <InfoCard
@@ -52,7 +62,7 @@ const InfoCardWrapp = () => {
           task="Front"
           number="010-0000-0000"
           emailAdress="aaaaaaa@naver.com"
-          onClick={test}
+          onClick={()=>test("junhyung")}
         />
       </InfoCardWrapper>
     );
