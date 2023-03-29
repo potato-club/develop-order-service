@@ -20,8 +20,8 @@ const InfoCard = ({ name, task, number, emailAdress,onClick }: InfoProps) => {
 
 
   return (
-    <InfoBox>
-      <Circle onClick={onClick}>
+    <InfoBox onClick={onClick}>
+      <Circle>
         <Image src={character} alt={""} width={80} />
       </Circle>
       <Name>{name}</Name>
@@ -42,7 +42,7 @@ const InfoCard = ({ name, task, number, emailAdress,onClick }: InfoProps) => {
 };
 
 export default InfoCard;
-const InfoBox = styled.div`
+const InfoBox = styled.button`
   width: 150px;
   height: 360px;
   border-radius: 70px;
