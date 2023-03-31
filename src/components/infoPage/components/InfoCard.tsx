@@ -6,19 +6,18 @@ import email from "../../../assets/img/information/email.png";
 import phone from "../../../assets/img/information/phone.png";
 import imac from "../../../assets/img/information/imac.png";
 import character from "../../../assets/img/information/character.png";
-
+import { Link } from "react-scroll";
+import { info } from "console";
 
 type InfoProps = {
   name: string;
   task: string;
   number: string;
   emailAdress: string;
-  onClick : any
+  onClick: any;
 };
 
-const InfoCard = ({ name, task, number, emailAdress,onClick }: InfoProps) => {
-
-
+const InfoCard = ({ name, task, number, emailAdress, onClick }: InfoProps) => {
   return (
     <InfoBox onClick={onClick}>
       <Circle>
@@ -37,6 +36,9 @@ const InfoCard = ({ name, task, number, emailAdress,onClick }: InfoProps) => {
         <Image src={email} alt={""} width={20} />
         <Email>{emailAdress}</Email>
       </EmailBox>
+      <Link to="1" smooth spy>
+        <ScrollP>스케쥴 보러가기</ScrollP>
+      </Link>
     </InfoBox>
   );
 };
@@ -44,7 +46,7 @@ const InfoCard = ({ name, task, number, emailAdress,onClick }: InfoProps) => {
 export default InfoCard;
 const InfoBox = styled.button`
   width: 150px;
-  height: 360px;
+  height: 380px;
   border-radius: 70px;
   background-color: ${customColor.blue};
 `;
@@ -54,7 +56,6 @@ const Circle = styled.div`
   border-radius: 50%;
   background-color: ${customColor.white};
   margin: auto;
-  margin-top: 19.5px;
   position: relative;
   display: flex;
   align-items: center;
@@ -105,3 +106,5 @@ const Number = styled.p`
   margin-top: 4px;
   margin-left: 10px;
 `;
+
+const ScrollP = styled.p``;
