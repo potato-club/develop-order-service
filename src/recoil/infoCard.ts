@@ -12,8 +12,8 @@ export const personState = atom<PersonState>({
   key: 'personState',
   default: {
     hyoseong: true,
-    geumju: false,
-    haeyeon: false,
+    geumju: true,
+    haeyeon: true,
     cheongjo: false,
     junhyung: false,
   },
