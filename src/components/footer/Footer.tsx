@@ -4,18 +4,16 @@ import { FooterLogin } from "./FooterLogin";
 import { customColor } from "../customColor";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { isLogin } from "../../recoil/userInfo";
 
 export const Footer = () => {
   const isLoginPage = useRouter().pathname === "/login";
-  const [isLogin, setIsLogin] = useState<boolean>(false);
-
-  useEffect(() => {
-    setIsLogin(localStorage?.getItem("token") !== undefined);
-  }, []);
+  const isLoginState = useRecoilValue(isLogin);
 
   return (
     <Wrapper>
-      {!isLogin && !isLoginPage && <FooterLogin />}
+      {!isLoginState && !isLoginPage && <FooterLogin />}
       <FooterCompany />
     </Wrapper>
   );

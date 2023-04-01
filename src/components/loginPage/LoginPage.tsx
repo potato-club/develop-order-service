@@ -10,7 +10,7 @@ export const LoginPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem("token") !== undefined) {
+    if (localStorage.getItem("token") !== null) {
       Router.back();
     } else {
       const token = new URL(window.location.href).searchParams.get(
@@ -22,6 +22,7 @@ export const LoginPage = () => {
       if (token && refreshToken) {
         localStorage.setItem("token", token);
         localStorage.setItem("refreshToken", refreshToken);
+        console.log(Router.asPath);
         Router.back();
       }
     }
