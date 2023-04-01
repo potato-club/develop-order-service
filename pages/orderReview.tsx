@@ -38,17 +38,34 @@ export default function OrderReview() {
   //
   const getReviewData = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8080/orders/detail${
-          (pageState !== 1 ? "?page=" + pageState : "") +
-          (contentsFilterState === "finished" ? "?state=complete" : "") +
-          // 지금은 state=myOrder로 get 요청을 보낼경우 state 값을 설정하지 않고 보낸것고 같은 데이터가 넘어옴
-          // 일단은 임시로 state=complete로 요청하도록 해놓음
-          (contentsFilterState === "myOrder" ? "?state=complete" : "")
-        }`
-      );
-      setContentsDataState(response.data);
-      console.log(response);
+      if (contentsFilterState !== "myOrder") {
+        const response = await axios.get(
+          `http://localhost:8080/orders/detail${
+            (pageState !== 1 ? "?page=" + pageState : "") +
+            (contentsFilterState === "finished" ? "?state=complete" : "")
+          }`,
+          {
+            headers: {
+              Authorization: `${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        setContentsDataState(response.data);
+        console.log(response);
+      } else {
+        const response = await axios.get(
+          `http://localhost:8080/users/orders${
+            pageState !== 1 ? "?page=" + pageState : ""
+          }`,
+          {
+            headers: {
+              Authorization: `${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        setContentsDataState(response.data);
+        console.log(response);
+      }
     } catch (err) {
       console.log(err);
     }
