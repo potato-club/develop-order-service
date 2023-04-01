@@ -7,9 +7,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function OrderDetail() {
-  // 토큰값은 로그인 할때마다 갱신해주기
-  const TOKEN =
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3bnNndWRkbDU3M0BuYXZlci5jb20iLCJyb2xlIjoiVVNFUiIsImV4cCI6MTY3OTkyNDc0N30.QmDIr7NG3-CtxOm3vzWZ46rbDhNNitd4L2ewr70qCGE";
   const router = useRouter();
   const id = router.query.id;
   const [detailDataState, setDetailDataState] = useState<any>();
@@ -19,7 +16,7 @@ export default function OrderDetail() {
         `http://localhost:8080/orders/detail/${id}`,
         {
           headers: {
-            Authorization: `${TOKEN}`,
+            Authorization: `${localStorage.getItem("token")}`,
           },
         }
       );
@@ -57,21 +54,22 @@ export default function OrderDetail() {
     <Wrapper>
       <DetailTop />
       <DetailContnets
-        title={detailDataState && detailDataState.siteName}
-        id={detailDataState && detailDataState.id}
-        purpose={detailDataState && detailDataState.purpose}
-        startDate={detailDataState && detailDataState.createdDate.split("T")[0]}
-        endDate={
-          detailDataState &&
-          detailDataState.completedDate &&
-          detailDataState.completedDate.split("T")[0]
-        }
-        progress={detailDataState && detailDataState.state}
-        // page login db starRating 등의 데이터는 완료되지 않은 발주에서는 존재하지 않음
-        page={detailDataState && detailDataState.page}
-        login={detailDataState && detailDataState.login}
-        db={detailDataState && detailDataState.database}
-        starRating={detailDataState && detailDataState.rating}
+        detailData={detailDataState && detailDataState}
+        // title={detailDataState && detailDataState.siteName}
+        // id={detailDataState && detailDataState.id}
+        // purpose={detailDataState && detailDataState.purpose}
+        // startDate={detailDataState && detailDataState.createdDate.split("T")[0]}
+        // endDate={
+        //   detailDataState &&
+        //   detailDataState.completedDate &&
+        //   detailDataState.completedDate.split("T")[0]
+        // }
+        // progress={detailDataState && detailDataState.state}
+        // // page login db starRating 등의 데이터는 완료되지 않은 발주에서는 존재하지 않음
+        // page={detailDataState && detailDataState.page}
+        // login={detailDataState && detailDataState.login}
+        // db={detailDataState && detailDataState.database}
+        // starRating={detailDataState && detailDataState.rating}
       />
       <DetailBottm
         like={detailDataState && detailDataState.like}

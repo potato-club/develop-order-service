@@ -3,42 +3,37 @@ import Image from "next/image";
 import checkIcon from "../../../public/img/detail/check.png";
 import { PreviewSwiper } from "./PreviewSwiper";
 
-// 상위 컴포넌트 orderDetail에서 데이터 받아오도록 변경하자
-// review.png arrow.png 경로 public으로변경됐다고 함
-export const DetailContnets = ({
-  title,
-  id,
-  purpose,
-  startDate,
-  endDate,
-  progress,
-  page,
-  login,
-  db,
-  starRating,
-}: {
-  title: any;
+type contentsTypes = {
+  title: string;
   id: number;
   purpose: string;
-  startDate: string;
-  endDate: string;
+  createdDate: string;
+  completedDate: string;
   progress: string;
   page: any;
   login: any;
   db: any;
   starRating: any;
+};
+
+// 상위 컴포넌트 orderDetail에서 데이터 받아오도록 변경하자
+// review.png arrow.png 경로 public으로변경됐다고 함
+export const DetailContnets = ({
+  detailData,
+}: {
+  detailData: contentsTypes;
 }) => {
   return (
     <WrapperContents>
       <OrderTitleDiv>
-        <OrderTitleH2>{title}</OrderTitleH2>
+        <OrderTitleH2>{detailData && detailData.title}</OrderTitleH2>
       </OrderTitleDiv>
       <OrderInfoDiv data={""}>
         <InfoLabelDiv>
           <OrderInfoP>목적</OrderInfoP>
         </InfoLabelDiv>
         <InfoDataDiv1>
-          <OrderInfoP>{purpose}</OrderInfoP>
+          <OrderInfoP>{detailData && detailData.purpose}</OrderInfoP>
         </InfoDataDiv1>
       </OrderInfoDiv>
       <OrderInfoDiv data={""}>
@@ -49,16 +44,22 @@ export const DetailContnets = ({
           <DataLabelDiv>
             <OrderInfoP>시작일</OrderInfoP>
           </DataLabelDiv>
-          <OrderInfoP>{startDate}</OrderInfoP>
+          <OrderInfoP>
+            {detailData && detailData.createdDate.split("T")[0]}
+          </OrderInfoP>
         </InfoDataDiv2>
         <InfoDataDiv2>
           <DataLabelDiv>
             <OrderInfoP>종료일</OrderInfoP>
           </DataLabelDiv>
-          <OrderInfoP>{endDate}</OrderInfoP>
+          <OrderInfoP>
+            {detailData &&
+              detailData.completedDate &&
+              detailData.completedDate.split("T")[0]}
+          </OrderInfoP>
         </InfoDataDiv2>
       </OrderInfoDiv>
-      <OrderInfoDiv data={progress}>
+      <OrderInfoDiv data={detailData && detailData.progress}>
         <InfoLabelDiv>
           <OrderInfoP>추가 옵션</OrderInfoP>
         </InfoLabelDiv>
@@ -67,8 +68,14 @@ export const DetailContnets = ({
             <OrderInfoP>페이지 추가</OrderInfoP>
           </DataLabelDiv>
           <CheckBoxDiv>
-            <CheckImgDiv additional={page}>
-              <Image src={checkIcon} alt="icon" width={16} height={16}></Image>
+            <CheckImgDiv additional={detailData && detailData.page}>
+              <Image
+                src={checkIcon}
+                alt="icon"
+                width={21}
+                height={21}
+                style={{ margin: "auto" }}
+              ></Image>
             </CheckImgDiv>
           </CheckBoxDiv>
         </InfoDataDiv3>
@@ -77,8 +84,14 @@ export const DetailContnets = ({
             <OrderInfoP>로그인 기능</OrderInfoP>
           </DataLabelDiv>
           <CheckBoxDiv>
-            <CheckImgDiv additional={login}>
-              <Image src={checkIcon} alt="icon" width={16} height={16}></Image>
+            <CheckImgDiv additional={detailData && detailData.login}>
+              <Image
+                src={checkIcon}
+                alt="icon"
+                width={21}
+                height={21}
+                style={{ margin: "auto" }}
+              ></Image>
             </CheckImgDiv>
           </CheckBoxDiv>
         </InfoDataDiv3>
@@ -87,13 +100,19 @@ export const DetailContnets = ({
             <OrderInfoP>DB</OrderInfoP>
           </DataLabelDiv>
           <CheckBoxDiv>
-            <CheckImgDiv additional={db}>
-              <Image src={checkIcon} alt="icon" width={16} height={16}></Image>
+            <CheckImgDiv additional={detailData && detailData.db}>
+              <Image
+                src={checkIcon}
+                alt="icon"
+                width={21}
+                height={21}
+                style={{ margin: "auto" }}
+              ></Image>
             </CheckImgDiv>
           </CheckBoxDiv>
         </InfoDataDiv3>
       </OrderInfoDiv>
-      <OrderInfoDiv data={progress}>
+      <OrderInfoDiv data={detailData && detailData.progress}>
         <InfoLabelDiv>
           <OrderInfoP>별점</OrderInfoP>
         </InfoLabelDiv>
@@ -193,11 +212,11 @@ const CheckBoxDiv = styled.div`
   border: 1px solid black;
 `;
 
-const CheckImgDiv = styled.div<{ additional: Boolean }>`
-  visibility: ${(props) => (props.additional === false ? "hidden" : "")};
+const CheckImgDiv = styled.div<{ additional: any }>`
+  visibility: ${(props) =>
+    props.additional !== true || props.additional === 0 ? "hidden" : ""};
   width: 23px;
   height: 23px;
   display: flex;
   align-items: center;
-  padding: 0 0;
 `;

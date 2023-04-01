@@ -10,15 +10,14 @@ import Image from "next/image";
 export const PreviewSwiper = () => {
   const list = [1, 2, 3, 4, 5];
   const list2 = [];
-  const TESTIMGURL = "https://cdn-icons-png.flaticon.com/512/3305/3305887.png";
 
   SwiperCore.use([Navigation, Pagination]);
   const settings = {
     navigation: true,
-    spaceBetween: 50,
+    pagination: true,
+    spaceBetween: -50,
     slidesPerView: 3,
     centeredSlides: true,
-    loop: true,
   };
 
   return (
@@ -74,17 +73,37 @@ const NoPrevImgP = styled.p`
 `;
 
 const StyledSwiperSlide = styled(SwiperSlide)`
+  position: relative;
   width: 450px;
   height: 600px;
   border: 1px solid black;
+  background-color: beige;
+  visibility: hidden;
+  &.swiper-slide-prev {
+    visibility: visible;
+    background-color: aqua;
+    top: -50px;
+    z-index: -1;
+  }
+  &.swiper-slide-next {
+    visibility: visible;
+    background-color: aqua;
+    top: -50px;
+    z-index: -1;
+  }
+  &.swiper-slide-active {
+    visibility: visible;
+  }
 `;
 
 const StyledRoot = styled.div`
   .swiper {
     &-wrapper,
     &-container {
+      display: flex;
+      align-items: center;
       width: 1000px;
-      height: 600px;
+      height: 945px;
       margin: 0 auto;
     }
     &-button-disabled {
