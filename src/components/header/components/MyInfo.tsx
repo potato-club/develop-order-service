@@ -38,6 +38,7 @@ export const MyInfo = () => {
           picture: data.data.picture,
           role: data.data.role,
         });
+        console.log(data);
       });
   };
 
