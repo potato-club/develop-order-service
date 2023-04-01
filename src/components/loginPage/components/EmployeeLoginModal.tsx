@@ -5,6 +5,9 @@ import { customColor } from "../../customColor";
 import Image from "next/image";
 import { TbWorld } from "react-icons/tb";
 import { IoMdClose } from "react-icons/io";
+import { FieldValues, useForm } from "react-hook-form";
+import axios from "axios";
+import Router from "next/router";
 
 interface Props {
   isOpen: boolean;
@@ -15,7 +18,26 @@ interface StyleProps {
 }
 
 export const EmployeeLoginModal = ({ isOpen, closeModal }: Props) => {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
   const modalRef = useRef(null);
+
+  const submit = (data: FieldValues) => {
+    axios
+      .post("http://localhost:8080/admin/login", {
+        adminId: data["employeeId"],
+        adminPw: data["employeePw"],
+      })
+      .then((data) => {
+        localStorage.setItem("token", data.data["accessToken"]);
+        localStorage.setItem("refreshToken", data.data["refreshToken"]);
+        Router.reload();
+      });
+  };
+
   return (
     <CSSTransition
       in={isOpen}
@@ -24,7 +46,7 @@ export const EmployeeLoginModal = ({ isOpen, closeModal }: Props) => {
       classNames="loginModal"
     >
       <Wrapper isOpen={isOpen} ref={modalRef}>
-        <WrapperInner>
+        <WrapperInner onSubmit={handleSubmit(submit)}>
           <CloseButton onClick={closeModal}>
             <IoMdClose />
           </CloseButton>
@@ -36,13 +58,23 @@ export const EmployeeLoginModal = ({ isOpen, closeModal }: Props) => {
           <Login>
             <LoginBox>
               <Label>아이디</Label>
-              <Input type="text" placeholder="Enter ID" />
+              <Input
+                type="text"
+                placeholder="Enter ID"
+                {...register("employeeId", { required: true })}
+              />
+              {errors["employeeId"] && <Error>아이디를 입력해주세요</Error>}
             </LoginBox>
             <LoginBox>
               <Label>비밀번호</Label>
-              <Input type="password" placeholder="Enter PW" />
+              <Input
+                type="password"
+                placeholder="Enter PW"
+                {...register("employeePw", { required: true })}
+              />
+              {errors["employeePw"] && <Error>비밀번호를 입력해주세요</Error>}
             </LoginBox>
-            <LoginButton>로그인</LoginButton>
+            <LoginButton type="submit">로그인</LoginButton>
           </Login>
         </WrapperInner>
       </Wrapper>
@@ -61,7 +93,7 @@ const Wrapper = styled.div<StyleProps>`
   left: 50%;
   transform: translate(-50%, -50%);
 `;
-const WrapperInner = styled.div`
+const WrapperInner = styled.form`
   display: flex;
   flex-direction: column;
   position: relative;
@@ -124,6 +156,7 @@ const Login = styled.div`
 const LoginBox = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
   gap: 10px;
   width: 100%;
 `;
@@ -151,4 +184,13 @@ const LoginButton = styled.button`
   background: ${customColor.indigo3};
   padding: 12px;
   margin: 16px 0;
+`;
+const Error = styled.div`
+  display: flex;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 12px;
+  color: ${customColor.darkGray};
+  transform: translate(0, calc(100% + 2px));
 `;

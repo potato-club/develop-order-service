@@ -9,7 +9,9 @@ export const FooterLogin = () => {
       <WrapperInner>
         <Content>
           발주신청을 하고싶다면?
-          <LoginButton onClick={() => Router.push(pathName.LOGIN)}>
+          <LoginButton
+            onClick={() => Router.replace(pathName.LOGIN, Router.pathname)}
+          >
             로그인하기
           </LoginButton>
         </Content>
