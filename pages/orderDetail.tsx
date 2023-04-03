@@ -50,27 +50,10 @@ export default function OrderDetail() {
     //   "rating": 0,
     //   "siteName": "string",
     //   "state": "COMPLETE"
-    // }
+    // }  
     <Wrapper>
       <DetailTop />
-      <DetailContnets
-        detailData={detailDataState && detailDataState}
-        // title={detailDataState && detailDataState.siteName}
-        // id={detailDataState && detailDataState.id}
-        // purpose={detailDataState && detailDataState.purpose}
-        // startDate={detailDataState && detailDataState.createdDate.split("T")[0]}
-        // endDate={
-        //   detailDataState &&
-        //   detailDataState.completedDate &&
-        //   detailDataState.completedDate.split("T")[0]
-        // }
-        // progress={detailDataState && detailDataState.state}
-        // // page login db starRating 등의 데이터는 완료되지 않은 발주에서는 존재하지 않음
-        // page={detailDataState && detailDataState.page}
-        // login={detailDataState && detailDataState.login}
-        // db={detailDataState && detailDataState.database}
-        // starRating={detailDataState && detailDataState.rating}
-      />
+      <DetailContnets detailData={detailDataState && detailDataState} />
       <DetailBottm
         like={detailDataState && detailDataState.like}
         progress={detailDataState && detailDataState.state}

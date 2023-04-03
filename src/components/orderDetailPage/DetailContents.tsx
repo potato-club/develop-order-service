@@ -15,9 +15,6 @@ type contentsTypes = {
   db: any;
   starRating: any;
 };
-
-// 상위 컴포넌트 orderDetail에서 데이터 받아오도록 변경하자
-// review.png arrow.png 경로 public으로변경됐다고 함
 export const DetailContnets = ({
   detailData,
 }: {
