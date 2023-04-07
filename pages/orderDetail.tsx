@@ -28,29 +28,11 @@ export default function OrderDetail() {
 
   useEffect(() => {
     if (!router.isReady) return;
+
     getDetailData();
   }, [router.isReady]);
 
   return (
-    // {
-    //   "completedDate": "2023-03-20T11:03:08.011Z",
-    //   "createdDate": "2023-03-20T11:03:08.011Z",
-    //   "database": true,
-    //   "id": 0,
-    //   "images": [
-    //     {
-    //       "id": 0,
-    //       "imageName": "string",
-    //       "imageUrl": "string"
-    //     }
-    //   ],
-    //   "login": true,
-    //   "page": 0,
-    //   "purpose": "string",
-    //   "rating": 0,
-    //   "siteName": "string",
-    //   "state": "COMPLETE"
-    // }  
     <Wrapper>
       <DetailTop />
       <DetailContnets detailData={detailDataState && detailDataState} />

@@ -20,7 +20,7 @@ export const DetailBottm = ({
           {like}
         </LikeButtonP>
       </LikeButton>
-      {/* usenavigate를 이용해서 목록으로 돌아갈 예정 */}
+
       <ListButton>목록</ListButton>
     </BottomWrapper>
   );
