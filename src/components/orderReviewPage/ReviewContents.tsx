@@ -39,11 +39,16 @@ export const ReviewContnets = ({ contentsData }: { contentsData: any }) => {
                   });
                 }}
               >
-                <PreviewImg />
+                <PreviewImg>
+                  웹페이지
+                  <br />
+                  미리보기
+                </PreviewImg>
                 <OrderTitleH2>
                   #{item.id} {item.siteName}
                 </OrderTitleH2>
               </RouterA>
+
               <OrderInfoP>사용 목적 : {item.purpose}</OrderInfoP>
               <OrderInfoP>
                 제작 기간 : {item.createdDate?.split("T")[0]}~
@@ -115,9 +120,14 @@ const AlertDiv = styled.div`
 `;
 
 const PreviewImg = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
   width: 150px;
   height: 200px;
-  background-color: #9c9090;
+  background-color: ${customColor.blue};
   margin-right: 30px;
   float: left;
 `;
