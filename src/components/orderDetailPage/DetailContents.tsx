@@ -2,9 +2,11 @@ import styled from "styled-components";
 import Image from "next/image";
 import checkIcon from "../../../public/img/detail/check.png";
 import { PreviewSwiper } from "./PreviewSwiper";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 type contentsTypes = {
-  title: string;
+  siteName: string;
   id: number;
   purpose: string;
   createdDate: string;
@@ -20,11 +22,36 @@ export const DetailContnets = ({
 }: {
   detailData: contentsTypes;
 }) => {
+  const router = useRouter();
+  const onClickOrderCancelButton = async () => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8080/orders/${detailData.id}`,
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+    router.back();
+  };
+
   return (
     <WrapperContents>
-      <OrderTitleDiv>
-        <OrderTitleH2>{detailData && detailData.title}</OrderTitleH2>
-      </OrderTitleDiv>
+      <OrderTitleWrapper>
+        <OrderTitleDiv>
+          <OrderTitleH2>{detailData && detailData.siteName}</OrderTitleH2>
+        </OrderTitleDiv>
+        <OrderCanaleButtonDiv>
+          <OrderCanaleButton onClick={onClickOrderCancelButton}>
+            발주 취소
+          </OrderCanaleButton>
+        </OrderCanaleButtonDiv>
+      </OrderTitleWrapper>
       <OrderInfoDiv data={""}>
         <InfoLabelDiv>
           <OrderInfoP>목적</OrderInfoP>
@@ -133,16 +160,40 @@ const WrapperContents = styled.div`
   padding-bottom: 50px;
 `;
 
-const OrderTitleDiv = styled.div`
+const OrderTitleWrapper = styled.div`
+  display: flex;
   width: 100%;
   height: 70px;
   border-top: 1px solid black;
+`;
+
+const OrderTitleDiv = styled.div`
   padding-left: 21px;
+  height: 70px;
+  width: 795px;
+  border-right: 1px solid black;
 `;
 
 const OrderTitleH2 = styled.h2`
+  flex-grow: 1;
   font-size: 27px;
   line-height: 70px;
+`;
+
+const OrderCanaleButtonDiv = styled.div`
+  display: flex;
+  align-items: center;
+  height: 70px;
+  width: 205px;
+`;
+
+const OrderCanaleButton = styled.button`
+  width: 100px;
+  height: 40px;
+  border-radius: 7px;
+  font-size: 17px;
+  border: 1px solid black;
+  margin: auto;
 `;
 
 const OrderInfoDiv = styled.div<{ data: String }>`
