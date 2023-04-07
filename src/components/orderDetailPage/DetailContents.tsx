@@ -11,7 +11,7 @@ type contentsTypes = {
   purpose: string;
   createdDate: string;
   completedDate: string;
-  progress: string;
+  state: string;
   page: any;
   login: any;
   db: any;
@@ -46,13 +46,13 @@ export const DetailContnets = ({
         <OrderTitleDiv>
           <OrderTitleH2>{detailData && detailData.siteName}</OrderTitleH2>
         </OrderTitleDiv>
-        <OrderCanaleButtonDiv>
+        <OrderCanaleButtonDiv progress={detailData && detailData.state}>
           <OrderCanaleButton onClick={onClickOrderCancelButton}>
             발주 취소
           </OrderCanaleButton>
         </OrderCanaleButtonDiv>
       </OrderTitleWrapper>
-      <OrderInfoDiv data={""}>
+      <OrderInfoDiv progress={""}>
         <InfoLabelDiv>
           <OrderInfoP>목적</OrderInfoP>
         </InfoLabelDiv>
@@ -60,7 +60,7 @@ export const DetailContnets = ({
           <OrderInfoP>{detailData && detailData.purpose}</OrderInfoP>
         </InfoDataDiv1>
       </OrderInfoDiv>
-      <OrderInfoDiv data={""}>
+      <OrderInfoDiv progress={""}>
         <InfoLabelDiv>
           <OrderInfoP>제작기간</OrderInfoP>
         </InfoLabelDiv>
@@ -83,7 +83,7 @@ export const DetailContnets = ({
           </OrderInfoP>
         </InfoDataDiv2>
       </OrderInfoDiv>
-      <OrderInfoDiv data={detailData && detailData.progress}>
+      <OrderInfoDiv progress={""}>
         <InfoLabelDiv>
           <OrderInfoP>추가 옵션</OrderInfoP>
         </InfoLabelDiv>
@@ -136,13 +136,13 @@ export const DetailContnets = ({
           </CheckBoxDiv>
         </InfoDataDiv3>
       </OrderInfoDiv>
-      <OrderInfoDiv data={detailData && detailData.progress}>
+      <OrderInfoDiv progress={detailData && detailData.state}>
         <InfoLabelDiv>
           <OrderInfoP>별점</OrderInfoP>
         </InfoLabelDiv>
         <InfoDataDiv1></InfoDataDiv1>
       </OrderInfoDiv>
-      <OrderInfoDiv data={""}>
+      <OrderInfoDiv progress={""}>
         <PreviewLabelDiv>
           <OrderInfoP>웹페이지 미리보기</OrderInfoP>
         </PreviewLabelDiv>
@@ -180,8 +180,8 @@ const OrderTitleH2 = styled.h2`
   line-height: 70px;
 `;
 
-const OrderCanaleButtonDiv = styled.div`
-  display: flex;
+const OrderCanaleButtonDiv = styled.div<{ progress: string }>`
+  display: ${(props) => (props.progress === "START" ? "flex" : "none")};
   align-items: center;
   height: 70px;
   width: 205px;
@@ -196,8 +196,9 @@ const OrderCanaleButton = styled.button`
   margin: auto;
 `;
 
-const OrderInfoDiv = styled.div<{ data: String }>`
-  display: ${(props) => (props.data === "WORKING" ? "none" : "")};
+const OrderInfoDiv = styled.div<{ progress: String }>`
+  display: ${(props) =>
+    props.progress === "" || props.progress === "COMPLETED" ? "" : "none"};
   width: 100%;
   height: 50px;
   border-top: 1px solid black;
