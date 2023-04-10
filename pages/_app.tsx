@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Router from "next/router";
 import { GlobalStyle } from "../styles/global.style";
 import type { AppProps } from "next/app";
 import { Header } from "../src/components/header/Header";
@@ -10,15 +11,19 @@ import { ScrollCSS } from "../src/components/layout/ScrollCSS";
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <RecoilRoot>
-      <Wrapper>
-        <GlobalStyle />
-        <ScrollCSS />
-        <Header />
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-        <Footer />
-      </Wrapper>
+      {Router.asPath.includes("/admin") ? (
+        <Component {...pageProps} />
+      ) : (
+        <Wrapper>
+          <GlobalStyle />
+          <ScrollCSS />
+          <Header />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+          <Footer />
+        </Wrapper>
+      )}
     </RecoilRoot>
   );
 }
