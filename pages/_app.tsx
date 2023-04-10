@@ -10,22 +10,9 @@ import { ScrollCSS } from "../src/components/layout/ScrollCSS";
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <RecoilRoot>
-      <Wrapper>
-        <GlobalStyle />
-        <ScrollCSS />
-        <Header />
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-        <Footer />
-      </Wrapper>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </RecoilRoot>
   );
 }
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  min-height: 100vh;
-`;
