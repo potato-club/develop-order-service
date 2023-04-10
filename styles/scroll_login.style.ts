@@ -24,7 +24,7 @@ html {
     }
     ::-webkit-scrollbar-button:end:increment {
     background-color: transparent;
-    height: 125px;
+    height: 130px;
     }
   }
   `;
