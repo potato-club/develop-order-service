@@ -11,7 +11,11 @@ export const LoginPage = () => {
 
   useEffect(() => {
     if (localStorage.getItem("token") !== null) {
-      Router.back();
+      if (Router.asPath.startsWith("/login")) {
+        Router.back();
+      } else {
+        Router.back();
+      }
     } else {
       const token = new URL(window.location.href).searchParams.get(
         "accesstoken"

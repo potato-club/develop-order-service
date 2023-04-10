@@ -2,33 +2,57 @@ import styled from "styled-components";
 import Image from "next/image";
 import checkIcon from "../../../public/img/detail/check.png";
 import { PreviewSwiper } from "./PreviewSwiper";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 type contentsTypes = {
-  title: string;
+  siteName: string;
   id: number;
   purpose: string;
   createdDate: string;
   completedDate: string;
-  progress: string;
+  state: string;
   page: any;
   login: any;
   db: any;
   starRating: any;
 };
-
-// 상위 컴포넌트 orderDetail에서 데이터 받아오도록 변경하자
-// review.png arrow.png 경로 public으로변경됐다고 함
 export const DetailContnets = ({
   detailData,
 }: {
   detailData: contentsTypes;
 }) => {
+  const router = useRouter();
+  const onClickOrderCancelButton = async () => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8080/orders/${detailData.id}`,
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+    router.back();
+  };
+
   return (
     <WrapperContents>
-      <OrderTitleDiv>
-        <OrderTitleH2>{detailData && detailData.title}</OrderTitleH2>
-      </OrderTitleDiv>
-      <OrderInfoDiv data={""}>
+      <OrderTitleWrapper>
+        <OrderTitleDiv>
+          <OrderTitleH2>{detailData && detailData.siteName}</OrderTitleH2>
+        </OrderTitleDiv>
+        <OrderCanaleButtonDiv progress={detailData && detailData.state}>
+          <OrderCanaleButton onClick={onClickOrderCancelButton}>
+            발주 취소
+          </OrderCanaleButton>
+        </OrderCanaleButtonDiv>
+      </OrderTitleWrapper>
+      <OrderInfoDiv progress={""}>
         <InfoLabelDiv>
           <OrderInfoP>목적</OrderInfoP>
         </InfoLabelDiv>
@@ -36,7 +60,7 @@ export const DetailContnets = ({
           <OrderInfoP>{detailData && detailData.purpose}</OrderInfoP>
         </InfoDataDiv1>
       </OrderInfoDiv>
-      <OrderInfoDiv data={""}>
+      <OrderInfoDiv progress={""}>
         <InfoLabelDiv>
           <OrderInfoP>제작기간</OrderInfoP>
         </InfoLabelDiv>
@@ -59,7 +83,7 @@ export const DetailContnets = ({
           </OrderInfoP>
         </InfoDataDiv2>
       </OrderInfoDiv>
-      <OrderInfoDiv data={detailData && detailData.progress}>
+      <OrderInfoDiv progress={""}>
         <InfoLabelDiv>
           <OrderInfoP>추가 옵션</OrderInfoP>
         </InfoLabelDiv>
@@ -112,13 +136,13 @@ export const DetailContnets = ({
           </CheckBoxDiv>
         </InfoDataDiv3>
       </OrderInfoDiv>
-      <OrderInfoDiv data={detailData && detailData.progress}>
+      <OrderInfoDiv progress={detailData && detailData.state}>
         <InfoLabelDiv>
           <OrderInfoP>별점</OrderInfoP>
         </InfoLabelDiv>
         <InfoDataDiv1></InfoDataDiv1>
       </OrderInfoDiv>
-      <OrderInfoDiv data={""}>
+      <OrderInfoDiv progress={""}>
         <PreviewLabelDiv>
           <OrderInfoP>웹페이지 미리보기</OrderInfoP>
         </PreviewLabelDiv>
@@ -136,20 +160,45 @@ const WrapperContents = styled.div`
   padding-bottom: 50px;
 `;
 
-const OrderTitleDiv = styled.div`
+const OrderTitleWrapper = styled.div`
+  display: flex;
   width: 100%;
   height: 70px;
   border-top: 1px solid black;
+`;
+
+const OrderTitleDiv = styled.div`
   padding-left: 21px;
+  height: 70px;
+  width: 795px;
+  border-right: 1px solid black;
 `;
 
 const OrderTitleH2 = styled.h2`
+  flex-grow: 1;
   font-size: 27px;
   line-height: 70px;
 `;
 
-const OrderInfoDiv = styled.div<{ data: String }>`
-  display: ${(props) => (props.data === "WORKING" ? "none" : "")};
+const OrderCanaleButtonDiv = styled.div<{ progress: string }>`
+  display: ${(props) => (props.progress === "START" ? "flex" : "none")};
+  align-items: center;
+  height: 70px;
+  width: 205px;
+`;
+
+const OrderCanaleButton = styled.button`
+  width: 100px;
+  height: 40px;
+  border-radius: 7px;
+  font-size: 17px;
+  border: 1px solid black;
+  margin: auto;
+`;
+
+const OrderInfoDiv = styled.div<{ progress: String }>`
+  display: ${(props) =>
+    props.progress === "" || props.progress === "COMPLETED" ? "" : "none"};
   width: 100%;
   height: 50px;
   border-top: 1px solid black;

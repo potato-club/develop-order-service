@@ -72,10 +72,7 @@ export default function OrderReview() {
   };
 
   useEffect(() => {
-    // console.log(pageState);
-    // console.log(contentsFilterState);
-    // console.log(sortOptionState);
-    // console.log(conceptOptionState);
+    console.log(localStorage.getItem("token"));
     getReviewData();
   }, [pageState, contentsFilterState, sortOptionState, conceptOptionState]);
 

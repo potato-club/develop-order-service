@@ -15,21 +15,30 @@ export const PreviewSwiper = () => {
   const settings = {
     navigation: true,
     pagination: true,
-    spaceBetween: -50,
+    spaceBetween: -175,
     slidesPerView: 3,
     centeredSlides: true,
   };
 
   return (
     <PreviewSiperWrapper>
-      {list.length === 0 ? (
-        <NoPreviewImgDiv>
-          <NoPrevImgP>
-            웹페이지
-            <br />
-            미리보기
-          </NoPrevImgP>
-        </NoPreviewImgDiv>
+      {list2.length === 0 ? (
+        <StyledRoot>
+          <Swiper {...settings}>
+            {[1, 2, 3].map((item) => (
+              <StyledSwiperSlide key={item}>
+                {" "}
+                <NoPreviewImgDiv>
+                  <NoPrevImgP>
+                    웹페이지
+                    <br />
+                    미리보기
+                  </NoPrevImgP>
+                </NoPreviewImgDiv>
+              </StyledSwiperSlide>
+            ))}
+          </Swiper>
+        </StyledRoot>
       ) : (
         <SwiperContainer>
           <StyledRoot>
@@ -58,8 +67,8 @@ const SwiperContainer = styled.div`
 `;
 
 const NoPreviewImgDiv = styled.div`
-  width: 450px;
-  height: 600px;
+  width: 448px;
+  height: 598px;
   margin: 0 auto;
   background-color: ${customColor.blue};
   display: flex;
