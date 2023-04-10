@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const AdminPage = () => {
-  return <></>;
+  return <Wrapper>123</Wrapper>;
 };
 
 const Wrapper = styled.section``;
