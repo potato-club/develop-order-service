@@ -7,7 +7,6 @@ import { pathName } from "../../../config/pathName";
 import { useRecoilState } from "recoil";
 import { isLogin, userInformation } from "../../../recoil/userInfo";
 import axios from "axios";
-import { log } from "console";
 
 interface ButtonProps {
   isHover?: boolean;
@@ -41,6 +40,10 @@ export const MyInfo = () => {
       });
   };
 
+  const handleGoLoginPage = () => {
+    localStorage.setItem("prevPath", Router.asPath);
+    Router.push(pathName.LOGIN);
+  };
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
@@ -67,11 +70,7 @@ export const MyInfo = () => {
               <ActionButton isHover={isHover}>내정보</ActionButton>
             </>
           ) : (
-            <ActionButton
-              onClick={() => Router.replace(pathName.LOGIN, Router.pathname)}
-            >
-              로그인
-            </ActionButton>
+            <ActionButton onClick={handleGoLoginPage}>로그인</ActionButton>
           )}
         </LogAction>
         <Img>
