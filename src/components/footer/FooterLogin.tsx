@@ -4,16 +4,17 @@ import { pathName } from "../../config/pathName";
 import { customColor } from "../customColor";
 
 export const FooterLogin = () => {
+  const handleGoLoginPage = () => {
+    localStorage.setItem("prevPath", Router.asPath);
+    Router.push(pathName.LOGIN);
+  };
+
   return (
     <Wrapper>
       <WrapperInner>
         <Content>
           발주신청을 하고싶다면?
-          <LoginButton
-            onClick={() => Router.replace(pathName.LOGIN, Router.pathname)}
-          >
-            로그인하기
-          </LoginButton>
+          <LoginButton onClick={handleGoLoginPage}>로그인하기</LoginButton>
         </Content>
       </WrapperInner>
     </Wrapper>
