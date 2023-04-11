@@ -51,6 +51,8 @@ const Wrapper = styled.article<StyleProps>`
 const Content = styled.p`
   font-size: 16px;
   letter-spacing: -0.5px;
+  text-align: center;
+  word-break: keep-all;
 `;
 const Button = styled.button`
   display: flex;
