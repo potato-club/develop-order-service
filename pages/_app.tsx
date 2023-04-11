@@ -4,23 +4,15 @@ import type { AppProps } from "next/app";
 import { Header } from "../src/components/header/Header";
 import { Footer } from "../src/components/footer/Footer";
 import { Layout } from "../src/components/layout/Layout";
+import { RecoilRoot } from "recoil";
+import { ScrollCSS } from "../src/components/layout/ScrollCSS";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <Wrapper>
-      <GlobalStyle />
-      <Header />
+    <RecoilRoot>
       <Layout>
         <Component {...pageProps} />
       </Layout>
-      <Footer />
-    </Wrapper>
+    </RecoilRoot>
   );
 }
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  min-height: 100vh;
-`;

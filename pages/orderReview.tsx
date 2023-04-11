@@ -4,7 +4,6 @@ import { ReviewContnets } from "../src/components/orderReviewPage/ReviewContents
 import { ReviewBottm } from "../src/components/orderReviewPage/ReviewBottom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { finished } from "stream";
 
 export default function OrderReview() {
   const [contentsDataState, setContentsDataState] = useState<object>({});
@@ -39,27 +38,41 @@ export default function OrderReview() {
   //
   const getReviewData = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8080/orders/detail${
-          (pageState !== 1 ? "?page=" + pageState : "") +
-          (contentsFilterState === "finished" ? "?state=complete" : "") +
-          // 지금은 state=myOrder로 get 요청을 보낼경우 state 값을 설정하지 않고 보낸것고 같은 데이터가 넘어옴
-          // 일단은 임시로 state=complete로 요청하도록 해놓음
-          (contentsFilterState === "myOrder" ? "?state=complete" : "")
-        }`
-      );
-      setContentsDataState(response.data);
-      console.log(response);
+      if (contentsFilterState !== "myOrder") {
+        const response = await axios.get(
+          `http://localhost:8080/orders/detail${
+            (pageState !== 1 ? "?page=" + pageState : "") +
+            (contentsFilterState === "finished" ? "?state=complete" : "")
+          }`,
+          {
+            headers: {
+              Authorization: `${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        setContentsDataState(response.data);
+        console.log(response);
+      } else {
+        const response = await axios.get(
+          `http://localhost:8080/users/orders${
+            pageState !== 1 ? "?page=" + pageState : ""
+          }`,
+          {
+            headers: {
+              Authorization: `${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        setContentsDataState(response.data);
+        console.log(response);
+      }
     } catch (err) {
       console.log(err);
     }
   };
 
   useEffect(() => {
-    // console.log(pageState);
-    // console.log(contentsFilterState);
-    // console.log(sortOptionState);
-    // console.log(conceptOptionState);
+    console.log(localStorage.getItem("token"));
     getReviewData();
   }, [pageState, contentsFilterState, sortOptionState, conceptOptionState]);
 
@@ -88,4 +101,5 @@ const Wrapper = styled.div`
   width: 1024px;
   height: 1800px;
   padding: 0 12px;
+  margin-top: 80px;
 `;

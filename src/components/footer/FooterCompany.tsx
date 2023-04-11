@@ -35,6 +35,7 @@ const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 130px;
   align-items: center;
   background: ${customColor.indigo1};
 `;

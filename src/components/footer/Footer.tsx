@@ -1,14 +1,19 @@
 import styled from "styled-components";
-import { useState } from "react";
 import { FooterCompany } from "./FooterCompany";
 import { FooterLogin } from "./FooterLogin";
 import { customColor } from "../customColor";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { isLogin } from "../../recoil/userInfo";
 
 export const Footer = () => {
-  const [isLogin, setIsLogin] = useState(false);
+  const isLoginPage = useRouter().pathname === "/login";
+  const isLoginState = useRecoilValue(isLogin);
+
   return (
     <Wrapper>
-      {!isLogin && <FooterLogin />}
+      {!isLoginState && !isLoginPage && <FooterLogin />}
       <FooterCompany />
     </Wrapper>
   );
