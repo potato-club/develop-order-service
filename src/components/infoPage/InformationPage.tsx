@@ -1,8 +1,8 @@
 import styled, { keyframes } from "styled-components";
 import React from "react";
 import Image from "next/image";
-import information from "../../assets/img/information/information.png";
-import schedule from "../../assets/img/information/schedule.png";
+import information from "../../../public/img/information/information.png";
+import schedule from "../../../public/img/information/schedule.png";
 import Scheduler from "./components/Scheduler";
 import InfoCardWrapp from "./components/InfoCardWrapp";
 import { Link } from "react-scroll";

@@ -12,7 +12,7 @@ import {
   localeKo,
 } from "@mobiscroll/react";
 import styled from "styled-components";
-import character from "../../../assets/img/information/character.png";
+import character from "../../../../public/img/information/character.png";
 import Image from "next/image";
 import { useRecoilState } from "recoil";
 import { personState, PersonState } from "../../../recoil/infoCard";
