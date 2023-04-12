@@ -12,7 +12,7 @@ export const MenuButtons = () => {
     <Wrapper>
       <Button onClick={() => handleRouter(pathName.SIGNUP)}>발주신청</Button>
       <Button>발주현황</Button>
-      <Button>직원정보</Button>
+      <Button onClick={() => handleRouter(pathName.INFORMATION)}>직원정보</Button>
       <LastButton>후기</LastButton>
     </Wrapper>
   );
