@@ -10,26 +10,35 @@ import Image from "next/image";
 export const PreviewSwiper = () => {
   const list = [1, 2, 3, 4, 5];
   const list2 = [];
-  const TESTIMGURL = "https://cdn-icons-png.flaticon.com/512/3305/3305887.png";
 
   SwiperCore.use([Navigation, Pagination]);
   const settings = {
-    spaceBetween: 20,
-    navigation: {},
-    slidesPerView: 1,
-    loop: true,
+    navigation: true,
+    pagination: true,
+    spaceBetween: -175,
+    slidesPerView: 3,
+    centeredSlides: true,
   };
 
   return (
     <PreviewSiperWrapper>
-      {list.length === 0 ? (
-        <NoPreviewImgDiv>
-          <NoPrevImgP>
-            웹페이지
-            <br />
-            미리보기
-          </NoPrevImgP>
-        </NoPreviewImgDiv>
+      {list2.length === 0 ? (
+        <StyledRoot>
+          <Swiper {...settings}>
+            {[1, 2, 3].map((item) => (
+              <StyledSwiperSlide key={item}>
+                {" "}
+                <NoPreviewImgDiv>
+                  <NoPrevImgP>
+                    웹페이지
+                    <br />
+                    미리보기
+                  </NoPrevImgP>
+                </NoPreviewImgDiv>
+              </StyledSwiperSlide>
+            ))}
+          </Swiper>
+        </StyledRoot>
       ) : (
         <SwiperContainer>
           <StyledRoot>
@@ -58,8 +67,8 @@ const SwiperContainer = styled.div`
 `;
 
 const NoPreviewImgDiv = styled.div`
-  width: 450px;
-  height: 600px;
+  width: 448px;
+  height: 598px;
   margin: 0 auto;
   background-color: ${customColor.blue};
   display: flex;
@@ -73,17 +82,37 @@ const NoPrevImgP = styled.p`
 `;
 
 const StyledSwiperSlide = styled(SwiperSlide)`
+  position: relative;
   width: 450px;
   height: 600px;
   border: 1px solid black;
+  background-color: beige;
+  visibility: hidden;
+  &.swiper-slide-prev {
+    visibility: visible;
+    background-color: aqua;
+    top: -50px;
+    z-index: -1;
+  }
+  &.swiper-slide-next {
+    visibility: visible;
+    background-color: aqua;
+    top: -50px;
+    z-index: -1;
+  }
+  &.swiper-slide-active {
+    visibility: visible;
+  }
 `;
 
 const StyledRoot = styled.div`
   .swiper {
     &-wrapper,
     &-container {
-      width: 450px;
-      height: 600px;
+      display: flex;
+      align-items: center;
+      width: 1000px;
+      height: 945px;
       margin: 0 auto;
     }
     &-button-disabled {

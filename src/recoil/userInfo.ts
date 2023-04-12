@@ -1,7 +1,18 @@
 import { atom } from "recoil";
 
-export const isLoginState = atom<boolean>({
-  key: "isLoginState",
+export interface UserInfo {
+  email: string;
+  name: string;
+  picture: string;
+  role: string;
+}
+
+export const isLogin = atom<boolean>({
+  key: "isLogin",
   default: false,
 });
 
+export const userInformation = atom<UserInfo>({
+  key: "userInformation",
+  default: { email: "", name: "", picture: "", role: "" },
+});

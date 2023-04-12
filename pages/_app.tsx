@@ -8,6 +8,7 @@ import { RecoilRoot } from "recoil";
 import { useEffect, useState } from "react";
 import Router from "next/router";
 import LoadingSpinner from "../src/components/loading/LoadingSpinner";
+import { ScrollCSS } from "../src/components/layout/ScrollCSS";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
@@ -38,21 +39,9 @@ export default function App({ Component, pageProps }: AppProps) {
     
     <RecoilRoot>
        {loading && <LoadingSpinner fixed />}
-      <Wrapper>
-        <GlobalStyle />
-        <Header />
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-        <Footer />
-      </Wrapper>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </RecoilRoot>
   );
 }
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  min-height: 100vh;
-`;
