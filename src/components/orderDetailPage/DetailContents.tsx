@@ -23,6 +23,30 @@ export const DetailContnets = ({
   detailData: contentsTypes;
 }) => {
   const router = useRouter();
+
+  const onClickModifyButton = async () => {
+    const formData = new FormData();
+    const requestDto = { database: true, login: true, page: 8, stateKey: 6 };
+    if (requestDto) {
+      formData.append(
+        "orderDetail",
+        new Blob([JSON.stringify(requestDto)], { type: "application/json" })
+      );
+    }
+    const headers = {
+      Authorization: localStorage.getItem("token"),
+      "Content-Type": "multipart/form-data",
+    };
+
+    const response = await axios.put(
+      `http://localhost:8080/orders/detail/${detailData.id}`,
+      formData,
+      { headers }
+    );
+
+    router.back();
+  };
+
   const onClickOrderCancelButton = async () => {
     try {
       const response = await axios.delete(
@@ -42,6 +66,9 @@ export const DetailContnets = ({
 
   return (
     <WrapperContents>
+      <div>
+        <button onClick={onClickModifyButton}>발주 상태 변경</button>
+      </div>
       <OrderTitleWrapper>
         <OrderTitleDiv>
           <OrderTitleH2>{detailData && detailData.siteName}</OrderTitleH2>
