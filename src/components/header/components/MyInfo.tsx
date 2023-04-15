@@ -7,6 +7,7 @@ import { pathName } from "../../../config/pathName";
 import { useRecoilState } from "recoil";
 import { isLogin, userInformation } from "../../../recoil/userInfo";
 import axios from "axios";
+import { adminPathName } from "../../../config/adminPathName";
 
 interface ButtonProps {
   isHover?: boolean;
@@ -19,6 +20,9 @@ export const MyInfo = () => {
   const [userInfo, setUserInfo] = useRecoilState(userInformation);
 
   useEffect(() => {
+    if (userInfo.role === "ADMIN") {
+      Router.push(adminPathName.MAIN);
+    }
     setIsLoginState(localStorage?.getItem("token") !== null);
     if (localStorage?.getItem("token") !== null) {
       getUserInfo();
@@ -37,6 +41,7 @@ export const MyInfo = () => {
           picture: data.data.picture,
           role: data.data.role,
         });
+        data.data.role === "ADMIN" && Router.push(adminPathName.MAIN);
       });
   };
 
