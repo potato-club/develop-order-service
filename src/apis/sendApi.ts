@@ -1,10 +1,10 @@
-import { sessionService } from "../libs/sessionService";
+import { tokenService } from "../libs/tokenService";
 import api from "./api";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   get: async (url: string, params?: any) => {
-    const idSession = await sessionService.getIdSession();
+    const token = await tokenService.getToken();
 
     return params !== undefined
       ? api({
@@ -12,19 +12,19 @@ export default {
           method: "get",
           params: params,
           headers: {
-            Authorization: `${idSession}`,
+            Authorization: `${token}`,
           },
         })
       : api({
           url: url,
           method: "get",
           headers: {
-            Authorization: `${idSession}`,
+            Authorization: `${token}`,
           },
         });
   },
   post: async (url: string, params: any) => {
-    const idSession = await sessionService.getIdSession();
+    const token = await tokenService.getToken();
 
     return params !== undefined
       ? api({
@@ -32,19 +32,19 @@ export default {
           method: "post",
           data: params,
           headers: {
-            Authorization: `${idSession}`,
+            Authorization: `${token}`,
           },
         })
       : api({
           url: url,
           method: "post",
           headers: {
-            Authorization: `${idSession}`,
+            Authorization: `${token}`,
           },
         });
   },
   put: async (url: string, params: any) => {
-    const idSession = await sessionService.getIdSession();
+    const token = await tokenService.getToken();
 
     return params !== undefined
       ? api({
@@ -52,19 +52,19 @@ export default {
           method: "put",
           params: params,
           headers: {
-            Authorization: `${idSession}`,
+            Authorization: `${token}`,
           },
         })
       : api({
           url: url,
           method: "put",
           headers: {
-            Authorization: `${idSession}`,
+            Authorization: `${token}`,
           },
         });
   },
   delete: async (url: string, params?: any) => {
-    const idSession = await sessionService.getIdSession();
+    const token = await tokenService.getToken();
 
     return params !== undefined
       ? api({
@@ -72,14 +72,14 @@ export default {
           method: "delete",
           data: params,
           headers: {
-            Authorization: `${idSession}`,
+            Authorization: `${token}`,
           },
         })
       : api({
           url: url,
           method: "delete",
           headers: {
-            Authorization: `${idSession}`,
+            Authorization: `${token}`,
           },
         });
   },
