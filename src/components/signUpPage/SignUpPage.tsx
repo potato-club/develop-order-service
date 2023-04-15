@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { FieldValues, useForm } from "react-hook-form";
 import { customColor } from "../customColor";
@@ -7,8 +7,12 @@ import { SignUpUserInfo } from "./SignUpUserInfo";
 import { SignUpSiteInfo } from "./SignUpSiteInfo";
 import { SignUpAddInfo } from "./SignUpAddInfo";
 import axios from "axios";
+import { Alert } from "../modal/alert";
+import Router from "next/router";
+import { pathName } from "../../config/pathName";
 
 export const SignUpPage = () => {
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const {
     register,
     unregister,
@@ -19,6 +23,16 @@ export const SignUpPage = () => {
     setValue,
     setError,
   } = useForm();
+
+  useEffect(() => {
+    localStorage.getItem("token") === null && setIsLoginModalOpen(true);
+  }, []);
+
+  const handleGoLogin = () => {
+    setIsLoginModalOpen(false);
+    localStorage.setItem("prevPath", Router.asPath);
+    Router.push(pathName.LOGIN);
+  };
 
   const submit = (data: FieldValues) => {
     if (data.meeting.length < 12) {
@@ -53,6 +67,11 @@ export const SignUpPage = () => {
   };
   return (
     <Container>
+      <Alert
+        isOpen={isLoginModalOpen}
+        content="로그인 없이 접근할 수 없는 페이지 입니다"
+        closeModal={handleGoLogin}
+      />
       <Head>
         <Title>
           <AiOutlineForm size={28} />
