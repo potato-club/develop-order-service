@@ -10,6 +10,7 @@ import axios from "axios";
 import { Alert } from "../modal/alert";
 import Router from "next/router";
 import { pathName } from "../../config/pathName";
+import { useQueryPostSignUp } from "../../hooks/query/signUp/useQueryPostSignUp";
 
 export const SignUpPage = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -34,6 +35,7 @@ export const SignUpPage = () => {
     Router.push(pathName.LOGIN);
   };
 
+  const { mutate } = useQueryPostSignUp();
   const submit = (data: FieldValues) => {
     if (data.meeting.length < 12) {
       setError("meeting", {});
@@ -62,7 +64,7 @@ export const SignUpPage = () => {
         "orderDto",
         new Blob([JSON.stringify(send)], { type: "application/json" })
       );
-      axios.post("http://localhost:8080/orders", formData);
+      mutate(formData);
     }
   };
   return (
