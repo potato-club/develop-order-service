@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useRef, useState } from "react";
 import moment from "moment";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -16,9 +17,21 @@ interface Props {
   setValue: UseFormSetValue<FieldValues>;
   register: UseFormRegister<FieldValues>;
   value: string;
+  isLoading: boolean;
+  meetingData: QueryType[] | undefined;
+}
+export interface QueryType {
+  date: String;
+  title: String;
 }
 
-export const FormCalendar = ({ setValue, register, value }: Props) => {
+export const FormCalendar = ({
+  setValue,
+  register,
+  value,
+  isLoading,
+  meetingData,
+}: Props) => {
   const { ref, onChange, ...rest } = register(value);
   const wrapper = useRef<HTMLElement>(null);
   const [modal, setModal] = useState(false);
@@ -87,46 +100,26 @@ export const FormCalendar = ({ setValue, register, value }: Props) => {
         }}
         content={content}
       />
-      <FullCalendar
-        plugins={[dayGridPlugin, interaction]}
-        initialView="dayGridMonth"
-        headerToolbar={{
-          start: "title",
-          center: "",
-          end: "prev,next",
-        }}
-        titleFormat={{ year: "numeric", month: "narrow" }}
-        locale="ko"
-        height={524}
-        eventColor={customColor.blue}
-        eventTextColor={customColor.black}
-        events={[
-          { title: "10:00 조**", date: "2023-02-10" },
-          { title: "10:00 조**", date: "2023-02-10" },
-          { title: "10:00 조**", date: "2023-02-10" },
-          { title: "add", date: "2023-02-17" },
-          { title: "add", date: "2023-02-17" },
-          { title: "add", date: "2023-02-17" },
-          { title: "add", date: "2023-02-03" },
-          { title: "add", date: "2023-02-03" },
-          { title: "add", date: "2023-02-03" },
-          { title: "add", date: "2023-02-24" },
-          { title: "add", date: "2023-02-24" },
-          { title: "add", date: "2023-02-24" },
-          { title: "add", date: "2023-03-03" },
-          { title: "add", date: "2023-03-03" },
-          { title: "add", date: "2023-03-03" },
-          { title: "add", date: "2023-03-10" },
-          { title: "add", date: "2023-03-10" },
-          { title: "add", date: "2023-03-10" },
-          { title: "18:00 김**", date: "2023-02-14" },
-          { title: "18:00 김**", date: "2023-02-14" },
-          { title: "18:00 김**", date: "2023-02-14" },
-        ]}
-        eventContent={renderEvent}
-        dateClick={handleClickDay}
-        eventClick={handleEventClick}
-      />
+      {!isLoading && (
+        <FullCalendar
+          plugins={[dayGridPlugin, interaction]}
+          initialView="dayGridMonth"
+          headerToolbar={{
+            start: "title",
+            center: "",
+            end: "prev,next",
+          }}
+          titleFormat={{ year: "numeric", month: "narrow" }}
+          locale="ko"
+          height={524}
+          eventColor={customColor.blue}
+          eventTextColor={customColor.black}
+          events={meetingData}
+          eventContent={renderEvent}
+          dateClick={handleClickDay}
+          eventClick={handleEventClick}
+        />
+      )}
       <PrevIcon />
       <NextIcon />
       <SelectTime
@@ -157,6 +150,7 @@ const Item = styled.div`
   color: ${customColor.black};
   padding: 0 2px;
   overflow: hidden;
+  pointer-events: none;
 `;
 const PrevIcon = styled(BsFillCaretLeftFill)`
   position: absolute;

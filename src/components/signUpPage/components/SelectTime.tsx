@@ -1,7 +1,5 @@
-import { RefObject, useRef, useState } from "react";
 import styled from "styled-components";
 import { customColor } from "../../customColor";
-import { CSSTransition } from "react-transition-group";
 
 interface Props {
   isOpen: boolean;
@@ -16,48 +14,39 @@ interface StyleProps {
 }
 
 export const SelectTime = ({ isOpen, xy, time, setTime }: Props) => {
-  const modalRef = useRef(null);
   return (
-    <CSSTransition
-      in={isOpen}
-      timeout={400}
-      nodeRef={modalRef}
-      classNames="time_modal"
-      unmountOnExit
-    >
-      <Modal isOpen={isOpen} xy={xy} ref={modalRef}>
-        <Title>원하는 시간을 선택해주세요</Title>
-        <Buttons>
-          <Button
-            type="button"
-            btnValue={time === "10:00"}
-            onClick={() => {
-              setTime("10:00");
-            }}
-          >
-            10:00
-          </Button>
-          <Button
-            type="button"
-            btnValue={time === "13:00"}
-            onClick={() => {
-              setTime("13:00");
-            }}
-          >
-            13:00
-          </Button>
-          <Button
-            type="button"
-            btnValue={time === "16:00"}
-            onClick={() => {
-              setTime("16:00");
-            }}
-          >
-            16:00
-          </Button>
-        </Buttons>
-      </Modal>
-    </CSSTransition>
+    <Modal isOpen={isOpen} xy={xy}>
+      <Title>원하는 시간을 선택해주세요</Title>
+      <Buttons>
+        <Button
+          type="button"
+          btnValue={time === "10:00"}
+          onClick={() => {
+            setTime("10:00");
+          }}
+        >
+          10:00
+        </Button>
+        <Button
+          type="button"
+          btnValue={time === "13:00"}
+          onClick={() => {
+            setTime("13:00");
+          }}
+        >
+          13:00
+        </Button>
+        <Button
+          type="button"
+          btnValue={time === "16:00"}
+          onClick={() => {
+            setTime("16:00");
+          }}
+        >
+          16:00
+        </Button>
+      </Buttons>
+    </Modal>
   );
 };
 

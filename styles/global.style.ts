@@ -95,6 +95,9 @@ height:20px;
   filter: grayscale(0%);
   height:max-content;
 }
+.fc-event-main{
+  pointer-events: none;
+}
 .selected{
   filter:drop-shadow(0px 0px 6px ${customColor.blue});
 }
@@ -116,11 +119,4 @@ height:20px;
   transform: translate(-50%,-50%);
   transition: all 0.3s ease;
 }
-.time_modal-enter {
-  width:1px;
-  }
-  .time_modal-enter-active {
-    width:137px;
-    transition: all 0.4s ease-out;
-  }
 `;

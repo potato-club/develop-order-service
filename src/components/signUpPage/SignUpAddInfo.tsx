@@ -17,6 +17,8 @@ import { InfoLabel } from "./components/InfoLabel";
 import { FormTextarea } from "./components/FormTextarea";
 import { FormFile } from "./components/FormFile";
 import { FormCalendar } from "./components/FormCalendar";
+import { useQueryGetMeetings } from "../../hooks/query/signUp/useQueryGetMeetings";
+import { useEffect, useState } from "react";
 
 interface Props {
   register: UseFormRegister<FieldValues>;
@@ -33,6 +35,14 @@ export const SignUpAddInfo = ({
   watch,
   setValue,
 }: Props) => {
+  const { isLoading, data, error } = useQueryGetMeetings();
+  const [meetings, setMeetings] = useState<{ title: String; date: String }[]>();
+  useEffect(() => {
+    let meetings: { title: String; date: String }[] = [];
+    data?.map((i) => meetings.push({ title: `${i.name[0]}**`, date: i.date }));
+    setMeetings(meetings);
+  }, [isLoading]);
+
   return (
     <Content>
       <Lbel>
@@ -170,6 +180,8 @@ export const SignUpAddInfo = ({
               setValue={setValue}
               register={register}
               value="meeting"
+              isLoading={isLoading}
+              meetingData={meetings}
             />
           </FormItemContent>
           <InfoLabel
