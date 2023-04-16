@@ -37,6 +37,7 @@ export default function OrderDetail() {
       <DetailTop />
       <DetailContnets detailData={detailDataState && detailDataState} />
       <DetailBottm
+        id={detailDataState && detailDataState.id}
         like={detailDataState && detailDataState.like}
         progress={detailDataState && detailDataState.state}
       />

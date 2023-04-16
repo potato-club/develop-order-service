@@ -1,17 +1,47 @@
 import styled from "styled-components";
 import Image from "next/image";
 import heartIcon from "../../../public/img/detail/heart.png";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { pathName } from "./../../config/pathName";
 
 export const DetailBottm = ({
+  id,
   like,
   progress,
 }: {
+  id: number;
   like: number;
   progress: string;
 }) => {
+  //
+  const router = useRouter();
+  const onClickLikeButton = async () => {
+    console.log(localStorage.getItem("token"));
+
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/orders/detail/${id}/likes`,
+        {},
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(response);
+    } catch (err: any) {
+      console.log(err.response.data.error);
+    }
+  };
+
+  const onClickBackToListButton = () => {
+    router.push(pathName.ORDERREVIEW);
+  };
+
   return (
     <BottomWrapper>
-      <LikeButton progress={progress}>
+      <LikeButton progress={progress} onClick={onClickLikeButton}>
         좋아요
         <LikeButtonP>
           {/* <VerticalContainer></VerticalContainer> */}
@@ -21,7 +51,7 @@ export const DetailBottm = ({
         </LikeButtonP>
       </LikeButton>
 
-      <ListButton>목록</ListButton>
+      <ListButton onClick={onClickBackToListButton}>목록</ListButton>
     </BottomWrapper>
   );
 };

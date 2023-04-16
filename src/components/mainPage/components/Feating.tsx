@@ -35,56 +35,10 @@ export const Feating = () => {
           <BodyLeft>
             <BodyInner>
               <Image
-                src="/img/main/stickers/sticker10.png"
-                alt="sticker"
-                width={400}
-                height={420}
-                style={{
-                  position: "absolute",
-                  bottom: "-40px",
-                  left: "-40px",
-                  transform: " rotate(-30deg)",
-                }}
-              />
-              <Image
-                src="/img/main/stickers/sticker7.png"
-                alt="sticker"
-                width={80}
-                height={100}
-                style={{ position: "absolute", bottom: "160px", left: "100px" }}
-              />
-              <Image
-                src="/img/main/stickers/sticker3.png"
-                alt="sticker"
-                width={100}
-                height={100}
-                style={{ position: "absolute", bottom: "150px", left: "30px" }}
-              />
-              <Image
-                src="/img/main/stickers/sticker5.png"
-                alt="sticker"
-                width={160}
-                height={180}
-                style={{ position: "absolute", bottom: "10px", left: "40px" }}
-              />
-              <Image
-                src="/img/main/stickers/sticker6.png"
-                alt="sticker"
-                width={180}
-                height={310}
-                style={{ position: "absolute", bottom: 0, right: 0 }}
-              />
-              <Image
-                src="/img/main/stickers/sticker8.png"
-                alt="sticker"
-                width={160}
-                height={130}
-                style={{
-                  position: "absolute",
-                  top: "50%",
-                  right: "-16px",
-                  transform: "translate(0,calc(-50% - 90px)) rotate(20deg)",
-                }}
+                src="/img/main/publishingLeft.png"
+                fill
+                style={{ objectFit: "cover" }}
+                alt="publishingLeft"
               />
               <Date>XXXX년 XX월 XX일</Date>
               <Date_ className={inView ? "feating" : "feating2"}>
@@ -99,59 +53,10 @@ export const Feating = () => {
           <BodyRight>
             <BodyInner>
               <Image
-                src="/img/main/stickers/sticker11.png"
-                alt="sticker"
+                src="/img/main/publishingRight.png"
                 fill
-                style={{
-                  objectFit: "cover",
-                  transform: "rotate(-180deg) translate(-100px,-100px)",
-                }}
-              />
-              <Image
-                src="/img/main/stickers/sticker4.png"
-                alt="sticker"
-                width={160}
-                height={160}
-                style={{
-                  position: "absolute",
-                  bottom: "20px",
-                  left: "20px",
-                }}
-              />
-              <Image
-                src="/img/main/stickers/sticker2.png"
-                alt="sticker"
-                width={100}
-                height={110}
-                style={{
-                  position: "absolute",
-                  bottom: "20px",
-                  left: "140px",
-                }}
-              />
-              <Image
-                src="/img/main/stickers/sticker1.png"
-                alt="sticker"
-                width={220}
-                height={280}
-                style={{
-                  position: "absolute",
-                  top: "50%",
-                  left: "10px",
-                  transform: "translate(0,calc(-50% - 60px))",
-                }}
-              />
-              <Image
-                src="/img/main/stickers/sticker9.png"
-                alt="sticker"
-                width={140}
-                height={120}
-                style={{
-                  position: "absolute",
-                  top: "50%",
-                  right: "20px",
-                  transform: "rotateY(-180deg) translate(0,-50%)",
-                }}
+                style={{ objectFit: "cover" }}
+                alt="publishingRight"
               />
               <Date style={{ right: 20 }}>XXXX년 XX월 XX일</Date>
               <Date_
