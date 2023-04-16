@@ -6,8 +6,8 @@ import Router from "next/router";
 import { pathName } from "../../../config/pathName";
 import { useRecoilState } from "recoil";
 import { isLogin, userInformation } from "../../../recoil/userInfo";
-import axios from "axios";
 import { adminPathName } from "../../../config/adminPathName";
+import axios from "axios";
 
 interface ButtonProps {
   isHover?: boolean;
@@ -42,6 +42,9 @@ export const MyInfo = () => {
           role: data.data.role,
         });
         data.data.role === "ADMIN" && Router.push(adminPathName.MAIN);
+      })
+      .catch(() => {
+        handleLogout();
       });
   };
 
