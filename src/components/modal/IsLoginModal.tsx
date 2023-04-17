@@ -2,38 +2,34 @@ import styled from "styled-components";
 import { customColor } from "../customColor";
 import { CSSTransition } from "react-transition-group";
 import { useRef } from "react";
-import ReactModal from "react-modal";
+import ReactLoginModal from "react-modal";
+import Router from "next/router";
+import { pathName } from "../../config/pathName";
 
 interface Props {
-  content: string;
   isOpen: boolean;
-  closeModal: () => void;
-  yesEventFunc: () => void;
-  noEventFunc?: () => void;
-  eventBtnType?: "button" | "submit" | "reset";
 }
 
-export const Modal = ({
-  content,
-  isOpen,
-  closeModal,
-  yesEventFunc,
-  noEventFunc,
-  eventBtnType,
-}: Props) => {
-  ReactModal.setAppElement("#__next");
-  const modalRef = useRef(null);
+export const IsLoginModal = ({ isOpen }: Props) => {
+  ReactLoginModal.setAppElement("#__next");
+  const alertRef = useRef(null);
+
+  const handleGoLogin = () => {
+    localStorage.setItem("prevPath", Router.asPath);
+    Router.push(pathName.LOGIN);
+  };
+
   return (
     <CSSTransition
       in={isOpen}
       timeout={400}
-      nodeRef={modalRef}
+      nodeRef={alertRef}
       classNames="modal"
     >
-      <ReactModal
+      <ReactLoginModal
         ariaHideApp={false}
         shouldCloseOnOverlayClick={true}
-        onRequestClose={closeModal}
+        onRequestClose={handleGoLogin}
         isOpen={true}
         style={{
           overlay: {
@@ -64,19 +60,13 @@ export const Modal = ({
           },
         }}
       >
-        <Wrapper ref={modalRef}>
-          <Content>{content}</Content>
-          <Buttons>
-            <Division />
-            <Button type={eventBtnType || "button"} onClick={yesEventFunc}>
-              네
-            </Button>
-            <Button type="button" onClick={noEventFunc || closeModal}>
-              아니요
-            </Button>
-          </Buttons>
+        <Wrapper ref={alertRef}>
+          <Content>로그인 없이 접근할 수 없는 페이지 입니다</Content>
+          <Button type="button" onClick={handleGoLogin}>
+            닫기
+          </Button>
         </Wrapper>
-      </ReactModal>
+      </ReactLoginModal>
     </CSSTransition>
   );
 };
@@ -98,28 +88,11 @@ const Content = styled.p`
   text-align: center;
   word-break: keep-all;
 `;
-const Buttons = styled.div`
-  display: flex;
-  position: relative;
-  width: 100%;
-  height: 32px;
-  background: ${customColor.indigo3};
-  color: ${customColor.white};
-  font-size: 14px;
-  letter-spacing: -0.3px;
-  align-items: center;
-  justify-content: center;
-`;
-const Division = styled.div`
-  position: absolute;
-  width: 1px;
-  height: calc(100% - 8px);
-  background: ${customColor.white + "66"};
-`;
 const Button = styled.button`
   display: flex;
-  width: 50%;
-  height: 100%;
+  width: 100px;
+  height: 32px;
+  background: ${customColor.indigo3};
   color: ${customColor.white};
   font-size: 13px;
   letter-spacing: -0.3px;

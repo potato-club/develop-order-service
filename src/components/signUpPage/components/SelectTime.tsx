@@ -1,9 +1,11 @@
-import { RefObject, useRef, useState } from "react";
 import styled from "styled-components";
 import { customColor } from "../../customColor";
-import { CSSTransition } from "react-transition-group";
 
 interface Props {
+  events: {
+    date: String;
+    title: String;
+  }[];
   isOpen: boolean;
   xy: number[];
   time: string;
@@ -13,51 +15,46 @@ interface StyleProps {
   isOpen?: boolean;
   xy?: number[];
   btnValue?: boolean;
+  isExist?: boolean;
 }
 
-export const SelectTime = ({ isOpen, xy, time, setTime }: Props) => {
-  const modalRef = useRef(null);
+export const SelectTime = ({ isOpen, xy, time, setTime, events }: Props) => {
   return (
-    <CSSTransition
-      in={isOpen}
-      timeout={400}
-      nodeRef={modalRef}
-      classNames="time_modal"
-      unmountOnExit
-    >
-      <Modal isOpen={isOpen} xy={xy} ref={modalRef}>
-        <Title>원하는 시간을 선택해주세요</Title>
-        <Buttons>
-          <Button
-            type="button"
-            btnValue={time === "10:00"}
-            onClick={() => {
-              setTime("10:00");
-            }}
-          >
-            10:00
-          </Button>
-          <Button
-            type="button"
-            btnValue={time === "13:00"}
-            onClick={() => {
-              setTime("13:00");
-            }}
-          >
-            13:00
-          </Button>
-          <Button
-            type="button"
-            btnValue={time === "16:00"}
-            onClick={() => {
-              setTime("16:00");
-            }}
-          >
-            16:00
-          </Button>
-        </Buttons>
-      </Modal>
-    </CSSTransition>
+    <Modal isOpen={isOpen} xy={xy}>
+      <Title>원하는 시간을 선택해주세요</Title>
+      <Buttons>
+        <Button
+          type="button"
+          btnValue={time === "10:00"}
+          onClick={() => {
+            setTime("10:00");
+          }}
+          isExist={events.map((i) => i.title.slice(4)).includes("10:00")}
+        >
+          10:00
+        </Button>
+        <Button
+          type="button"
+          btnValue={time === "13:00"}
+          onClick={() => {
+            setTime("13:00");
+          }}
+          isExist={events.map((i) => i.title.slice(4)).includes("13:00")}
+        >
+          13:00
+        </Button>
+        <Button
+          type="button"
+          btnValue={time === "16:00"}
+          onClick={() => {
+            setTime("16:00");
+          }}
+          isExist={events.map((i) => i.title.slice(4)).includes("16:00")}
+        >
+          16:00
+        </Button>
+      </Buttons>
+    </Modal>
   );
 };
 
@@ -107,5 +104,12 @@ const Button = styled.button<StyleProps>`
   justify-content: center;
   font-size: 14px;
   letter-spacing: -0.3px;
-  background: ${(props) => (props.btnValue ? `${customColor.blue_}` : "none")};
+  background: ${(props) =>
+    props.btnValue
+      ? `${customColor.blue_}`
+      : props.isExist
+      ? `${customColor.lightGray}`
+      : "none"};
+  color: ${(props) => props.isExist && `${customColor.gray}`};
+  pointer-events: ${(props) => props.isExist && "none"};
 `;

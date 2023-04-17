@@ -1,17 +1,17 @@
-import { sessionService } from '../libs/sessionService';
-import axios from 'axios';
+import { tokenService } from "../libs/tokenService";
+import axios from "axios";
 
-export const UNAUTH_ERROR = 'UNAUTH_ERROR';
-export const CLIENT_ERROR = 'CLIENT_ERROR';
-export const SERVER_ERROR = 'SERVER_ERROR';
-export const CANCEL_ERROR = 'CANCEL_ERROR';
-export const TIMEOUT_ERROR = 'TIMEOUT_ERROR';
-export const NETWORK_ERROR = 'NETWORK_ERROR';
-export const UNKNOWN_ERROR = 'UNKNOWN_ERROR';
+export const UNAUTH_ERROR = "UNAUTH_ERROR";
+export const CLIENT_ERROR = "CLIENT_ERROR";
+export const SERVER_ERROR = "SERVER_ERROR";
+export const CANCEL_ERROR = "CANCEL_ERROR";
+export const TIMEOUT_ERROR = "TIMEOUT_ERROR";
+export const NETWORK_ERROR = "NETWORK_ERROR";
+export const UNKNOWN_ERROR = "UNKNOWN_ERROR";
 
 function xhrError({ code, status = 0, data = {} }: any) {
   const err: any = new Error();
-  err.name = 'XhrError';
+  err.name = "XhrError";
   err.message = err.code = code;
   err.data = data;
   err.status = status;
@@ -20,7 +20,7 @@ function xhrError({ code, status = 0, data = {} }: any) {
 
 export default function normalizeAxiosError(error: any) {
   // timeout
-  if (error.code === 'ECONNABORTED') {
+  if (error.code === "ECONNABORTED") {
     return xhrError({
       code: TIMEOUT_ERROR,
     });
@@ -37,8 +37,8 @@ export default function normalizeAxiosError(error: any) {
   // service error, 400 401 404 500 502...
   if (error.response) {
     if ([401, 423].includes(error.response.status)) {
-      sessionService.resetIdSession();
-      location.replace('/login?warn');
+      // tokenService.resetToken();
+      location.replace("/login?warn");
 
       return xhrError({
         code: UNAUTH_ERROR,

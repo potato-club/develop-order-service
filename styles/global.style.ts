@@ -95,32 +95,20 @@ height:20px;
   filter: grayscale(0%);
   height:max-content;
 }
+.fc-event-main{
+  pointer-events: none;
+}
 .selected{
   filter:drop-shadow(0px 0px 6px ${customColor.blue});
 }
 /* react-transition-group */
 .modal-enter{
   opacity: 0;
-  transform: translate(-50%,12px);
+  transform: translate(0,12px);
 }
 .modal-enter-active {
   opacity: 1;
-  transform: translate(-50%,0);
-  transition: all 0.3s ease;
-}.loginModal-enter{
-  opacity: 0;
-  transform: translate(-50%,calc(-50% + 16px));
-}
-.loginModal-enter-active {
-  opacity: 1;
-  transform: translate(-50%,-50%);
+  transform: translate(0,0);
   transition: all 0.3s ease;
 }
-.time_modal-enter {
-  width:1px;
-  }
-  .time_modal-enter-active {
-    width:137px;
-    transition: all 0.4s ease-out;
-  }
 `;
