@@ -11,7 +11,7 @@ interface Props {
   closeModal: () => void;
 }
 
-export const Alert = ({ isOpen, closeModal }: Props) => {
+export const IsLoginModal = ({ isOpen, closeModal }: Props) => {
   ReactModal.setAppElement("#__next");
   const alertRef = useRef(null);
 
