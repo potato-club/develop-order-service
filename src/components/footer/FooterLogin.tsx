@@ -1,12 +1,20 @@
+import Router from "next/router";
 import styled from "styled-components";
+import { pathName } from "../../config/pathName";
 import { customColor } from "../customColor";
 
 export const FooterLogin = () => {
+  const handleGoLoginPage = () => {
+    localStorage.setItem("prevPath", Router.asPath);
+    Router.push(pathName.LOGIN);
+  };
+
   return (
     <Wrapper>
       <WrapperInner>
         <Content>
-          발주신청을 하고싶다면?<LoginButton>로그인하기</LoginButton>
+          발주신청을 하고싶다면?
+          <LoginButton onClick={handleGoLoginPage}>로그인하기</LoginButton>
         </Content>
       </WrapperInner>
     </Wrapper>

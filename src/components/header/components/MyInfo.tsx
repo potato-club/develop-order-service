@@ -1,8 +1,12 @@
-import { useState } from "react";
-import styled, { keyframes } from "styled-components";
+import { useEffect, useState } from "react";
+import styled from "styled-components";
 import Image from "next/image";
 import { customColor } from "../../customColor";
-import www from "../../../assets/img/www.png";
+import Router from "next/router";
+import { pathName } from "../../../config/pathName";
+import { useRecoilState } from "recoil";
+import { isLogin, userInformation } from "../../../recoil/userInfo";
+import axios from "axios";
 
 interface ButtonProps {
   isHover?: boolean;
@@ -10,8 +14,43 @@ interface ButtonProps {
 }
 
 export const MyInfo = () => {
-  const [isLogin, setIsLogin] = useState(false);
   const [isHover, setIsHover] = useState(false);
+  const [isLoginState, setIsLoginState] = useRecoilState(isLogin);
+  const [userInfo, setUserInfo] = useRecoilState(userInformation);
+
+  useEffect(() => {
+    setIsLoginState(localStorage?.getItem("token") !== null);
+    if (localStorage?.getItem("token") !== null) {
+      getUserInfo();
+    }
+  }, []);
+
+  const getUserInfo = async () => {
+    await axios
+      .get("http://localhost:8080/users", {
+        headers: { Authorization: localStorage.getItem("token") },
+      })
+      .then((data) => {
+        setUserInfo({
+          email: data.data.email,
+          name: data.data.name,
+          picture: data.data.picture,
+          role: data.data.role,
+        });
+      });
+  };
+
+  const handleGoLoginPage = () => {
+    localStorage.setItem("prevPath", Router.asPath);
+    Router.push(pathName.LOGIN);
+  };
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("refreshToken");
+    setIsLoginState(true);
+    Router.reload();
+  };
+
   return (
     <Wrapper>
       <MyImg
@@ -22,17 +61,28 @@ export const MyInfo = () => {
           setIsHover(false);
         }}
       >
-        <LogAction isHover={isHover} isLogin={isLogin}>
-          {isLogin ? (
+        <LogAction isHover={isHover} isLogin={isLoginState}>
+          {isLoginState ? (
             <>
-              <ActionButton isHover={isHover}>로그아웃</ActionButton>
+              <ActionButton isHover={isHover} onClick={handleLogout}>
+                로그아웃
+              </ActionButton>
               <ActionButton isHover={isHover}>내정보</ActionButton>
             </>
           ) : (
-            <ActionButton>로그인</ActionButton>
+            <ActionButton onClick={handleGoLoginPage}>로그인</ActionButton>
           )}
         </LogAction>
-        <Img>{isLogin && <Image src={www} fill alt="my_image" />}</Img>
+        <Img>
+          {isLoginState && (
+            <Image
+              src={userInfo.picture}
+              fill
+              alt="my_image"
+              style={{ borderRadius: "inherit" }}
+            />
+          )}
+        </Img>
       </MyImg>
     </Wrapper>
   );
@@ -65,10 +115,10 @@ const LogAction = styled.div<ButtonProps>`
   width: ${(props) =>
     props.isLogin
       ? props.isHover
-        ? "147px"
+        ? "138px"
         : "0px"
       : props.isHover
-      ? "84px"
+      ? "80px"
       : "0px"};
   height: 100%;
   font-size: 10px;

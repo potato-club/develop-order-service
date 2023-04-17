@@ -1,10 +1,52 @@
 import styled from "styled-components";
 import Image from "next/image";
-import kakaoLogin from "../../assets/img/login/kakaoLogin.png";
-import google from "../../assets/img/login/google.png";
 import { customColor } from "../customColor";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import Router from "next/router";
+import { pathName } from "../../config/pathName";
 
 export const LoginPage = () => {
+  const isContainPathName = (prevPath: string) => {
+    let isContain = Object.values(pathName).map((i, id) => {
+      if (id > 0) {
+        if (prevPath.includes(i)) {
+          return "true";
+        } else {
+          return "false";
+        }
+      }
+    });
+    return isContain.includes("true");
+  };
+
+  const handleGoPrevPath = () => {
+    const prevPath = localStorage.getItem("prevPath");
+    prevPath !== null &&
+    prevPath !== pathName.LOGIN &&
+    isContainPathName(prevPath)
+      ? Router.push(prevPath)
+      : Router.push(pathName.MAIN);
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem("token") !== null) {
+      handleGoPrevPath();
+    } else {
+      const token = new URL(window.location.href).searchParams.get(
+        "accesstoken"
+      );
+      const refreshToken = new URL(window.location.href).searchParams.get(
+        "refresh"
+      );
+      if (token && refreshToken) {
+        localStorage.setItem("token", token);
+        localStorage.setItem("refreshToken", refreshToken);
+        handleGoPrevPath();
+      }
+    }
+  }, []);
+
   return (
     <Wrapper>
       <Content>
@@ -12,18 +54,27 @@ export const LoginPage = () => {
         <br />
         다양한 서비스를 이용하세요
         <Logins>
-          <KakaoLogin>
-            <Image
-              src={kakaoLogin}
-              fill
-              alt="kakaoLogin"
-              style={{ objectFit: "cover" }}
-            />
-          </KakaoLogin>
-          <GoogleLogin>
-            <Image src={google} width={20} alt="googleLogin" />
-            <GoogleText>구글 로그인</GoogleText>
-          </GoogleLogin>
+          <Link href="http://localhost:8080/oauth2/authorization/kakao">
+            <KakaoLogin>
+              <Image
+                src={"/img/login/kakaoLogin.png"}
+                fill
+                alt="kakaoLogin"
+                style={{ objectFit: "cover" }}
+              />
+            </KakaoLogin>
+          </Link>
+          <Link href="http://localhost:8080/oauth2/authorization/google">
+            <GoogleLogin>
+              <Image
+                src={"/img/login/google.png"}
+                width={20}
+                height={20}
+                alt="googleLogin"
+              />
+              <GoogleText>구글 로그인</GoogleText>
+            </GoogleLogin>
+          </Link>
         </Logins>
       </Content>
     </Wrapper>
@@ -60,6 +111,7 @@ const Logins = styled.div`
   display: flex;
   flex-direction: column;
   gap: 32px 0;
+  align-items: center;
 `;
 const KakaoLogin = styled.button`
   display: flex;
@@ -94,7 +146,5 @@ const GoogleText = styled.p`
   color: ${customColor.black + "aa"};
   transform: translate(calc(-50% + 10px), -50%);
   letter-spacing: -0.5px;
-  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; */
   font-family: Roboto;
 `;

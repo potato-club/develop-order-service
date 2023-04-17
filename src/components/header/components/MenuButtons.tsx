@@ -1,11 +1,19 @@
+import Router from "next/router";
 import styled from "styled-components";
+import { pathName } from "../../../config/pathName";
 import { customColor } from "../../customColor";
 
 export const MenuButtons = () => {
+  const handleRouter = (router: string) => {
+    Router.push(router);
+  };
+
   return (
     <Wrapper>
-      <Button>발주신청</Button>
-      <Button>발주현황</Button>
+      <Button onClick={() => handleRouter(pathName.SIGNUP)}>발주신청</Button>
+      <Button onClick={() => handleRouter(pathName.ORDERREVIEW)}>
+        발주현황
+      </Button>
       <Button>직원정보</Button>
       <LastButton>후기</LastButton>
     </Wrapper>
