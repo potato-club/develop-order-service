@@ -10,11 +10,13 @@ import { Alert } from "../modal/alert";
 import Router from "next/router";
 import { pathName } from "../../config/pathName";
 import { useQueryPostSignUp } from "../../hooks/query/signUp/useQueryPostSignUp";
+import { Modal } from "../modal/modal";
 
 export const SignUpPage = () => {
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalContent, setModalContent] = useState("");
-  const [modalFunc, setModalFunc] = useState<() => void>(() => {});
+  const [alertType, setAlertType] = useState("login");
+  const [alertContent, setAlertContent] = useState("");
 
   const {
     register,
@@ -30,27 +32,23 @@ export const SignUpPage = () => {
 
   useEffect(() => {
     if (localStorage.getItem("token") === null) {
-      setModalContent("로그인 없이 접근할 수 없는 페이지 입니다");
-      setModalFunc(handleGoLogin);
-      setIsModalOpen(true);
+      setAlertContent("로그인 없이 접근할 수 없는 페이지 입니다");
+      setIsAlertOpen(true);
     }
   }, []);
 
   const handleGoLogin = () => {
-    setIsModalOpen(false);
+    setIsAlertOpen(false);
     localStorage.setItem("prevPath", Router.asPath);
     Router.push(pathName.LOGIN);
   };
   const CompleteSubmit = () => {
     reset();
-    setModalContent("발주신청이 성공적으로 완료되었습니다");
-    setModalFunc(() => Router.reload());
     setIsModalOpen(true);
   };
   const UncheckMeeting = () => {
-    setModalContent("첫 미팅 희망날짜를 선택해 주세요");
-    setModalFunc(() => setIsModalOpen(false));
-    setIsModalOpen(true);
+    setAlertContent("첫 미팅 희망날짜를 선택해 주세요");
+    setIsAlertOpen(true);
   };
 
   const { mutate } = useQueryPostSignUp(CompleteSubmit);
@@ -88,10 +86,17 @@ export const SignUpPage = () => {
   };
   return (
     <Container>
-      <Alert
+      {/* <Modal
         isOpen={isModalOpen}
-        content={modalContent}
-        closeModal={modalFunc}
+        content="발주신청이 성공적으로 완료되었습니다"
+        closeModal={() => setIsModalOpen(false)}
+        yesEventFunc={() => Router.reload()}
+      /> */}
+      <Alert
+        isOpen={isAlertOpen}
+        content={alertContent}
+        closeModal={() => setIsAlertOpen(false)}
+        eventFunc={handleGoLogin}
       />
       <Head>
         <Title>
