@@ -6,14 +6,16 @@ import { AiOutlineForm } from "react-icons/ai";
 import { SignUpUserInfo } from "./SignUpUserInfo";
 import { SignUpSiteInfo } from "./SignUpSiteInfo";
 import { SignUpAddInfo } from "./SignUpAddInfo";
-import axios from "axios";
 import { Alert } from "../modal/alert";
 import Router from "next/router";
 import { pathName } from "../../config/pathName";
 import { useQueryPostSignUp } from "../../hooks/query/signUp/useQueryPostSignUp";
 
 export const SignUpPage = () => {
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState("");
+  const [modalFunc, setModalFunc] = useState<() => void>(() => {});
+
   const {
     register,
     unregister,
@@ -23,22 +25,39 @@ export const SignUpPage = () => {
     watch,
     setValue,
     setError,
+    reset,
   } = useForm();
 
   useEffect(() => {
-    localStorage.getItem("token") === null && setIsLoginModalOpen(true);
+    if (localStorage.getItem("token") === null) {
+      setModalContent("로그인 없이 접근할 수 없는 페이지 입니다");
+      setModalFunc(handleGoLogin);
+      setIsModalOpen(true);
+    }
   }, []);
 
   const handleGoLogin = () => {
-    setIsLoginModalOpen(false);
+    setIsModalOpen(false);
     localStorage.setItem("prevPath", Router.asPath);
     Router.push(pathName.LOGIN);
   };
+  const CompleteSubmit = () => {
+    reset();
+    setModalContent("발주신청이 성공적으로 완료되었습니다");
+    setModalFunc(() => Router.reload());
+    setIsModalOpen(true);
+  };
+  const UncheckMeeting = () => {
+    setModalContent("첫 미팅 희망날짜를 선택해 주세요");
+    setModalFunc(() => setIsModalOpen(false));
+    setIsModalOpen(true);
+  };
 
-  const { mutate } = useQueryPostSignUp();
+  const { mutate } = useQueryPostSignUp(CompleteSubmit);
+
   const submit = (data: FieldValues) => {
     if (data.meeting.length < 12) {
-      setError("meeting", {});
+      UncheckMeeting();
     } else {
       let tempColor1 = Object.keys(data)
         .filter((i) => i.includes("mainColor"))
@@ -70,9 +89,9 @@ export const SignUpPage = () => {
   return (
     <Container>
       <Alert
-        isOpen={isLoginModalOpen}
-        content="로그인 없이 접근할 수 없는 페이지 입니다"
-        closeModal={handleGoLogin}
+        isOpen={isModalOpen}
+        content={modalContent}
+        closeModal={modalFunc}
       />
       <Head>
         <Title>
@@ -86,12 +105,12 @@ export const SignUpPage = () => {
       <Body onSubmit={handleSubmit(submit)}>
         <BodyInner>
           <Division />
-          <SignUpUserInfo
+          {/* <SignUpUserInfo
             register={register}
             errors={errors}
             control={control}
           />
-          <SignUpSiteInfo register={register} errors={errors} />
+          <SignUpSiteInfo register={register} errors={errors} /> */}
           <SignUpAddInfo
             register={register}
             errors={errors}

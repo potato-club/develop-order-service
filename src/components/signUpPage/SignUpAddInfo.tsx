@@ -39,7 +39,9 @@ export const SignUpAddInfo = ({
   const [meetings, setMeetings] = useState<{ title: String; date: String }[]>();
   useEffect(() => {
     let meetings: { title: String; date: String }[] = [];
-    data?.map((i) => meetings.push({ title: `${i.name[0]}**`, date: i.date }));
+    data?.map((i) =>
+      meetings.push({ title: `${i.name[0]}**/${i.time}`, date: i.date })
+    );
     setMeetings(meetings);
   }, [isLoading]);
 

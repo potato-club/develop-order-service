@@ -43,7 +43,12 @@ export const FormCalendar = ({
   const [date, setDate] = useState("");
 
   const renderEvent = (info: EventContentArg) => {
-    return <Item>{info.event.title}</Item>;
+    return (
+      <Item>
+        <Name>{info.event.title.slice(0, 3)}</Name>
+        <Time>{info.event.title.slice(4)}</Time>
+      </Item>
+    );
   };
   const handleClickDay = (info: DateClickArg) => {
     let today = moment().format("YYYY-MM-DD");
@@ -83,6 +88,10 @@ export const FormCalendar = ({
     const dateClickArg: DateClickArg = {
       dateStr: info.event.startStr,
       view: info.view,
+      dayEl: info.el,
+      jsEvent: info.jsEvent,
+      date: info.event.start,
+      allDay: info.event.allDay,
     };
     info.view.calendar.trigger("dateClick", dateClickArg);
   };
@@ -144,6 +153,7 @@ const Wrapper = styled.article`
   padding-left: 0;
 `;
 const Item = styled.div`
+  display: flex;
   height: 14px;
   width: 100%;
   font-size: 12px;
@@ -151,6 +161,20 @@ const Item = styled.div`
   padding: 0 2px;
   overflow: hidden;
   pointer-events: none;
+  justify-content: space-between;
+`;
+const Name = styled.p`
+  color: ${customColor.black};
+  font-size: 12px;
+  pointer-events: none;
+`;
+const Time = styled.p`
+  color: ${customColor.black};
+  font-size: 12px;
+  pointer-events: none;
+  @media (max-width: 767px) {
+    display: none;
+  }
 `;
 const PrevIcon = styled(BsFillCaretLeftFill)`
   position: absolute;
