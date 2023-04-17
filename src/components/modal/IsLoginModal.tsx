@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { customColor } from "../customColor";
 import { CSSTransition } from "react-transition-group";
 import { useRef } from "react";
-import ReactModal from "react-modal";
+import ReactLoginModal from "react-modal";
 import Router from "next/router";
 import { pathName } from "../../config/pathName";
 
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const IsLoginModal = ({ isOpen }: Props) => {
-  ReactModal.setAppElement("#__next");
+  ReactLoginModal.setAppElement("#__next");
   const alertRef = useRef(null);
 
   const handleGoLogin = () => {
@@ -26,7 +26,7 @@ export const IsLoginModal = ({ isOpen }: Props) => {
       nodeRef={alertRef}
       classNames="modal"
     >
-      <ReactModal
+      <ReactLoginModal
         ariaHideApp={false}
         shouldCloseOnOverlayClick={true}
         onRequestClose={handleGoLogin}
@@ -66,7 +66,7 @@ export const IsLoginModal = ({ isOpen }: Props) => {
             닫기
           </Button>
         </Wrapper>
-      </ReactModal>
+      </ReactLoginModal>
     </CSSTransition>
   );
 };

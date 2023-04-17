@@ -11,12 +11,12 @@ import Router from "next/router";
 import { pathName } from "../../config/pathName";
 import { useQueryPostSignUp } from "../../hooks/query/signUp/useQueryPostSignUp";
 import { Modal } from "../modal/modal";
+import { IsLoginModal } from "../modal/IsLoginModal";
 
 export const SignUpPage = () => {
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [alertType, setAlertType] = useState("login");
-  const [alertContent, setAlertContent] = useState("");
 
   const {
     register,
@@ -32,8 +32,7 @@ export const SignUpPage = () => {
 
   useEffect(() => {
     if (localStorage.getItem("token") === null) {
-      setAlertContent("로그인 없이 접근할 수 없는 페이지 입니다");
-      setIsAlertOpen(true);
+      setIsLoginModalOpen(true);
     }
   }, []);
 
@@ -47,7 +46,6 @@ export const SignUpPage = () => {
     setIsModalOpen(true);
   };
   const UncheckMeeting = () => {
-    setAlertContent("첫 미팅 희망날짜를 선택해 주세요");
     setIsAlertOpen(true);
   };
 
@@ -86,18 +84,19 @@ export const SignUpPage = () => {
   };
   return (
     <Container>
-      {/* <Modal
+      <Modal
         isOpen={isModalOpen}
         content="발주신청이 성공적으로 완료되었습니다"
         closeModal={() => setIsModalOpen(false)}
         yesEventFunc={() => Router.reload()}
-      /> */}
+      />
       <Alert
         isOpen={isAlertOpen}
-        content={alertContent}
+        content="첫 미팅 희망날짜를 선택해 주세요"
         closeModal={() => setIsAlertOpen(false)}
         eventFunc={handleGoLogin}
       />
+      <IsLoginModal isOpen={isLoginModalOpen} />
       <Head>
         <Title>
           <AiOutlineForm size={28} />
