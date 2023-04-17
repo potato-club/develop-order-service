@@ -101,19 +101,11 @@ height:20px;
 /* react-transition-group */
 .modal-enter{
   opacity: 0;
-  transform: translate(-50%,12px);
+  transform: translate(0,12px);
 }
 .modal-enter-active {
   opacity: 1;
-  transform: translate(-50%,0);
-  transition: all 0.3s ease;
-}.loginModal-enter{
-  opacity: 0;
-  transform: translate(-50%,calc(-50% + 16px));
-}
-.loginModal-enter-active {
-  opacity: 1;
-  transform: translate(-50%,-50%);
+  transform: translate(0,0);
   transition: all 0.3s ease;
 }
 .time_modal-enter {
