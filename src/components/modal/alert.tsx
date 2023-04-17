@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { customColor } from "../customColor";
 import { CSSTransition } from "react-transition-group";
 import { useRef } from "react";
-import ReactModal from "react-modal";
+import ReactAlert from "react-modal";
 
 interface Props {
   content: string;
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const Alert = ({ content, isOpen, closeModal, eventFunc }: Props) => {
-  ReactModal.setAppElement("#__next");
+  ReactAlert.setAppElement("#__next");
   const alertRef = useRef(null);
   return (
     <CSSTransition
@@ -21,10 +21,10 @@ export const Alert = ({ content, isOpen, closeModal, eventFunc }: Props) => {
       nodeRef={alertRef}
       classNames="modal"
     >
-      <ReactModal
+      <ReactAlert
         ariaHideApp={false}
         shouldCloseOnOverlayClick={true}
-        onRequestClose={closeModal}
+        onRequestClose={eventFunc || closeModal}
         isOpen={true}
         style={{
           overlay: {
@@ -61,7 +61,7 @@ export const Alert = ({ content, isOpen, closeModal, eventFunc }: Props) => {
             닫기
           </Button>
         </Wrapper>
-      </ReactModal>
+      </ReactAlert>
     </CSSTransition>
   );
 };

@@ -1,5 +1,5 @@
-import axios from 'axios';
-import applyDefaultParams from './applyDefaultParams';
+import axios from "axios";
+import applyDefaultParams from "./applyDefaultParams";
 
 import normalizeAxiosError, {
   SERVER_ERROR,
@@ -7,8 +7,7 @@ import normalizeAxiosError, {
   NETWORK_ERROR,
   CLIENT_ERROR,
   UNAUTH_ERROR,
-} from './normalizeAxiosError';
-import { settings } from '@street-vendor/core';
+} from "./normalizeAxiosError";
 
 const API_TIMEOUT = 50000; // 50s
 
@@ -19,13 +18,13 @@ const api = axios.create({
 });
 
 function getBaseUrl() {
-  return settings.api.baseUrl;
+  return "http://localhost:8080";
 }
 
 api.interceptors.request.use(applyDefaultParams);
 api.interceptors.response.use(undefined, normalizeAxiosError);
 api.interceptors.response.use(undefined, function (err) {
-  console.log('ERR :: ', err);
+  console.log("ERR :: ", err);
 
   if (err.code === TIMEOUT_ERROR || err.code === NETWORK_ERROR) {
     //
