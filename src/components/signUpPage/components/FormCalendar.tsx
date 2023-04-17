@@ -41,6 +41,7 @@ export const FormCalendar = ({
   const [isOpen, setIsOpen] = useState(false);
   const [time, setTime] = useState("");
   const [date, setDate] = useState("");
+  const [events, setEvents] = useState<QueryType[]>([]);
 
   const renderEvent = (info: EventContentArg) => {
     return (
@@ -53,11 +54,7 @@ export const FormCalendar = ({
   const handleClickDay = (info: DateClickArg) => {
     let today = moment().format("YYYY-MM-DD");
     let date = info.dateStr;
-    let events = info.view.calendar
-      .getEventSources()[0]
-      .internalEventSource.meta.filter(
-        (i: { date: string; title: string }) => i.date === date
-      );
+    let events = meetingData?.filter((i) => i.date === date) ?? [];
     setIsOpen(false);
     remove?.classList.remove("selected");
     if (today >= date || moment(date).day() === 0 || moment(date).day() === 6) {
@@ -72,6 +69,7 @@ export const FormCalendar = ({
         `.fc-day[data-date="${date}"]`
       );
       // SelectTime Modal 설정
+      setEvents(events);
       setTime("");
       setIsOpen(true);
       wrapper.current &&
@@ -132,6 +130,7 @@ export const FormCalendar = ({
       <PrevIcon />
       <NextIcon />
       <SelectTime
+        events={events}
         isOpen={isOpen}
         xy={xy}
         time={time}

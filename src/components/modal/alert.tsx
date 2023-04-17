@@ -24,7 +24,7 @@ export const Alert = ({ content, isOpen, closeModal, eventFunc }: Props) => {
       <ReactAlert
         ariaHideApp={false}
         shouldCloseOnOverlayClick={true}
-        onRequestClose={closeModal}
+        onRequestClose={eventFunc || closeModal}
         isOpen={true}
         style={{
           overlay: {

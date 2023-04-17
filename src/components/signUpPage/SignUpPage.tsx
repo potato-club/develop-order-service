@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { FieldValues, useForm } from "react-hook-form";
 import { customColor } from "../customColor";
@@ -8,7 +8,6 @@ import { SignUpSiteInfo } from "./SignUpSiteInfo";
 import { SignUpAddInfo } from "./SignUpAddInfo";
 import { Alert } from "../modal/alert";
 import Router from "next/router";
-import { pathName } from "../../config/pathName";
 import { useQueryPostSignUp } from "../../hooks/query/signUp/useQueryPostSignUp";
 import { Modal } from "../modal/modal";
 import { IsLoginModal } from "../modal/IsLoginModal";
@@ -17,6 +16,9 @@ export const SignUpPage = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [alertContent, setAlertContent] =
+    useState("첫 미팅 희망날짜를 선택해 주세요");
+  const [formData, setFormData] = useState<FormData>();
 
   const {
     register,
@@ -26,8 +28,6 @@ export const SignUpPage = () => {
     handleSubmit,
     watch,
     setValue,
-    setError,
-    reset,
   } = useForm();
 
   useEffect(() => {
@@ -36,24 +36,20 @@ export const SignUpPage = () => {
     }
   }, []);
 
-  const handleGoLogin = () => {
-    setIsAlertOpen(false);
-    localStorage.setItem("prevPath", Router.asPath);
-    Router.push(pathName.LOGIN);
+  const completeSubmit = () => {
+    Router.reload();
   };
-  const CompleteSubmit = () => {
-    reset();
-    setIsModalOpen(true);
-  };
-  const UncheckMeeting = () => {
+  const failSubmit = () => {
+    setAlertContent("이미 존재하는 사이트이름 입니다");
     setIsAlertOpen(true);
   };
 
-  const { mutate } = useQueryPostSignUp(CompleteSubmit);
+  const { mutate } = useQueryPostSignUp(completeSubmit, failSubmit);
 
   const submit = (data: FieldValues) => {
     if (data.meeting.length < 12) {
-      UncheckMeeting();
+      setAlertContent("첫 미팅 희망날짜를 선택해 주세요");
+      setIsAlertOpen(true);
     } else {
       let tempColor1 = Object.keys(data)
         .filter((i) => i.includes("mainColor"))
@@ -79,22 +75,25 @@ export const SignUpPage = () => {
         "orderDto",
         new Blob([JSON.stringify(send)], { type: "application/json" })
       );
-      mutate(formData);
+      setFormData(formData);
+      setIsModalOpen(true);
     }
   };
   return (
     <Container>
       <Modal
         isOpen={isModalOpen}
-        content="발주신청이 성공적으로 완료되었습니다"
+        content="발주신청을 진행하시겠습니까?"
         closeModal={() => setIsModalOpen(false)}
-        yesEventFunc={() => Router.reload()}
+        yesEventFunc={() => {
+          formData && mutate(formData);
+          setIsModalOpen(false);
+        }}
       />
       <Alert
         isOpen={isAlertOpen}
-        content="첫 미팅 희망날짜를 선택해 주세요"
+        content={alertContent}
         closeModal={() => setIsAlertOpen(false)}
-        eventFunc={handleGoLogin}
       />
       <IsLoginModal isOpen={isLoginModalOpen} />
       <Head>
@@ -109,12 +108,12 @@ export const SignUpPage = () => {
       <Body onSubmit={handleSubmit(submit)}>
         <BodyInner>
           <Division />
-          {/* <SignUpUserInfo
+          <SignUpUserInfo
             register={register}
             errors={errors}
             control={control}
           />
-          <SignUpSiteInfo register={register} errors={errors} /> */}
+          <SignUpSiteInfo register={register} errors={errors} />
           <SignUpAddInfo
             register={register}
             errors={errors}
