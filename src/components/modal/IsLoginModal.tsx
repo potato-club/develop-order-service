@@ -8,10 +8,9 @@ import { pathName } from "../../config/pathName";
 
 interface Props {
   isOpen: boolean;
-  closeModal: () => void;
 }
 
-export const IsLoginModal = ({ isOpen, closeModal }: Props) => {
+export const IsLoginModal = ({ isOpen }: Props) => {
   ReactModal.setAppElement("#__next");
   const alertRef = useRef(null);
 
@@ -30,7 +29,7 @@ export const IsLoginModal = ({ isOpen, closeModal }: Props) => {
       <ReactModal
         ariaHideApp={false}
         shouldCloseOnOverlayClick={true}
-        onRequestClose={closeModal}
+        onRequestClose={handleGoLogin}
         isOpen={true}
         style={{
           overlay: {
