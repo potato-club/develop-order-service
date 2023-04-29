@@ -5,15 +5,21 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { pathName } from "./../../config/pathName";
 
+type propTypes = {
+  id: number;
+  like: number;
+  progress: string;
+  errorModalState: { state: boolean; text: string };
+  getErrorModalState: (modalState: { state: boolean; text: string }) => void;
+};
+
 export const DetailBottm = ({
   id,
   like,
   progress,
-}: {
-  id: number;
-  like: number;
-  progress: string;
-}) => {
+  errorModalState,
+  getErrorModalState,
+}: propTypes) => {
   //
   const router = useRouter();
   const onClickLikeButton = async () => {
@@ -31,6 +37,7 @@ export const DetailBottm = ({
       );
       console.log(response);
     } catch (err: any) {
+      getErrorModalState({ state: true, text: err.response.data.error });
       console.log(err.response.data.error);
     }
   };
