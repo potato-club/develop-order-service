@@ -22,28 +22,52 @@ type contentsTypes = {
   db: any;
   starRating: any;
 };
+
+type propTypes = {
+  detailData: contentsTypes;
+  modalState: {
+    modalRole: string;
+    state: boolean;
+    text: string;
+    onClickConfirmButton: () => void;
+  };
+  getModalState: (modalState: {
+    modalRole: string;
+    state: boolean;
+    text: string;
+    onClickConfirmButton: () => void;
+  }) => void;
+};
+
 export const DetailContnets = ({
   detailData,
-}: {
-  detailData: contentsTypes;
-}) => {
+  modalState,
+  getModalState,
+}: propTypes) => {
   const router = useRouter();
 
   const onClickOrderCancelButton = async () => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:8080/orders/${detailData.id}`,
-        {
-          headers: {
-            Authorization: `${localStorage.getItem("token")}`,
-          },
+    getModalState({
+      modalRole: "confirm",
+      state: true,
+      text: "정말로 발주를 취소하시겠습니까?",
+      onClickConfirmButton: async () => {
+        try {
+          const response = await axios.delete(
+            `http://localhost:8080/orders/${detailData.id}`,
+            {
+              headers: {
+                Authorization: `${localStorage.getItem("token")}`,
+              },
+            }
+          );
+          console.log(response);
+        } catch (err) {
+          console.log(err);
         }
-      );
-      console.log(response);
-    } catch (err) {
-      console.log(err);
-    }
-    router.back();
+        router.back();
+      },
+    });
   };
 
   //이거는 발주 상태 변경 테스트용

@@ -5,19 +5,26 @@ import { DetailBottm } from "../src/components/orderDetailPage/Detailbottom";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { ErrorModal } from "../src/components/orderDetailPage/ErrorModal";
+import { ReviewModal } from "../src/components/modal/ReviewModal";
 
 export default function OrderDetail() {
   const router = useRouter();
   const id = router.query.id;
   const [detailDataState, setDetailDataState] = useState<any>();
-  const [errorModalState, setErrorModalState] = useState<{
+  const [modalState, setModalState] = useState<{
+    modalRole: string;
     state: boolean;
     text: string;
-  }>({ state: false, text: "" });
+    onClickConfirmButton: () => void;
+  }>({ modalRole: "", state: false, text: "", onClickConfirmButton: () => {} });
 
-  function getErrorModalState(modalState: { state: boolean; text: string }) {
-    setErrorModalState(modalState);
+  function getModalState(modalState: {
+    modalRole: string;
+    state: boolean;
+    text: string;
+    onClickConfirmButton: () => void;
+  }) {
+    setModalState(modalState);
   }
 
   const getDetailData = async () => {
@@ -44,18 +51,22 @@ export default function OrderDetail() {
 
   return (
     <Wrapper>
-      <ErrorModal
-        errorModalState={errorModalState}
-        getErrorModalState={getErrorModalState}
-      ></ErrorModal>
+      <ReviewModal
+        modalState={modalState}
+        getModalState={getModalState}
+      ></ReviewModal>
       <DetailTop />
-      <DetailContnets detailData={detailDataState && detailDataState} />
+      <DetailContnets
+        detailData={detailDataState && detailDataState}
+        modalState={modalState}
+        getModalState={getModalState}
+      />
       <DetailBottm
         id={detailDataState && detailDataState.id}
         like={detailDataState && detailDataState.like}
         progress={detailDataState && detailDataState.state}
-        errorModalState={errorModalState}
-        getErrorModalState={getErrorModalState}
+        modalState={modalState}
+        getModalState={getModalState}
       />
     </Wrapper>
   );

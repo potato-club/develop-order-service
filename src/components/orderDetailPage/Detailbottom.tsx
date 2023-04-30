@@ -9,16 +9,26 @@ type propTypes = {
   id: number;
   like: number;
   progress: string;
-  errorModalState: { state: boolean; text: string };
-  getErrorModalState: (modalState: { state: boolean; text: string }) => void;
+  modalState: {
+    modalRole: string;
+    state: boolean;
+    text: string;
+    onClickConfirmButton: () => void;
+  };
+  getModalState: (modalState: {
+    modalRole: string;
+    state: boolean;
+    text: string;
+    onClickConfirmButton: () => void;
+  }) => void;
 };
 
 export const DetailBottm = ({
   id,
   like,
   progress,
-  errorModalState,
-  getErrorModalState,
+  modalState,
+  getModalState,
 }: propTypes) => {
   //
   const router = useRouter();
@@ -37,7 +47,12 @@ export const DetailBottm = ({
       );
       console.log(response);
     } catch (err: any) {
-      getErrorModalState({ state: true, text: err.response.data.error });
+      getModalState({
+        modalRole: "likeMyOrder",
+        state: true,
+        text: err.response.data.error,
+        onClickConfirmButton: () => {},
+      });
       console.log(err.response.data.error);
     }
   };
