@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { ReviewTop } from "../src/components/orderReviewPage/ReviewTop";
 import { ReviewContnets } from "../src/components/orderReviewPage/ReviewContents";
 import { ReviewBottm } from "../src/components/orderReviewPage/ReviewBottom";
-import { NoLoginModal } from "../src/components/orderReviewPage/NoLoginModal";
+import { ReviewModal } from "../src/components/modal/ReviewModal";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -25,9 +25,11 @@ export default function OrderReview() {
 
   // 모달 출력 state ReviewTop과 ReviewContents에서 값을 받아옴
   const [modalState, setModalState] = useState<{
+    modalRole: string;
     state: boolean;
     text: string;
-  }>({ state: false, text: "" });
+    onClickConfirmButton: () => void;
+  }>({ modalRole: "", state: false, text: "", onClickConfirmButton: () => {} });
 
   // 하위 컴포넌트들에서 state 값을 받아오기 위한 getState 함수들
   function getPageState(pageState: number) {
@@ -42,7 +44,12 @@ export default function OrderReview() {
   function getConceptOptionState(conceptOptionState: string) {
     setConceptOptionState(conceptOptionState);
   }
-  function getModalState(modalState: { state: boolean; text: string }) {
+  function getModalState(modalState: {
+    modalRole: string;
+    state: boolean;
+    text: string;
+    onClickConfirmButton: () => void;
+  }) {
     setModalState(modalState);
   }
 
@@ -88,10 +95,10 @@ export default function OrderReview() {
 
   return (
     <Wrapper>
-      <NoLoginModal
+      <ReviewModal
         modalState={modalState}
         getModalState={getModalState}
-      ></NoLoginModal>
+      ></ReviewModal>
       <ReviewTop
         contentsFilterState={contentsFilterState}
         sortOptionState={sortOptionState}

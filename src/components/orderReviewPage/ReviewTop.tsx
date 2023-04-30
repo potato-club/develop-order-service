@@ -7,11 +7,21 @@ type propTypes = {
   getSortOptionState: (sortOptionState: string) => void;
   getConceptOptionState: (conceptOptionState: string) => void;
   getPageState: (pageState: number) => void;
-  getModalState: (modalState: { state: boolean; text: string }) => void;
+  getModalState: (modalState: {
+    modalRole: string;
+    state: boolean;
+    text: string;
+    onClickConfirmButton: () => void;
+  }) => void;
   contentsFilterState: string;
   sortOptionState: string;
   conceptOptionState: string;
-  modalState: { state: boolean; text: string };
+  modalState: {
+    modalRole: string;
+    state: boolean;
+    text: string;
+    onClickConfirmButton: () => void;
+  };
 };
 
 export const ReviewTop = ({
@@ -56,8 +66,10 @@ export const ReviewTop = ({
       getPageState(1);
     } else {
       getModalState({
+        modalRole: "noLogin",
         state: true,
         text: "로그인 하지 않은 상태에서는 내 발주를 확인할 수 없습니다.",
+        onClickConfirmButton: () => {},
       });
     }
   };

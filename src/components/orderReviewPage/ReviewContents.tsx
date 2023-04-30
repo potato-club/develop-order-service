@@ -4,8 +4,18 @@ import styled from "styled-components";
 
 type propTypes = {
   contentsData: any;
-  modalState: { state: boolean; text: string };
-  getModalState: (modalState: { state: boolean; text: string }) => void;
+  modalState: {
+    modalRole: string;
+    state: boolean;
+    text: string;
+    onClickConfirmButton: () => void;
+  };
+  getModalState: (modalState: {
+    modalRole: string;
+    state: boolean;
+    text: string;
+    onClickConfirmButton: () => void;
+  }) => void;
 };
 
 export const ReviewContnets = ({
@@ -50,8 +60,10 @@ export const ReviewContnets = ({
                     });
                   } else {
                     getModalState({
+                      modalRole: "noLogin",
                       state: true,
                       text: "로그인 하지 않은 상태에서는 게시물에 접근할 수 없습니다.",
+                      onClickConfirmButton: () => {},
                     });
                   }
                 }}

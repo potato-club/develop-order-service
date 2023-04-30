@@ -3,18 +3,33 @@ import { customColor } from "../customColor";
 import Image from "next/image";
 import cross from "./../../../public/img/modal/cross.png";
 import { useRouter } from "next/router";
-import { pathName } from "./../../config/pathName";
+import { pathName } from "../../config/pathName";
 
 type propTypes = {
-  modalState: { state: boolean; text: string };
-  getModalState: (modalState: { state: boolean; text: string }) => void;
+  modalState: {
+    modalRole: string;
+    state: boolean;
+    text: string;
+    onClickConfirmButton: () => void;
+  };
+  getModalState: (modalState: {
+    modalRole: string;
+    state: boolean;
+    text: string;
+    onClickConfirmButton: () => void;
+  }) => void;
 };
 
-export const NoLoginModal = ({ modalState, getModalState }: propTypes) => {
+export const ReviewModal = ({ modalState, getModalState }: propTypes) => {
   const router = useRouter();
 
   const onClickXbutton = () => {
-    getModalState({ state: false, text: "" });
+    getModalState({
+      modalRole: "",
+      state: false,
+      text: "",
+      onClickConfirmButton: () => {},
+    });
   };
 
   const onClickGoToLoginButton = () => {
@@ -29,9 +44,24 @@ export const NoLoginModal = ({ modalState, getModalState }: propTypes) => {
       </ModalHeaderDiv>
       <ModalContentDiv>{modalState.text}</ModalContentDiv>
       <ModalFooterDiv>
-        <GoToLoginButton onClick={onClickGoToLoginButton}>
+        <GoToLoginButton
+          onClick={onClickGoToLoginButton}
+          modalRole={modalState.modalRole}
+        >
           로그인 하러 가기
         </GoToLoginButton>
+        <ConfirmButton
+          onClick={modalState.onClickConfirmButton}
+          modalRole={modalState.modalRole}
+        >
+          확인
+        </ConfirmButton>
+        <ConfirmButton
+          onClick={onClickXbutton}
+          modalRole={modalState.modalRole}
+        >
+          취소
+        </ConfirmButton>
       </ModalFooterDiv>
     </ModalWrapper>
   );
@@ -78,10 +108,20 @@ const ModalFooterDiv = styled.div`
   justify-content: center;
 `;
 
-const GoToLoginButton = styled.button`
+const GoToLoginButton = styled.button<{ modalRole: string }>`
+  display: ${(props) => (props.modalRole === "noLogin" ? "" : "none")};
   background-color: black;
   color: white;
   width: 100px;
   height: 30px;
   margin-bottom: 20px;
+`;
+
+const ConfirmButton = styled.button<{ modalRole: string }>`
+  display: ${(props) => (props.modalRole === "confirm" ? "" : "none")};
+  background-color: black;
+  color: white;
+  width: 75px;
+  height: 30px;
+  margin: 0 10px 20px 10px;
 `;
