@@ -6,6 +6,7 @@ import { Footer } from "../footer/Footer";
 import { Header } from "../header/Header";
 import { ScrollCSS } from "./ScrollCSS";
 import { useEffect, useState } from "react";
+import { AdminHeader } from "../header/AdminHeader";
 
 interface Props {
   children: React.ReactNode;
@@ -20,10 +21,11 @@ export const Layout = ({ children }: Props) => {
   return (
     <Wrapper>
       {isAdmin ? (
-        <>
+        <AdminWrapper>
+          {Router.pathname !== "/admin/login" && <AdminHeader />}
           <GlobalStyle />
           {children}
-        </>
+        </AdminWrapper>
       ) : (
         <>
           <GlobalStyle />
@@ -44,6 +46,13 @@ const Wrapper = styled.div`
   flex-direction: column;
   width: 100vw;
   min-height: 100vh;
+`;
+const AdminWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  background: ${customColor.indigo1};
 `;
 const LayoutWrapper = styled.div`
   display: flex;

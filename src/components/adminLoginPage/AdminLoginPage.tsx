@@ -66,7 +66,6 @@ export const AdminLoginPage = () => {
 
 const Container = styled.section`
   display: flex;
-  background: ${customColor.indigo3};
   width: 100%;
   height: 100vh;
 `;

@@ -1,4 +1,5 @@
 export * from "./header/Header";
+export * from "./header/AdminHeader";
 export * from "./footer/Footer";
 export * from "./modal/alert";
 export * from "./modal/modal";
