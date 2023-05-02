@@ -7,10 +7,15 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Image from "next/image";
 
-export const PreviewSwiper = () => {
-  const list = [1, 2, 3, 4, 5];
-  const list2 = [];
-
+export const PreviewSwiper = ({
+  images,
+}: {
+  images: Array<{
+    id: number;
+    imageName: string;
+    imageUrl: string;
+  }>;
+}) => {
   SwiperCore.use([Navigation, Pagination]);
   const settings = {
     navigation: true,
@@ -22,7 +27,7 @@ export const PreviewSwiper = () => {
 
   return (
     <PreviewSiperWrapper>
-      {list2.length === 0 ? (
+      {images && images.length === 0 ? (
         <StyledRoot>
           <Swiper {...settings}>
             {[1, 2, 3].map((item) => (
@@ -43,9 +48,17 @@ export const PreviewSwiper = () => {
         <SwiperContainer>
           <StyledRoot>
             <Swiper {...settings}>
-              {list.map((item) => (
-                <StyledSwiperSlide key={item}>{item}</StyledSwiperSlide>
-              ))}
+              {images &&
+                images.map((item) => (
+                  <StyledSwiperSlide key={item.id}>
+                    <Image
+                      src={item.imageUrl}
+                      alt={item.imageName}
+                      width={450}
+                      height={600}
+                    ></Image>
+                  </StyledSwiperSlide>
+                ))}
             </Swiper>
           </StyledRoot>
         </SwiperContainer>
@@ -71,6 +84,7 @@ const NoPreviewImgDiv = styled.div`
   height: 598px;
   margin: 0 auto;
   background-color: ${customColor.blue};
+  border: 1px solid white;
   display: flex;
   align-items: center;
 `;
@@ -82,21 +96,20 @@ const NoPrevImgP = styled.p`
 `;
 
 const StyledSwiperSlide = styled(SwiperSlide)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   width: 450px;
   height: 600px;
-  border: 1px solid black;
-  background-color: beige;
   visibility: hidden;
   &.swiper-slide-prev {
     visibility: visible;
-    background-color: aqua;
     top: -50px;
     z-index: -1;
   }
   &.swiper-slide-next {
     visibility: visible;
-    background-color: aqua;
     top: -50px;
     z-index: -1;
   }

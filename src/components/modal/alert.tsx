@@ -2,55 +2,86 @@ import styled from "styled-components";
 import { customColor } from "../customColor";
 import { CSSTransition } from "react-transition-group";
 import { useRef } from "react";
+import ReactAlert from "react-modal";
 
 interface Props {
   content: string;
   isOpen: boolean;
   closeModal: () => void;
-}
-interface StyleProps {
-  isOpen: boolean;
+  eventFunc?: () => void;
 }
 
-export const Alert = ({ content, isOpen, closeModal }: Props) => {
-  const modalRef = useRef(null);
+export const Alert = ({ content, isOpen, closeModal, eventFunc }: Props) => {
+  ReactAlert.setAppElement("#__next");
+  const alertRef = useRef(null);
   return (
     <CSSTransition
       in={isOpen}
       timeout={400}
-      nodeRef={modalRef}
+      nodeRef={alertRef}
       classNames="modal"
     >
-      <Wrapper isOpen={isOpen} ref={modalRef}>
-        <Content>{content}</Content>
-        <Button type="button" onClick={closeModal}>
-          닫기
-        </Button>
-      </Wrapper>
+      <ReactAlert
+        ariaHideApp={false}
+        shouldCloseOnOverlayClick={true}
+        onRequestClose={eventFunc || closeModal}
+        isOpen={true}
+        style={{
+          overlay: {
+            display: `${isOpen ? "flex" : "none"}`,
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: `${customColor.black + "00"}`,
+            zIndex: 10,
+            height: "100%",
+            width: "100%",
+          },
+          content: {
+            display: "flex",
+            position: "fixed",
+            WebkitOverflowScrolling: "touch",
+            border: "none",
+            padding: "0px",
+            backgroundColor: `${customColor.white + "00"}`,
+            width: "320px",
+            height: "180px",
+            top: "20px",
+            left: "50%",
+            transform: "translate(-50%,0)",
+            overflow: "visible",
+          },
+        }}
+      >
+        <Wrapper ref={alertRef}>
+          <Content>{content}</Content>
+          <Button type="button" onClick={eventFunc || closeModal}>
+            닫기
+          </Button>
+        </Wrapper>
+      </ReactAlert>
     </CSSTransition>
   );
 };
 
-const Wrapper = styled.article<StyleProps>`
-  display: ${(props) => (props.isOpen ? "flex" : "none")};
-  /* display: flex; */
+const Wrapper = styled.article`
+  display: flex;
   flex-direction: column;
-  position: fixed;
-  box-shadow: 1px 2px 4px 2px ${customColor.black + "33"};
-  background: ${customColor.white};
-  width: 320px;
+  width: 100%;
   height: 180px;
   padding: 40px 60px 20px;
   align-items: center;
   justify-content: space-around;
-  left: 50%;
-  top: 20px;
-  transform: translate(-50%, 0);
-  z-index: 50;
+  background: ${customColor.white};
+  box-shadow: 1px 2px 4px 2px ${customColor.black + "33"};
 `;
 const Content = styled.p`
   font-size: 16px;
   letter-spacing: -0.5px;
+  text-align: center;
+  word-break: keep-all;
 `;
 const Button = styled.button`
   display: flex;

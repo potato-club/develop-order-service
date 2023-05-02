@@ -8,11 +8,16 @@ import { pathName } from "../../config/pathName";
 
 export const LoginPage = () => {
   const isContainPathName = (prevPath: string) => {
-    let result = false;
-    let isContain = Object.values(pathName).map((i) => {
-      prevPath.includes(i) && result === true;
+    let isContain = Object.values(pathName).map((i, id) => {
+      if (id > 0) {
+        if (prevPath.includes(i)) {
+          return "true";
+        } else {
+          return "false";
+        }
+      }
     });
-    return result;
+    return isContain.includes("true");
   };
 
   const handleGoPrevPath = () => {

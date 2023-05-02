@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import { BsChevronCompactDown } from "react-icons/bs";
-import { Events, Link, scroller } from "react-scroll";
+import { Link, scroller } from "react-scroll";
 import ScrollWheelHandler from "react-scroll-wheel-handler";
 import { useState } from "react";
 import { Title } from "./components/Title";

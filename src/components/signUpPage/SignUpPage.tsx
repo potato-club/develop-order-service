@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { FieldValues, useForm } from "react-hook-form";
 import { customColor } from "../customColor";
@@ -6,9 +6,20 @@ import { AiOutlineForm } from "react-icons/ai";
 import { SignUpUserInfo } from "./SignUpUserInfo";
 import { SignUpSiteInfo } from "./SignUpSiteInfo";
 import { SignUpAddInfo } from "./SignUpAddInfo";
-import axios from "axios";
+import { Alert } from "../modal/alert";
+import Router from "next/router";
+import { useQueryPostSignUp } from "../../hooks/query/signUp/useQueryPostSignUp";
+import { Modal } from "../modal/modal";
+import { IsLoginModal } from "../modal/IsLoginModal";
 
 export const SignUpPage = () => {
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [alertContent, setAlertContent] =
+    useState("첫 미팅 희망날짜를 선택해 주세요");
+  const [formData, setFormData] = useState<FormData>();
+
   const {
     register,
     unregister,
@@ -17,12 +28,28 @@ export const SignUpPage = () => {
     handleSubmit,
     watch,
     setValue,
-    setError,
   } = useForm();
+
+  useEffect(() => {
+    if (localStorage.getItem("token") === null) {
+      setIsLoginModalOpen(true);
+    }
+  }, []);
+
+  const completeSubmit = () => {
+    Router.reload();
+  };
+  const failSubmit = () => {
+    setAlertContent("이미 존재하는 사이트이름 입니다");
+    setIsAlertOpen(true);
+  };
+
+  const { mutate } = useQueryPostSignUp(completeSubmit, failSubmit);
 
   const submit = (data: FieldValues) => {
     if (data.meeting.length < 12) {
-      setError("meeting", {});
+      setAlertContent("첫 미팅 희망날짜를 선택해 주세요");
+      setIsAlertOpen(true);
     } else {
       let tempColor1 = Object.keys(data)
         .filter((i) => i.includes("mainColor"))
@@ -48,11 +75,27 @@ export const SignUpPage = () => {
         "orderDto",
         new Blob([JSON.stringify(send)], { type: "application/json" })
       );
-      axios.post("http://localhost:8080/orders", formData);
+      setFormData(formData);
+      setIsModalOpen(true);
     }
   };
   return (
     <Container>
+      <Modal
+        isOpen={isModalOpen}
+        content="발주신청을 진행하시겠습니까?"
+        closeModal={() => setIsModalOpen(false)}
+        yesEventFunc={() => {
+          formData && mutate(formData);
+          setIsModalOpen(false);
+        }}
+      />
+      <Alert
+        isOpen={isAlertOpen}
+        content={alertContent}
+        closeModal={() => setIsAlertOpen(false)}
+      />
+      <IsLoginModal isOpen={isLoginModalOpen} />
       <Head>
         <Title>
           <AiOutlineForm size={28} />
