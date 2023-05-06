@@ -2,6 +2,6 @@ export const pathName = {
   MAIN: "/",
   LOGIN: "/login",
   SIGNUP: "/signUp",
-  INFORMATION : "/information",
+  INFORMATION : "/Information",
   ORDERREVIEW: "/orderReview",
 };
