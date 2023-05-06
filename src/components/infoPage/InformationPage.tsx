@@ -12,7 +12,7 @@ const InformationPage = () => {
   return (
     <Wrapper>
       <InfoHead>
-        <Image src={information} alt={""} width={50} />
+        <Image src={information} alt={""} width={40} />
         <InfoHeadText>직원정보</InfoHeadText>
       </InfoHead>
       <InfoCardWrapp />
@@ -54,11 +54,11 @@ const Wrapper = styled.div`
 `;
 const InfoHead = styled.div`
   display: flex;
-  margin: 40px;
+  margin: 50px;
 `;
 const InfoHeadText = styled.p`
   align-self: center;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: bolder;
   margin-left: 20px;
 `;

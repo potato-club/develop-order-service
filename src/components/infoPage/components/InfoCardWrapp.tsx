@@ -27,14 +27,8 @@ const InfoCardWrapp = () => {
         number="010-3388-3951"
         emailAdress="smwfkim2@naver.com"
         onClick={() => test("hyoseong")}
-      />
-
-      <InfoCard
-        name="조 금 주"
-        task="Front"
-        number="010-0000-0000"
-        emailAdress="aaaaaaa@naver.com"
-        onClick={() => test("geumju")}
+        backgroundColor="#8fd1ee"
+      
       />
 
       <InfoCard
@@ -43,6 +37,16 @@ const InfoCardWrapp = () => {
         number="010-0000-0000"
         emailAdress="aaaaaaa@naver.com"
         onClick={() => test("cheongjo")}
+        backgroundColor="#e5eef3"
+      />
+
+      <InfoCard
+        name="조 금 주"
+        task="Front"
+        number="010-0000-0000"
+        emailAdress="aaaaaaa@naver.com"
+        onClick={() => test("geumju")}
+        backgroundColor="#8fd1ee"
       />
 
       <InfoCard
@@ -51,6 +55,7 @@ const InfoCardWrapp = () => {
         number="010-0000-0000"
         emailAdress="aaaaaaa@naver.com"
         onClick={() => test("haeyeon")}
+        backgroundColor="#e5eef3"
       />
 
       <InfoCard
@@ -59,6 +64,7 @@ const InfoCardWrapp = () => {
         number="010-0000-0000"
         emailAdress="aaaaaaa@naver.com"
         onClick={() => test("junhyung")}
+        backgroundColor="#8fd1ee"
       />
     </InfoCardWrapper>
   );
@@ -70,6 +76,6 @@ const InfoCardWrapper = styled.div`
   width: 100%;
   position: relative;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   margin-bottom: 100px;
 `;
