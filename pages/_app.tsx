@@ -1,14 +1,13 @@
 import styled from "styled-components";
 import { GlobalStyle } from "../styles/global.style";
 import type { AppProps } from "next/app";
-import { Header } from "../src/components/header/Header";
-import { Footer } from "../src/components/footer/Footer";
 import { Layout } from "../src/components/layout/Layout";
 import { RecoilRoot } from "recoil";
 import { useEffect, useState } from "react";
 import Router from "next/router";
 import LoadingSpinner from "../src/components/loading/LoadingSpinner";
 import { ScrollCSS } from "../src/components/layout/ScrollCSS";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
@@ -35,13 +34,19 @@ export default function App({ Component, pageProps }: AppProps) {
     };
   }, []);
 
+
+
+  const queryClient = new QueryClient();
+
   return (
     
     <RecoilRoot>
        {loading && <LoadingSpinner fixed />}
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <QueryClientProvider client={queryClient}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </QueryClientProvider>
     </RecoilRoot>
   );
 }
