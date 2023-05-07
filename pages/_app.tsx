@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Router from "next/router";
 import { GlobalStyle } from "../styles/global.style";
 import type { AppProps } from "next/app";
 import { Layout } from "../src/components/layout/Layout";
