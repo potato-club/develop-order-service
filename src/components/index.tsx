@@ -9,4 +9,5 @@ export * from "./signUpPage/SignUpPage";
 export * from "./infoPage/InformationPage";
 export * from "./mainPage/MainPage";
 export * from "./adminPage/AdminPage";
+export * from "./adminModifyOrderPage/AdminModifyOrderPage";
 export * from "./adminLoginPage/AdminLoginPage";
