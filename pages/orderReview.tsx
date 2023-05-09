@@ -54,35 +54,24 @@ export default function OrderReview() {
   }
 
   const getReviewData = async () => {
+    let url =
+      `http://localhost:8080/` +
+      `${contentsFilterState !== "myOrder" ? "orders/detail" : "users/orders"}`;
     try {
-      if (contentsFilterState !== "myOrder") {
-        const response = await axios.get(
-          `http://localhost:8080/orders/detail${
-            (pageState !== 1 ? "?page=" + pageState : "") +
-            (contentsFilterState === "finished" ? "?state=complete" : "")
-          }`,
-          {
-            headers: {
-              Authorization: `${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        setContentsDataState(response.data);
-        console.log(response);
-      } else {
-        const response = await axios.get(
-          `http://localhost:8080/users/orders${
-            pageState !== 1 ? "?page=" + pageState : ""
-          }`,
-          {
-            headers: {
-              Authorization: `${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        setContentsDataState(response.data);
-        console.log(response);
-      }
+      const response = await axios.get(
+        `${
+          url +
+          (pageState !== 1 ? "?page=" + pageState : "") +
+          (contentsFilterState === "finished" ? "?state=complete" : "")
+        }`,
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      setContentsDataState(response.data);
+      console.log(response);
     } catch (err) {
       console.log(err);
     }
