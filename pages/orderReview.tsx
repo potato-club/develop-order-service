@@ -4,7 +4,7 @@ import { ReviewContnets } from "../src/components/orderReviewPage/ReviewContents
 import { ReviewBottm } from "../src/components/orderReviewPage/ReviewBottom";
 import { ReviewModal } from "../src/components/modal/ReviewModal";
 import { useEffect, useState } from "react";
-import { useQUeryGetOrderList } from "../src/hooks/query/orderReview/useQueryGetOrderList";
+import { useQueryGetOrderList } from "../src/hooks/query/orderReview/useQueryGetOrderList";
 
 type contentsFilterType = "onGoing" | "finished" | "myOrder";
 
@@ -59,7 +59,7 @@ export default function OrderReview() {
     setModalState(modalState);
   }
 
-  const { isSuccess, isError, data, refetch } = useQUeryGetOrderList(
+  const { isSuccess, isError, data, refetch } = useQueryGetOrderList(
     contentsFilterState,
     pageState,
     getContentsDataState

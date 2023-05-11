@@ -4,7 +4,7 @@ import { OrderReviewApi } from "../../../apis/controller/orderReview.api";
 
 type contentsFilterType = "onGoing" | "finished" | "myOrder";
 
-export const useQUeryGetOrderList = (
+export const useQueryGetOrderList = (
   contentsFilterState: contentsFilterType,
   pageState: number,
   getContentsDataState: (contentsDataState: object) => void
