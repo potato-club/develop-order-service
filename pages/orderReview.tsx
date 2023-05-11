@@ -4,7 +4,9 @@ import { ReviewContnets } from "../src/components/orderReviewPage/ReviewContents
 import { ReviewBottm } from "../src/components/orderReviewPage/ReviewBottom";
 import { ReviewModal } from "../src/components/modal/ReviewModal";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { useQUeryGetOrderList } from "../src/hooks/query/orderReview/useQueryGetOrderList";
+
+type contentsFilterType = "onGoing" | "finished" | "myOrder";
 
 export default function OrderReview() {
   const [contentsDataState, setContentsDataState] = useState<object>({});
@@ -14,7 +16,7 @@ export default function OrderReview() {
 
   // 컨텐츠 필터 state, ReviewTop에서 값을 받아옴
   const [contentsFilterState, setContentsFilterState] =
-    useState<string>("onGoing");
+    useState<contentsFilterType>("onGoing");
 
   // 정렬 옵션 state, ReviewTop에서 값을 받아옴
   const [sortOptionState, setSortOptionState] = useState<string>("noSort");
@@ -35,7 +37,11 @@ export default function OrderReview() {
   function getPageState(pageState: number) {
     setPageState(pageState);
   }
-  function getContentsFilterState(contentFilterState: string) {
+
+  function getContentsDataState(contentsDataState: object) {
+    setContentsDataState(contentsDataState);
+  }
+  function getContentsFilterState(contentFilterState: contentsFilterType) {
     setContentsFilterState(contentFilterState);
   }
   function getSortOptionState(sortOptionState: string) {
@@ -53,33 +59,16 @@ export default function OrderReview() {
     setModalState(modalState);
   }
 
-  const getReviewData = async () => {
-    let url =
-      `http://localhost:8080/` +
-      `${contentsFilterState !== "myOrder" ? "orders/detail" : "users/orders"}`;
-    try {
-      const response = await axios.get(
-        `${
-          url +
-          (pageState !== 1 ? "?page=" + pageState : "") +
-          (contentsFilterState === "finished" ? "?state=complete" : "")
-        }`,
-        {
-          headers: {
-            Authorization: `${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      setContentsDataState(response.data);
-      console.log(response);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const { isSuccess, isError, data, refetch } = useQUeryGetOrderList(
+    contentsFilterState,
+    pageState,
+    getContentsDataState
+  );
 
   useEffect(() => {
     console.log(localStorage.getItem("token"));
-    getReviewData();
+    refetch();
+    console.log(data);
   }, [pageState, contentsFilterState, sortOptionState, conceptOptionState]);
 
   return (
