@@ -1,10 +1,16 @@
 import styled from "styled-components";
 import { customColor } from "../../customColor";
 import { IoDocumentTextOutline } from "react-icons/io5";
+import Router from "next/router";
+import { pathName } from "../../../config/adminPathName";
 
 export const SignUpItem = () => {
+  const handleRouteDetail = (id: number) => {
+    Router.push(`${pathName.CHECK_SIGNUP.DETAIL.replace(":id", String(id))}`);
+  };
+
   return (
-    <Wrapper>
+    <Wrapper onClick={() => handleRouteDetail(1)}>
       <Name>
         <DocumentIcon />
         <Highlighting>김민주</Highlighting>님의 발주신청
@@ -19,13 +25,13 @@ export const SignUpItem = () => {
   );
 };
 
-const Wrapper = styled.article`
+const Wrapper = styled.button`
   display: flex;
   flex-direction: column;
   position: relative;
   background: ${customColor.indigo3};
   padding: 20px;
-  gap: 16px;
+  gap: 8px;
 `;
 const DocumentIcon = styled(IoDocumentTextOutline)`
   font-size: 28px;
@@ -49,10 +55,12 @@ const Highlighting = styled.p`
 const SiteInfo = styled.div`
   display: flex;
   flex-direction: row;
+  width: 100%;
   padding: 0 8px 0 32px;
   gap: 8px;
   align-items: flex-end;
   justify-content: flex-end;
+  margin-bottom: 8px;
 `;
 const SiteName = styled.p`
   font-size: 20px;
@@ -75,6 +83,6 @@ const Date = styled.p`
   position: absolute;
   color: ${customColor.gray};
   font-size: 12px;
-  bottom: 14px;
+  bottom: 12px;
   left: 18px;
 `;

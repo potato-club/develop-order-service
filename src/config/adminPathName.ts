@@ -1,4 +1,4 @@
 export const pathName = {
-  CHECK_SIGNUP: "/admin",
   LOGIN: "/admin/login",
+  CHECK_SIGNUP: { LIST: "/admin", DETAIL: "/admin/:id" },
 };
