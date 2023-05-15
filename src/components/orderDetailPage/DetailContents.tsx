@@ -10,16 +10,16 @@ type contentsTypes = {
   id: number;
   purpose: string;
   createdDate: string;
-  completedDate: string;
+  completedDate: null | string;
   images: Array<{
     id: number;
     imageName: string;
     imageUrl: string;
   }>;
   state: string;
-  page: any;
-  login: any;
-  db: any;
+  page: number;
+  login: boolean;
+  database: boolean;
   starRating: any;
 };
 
@@ -194,19 +194,9 @@ export const DetailContnets = ({
         </InfoLabelDiv>
         <InfoDataDiv3>
           <DataLabelDiv>
-            <OrderInfoP>페이지 추가</OrderInfoP>
+            <OrderInfoP>페이지 수</OrderInfoP>
           </DataLabelDiv>
-          <CheckBoxDiv>
-            <CheckImgDiv additional={detailData && detailData.page}>
-              <Image
-                src={checkIcon}
-                alt="icon"
-                width={21}
-                height={21}
-                style={{ margin: "auto" }}
-              ></Image>
-            </CheckImgDiv>
-          </CheckBoxDiv>
+          {detailData && detailData.page}
         </InfoDataDiv3>
         <InfoDataDiv3>
           <DataLabelDiv>
@@ -229,7 +219,7 @@ export const DetailContnets = ({
             <OrderInfoP>DB</OrderInfoP>
           </DataLabelDiv>
           <CheckBoxDiv>
-            <CheckImgDiv additional={detailData && detailData.db}>
+            <CheckImgDiv additional={detailData && detailData.database}>
               <Image
                 src={checkIcon}
                 alt="icon"
@@ -345,6 +335,7 @@ const InfoDataDiv3 = styled.div`
   height: 50px;
   width: 200px;
   border-right: 1px solid black;
+  font-size: 20px;
   float: left;
   display: flex;
   align-items: center;
@@ -365,6 +356,9 @@ const OrderInfoP = styled.p`
 const CheckBoxDiv = styled.div`
   width: 25px;
   height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 1px solid black;
 `;
 
