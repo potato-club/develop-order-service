@@ -54,10 +54,13 @@ export const ReviewContnets = ({
               <RouterA
                 onClick={() => {
                   if (localStorage.getItem("token")) {
-                    router.push({
-                      pathname: "orderDetail",
-                      query: { id: `${item.id}` },
-                    });
+                    router.push(
+                      {
+                        pathname: "orderDetail",
+                        query: { id: `${item.id}` },
+                      },
+                      "orderDetail"
+                    );
                   } else {
                     getModalState({
                       modalRole: "noLogin",
