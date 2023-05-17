@@ -5,7 +5,7 @@ import { PreviewSwiper } from "./PreviewSwiper";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-type contentsTypes = {
+type detailDataTypes = {
   siteName: string;
   id: number;
   purpose: string;
@@ -24,7 +24,7 @@ type contentsTypes = {
 };
 
 type propTypes = {
-  detailData: contentsTypes;
+  detailData: detailDataTypes;
   modalState: {
     modalRole: string;
     state: boolean;

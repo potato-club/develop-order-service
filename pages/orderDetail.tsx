@@ -3,7 +3,7 @@ import { DetailTop } from "../src/components/orderDetailPage/DetailTop";
 import { DetailContnets } from "../src/components/orderDetailPage/DetailContents";
 import { DetailBottm } from "../src/components/orderDetailPage/Detailbottom";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ReviewModal } from "../src/components/modal/ReviewModal";
 import { useQueryGetOrderDetail } from "../src/hooks/query/orderDetail/useQueryGetOrderDetail";
 
@@ -53,7 +53,7 @@ export default function OrderDetail() {
       <DetailBottm
         id={detailDataState && detailDataState.id}
         like={detailDataState && detailDataState.like}
-        progress={detailDataState && detailDataState.state}
+        state={detailDataState && detailDataState.state}
         modalState={modalState}
         getModalState={getModalState}
       />

@@ -8,7 +8,7 @@ import { pathName } from "./../../config/pathName";
 type propTypes = {
   id: number;
   like: number;
-  progress: string;
+  state: string;
   modalState: {
     modalRole: string;
     state: boolean;
@@ -26,7 +26,7 @@ type propTypes = {
 export const DetailBottm = ({
   id,
   like,
-  progress,
+  state,
   modalState,
   getModalState,
 }: propTypes) => {
@@ -63,7 +63,7 @@ export const DetailBottm = ({
 
   return (
     <BottomWrapper>
-      <LikeButton progress={progress} onClick={onClickLikeButton}>
+      <LikeButton state={state} onClick={onClickLikeButton}>
         좋아요
         <LikeButtonP>
           {/* <VerticalContainer></VerticalContainer> */}
@@ -96,8 +96,8 @@ const ListButton = styled.button`
   border: 1px solid black;
 `;
 
-const LikeButton = styled.button<{ progress: String }>`
-  display: ${(props) => (props.progress !== "COMPLETED" ? "none" : "")};
+const LikeButton = styled.button<{ state: String }>`
+  display: ${(props) => (props.state !== "COMPLETED" ? "none" : "")};
   width: 150px;
   height: 80px;
   border-radius: 10px;
