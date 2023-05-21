@@ -2,14 +2,26 @@ import styled from "styled-components";
 import { Title } from "../orderDetailPage/Title";
 import React, { useEffect, useState } from "react";
 
-type stateProps = {
+type propTypes = {
   getContentsFilterState: (contentFilterState: string) => void;
   getSortOptionState: (sortOptionState: string) => void;
   getConceptOptionState: (conceptOptionState: string) => void;
   getPageState: (pageState: number) => void;
+  getModalState: (modalState: {
+    modalRole: string;
+    state: boolean;
+    text: string;
+    onClickConfirmButton: () => void;
+  }) => void;
   contentsFilterState: string;
   sortOptionState: string;
   conceptOptionState: string;
+  modalState: {
+    modalRole: string;
+    state: boolean;
+    text: string;
+    onClickConfirmButton: () => void;
+  };
 };
 
 export const ReviewTop = ({
@@ -17,10 +29,12 @@ export const ReviewTop = ({
   getSortOptionState,
   getConceptOptionState,
   getPageState,
+  getModalState,
   contentsFilterState,
   sortOptionState,
   conceptOptionState,
-}: stateProps) => {
+  modalState,
+}: propTypes) => {
   const PAGETITLE = "발주 현황 및 후기";
   const EXPLAIN = "발주 현황을 확인하고 완료된 발주에 평가를 남겨보세요";
 
@@ -45,10 +59,19 @@ export const ReviewTop = ({
     getPageState(1);
   };
   const myOrderButton = () => {
-    getContentsFilterState("myOrder");
-    getSortOptionState("noSort");
-    getConceptOptionState("concept1");
-    getPageState(1);
+    if (localStorage.getItem("token")) {
+      getContentsFilterState("myOrder");
+      getSortOptionState("noSort");
+      getConceptOptionState("concept1");
+      getPageState(1);
+    } else {
+      getModalState({
+        modalRole: "noLogin",
+        state: true,
+        text: "로그인 하지 않은 상태에서는 내 발주를 확인할 수 없습니다.",
+        onClickConfirmButton: () => {},
+      });
+    }
   };
 
   return (
