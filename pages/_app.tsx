@@ -5,7 +5,6 @@ import type { AppProps } from "next/app";
 import { Layout } from "../src/components/layout/Layout";
 import { RecoilRoot } from "recoil";
 import { useEffect, useState } from "react";
-import Router from "next/router";
 import LoadingSpinner from "../src/components/loading/LoadingSpinner";
 import { ScrollCSS } from "../src/components/layout/ScrollCSS";
 import { QueryClient, QueryClientProvider } from "react-query";
