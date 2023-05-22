@@ -4,13 +4,15 @@ import checkIcon from "../../../public/img/detail/check.png";
 import { PreviewSwiper } from "./PreviewSwiper";
 import axios from "axios";
 import { useRouter } from "next/router";
+import StarRatings from "react-star-ratings";
+import { QueryClient, useMutation, useQuery } from "react-query";
 
 type detailDataTypes = {
   siteName: string;
   id: number;
   purpose: string;
   createdDate: string;
-  completedDate: null | string;
+  completedDate?: string;
   images: Array<{
     id: number;
     imageName: string;
@@ -20,7 +22,7 @@ type detailDataTypes = {
   page: number;
   login: boolean;
   database: boolean;
-  starRating: any;
+  rating?: number;
 };
 
 type propTypes = {
@@ -70,7 +72,41 @@ export const DetailContnets = ({
     });
   };
 
-  //이거는 발주 상태 변경 테스트용
+  const queryClient = new QueryClient();
+
+  const mutation = useMutation(
+    "setStarRatings",
+    (newRating: number) =>
+      axios.put(
+        `http://localhost:8080/orders/detail/${detailData.id}/rating`,
+        {
+          rating: newRating,
+        },
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        }
+      ),
+    {
+      onSuccess: (data) => {
+        queryClient.invalidateQueries("getOrderDetail");
+        console.log("onSuccess", data);
+      },
+      onError: (error: { response: { data: { error: string } } }) => {
+        console.log(error);
+        getModalState({
+          modalRole: "alreadyRated",
+          state: true,
+          text: error.response.data.error,
+          onClickConfirmButton: () => {},
+        });
+        console.log("onError", error);
+      },
+    }
+  );
+
+  // // 이거는 발주 상태 변경 테스트용
   // const onClickModifyButton = async () => {
   //   const formData = new FormData();
 
@@ -236,7 +272,18 @@ export const DetailContnets = ({
           <OrderInfoP>별점</OrderInfoP>
         </InfoLabelDiv>
         <InfoDataDiv1>
-          {/* <button onClick={onClickRatingButton}>별점별점</button> */}
+          <StarRatings
+            rating={(detailData && detailData.rating) || 0}
+            starRatedColor="gold"
+            starEmptyColor="lightgray"
+            starHoverColor="gold"
+            starDimension="30px"
+            starSpacing="2px"
+            changeRating={(newRating: number) => {
+              mutation.mutate(newRating);
+            }}
+            numberOfStars={5}
+          ></StarRatings>
         </InfoDataDiv1>
       </OrderInfoDiv>
       <OrderInfoDiv progress={""}>
@@ -317,6 +364,8 @@ const PreviewLabelDiv = styled.div`
 `;
 
 const InfoDataDiv1 = styled.div`
+  display: flex;
+  align-items: center;
   padding-left: 25px;
   height: 50px;
   width: 600px;
