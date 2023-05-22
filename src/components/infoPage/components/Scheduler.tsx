@@ -12,8 +12,10 @@ import {
   localeKo,
 } from "@mobiscroll/react";
 import styled from "styled-components";
-import character from "../../assets/img/information/character.png";
+import character from "../../../../public/img/information/character.png";
 import Image from "next/image";
+import { useRecoilState } from "recoil";
+import { personState, PersonState } from "../../../recoil/infoCard";
 
 setOptions({
   locale: localeKo,
@@ -21,36 +23,14 @@ setOptions({
   themeVariant: "light",
 });
 
-const Scheduler: React.FC = () => {
-  const [hyoseong, setHyoseong] = React.useState(true);
-  const [geumju, setGeumju] = React.useState(true);
-  const [haeyeon, setHaeyeon] = React.useState(true);
-  const [cheongjo, setCheongjo] = React.useState(true);
-  const [junhyung, setJunhyung] = React.useState(true);
+const Scheduler = () => {
+  const [state, setState] = useRecoilState<PersonState>(personState);
 
-  function hyoseongClick() {
-    setHyoseong(!hyoseong);
-  }
-  function geumjuClick() {
-    setGeumju(!geumju);
+  function toggleState(key: keyof PersonState) {
+    setState((prevState) => ({ ...prevState, [key]: !prevState[key] }));
   }
 
-  function haeyeonClick() {
-    setHaeyeon(!haeyeon);
-  }
-
-  function cheongjoClick() {
-    setCheongjo(!cheongjo);
-  }
-
-  function junhyungClick() {
-    setJunhyung(!junhyung);
-  }
-  
-
-  const [selected, setSelected] = React.useState<any>(1);
-
-  const [calView, setCalView] = React.useState<MbscEventcalendarView>({
+  const [calView] = React.useState<MbscEventcalendarView>({
     schedule: {
       type: "week",
       startDay: 1,
@@ -60,66 +40,52 @@ const Scheduler: React.FC = () => {
     },
   });
 
-  const filter = (ev: any, value: number) => {
-    setSelected(value);
-  };
-
   const customWithNavButtons = () => {
     return (
       <React.Fragment>
         <CalendarNav />
         <div>
-          <SegmentedGroup select="single">
+          <SegmentedGroup select="multiple">
             <SegmentedItem
-              value={1}
-              checked={selected === 1}
-              onChange={(ev: any) => {
-                filter(ev, 1);
-                hyoseongClick();
+              checked={state.hyoseong}
+              onChange={() => {
+                toggleState("hyoseong");
               }}
             >
               <Image src={character} alt={""} width={25} />
               <span>김효성</span>
             </SegmentedItem>
             <SegmentedItem
-              value={2}
-              checked={selected === 2}
-              onChange={(ev: any) => {
-                filter(ev, 2);
-                geumjuClick();
+              checked={state.geumju}
+              onChange={() => {
+                toggleState("geumju");
               }}
             >
               <Image src={character} alt={""} width={25} />
               <span>조금주</span>
             </SegmentedItem>
             <SegmentedItem
-              value={3}
-              checked={selected === 3}
-              onChange={(ev: any) => {
-                filter(ev, 3);
-                cheongjoClick();
+              checked={state.cheongjo}
+              onChange={() => {
+                toggleState("cheongjo");
               }}
             >
               <Image src={character} alt={""} width={25} />
               <span>박청조</span>
             </SegmentedItem>
             <SegmentedItem
-              value={4}
-              checked={selected === 4}
-              onChange={(ev: any) => {
-                filter(ev, 4);
-                haeyeonClick();
+              checked={state.haeyeon}
+              onChange={() => {
+                toggleState("haeyeon");
               }}
             >
               <Image src={character} alt={""} width={25} />
               <span>박해연</span>
             </SegmentedItem>
             <SegmentedItem
-              value={5}
-              checked={selected === 5}
-              onChange={(ev: any) => {
-                filter(ev, 5);
-                junhyungClick();
+              checked={state.junhyung}
+              onChange={() => {
+                toggleState("junhyung");
               }}
             >
               <Image src={character} alt={""} width={25} />
@@ -140,68 +106,68 @@ const Scheduler: React.FC = () => {
         view={calView}
         data={[
           {
-            id: "hyoseong",
-            start: "2023-03-24T08:00:00.000Z",
-            end: "2023-03-24T17:00:00.000Z",
+            name: "hyoseong",
+            start: "2023-04-03T08:00",
+            end: "2023-04-03T17:00",
             title: "이것저것 합니다..",
             color: "#328e39",
-            cssClass: selected === 1 ? "" : "active",
+            cssClass: state.hyoseong ? "" : "active",
           },
           {
-            id: "hyoseong",
-            start: "2023-03-20T08:00:00.000Z",
-            end: "2023-03-20T13:00:00.000Z",
+            name: "hyoseong",
+            start: "2023-04-04T08:00:00.000Z",
+            end: "2023-04-04T13:00:00.000Z",
             title: "이것저것 합니다..",
             color: "#328e39",
-            cssClass: selected === 1 ? "" : "active",
+            cssClass: state.hyoseong ? "" : "active",
           },
           {
-            id: "geumju",
-            start: "2023-03-20T08:00:00.000Z",
-            end: "2023-03-20T17:00:00.000Z",
+            name: "geumju",
+            start: "2023-04-04T08:00:00.000Z",
+            end: "2023-04-04T17:00:00.000Z",
             title: "이것저것 합니다..",
             color: "#00aabb",
-            cssClass: selected === 2 ? "" : "active",
+            cssClass: state.geumju ? "" : "active",
           },
           {
-            id: "geumju",
-            start: "2023-03-21T08:00:00.000Z",
-            end: "2023-03-21T13:00:00.000Z",
+            name: "geumju",
+            start: "2023-04-05T08:00:00.000Z",
+            end: "2023-04-05T13:00:00.000Z",
             title: "이것저것 합니다..",
             color: "#00aabb",
-            cssClass: selected === 2 ? "" : "active",
+            cssClass: state.geumju ? "" : "active",
           },
           {
-            id: "cheongjo",
-            start: "2023-03-21T08:00:00.000Z",
-            end: "2023-03-21T17:00:00.000Z",
+            name: "cheongjo",
+            start: "2023-04-05T08:00:00.000Z",
+            end: "2023-04-05T17:00:00.000Z",
             title: "이것저것 합니다..",
             color: " #ea72c0",
-            cssClass: selected === 3 ? "" : "active",
+            cssClass: state.cheongjo ? "" : "active",
           },
           {
-            id: "cheongjo",
-            start: "2023-03-22T17:00:00.000Z",
-            end: "2023-03-22T22:00:00.000Z",
+            name: "cheongjo",
+            start: "2023-04-06T17:00:00.000Z",
+            end: "2023-04-06T22:00:00.000Z",
             title: "이것저것 합니다..",
             color: " #ea72c0",
-            cssClass: selected === 3 ? "" : "active",
+            cssClass: state.cheongjo ? "" : "active",
           },
           {
-            id: "cheongjo",
-            start: "2023-03-22T08:00:00.000Z",
-            end: "2023-03-22T17:00:00.000Z",
+            name: "haeyeon",
+            start: "2023-04-06T08:00:00.000Z",
+            end: "2023-04-06T17:00:00.000Z",
             title: "이것저것 합니다..",
             color: " #eae125",
-            cssClass: selected === 4 ? "" : "active",
+            cssClass: state.haeyeon ? "" : "active",
           },
           {
-            id: "cheongjo",
-            start: "2023-03-23T08:00:00.000Z",
-            end: "2023-03-23T17:00:00.000Z",
+            name: "junhyung",
+            start: "2023-04-07T08:00:00.000Z",
+            end: "2023-04-07T17:00:00.000Z",
             title: "이것저것 합니다..",
             color: " #adf123",
-            cssClass: selected === 5 ? "" : "active",
+            cssClass: state.junhyung ? "" : "active",
           },
         ]}
         cssClass="md-custom-header-filtering"
