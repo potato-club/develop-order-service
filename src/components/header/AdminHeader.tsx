@@ -17,8 +17,8 @@ export const AdminHeader = () => {
         발주신청확인
       </MenuButton>
       <MenuButton
-        isPath={Router.pathname === pathName.MODIFY_ORDER}
-        onClick={() => Router.push(pathName.MODIFY_ORDER)}
+        isPath={Router.pathname.includes(pathName.MODIFY_ORDER.LIST)}
+        onClick={() => Router.push(pathName.MODIFY_ORDER.LIST)}
       >
         발주상태·내용수정
       </MenuButton>

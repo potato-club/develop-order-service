@@ -1,4 +1,6 @@
+import Router from "next/router";
 import styled from "styled-components";
+import { pathName } from "../../../config/adminPathName";
 import { customColor } from "../../customColor";
 
 interface StateProps {
@@ -13,8 +15,13 @@ export const ModifyOrderItem = () => {
     "최종 수정",
   ];
   const TestStateValue = 1;
+
+  const handleRouteDetail = (id: number) => {
+    Router.push(`${pathName.MODIFY_ORDER.DETAIL.replace(":id", String(id))}`);
+  };
+
   return (
-    <Wrapper>
+    <Wrapper onClick={() => handleRouteDetail(1)}>
       <Thumbnail />
       <WebInfo>
         <WebName>Develop-Order-Service</WebName>
