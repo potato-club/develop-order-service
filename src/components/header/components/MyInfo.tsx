@@ -27,7 +27,7 @@ export const MyInfo = () => {
 
   const getUserInfo = async () => {
     await axios
-      .get("http://localhost:8080/users", {
+      .get("https://www.developorderservice.store/users", {
         headers: { Authorization: localStorage.getItem("token") },
       })
       .then((data) => {
