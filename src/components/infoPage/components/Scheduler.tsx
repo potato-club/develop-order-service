@@ -183,6 +183,7 @@ const Wrapper = styled.div`
     flex: 1 0 auto;
     display: flex;
     justify-content: center;
+    overflow: auto;
   }
 
   .md-custom-header-filtering .mbsc-segmented {

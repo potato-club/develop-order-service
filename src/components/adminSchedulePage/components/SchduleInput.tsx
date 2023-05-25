@@ -4,11 +4,19 @@ import styled from "styled-components";
 interface ScheduleInputProps {
   onScheduleAdd: (startTime: string, endTime: string, content: string) => void;
 }
+interface ScheduleListProps {
+  schedules: any;
+}
 
-const ScheduleInput = ({ onScheduleAdd }: ScheduleInputProps) => {
+const ScheduleInput = ({ onScheduleAdd }: ScheduleInputProps , { schedules }: ScheduleListProps) => {
+  const [date, setDate] = useState("");
   const [startTime, setStartTime] = useState("09:00");
   const [endTime, setEndTime] = useState("09:00");
   const [content, setContent] = useState("");
+
+  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDate(event.target.value);
+  };
 
   const handleStartTimeChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -33,6 +41,13 @@ const ScheduleInput = ({ onScheduleAdd }: ScheduleInputProps) => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <Label htmlFor="date-input">날짜:</Label>
+      <input
+        id="date-input"
+        type="date"
+        value={date}
+        onChange={handleDateChange}
+      />
       <Label htmlFor="startTime-input">시작시간:</Label>
       <input
         id="timeInput"
@@ -57,7 +72,17 @@ const ScheduleInput = ({ onScheduleAdd }: ScheduleInputProps) => {
         onChange={handleContentChange}
       />
       <Button type="submit">스케쥴 추가하기</Button>
-    </form>
+  
+       
+        <ul>
+          {schedules.map((schedule: any, index: any) => (
+            <li key={index}>
+              {schedule.time} - {schedule.content}
+            </li>
+          ))}
+        </ul>
+        </form>
+     
   );
 };
 
