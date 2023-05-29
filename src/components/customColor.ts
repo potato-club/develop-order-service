@@ -6,6 +6,7 @@ export type customColorType = {
   darkGray: string;
   blue: string;
   blue_: string;
+  yellow: string;
   yellow_: string;
   indigo1: string;
   indigo2: string;
@@ -21,6 +22,7 @@ export const customColor: customColorType = {
 
   blue: "#91D8F7",
   blue_: "#BBEFFD48",
+  yellow: "#FFE564",
   yellow_: "#FFE56432",
   indigo1: "#17181D",
   indigo2: "#212329",

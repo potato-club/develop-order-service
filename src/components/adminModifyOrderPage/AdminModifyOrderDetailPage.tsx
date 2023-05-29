@@ -2,6 +2,8 @@ import { useState } from "react";
 import styled from "styled-components";
 import { customColor } from "../customColor";
 import { OptionButton } from "./components/OptionButton";
+import StarRatings from "react-star-ratings";
+import { SiteImagesSwiper } from "./components/SiteImagesSwiper";
 
 export const AdminModifyOrderDetailPage = () => {
   const [option, setOption] = useState(false);
@@ -29,9 +31,19 @@ export const AdminModifyOrderDetailPage = () => {
         </WebAddInfo>
         <WebStarRating>
           <WebInfoWrapper>주문자 별점</WebInfoWrapper>
-          ☆☆☆☆☆
+          <StarRatings
+            rating={4}
+            starRatedColor={customColor.yellow}
+            starEmptyColor={customColor.darkGray}
+            starDimension="22px"
+            starSpacing="0px"
+            numberOfStars={5}
+          />
         </WebStarRating>
       </WebInfo>
+      <WebImages>
+        <SiteImagesSwiper />
+      </WebImages>
     </Wrapper>
   );
 };
@@ -42,7 +54,6 @@ const Wrapper = styled.section`
   flex: auto;
   padding-top: 16px;
   color: ${customColor.white};
-  gap: 12px;
   overflow-y: overlay;
   scroll-behavior: smooth;
   ::-webkit-scrollbar {
@@ -121,4 +132,9 @@ const WebStarRating = styled.div`
   align-items: center;
   gap: 28px;
   font-size: 14px;
+`;
+const WebImages = styled.div`
+  display: flex;
+  flex: auto;
+  position: relative;
 `;
