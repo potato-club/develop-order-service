@@ -11,8 +11,8 @@ export const AdminHeader = () => {
   return (
     <Wrapper>
       <MenuButton
-        isPath={Router.pathname === pathName.CHECK_SIGNUP}
-        onClick={() => Router.push(pathName.CHECK_SIGNUP)}
+        isPath={Router.pathname.includes(pathName.CHECK_SIGNUP.LIST)}
+        onClick={() => Router.push(pathName.CHECK_SIGNUP.LIST)}
       >
         발주신청확인
       </MenuButton>
