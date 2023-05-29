@@ -1,4 +1,6 @@
+import Router from "next/router";
 import styled, { css } from "styled-components";
+import { pathName } from "../../config/adminPathName";
 import { customColor } from "../customColor";
 
 interface MenuProps {
@@ -8,8 +10,18 @@ interface MenuProps {
 export const AdminHeader = () => {
   return (
     <Wrapper>
-      <MenuButton isPath={true}>발주신청확인</MenuButton>
-      <MenuButton isPath={false}>발주상태·내용수정</MenuButton>
+      <MenuButton
+        isPath={Router.pathname === pathName.CHECK_SIGNUP}
+        onClick={() => Router.push(pathName.CHECK_SIGNUP)}
+      >
+        발주신청확인
+      </MenuButton>
+      <MenuButton
+        isPath={Router.pathname.includes(pathName.MODIFY_ORDER.LIST)}
+        onClick={() => Router.push(pathName.MODIFY_ORDER.LIST)}
+      >
+        발주상태·내용수정
+      </MenuButton>
       <MenuButton isPath={false}>직원정보수정</MenuButton>
       <MenuButton isPath={false}>통계추출</MenuButton>
     </Wrapper>
