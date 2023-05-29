@@ -3,6 +3,7 @@ import { MdTune } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { customColor } from "../customColor";
 import { TwoRadioBoxs } from "./components/TwoRadioBoxs";
+import { ColorPalette } from "./components/ColorPalette";
 
 export const SignUpAddInfo = () => {
   return (
@@ -14,11 +15,15 @@ export const SignUpAddInfo = () => {
       <Box>
         <BoxItem>
           <BoxItemLabel>브랜드 컬러1</BoxItemLabel>
-          <BoxItemContent>&[수정필요]&</BoxItemContent>
+          <BoxItemContent>
+            <ColorPalette data={["#ffffff", "#fff245", "#975657"]} />
+          </BoxItemContent>
         </BoxItem>
         <BoxItem>
           <BoxItemLabel>브랜드 컬러2</BoxItemLabel>
-          <BoxItemContent>&[수정필요]&</BoxItemContent>
+          <BoxItemContent>
+            <ColorPalette data={["#ffffff", "#fff245", "#975657"]} />
+          </BoxItemContent>
         </BoxItem>
         <BoxItem>
           <BoxItemLabel>페이지 수</BoxItemLabel>
