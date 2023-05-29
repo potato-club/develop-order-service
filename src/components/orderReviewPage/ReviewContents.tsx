@@ -2,7 +2,27 @@ import { useRouter } from "next/router";
 import { customColor } from "../customColor";
 import styled from "styled-components";
 
-export const ReviewContnets = ({ contentsData }: { contentsData: any }) => {
+type propTypes = {
+  contentsData: any;
+  modalState: {
+    modalRole: string;
+    state: boolean;
+    text: string;
+    onClickConfirmButton: () => void;
+  };
+  getModalState: (modalState: {
+    modalRole: string;
+    state: boolean;
+    text: string;
+    onClickConfirmButton: () => void;
+  }) => void;
+};
+
+export const ReviewContnets = ({
+  contentsData,
+  modalState,
+  getModalState,
+}: propTypes) => {
   const router = useRouter();
 
   return (
@@ -33,10 +53,19 @@ export const ReviewContnets = ({ contentsData }: { contentsData: any }) => {
             <ContentDiv key={item.id}>
               <RouterA
                 onClick={() => {
-                  router.push({
-                    pathname: "orderDetail",
-                    query: { id: `${item.id}` },
-                  });
+                  if (localStorage.getItem("token")) {
+                    router.push({
+                      pathname: "orderDetail",
+                      query: { id: `${item.id}` },
+                    });
+                  } else {
+                    getModalState({
+                      modalRole: "noLogin",
+                      state: true,
+                      text: "로그인 하지 않은 상태에서는 게시물에 접근할 수 없습니다.",
+                      onClickConfirmButton: () => {},
+                    });
+                  }
                 }}
               >
                 <PreviewImg>
@@ -95,10 +124,10 @@ export const ReviewContnets = ({ contentsData }: { contentsData: any }) => {
 
 const WrapperContents = styled.div`
   display: flex;
+  flex-direction: column;
   height: 1200px;
   width: 100%;
   position: relative;
-  flex-direction: column;
 `;
 
 const ContentDiv = styled.div`

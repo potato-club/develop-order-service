@@ -18,7 +18,7 @@ const api = axios.create({
 });
 
 function getBaseUrl() {
-  return "http://localhost:8080";
+  return "https://www.developorderservice.store/";
 }
 
 api.interceptors.request.use(applyDefaultParams);
