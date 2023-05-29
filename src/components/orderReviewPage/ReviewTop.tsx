@@ -2,8 +2,10 @@ import styled from "styled-components";
 import { Title } from "../orderDetailPage/Title";
 import React, { useEffect, useState } from "react";
 
+type contentsFilterType = "onGoing" | "finished" | "myOrder";
+
 type propTypes = {
-  getContentsFilterState: (contentFilterState: string) => void;
+  getContentsFilterState: (contentFilterState: contentsFilterType) => void;
   getSortOptionState: (sortOptionState: string) => void;
   getConceptOptionState: (conceptOptionState: string) => void;
   getPageState: (pageState: number) => void;
@@ -13,7 +15,7 @@ type propTypes = {
     text: string;
     onClickConfirmButton: () => void;
   }) => void;
-  contentsFilterState: string;
+  contentsFilterState: contentsFilterType;
   sortOptionState: string;
   conceptOptionState: string;
   modalState: {
