@@ -6,4 +6,15 @@ export const OrderDetailApi = {
 
     return response.data;
   },
+
+  putStarRating: async (
+    id: number,
+    newRating: {
+      rating: number;
+    }
+  ) => {
+    const response = await sendApi.put(`orders/detail/${id}/rating`, newRating);
+
+    return response;
+  },
 };
