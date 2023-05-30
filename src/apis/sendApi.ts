@@ -23,6 +23,12 @@ export default {
           },
         });
   },
+  reviewGet: async (url: string, params?: any) => {
+    return api({
+      url: url,
+      method: "get",
+    });
+  },
   post: async (url: string, params: any) => {
     const token = await tokenService.getToken();
 
