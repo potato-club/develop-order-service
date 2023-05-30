@@ -24,9 +24,17 @@ export default {
         });
   },
   reviewGet: async (url: string, params?: any) => {
+    const token = await tokenService.getToken();
+    const headers: { [key: string]: string } = {};
+
+    if (token) {
+      headers["Authorization"] = `${token}`;
+    }
+
     return api({
       url: url,
       method: "get",
+      headers: headers,
     });
   },
   post: async (url: string, params: any) => {
