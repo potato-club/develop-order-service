@@ -16,6 +16,10 @@ import character from "../../../../public/img/information/character.png";
 import Image from "next/image";
 import { useRecoilState } from "recoil";
 import { personState, PersonState } from "../../../recoil/infoCard";
+import { useQueryGetSchedules } from "../../../hooks/query/scheduler/useQueryGetSchedules";
+
+
+
 
 setOptions({
   locale: localeKo,
@@ -24,6 +28,11 @@ setOptions({
 });
 
 const Scheduler = () => {
+  const { isLoading,data,error } = useQueryGetSchedules();
+
+ 
+
+
   const [state, setState] = useRecoilState<PersonState>(personState);
 
   function toggleState(key: keyof PersonState) {
@@ -104,9 +113,9 @@ const Scheduler = () => {
       <Eventcalendar
         renderHeader={customWithNavButtons}
         view={calView}
-        data={[
+        data={[ 
           {
-            name: "hyoseong",
+            name: "hyoseong", 
             start: "2023-04-03T08:00",
             end: "2023-04-03T17:00",
             title: "이것저것 합니다..",
@@ -172,7 +181,9 @@ const Scheduler = () => {
         ]}
         cssClass="md-custom-header-filtering"
       />
+      
     </Wrapper>
+   
   );
 };
 
