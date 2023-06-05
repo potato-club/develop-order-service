@@ -88,7 +88,7 @@ const WebPeriod = styled.p`
   font-size: 12px;
   color: ${customColor.gray};
 `;
-const WebState = styled.p`
+const WebState = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;

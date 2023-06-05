@@ -23,7 +23,6 @@ export const MyInfo = () => {
     if (localStorage?.getItem("token") !== null) {
       getUserInfo();
     }
-    console.log(userInfo);
   }, []);
 
   const getUserInfo = async () => {
