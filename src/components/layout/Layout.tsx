@@ -7,6 +7,7 @@ import { Header } from "../header/Header";
 import { ScrollCSS } from "./ScrollCSS";
 import { useEffect, useState } from "react";
 import { AdminHeader } from "../header/AdminHeader";
+import { pathName } from "../../config/adminPathName";
 
 interface Props {
   children: React.ReactNode;
@@ -22,7 +23,7 @@ export const Layout = ({ children }: Props) => {
     <Wrapper>
       {isAdmin ? (
         <AdminWrapper>
-          {Router.pathname !== "/admin/login" && <AdminHeader />}
+          {Router.pathname !== pathName.LOGIN && <AdminHeader />}
           <GlobalStyle />
           {children}
         </AdminWrapper>

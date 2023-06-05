@@ -1,6 +1,9 @@
 import Router from "next/router";
+import { useEffect } from "react";
+import { useRecoilValue } from "recoil";
 import styled, { css } from "styled-components";
 import { pathName } from "../../config/adminPathName";
+import { userInformation } from "../../recoil/userInfo";
 import { customColor } from "../customColor";
 
 interface MenuProps {
@@ -8,6 +11,15 @@ interface MenuProps {
 }
 
 export const AdminHeader = () => {
+  const userInfo = useRecoilValue(userInformation);
+  useEffect(() => {
+    if (localStorage.getItem("token") === null || userInfo.role === "USER") {
+      localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
+      localStorage.setItem("prevPath", Router.asPath);
+      Router.push(pathName.LOGIN);
+    }
+  }, []);
   return (
     <Wrapper>
       <MenuButton
