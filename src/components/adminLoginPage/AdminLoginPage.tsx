@@ -45,7 +45,7 @@ export const AdminLoginPage = () => {
 
   const isContainPathName = (prevPath: string) => {
     if (
-      prevPath.includes(pathName.CHECK_SIGNUP) &&
+      prevPath.includes(pathName.CHECK_SIGNUP.LIST) &&
       prevPath !== pathName.LOGIN
     ) {
       return true;
@@ -57,7 +57,7 @@ export const AdminLoginPage = () => {
     const prevPath = localStorage.getItem("prevPath");
     prevPath !== null && isContainPathName(prevPath)
       ? Router.push(prevPath)
-      : Router.push(pathName.CHECK_SIGNUP);
+      : Router.push(pathName.CHECK_SIGNUP.LIST);
   };
 
   const submit = (data: FieldValues) => {
