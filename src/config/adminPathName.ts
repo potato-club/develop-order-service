@@ -1,8 +1,8 @@
 export const pathName = {
-  CHECK_SIGNUP: "/admin",
+  LOGIN: "/admin/login",
   MODIFY_ORDER: {
     LIST: "/admin/modifyOrder",
     DETAIL: "/admin/modifyOrder/:id",
   },
-  LOGIN: "/admin/login",
+  CHECK_SIGNUP: { LIST: "/admin", DETAIL: "/admin/:id" },
 };

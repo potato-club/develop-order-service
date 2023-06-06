@@ -4,9 +4,11 @@ import { customColor } from "../customColor";
 import { OptionButton } from "./components/OptionButton";
 import StarRatings from "react-star-ratings";
 import { SiteImagesSwiper } from "./components/SiteImagesSwiper";
+import { EditButton } from "./components/EditButton";
 
 export const AdminModifyOrderDetailPage = () => {
   const [option, setOption] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
   return (
     <Wrapper>
       <WebInfo>
@@ -43,6 +45,7 @@ export const AdminModifyOrderDetailPage = () => {
       </WebInfo>
       <WebImages>
         <SiteImagesSwiper />
+        <EditButton onClick={() => setIsEdit(!isEdit)} isEdit={isEdit} />
       </WebImages>
     </Wrapper>
   );
