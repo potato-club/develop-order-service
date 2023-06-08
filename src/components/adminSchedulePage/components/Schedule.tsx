@@ -30,6 +30,12 @@ const Schedule: React.FC = () => {
       start: "2023-05-12",
       end: "2023-05-13",
     },
+    {
+      name: "김효성",
+      title: "데드리프트 조지기",
+      start: "2023-05-10",
+      end: "2023-05-10",
+    },
   ]);
 
   const [addModalOpen, setAddModalOpen] = useState(false);
