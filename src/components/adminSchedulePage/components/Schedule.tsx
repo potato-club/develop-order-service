@@ -34,7 +34,40 @@ const Schedule: React.FC = () => {
 
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
-  const [selectedSchedule, setSelectedSchedule] = useState<ScheduleType | null>(null);
+  const [selectedSchedule, setSelectedSchedule] = useState<ScheduleType | null>(
+    null
+  );
+
+  // 요일을 단축 형식으로 표시하는 함수
+  const getShortWeekday = (date: Date) => {
+    const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
+    const dayIndex = date.getDay();
+    return weekdays[dayIndex];
+  };
+
+  // 요일에 따라 스케줄을 분류하는 함수
+  const groupSchedulesByDay = () => {
+    const groupedSchedules: { [key: string]: ScheduleType[] } = {
+      월: [],
+      화: [],
+      수: [],
+      목: [],
+      금: [],
+    };
+
+    const allDays = ["월", "화", "수", "목", "금"];
+
+    allDays.forEach((day) => {
+      groupedSchedules[day] = schedules.filter((schedule) => {
+        const startDate = new Date(schedule.start);
+        const endDate = new Date(schedule.end);
+        const currentDay = getShortWeekday(startDate);
+        return currentDay === day && startDate <= endDate;
+      });
+    });
+
+    return groupedSchedules;
+  };
 
   const handleAddSchedule = (schedule: ScheduleType) => {
     setSchedules((prevSchedules) => [...prevSchedules, schedule]);
@@ -79,51 +112,98 @@ const Schedule: React.FC = () => {
         onUpdateSchedule={handleUpdateSchedule}
       />
 
-      {schedules.map((schedule, index) => (
-        <Wrapper key={index}>
-          <LineWrapper>
-            <ScheduleBox>
-              <NumberBox>{index + 1}.</NumberBox>
-              <ContentBox>
-                <NameBox>{schedule.name}</NameBox>
-                <TitleBox>{schedule.title}</TitleBox>
-                <StartBox>{schedule.start} ~</StartBox>
-                <EndBox>{schedule.end}</EndBox>
-              </ContentBox>
-              <Button onClick={() => handleEditSchedule(schedule)}>수정</Button>
-              <Button onClick={() => handleDeleteSchedule(schedule)}>삭제</Button>
-            </ScheduleBox>
-          </LineWrapper>
-        </Wrapper>
-      ))}
+      <DayWrapper>
+        {Object.entries(groupSchedulesByDay()).map(([day, daySchedules]) => (
+          <DayColumn key={day}>
+            <DayLabel>{day}</DayLabel>
+            {daySchedules.length > 0 ? (
+              <DaySchedule>
+                {daySchedules.map((schedule, index) => (
+                  <ScheduleBox key={index}>
+                    <ContentBox>
+                      <NameBox>{schedule.name}</NameBox>
+                      <TitleBox>{schedule.title}</TitleBox>
+                      <DateRangeBox>
+                        {schedule.start} ~ {schedule.end}
+                      </DateRangeBox>
+                    </ContentBox>
+                    <Button onClick={() => handleEditSchedule(schedule)}>
+                      수정
+                    </Button>
+                    <Button onClick={() => handleDeleteSchedule(schedule)}>
+                      삭제
+                    </Button>
+                  </ScheduleBox>
+                ))}
+              </DaySchedule>
+            ) : (
+              <NoScheduleText>일정이 없습니다.</NoScheduleText>
+            )}
+          </DayColumn>
+        ))}
+      </DayWrapper>
     </RealWrapper>
   );
 };
 
 export default Schedule;
 
-const Wrapper = styled.div``;
+const RealWrapper = styled.div`
+  overflow-y: auto;
+`;
 
-const LineWrapper = styled.div`
+const Button = styled.button`
+  background-color: #ffffff;
+  border: none;
+  color: #333333;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #f1f1f1;
+  }
+`;
+
+const DayWrapper = styled.div`
+  margin-top: 20px;
+  color: black;
   display: flex;
+`;
+
+const DayColumn = styled.div`
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  margin: 0 20px;
+  width: 300px;
+`;
+
+const DayLabel = styled.div`
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  align-items: flex-start;
+  color: aliceblue;
+`;
+
+const DaySchedule = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 `;
 
 const ScheduleBox = styled.div`
-  width: 1240px;
+  width: 300px;
   height: 100px;
   background-color: white;
   border-radius: 20px;
   align-items: center;
-  margin: 20px;
+  margin-bottom: 20px;
   display: flex;
-`;
-
-const NumberBox = styled.div`
-  font-size: 80px;
-  font-weight: 0px;
-  color: white;
-  margin-left: 50px;
 `;
 
 const ContentBox = styled.div`
@@ -132,13 +212,10 @@ const ContentBox = styled.div`
 
 const NameBox = styled.div``;
 const TitleBox = styled.div``;
-const StartBox = styled.div``;
-const EndBox = styled.div``;
+const DateRangeBox = styled.div``;
 
-const Button = styled.button`
-  background-color: white;
-`;
-
-const RealWrapper = styled.div`
-  overflow-y: auto;
+const NoScheduleText = styled.div`
+  margin-top: 20px;
+  font-weight: bold;
+  color: gray;
 `;
