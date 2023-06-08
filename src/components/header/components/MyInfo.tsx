@@ -37,6 +37,9 @@ export const MyInfo = () => {
           picture: data.data.picture,
           role: data.data.role,
         });
+      })
+      .catch((error) => {
+        handleLogout();
       });
   };
 
@@ -47,7 +50,7 @@ export const MyInfo = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
-    setIsLoginState(true);
+    setIsLoginState(false);
     Router.reload();
   };
 

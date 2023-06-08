@@ -1,12 +1,14 @@
 import styled from "styled-components";
-import { useRef } from "react";
-import Image from "next/image";
 import { TbWorld } from "react-icons/tb";
-import { IoMdClose } from "react-icons/io";
 import { FieldValues, useForm } from "react-hook-form";
-import axios from "axios";
 import Router from "next/router";
 import { customColor } from "../customColor";
+import { useQueryPostLogin } from "../../hooks/query/userInfo/useQueryPostLogin";
+import { pathName } from "../../config/adminPathName";
+import { Alert } from "../modal/alert";
+import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { userInformation } from "../../recoil/userInfo";
 
 export const AdminLoginPage = () => {
   const {
@@ -15,21 +17,59 @@ export const AdminLoginPage = () => {
     handleSubmit,
   } = useForm();
 
-  const submit = (data: FieldValues) => {
-    axios
-      .post("http://localhost:8080/admin/login", {
-        adminId: data["employeeId"],
-        adminPw: data["employeePw"],
-      })
-      .then((data) => {
-        localStorage.setItem("token", data.data["accessToken"]);
-        localStorage.setItem("refreshToken", data.data["refreshToken"]);
-        Router.reload();
-      });
+  const [userInfo, setUserInfo] = useRecoilState(userInformation);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const completeLogin = (data: {
+    accessToken: string;
+    refreshToken: string;
+  }) => {
+    localStorage.setItem("token", data.accessToken);
+    localStorage.setItem("refreshToken", data.refreshToken);
+    setUserInfo({ email: "", name: "관리자", picture: "", role: "admin" });
+    handleGoPrevPath();
+  };
+  const failLogin = () => {
+    setIsModalOpen(true);
+  };
+  const { mutate } = useQueryPostLogin(completeLogin, failLogin);
+
+  useEffect(() => {
+    if (userInfo.role === "USER") {
+      localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
+    } else if (userInfo.role === "ADMIN") {
+      handleGoPrevPath();
+    }
+  }, []);
+
+  const isContainPathName = (prevPath: string) => {
+    if (
+      prevPath.includes(pathName.CHECK_SIGNUP.LIST) &&
+      prevPath !== pathName.LOGIN
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  const handleGoPrevPath = () => {
+    const prevPath = localStorage.getItem("prevPath");
+    prevPath !== null && isContainPathName(prevPath)
+      ? Router.push(prevPath)
+      : Router.push(pathName.CHECK_SIGNUP.LIST);
   };
 
+  const submit = (data: FieldValues) => {
+    mutate({ adminId: data.adminId, adminPw: data.adminPw });
+  };
   return (
     <Container>
+      <Alert
+        content={"로그인에 실패하였습니다"}
+        isOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+      />
       <Wrapper>
         <WrapperInner onSubmit={handleSubmit(submit)}>
           <Logo>
@@ -43,18 +83,18 @@ export const AdminLoginPage = () => {
               <Input
                 type="text"
                 placeholder="Enter ID"
-                {...register("employeeId", { required: true })}
+                {...register("adminId", { required: true })}
               />
-              {errors["employeeId"] && <Error>아이디를 입력해주세요</Error>}
+              {errors["adminId"] && <Error>아이디를 입력해주세요</Error>}
             </LoginBox>
             <LoginBox>
               <Label>비밀번호</Label>
               <Input
                 type="password"
                 placeholder="Enter PW"
-                {...register("employeePw", { required: true })}
+                {...register("adminPw", { required: true })}
               />
-              {errors["employeePw"] && <Error>비밀번호를 입력해주세요</Error>}
+              {errors["adminPw"] && <Error>비밀번호를 입력해주세요</Error>}
             </LoginBox>
             <LoginButton type="submit">로그인</LoginButton>
           </Login>

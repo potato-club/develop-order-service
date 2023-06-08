@@ -1,33 +1,30 @@
 import styled from "styled-components";
 import { customColor } from "../customColor";
-import { SignUpItem } from "./components/SignUpItem";
+import { ModifyOrderItem } from "./components/ModifyOrderItem";
+import { SearchBar } from "./components/SearchBar";
 
-export const AdminPage = () => {
+export const AdminModifyOrderPage = () => {
   return (
     <Wrapper>
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
+      <SearchBar />
+      <WrapperInner>
+        <ModifyOrderItem />
+        <ModifyOrderItem />
+        <ModifyOrderItem />
+        <ModifyOrderItem />
+        <ModifyOrderItem />
+        <ModifyOrderItem />
+      </WrapperInner>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.section`
   display: flex;
-  flex-direction: column;
   flex: auto;
+  flex-direction: column;
   padding: 16px 28px 28px 28px;
   color: ${customColor.white};
-  gap: 12px;
   overflow-y: overlay;
   scroll-behavior: smooth;
   ::-webkit-scrollbar {
@@ -45,10 +42,17 @@ const Wrapper = styled.section`
   }
   ::-webkit-scrollbar-button:start:decrement {
     background-color: transparent;
-    height: 12px;
+    height: 56px;
   }
   ::-webkit-scrollbar-button:end:increment {
     background-color: transparent;
     height: 24px;
   }
+`;
+const WrapperInner = styled.div`
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  padding-top: 20px;
+  gap: 12px;
 `;

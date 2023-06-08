@@ -1,22 +1,18 @@
 import styled from "styled-components";
 import { customColor } from "../customColor";
-import { SignUpItem } from "./components/SignUpItem";
+import { SignUpAddInfo } from "./SignUpAddInfo";
+import { SignUpSiteInfo } from "./SignUpSiteInfo";
+import { SignUpUserInfo } from "./SignUpUserInfo";
 
-export const AdminPage = () => {
+export const AdminDetailPage = () => {
   return (
     <Wrapper>
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
+      <WrapperInner>
+        <Division />
+        <SignUpUserInfo />
+        <SignUpSiteInfo />
+        <SignUpAddInfo />
+      </WrapperInner>
     </Wrapper>
   );
 };
@@ -51,4 +47,24 @@ const Wrapper = styled.section`
     background-color: transparent;
     height: 24px;
   }
+`;
+const WrapperInner = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 8px 76px;
+  width: 100%;
+  gap: 56px 0;
+`;
+const Division = styled.div`
+  display: flex;
+  position: absolute;
+  z-index: 1;
+  width: 2px;
+  height: 100%;
+  background: ${customColor.darkGray};
+  border-radius: 1px;
+  left: 212px;
+  top: 50%;
+  transform: translate(0, -50%);
 `;
