@@ -57,7 +57,7 @@ export const DetailContnets = ({
       onClickConfirmButton: async () => {
         try {
           const response = await axios.delete(
-            `http://localhost:8080/orders/${detailData.id}`,
+            `https://www.developorderservice.store/${detailData.id}`,
             {
               headers: {
                 Authorization: `${localStorage.getItem("token")}`,
