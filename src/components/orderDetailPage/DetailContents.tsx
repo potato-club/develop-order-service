@@ -6,7 +6,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import StarRatings from "react-star-ratings";
 import { QueryClient, useMutation, useQuery } from "react-query";
-import { useQueryPutStarRating } from "../../hooks/query/orderDetail/useQueryPutStarRating";
+import { useMutationPutStarRatings } from "../../hooks/query/orderDetail/useMutationPutStarRatings";
 
 type detailDataTypes = {
   siteName: string;
@@ -75,7 +75,10 @@ export const DetailContnets = ({
 
   const queryClient = new QueryClient();
 
-  const mutation = useQueryPutStarRating(detailData.id, getModalState);
+  const mutation = useMutationPutStarRatings({
+    id: detailData && detailData.id,
+    getModalState,
+  });
 
   // const mutation = useMutation(
   //   "setStarRatings",
