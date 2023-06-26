@@ -10,7 +10,7 @@ export const OrderReviewApi = {
     let url = `${
       contentsFilterState !== "myOrder" ? "orders/detail" : "users/orders"
     }`;
-    const response = await sendApi.get(
+    const response = await sendApi.reviewGet(
       `${
         url +
         (pageState !== 1 ? "?page=" + pageState : "") +
