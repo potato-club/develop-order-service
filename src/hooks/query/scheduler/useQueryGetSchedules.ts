@@ -12,16 +12,22 @@ export interface ScheduleType {
 
 export const useQueryGetSchedules = () => {
   const load = useCallback(async () => {
-    const response = await SchedulerApi.loadSchedules();
-    const schedulesRes: ScheduleType[]
-     = response.map((item: ScheduleType) => ({
-      name: item.name,
-      start: item.start,
-      end: item.end,
-      title: item.title,
-      color: item.color,
-    }));
-    return schedulesRes;
+    try {
+      const response = await SchedulerApi.loadSchedules();
+      const schedulesRes: ScheduleType[] = response.map((item: ScheduleType) => ({
+        name: item.name,
+        start: item.start,
+        end: item.end,
+        title: item.title,
+        color: item.color,
+      }));
+
+      console.log("Swagger 데이터 확인:", schedulesRes); // Swagger 데이터를 확인하기 위한 로그
+
+      return schedulesRes;
+    } catch (error) {
+      throw new Error("Failed to load schedules");
+    }
   }, []);
 
   return useQuery<ScheduleType[]>(["getSchedules"], load, {
@@ -30,3 +36,4 @@ export const useQueryGetSchedules = () => {
     },
   });
 };
+
