@@ -6,6 +6,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import StarRatings from "react-star-ratings";
 import { QueryClient, useMutation, useQuery } from "react-query";
+import { useMutationPutStarRatings } from "../../hooks/query/orderDetail/useMutationPutStarRatings";
 
 type detailDataTypes = {
   siteName: string;
@@ -56,7 +57,7 @@ export const DetailContnets = ({
       onClickConfirmButton: async () => {
         try {
           const response = await axios.delete(
-            `http://localhost:8080/orders/${detailData.id}`,
+            `https://www.developorderservice.store/${detailData.id}`,
             {
               headers: {
                 Authorization: `${localStorage.getItem("token")}`,
@@ -74,37 +75,42 @@ export const DetailContnets = ({
 
   const queryClient = new QueryClient();
 
-  const mutation = useMutation(
-    "setStarRatings",
-    (newRating: number) =>
-      axios.put(
-        `http://localhost:8080/orders/detail/${detailData.id}/rating`,
-        {
-          rating: newRating,
-        },
-        {
-          headers: {
-            Authorization: `${localStorage.getItem("token")}`,
-          },
-        }
-      ),
-    {
-      onSuccess: (data) => {
-        queryClient.invalidateQueries("getOrderDetail");
-        console.log("onSuccess", data);
-      },
-      onError: (error: { response: { data: { error: string } } }) => {
-        console.log(error);
-        getModalState({
-          modalRole: "alreadyRated",
-          state: true,
-          text: error.response.data.error,
-          onClickConfirmButton: () => {},
-        });
-        console.log("onError", error);
-      },
-    }
-  );
+  const mutation = useMutationPutStarRatings({
+    id: detailData && detailData.id,
+    getModalState,
+  });
+
+  // const mutation = useMutation(
+  //   "setStarRatings",
+  //   (newRating: number) =>
+  //     axios.put(
+  //       `http://localhost:8080/orders/detail/${detailData.id}/rating`,
+  //       {
+  //         rating: newRating,
+  //       },
+  //       {
+  //         headers: {
+  //           Authorization: `${localStorage.getItem("token")}`,
+  //         },
+  //       }
+  //     ),
+  //   {
+  //     onSuccess: (data) => {
+  //       queryClient.invalidateQueries("getOrderDetail");
+  //       console.log("onSuccess", data);
+  //     },
+  //     onError: (error: { response: { data: { error: string } } }) => {
+  //       console.log(error);
+  //       getModalState({
+  //         modalRole: "alreadyRated",
+  //         state: true,
+  //         text: error.response.data.error,
+  //         onClickConfirmButton: () => {},
+  //       });
+  //       console.log("onError", error);
+  //     },
+  //   }
+  // );
 
   // // 이거는 발주 상태 변경 테스트용
   // const onClickModifyButton = async () => {
