@@ -114,7 +114,6 @@ const Wrapper = styled.div`
   position: fixed;
   box-shadow: 1px 2px 4px 2px ${customColor.black + "33"};
   background: ${customColor.white};
-  z-index: 50;
   width: 400px;
   top: 50%;
   left: 50%;

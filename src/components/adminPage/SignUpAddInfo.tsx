@@ -5,7 +5,20 @@ import { customColor } from "../customColor";
 import { TwoRadioBoxs } from "./components/TwoRadioBoxs";
 import { ColorPalette } from "./components/ColorPalette";
 
-export const SignUpAddInfo = () => {
+interface Props {
+  mainColor: string[] | undefined;
+  subColor: string[] | undefined;
+  page: number | undefined;
+  login: boolean | undefined;
+  database: boolean | undefined;
+  etc: string | undefined;
+  meeting: string | undefined;
+}
+
+export const SignUpAddInfo = (props: Props) => {
+  const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
+  const date = props.meeting?.split("T");
+  const time = new Date(props.meeting!);
   return (
     <Content>
       <Lbel>
@@ -16,29 +29,29 @@ export const SignUpAddInfo = () => {
         <BoxItem>
           <BoxItemLabel>브랜드 컬러1</BoxItemLabel>
           <BoxItemContent>
-            <ColorPalette data={["#ffffff", "#fff245", "#975657"]} />
+            <ColorPalette data={props.mainColor!} />
           </BoxItemContent>
         </BoxItem>
         <BoxItem>
           <BoxItemLabel>브랜드 컬러2</BoxItemLabel>
           <BoxItemContent>
-            <ColorPalette data={["#ffffff", "#fff245", "#975657"]} />
+            <ColorPalette data={props.subColor!} />
           </BoxItemContent>
         </BoxItem>
         <BoxItem>
           <BoxItemLabel>페이지 수</BoxItemLabel>
-          <BoxItemContent>3</BoxItemContent>
+          <BoxItemContent>{props.page}</BoxItemContent>
         </BoxItem>
         <BoxItem>
           <BoxItemLabel>로그인 필요 유무</BoxItemLabel>
           <BoxItemContent>
-            <TwoRadioBoxs value1="예" value2="아니요" data="예" />
+            <TwoRadioBoxs value1="예" value2="아니요" data={props.login!} />
           </BoxItemContent>
         </BoxItem>
         <BoxItem>
           <BoxItemLabel>DB 필요 유무</BoxItemLabel>
           <BoxItemContent>
-            <TwoRadioBoxs value1="예" value2="아니요" data="예" />
+            <TwoRadioBoxs value1="예" value2="아니요" data={props.database!} />
           </BoxItemContent>
         </BoxItem>
         <BoxItem>
@@ -47,11 +60,13 @@ export const SignUpAddInfo = () => {
         </BoxItem>
         <BoxItem>
           <BoxItemLabel>기타사항</BoxItemLabel>
-          <BoxItemContent>응애</BoxItemContent>
+          <BoxItemContent>{props.etc}</BoxItemContent>
         </BoxItem>
         <BoxItem>
           <BoxItemLabel>*첫 미팅 희망날짜</BoxItemLabel>
-          <BoxItemContent>2023-05-15(월) / 10:00</BoxItemContent>
+          <BoxItemContent>
+            {date![0]}({daysOfWeek[time.getDay()]}) / {date![1].slice(0, 5)}
+          </BoxItemContent>
         </BoxItem>
       </Box>
     </Content>

@@ -1,17 +1,40 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 import { customColor } from "../customColor";
 import { SignUpAddInfo } from "./SignUpAddInfo";
 import { SignUpSiteInfo } from "./SignUpSiteInfo";
 import { SignUpUserInfo } from "./SignUpUserInfo";
+import Router from "next/router";
+import { useQueryGetSignUpDetail } from "../../hooks/query/adminSignUp/useQueryGetSignUpDetail";
 
 export const AdminDetailPage = () => {
+  const { id } = Router.query;
+  const { isLoading, data } = useQueryGetSignUpDetail(Number(id));
+
   return (
     <Wrapper>
       <WrapperInner>
         <Division />
-        <SignUpUserInfo />
-        <SignUpSiteInfo />
-        <SignUpAddInfo />
+        <SignUpUserInfo
+          name={data?.name}
+          email={data?.email}
+          hotLine={data?.hotLine}
+          subLine={data?.subLine}
+        />
+        <SignUpSiteInfo
+          siteName={data?.siteName}
+          purpose={data?.purpose}
+          owner={data?.owner}
+        />
+        <SignUpAddInfo
+          mainColor={data?.mainColor}
+          subColor={data?.subColor}
+          page={data?.page}
+          login={data?.login}
+          database={data?.database}
+          etc={data?.etc}
+          meeting={data?.meeting}
+        />
       </WrapperInner>
     </Wrapper>
   );

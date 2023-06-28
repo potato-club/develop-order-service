@@ -22,7 +22,7 @@ export const AdminHeader = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
-    localStorage.setItem("prevPath", Router.asPath);
+    localStorage.setItem("prevPath", Router.asPath.replace(/\/\d+$/, ""));
     Router.push(pathName.LOGIN);
   };
 
@@ -31,8 +31,7 @@ export const AdminHeader = () => {
       <WrapperInner>
         <MenuButton
           isPath={
-            Router.pathname === pathName.CHECK_SIGNUP.DETAIL ||
-            Router.pathname === pathName.CHECK_SIGNUP.LIST
+            Router.asPath.replace(/\/\d+$/, "") === pathName.CHECK_SIGNUP.LIST
           }
           onClick={() => Router.push(pathName.CHECK_SIGNUP.LIST)}
         >

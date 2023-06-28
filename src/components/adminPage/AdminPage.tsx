@@ -1,22 +1,22 @@
+import { useEffect } from "react";
 import styled from "styled-components";
+import { useQueryGetSignUps } from "../../hooks/query/adminSignUp/useQueryGetSignUps";
 import { customColor } from "../customColor";
 import { SignUpItem } from "./components/SignUpItem";
 
+export interface ResponseType {
+  clientName: string;
+  createdDate: string;
+  id: number;
+  purpose: string;
+  siteName: string;
+}
+
 export const AdminPage = () => {
+  const { isLoading, data } = useQueryGetSignUps();
   return (
     <Wrapper>
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
-      <SignUpItem />
+      {!isLoading && data?.map((i, id) => <SignUpItem data={i} key={id} />)}
     </Wrapper>
   );
 };
