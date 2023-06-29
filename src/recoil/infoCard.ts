@@ -6,6 +6,7 @@ export interface PersonState {
   cheongjo: boolean;
   haeyeon: boolean;
   junhyung: boolean;
+  [key: string]: boolean;
 }
 
 export const personState = atom<PersonState>({
@@ -16,5 +17,6 @@ export const personState = atom<PersonState>({
     haeyeon: true,
     cheongjo: false,
     junhyung: false,
+   
   },
 });

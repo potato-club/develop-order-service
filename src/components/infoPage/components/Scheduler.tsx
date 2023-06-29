@@ -18,20 +18,22 @@ import { useRecoilState } from "recoil";
 import { personState, PersonState } from "../../../recoil/infoCard";
 import { useQueryGetSchedules } from "../../../hooks/query/scheduler/useQueryGetSchedules";
 
-
-
-
 setOptions({
   locale: localeKo,
   theme: "windows",
   themeVariant: "light",
 });
 
+type MyEventType = {
+  name: string;
+  start: string;
+  end: string;
+  title: string;
+  color: string;
+};
+
 const Scheduler = () => {
-  const { isLoading,data,error } = useQueryGetSchedules();
-
- 
-
+  const { isLoading, data, error } = useQueryGetSchedules();
 
   const [state, setState] = useRecoilState<PersonState>(personState);
 
@@ -108,83 +110,32 @@ const Scheduler = () => {
     );
   };
 
+  const mapDataToEvent = (data: MyEventType[] | undefined) => {
+    if (!data) {
+      return []; // 데이터가 없는 경우 빈 배열을 반환하거나 다른 처리를 수행할 수 있습니다.
+    }
+    return data.map((item) => {
+      const { name, start, end, title, color } = item;
+      return {
+        name,
+        start,
+        end,
+        title,
+        color,
+        cssClass: state[name] ? "" : "active",
+      };
+    });
+  };
+
   return (
     <Wrapper>
       <Eventcalendar
         renderHeader={customWithNavButtons}
         view={calView}
-        // data={[ 
-        //   {
-        //     name: "hyoseong", 
-        //     start: "2023-04-03T08:00",
-        //     end: "2023-04-03T17:00",
-        //     title: "이것저것 합니다..",
-        //     color: "#328e39",
-        //     cssClass: state.hyoseong ? "" : "active",
-        //   },
-        //   {
-        //     name: "hyoseong",
-        //     start: "2023-04-04T08:00:00.000Z",
-        //     end: "2023-04-04T13:00:00.000Z",
-        //     title: "이것저것 합니다..",
-        //     color: "#328e39",
-        //     cssClass: state.hyoseong ? "" : "active",
-        //   },
-        //   {
-        //     name: "geumju",
-        //     start: "2023-04-04T08:00:00.000Z",
-        //     end: "2023-04-04T17:00:00.000Z",
-        //     title: "이것저것 합니다..",
-        //     color: "#00aabb",
-        //     cssClass: state.geumju ? "" : "active",
-        //   },
-        //   {
-        //     name: "geumju",
-        //     start: "2023-04-05T08:00:00.000Z",
-        //     end: "2023-04-05T13:00:00.000Z",
-        //     title: "이것저것 합니다..",
-        //     color: "#00aabb",
-        //     cssClass: state.geumju ? "" : "active",
-        //   },
-        //   {
-        //     name: "cheongjo",
-        //     start: "2023-04-05T08:00:00.000Z",
-        //     end: "2023-04-05T17:00:00.000Z",
-        //     title: "이것저것 합니다..",
-        //     color: " #ea72c0",
-        //     cssClass: state.cheongjo ? "" : "active",
-        //   },
-        //   {
-        //     name: "cheongjo",
-        //     start: "2023-04-06T17:00:00.000Z",
-        //     end: "2023-04-06T22:00:00.000Z",
-        //     title: "이것저것 합니다..",
-        //     color: " #ea72c0",
-        //     cssClass: state.cheongjo ? "" : "active",
-        //   },
-        //   {
-        //     name: "haeyeon",
-        //     start: "2023-04-06T08:00:00.000Z",
-        //     end: "2023-04-06T17:00:00.000Z",
-        //     title: "이것저것 합니다..",
-        //     color: " #eae125",
-        //     cssClass: state.haeyeon ? "" : "active",
-        //   },
-        //   {
-        //     name: "junhyung",
-        //     start: "2023-04-07T08:00:00.000Z",
-        //     end: "2023-04-07T17:00:00.000Z",
-        //     title: "이것저것 합니다..",
-        //     color: " #adf123",
-        //     cssClass: state.junhyung ? "" : "active",
-        //   },
-        // ]}
-        data = {data}
+        data={mapDataToEvent(data)}
         cssClass="md-custom-header-filtering"
       />
-      
     </Wrapper>
-   
   );
 };
 
