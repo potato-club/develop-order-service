@@ -4,71 +4,138 @@ import checkIcon from "../../../public/img/detail/check.png";
 import { PreviewSwiper } from "./PreviewSwiper";
 import axios from "axios";
 import { useRouter } from "next/router";
+import StarRatings from "react-star-ratings";
+import { QueryClient, useMutation, useQuery } from "react-query";
+import { useMutationPutStarRatings } from "../../hooks/query/orderDetail/useMutationPutStarRatings";
 
-type contentsTypes = {
+type detailDataTypes = {
   siteName: string;
   id: number;
   purpose: string;
   createdDate: string;
-  completedDate: string;
+  completedDate?: string;
   images: Array<{
     id: number;
     imageName: string;
     imageUrl: string;
   }>;
   state: string;
-  page: any;
-  login: any;
-  db: any;
-  starRating: any;
+  page: number;
+  login: boolean;
+  database: boolean;
+  rating?: number;
 };
+
+type propTypes = {
+  detailData: detailDataTypes;
+  modalState: {
+    modalRole: string;
+    state: boolean;
+    text: string;
+    onClickConfirmButton: () => void;
+  };
+  getModalState: (modalState: {
+    modalRole: string;
+    state: boolean;
+    text: string;
+    onClickConfirmButton: () => void;
+  }) => void;
+};
+
 export const DetailContnets = ({
   detailData,
-}: {
-  detailData: contentsTypes;
-}) => {
+  modalState,
+  getModalState,
+}: propTypes) => {
   const router = useRouter();
 
-  const onClickModifyButton = async () => {
-    const formData = new FormData();
-
-    const requestDto = { database: true, login: true, page: 8, stateKey: 6 };
-    if (requestDto) {
-      formData.append(
-        "orderDetail",
-        new Blob([JSON.stringify(requestDto)], { type: "application/json" })
-      );
-    }
-    const headers = {
-      Authorization: localStorage.getItem("token"),
-      "Content-Type": "multipart/form-data",
-    };
-
-    const response = await axios.put(
-      `http://localhost:8080/orders/detail/${detailData.id}`,
-      formData,
-      { headers }
-    );
-
-    router.back();
-  };
-
   const onClickOrderCancelButton = async () => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:8080/orders/${detailData.id}`,
-        {
-          headers: {
-            Authorization: `${localStorage.getItem("token")}`,
-          },
+    getModalState({
+      modalRole: "confirm",
+      state: true,
+      text: "정말로 발주를 취소하시겠습니까?",
+      onClickConfirmButton: async () => {
+        try {
+          const response = await axios.delete(
+            `https://www.developorderservice.store/${detailData.id}`,
+            {
+              headers: {
+                Authorization: `${localStorage.getItem("token")}`,
+              },
+            }
+          );
+          console.log(response);
+        } catch (err) {
+          console.log(err);
         }
-      );
-      console.log(response);
-    } catch (err) {
-      console.log(err);
-    }
-    router.back();
+        router.back();
+      },
+    });
   };
+
+  const queryClient = new QueryClient();
+
+  const mutation = useMutationPutStarRatings({
+    id: detailData && detailData.id,
+    getModalState,
+  });
+
+  // const mutation = useMutation(
+  //   "setStarRatings",
+  //   (newRating: number) =>
+  //     axios.put(
+  //       `http://localhost:8080/orders/detail/${detailData.id}/rating`,
+  //       {
+  //         rating: newRating,
+  //       },
+  //       {
+  //         headers: {
+  //           Authorization: `${localStorage.getItem("token")}`,
+  //         },
+  //       }
+  //     ),
+  //   {
+  //     onSuccess: (data) => {
+  //       queryClient.invalidateQueries("getOrderDetail");
+  //       console.log("onSuccess", data);
+  //     },
+  //     onError: (error: { response: { data: { error: string } } }) => {
+  //       console.log(error);
+  //       getModalState({
+  //         modalRole: "alreadyRated",
+  //         state: true,
+  //         text: error.response.data.error,
+  //         onClickConfirmButton: () => {},
+  //       });
+  //       console.log("onError", error);
+  //     },
+  //   }
+  // );
+
+  // // 이거는 발주 상태 변경 테스트용
+  // const onClickModifyButton = async () => {
+  //   const formData = new FormData();
+
+  //   const requestDto = { database: true, login: true, page: 8, stateKey: 6 };
+  //   if (requestDto) {
+  //     formData.append(
+  //       "orderDetail",
+  //       new Blob([JSON.stringify(requestDto)], { type: "application/json" })
+  //     );
+  //   }
+  //   const headers = {
+  //     Authorization: localStorage.getItem("token"),
+  //     "Content-Type": "multipart/form-data",
+  //   };
+
+  //   const response = await axios.put(
+  //     `http://localhost:8080/orders/detail/${detailData.id}`,
+  //     formData,
+  //     { headers }
+  //   );
+
+  //   router.back();
+  // };
 
   // 이거는 별점 부여 버튼 테스트용
   // const onClickRatingButton = async () => {
@@ -91,37 +158,37 @@ export const DetailContnets = ({
   // };
 
   // 이거는 이미지 업로드 하는거 테스트
-  const handleImageChange = (e: any) => {
-    const formData = new FormData();
-    const test = e.target.files[0];
+  // const handleImageChange = (e: any) => {
+  //   const formData = new FormData();
+  //   const test = e.target.files[0];
 
-    const requestDto = { database: true, login: true, page: 8, stateKey: 4 };
-    if (requestDto) {
-      formData.append(
-        "orderDetail",
-        new Blob([JSON.stringify(requestDto)], { type: "application/json" })
-      );
-      formData.append("images", test);
-    }
+  //   const requestDto = { database: true, login: true, page: 8, stateKey: 4 };
+  //   if (requestDto) {
+  //     formData.append(
+  //       "orderDetail",
+  //       new Blob([JSON.stringify(requestDto)], { type: "application/json" })
+  //     );
+  //     formData.append("images", test);
+  //   }
 
-    const headers = {
-      Authorization: localStorage.getItem("token"),
-    };
+  //   const headers = {
+  //     Authorization: localStorage.getItem("token"),
+  //   };
 
-    const response = axios.put(
-      `http://localhost:8080/orders/detail/${detailData.id}`,
-      formData,
-      { headers }
-    );
-    console.log(response);
-  };
+  //   const response = axios.put(
+  //     `http://localhost:8080/orders/detail/${detailData.id}`,
+  //     formData,
+  //     { headers }
+  //   );
+  //   console.log(response);
+  // };
 
   return (
     <WrapperContents>
-      <div>
+      {/* <div>
         <button onClick={onClickModifyButton}>발주 상태 변경</button>
-      </div>
-      <input type="file" onChange={handleImageChange} multiple />
+      </div> */}
+      {/* <input type="file" onChange={handleImageChange} multiple /> */}
       <OrderTitleWrapper>
         <OrderTitleDiv>
           <OrderTitleH2>{detailData && detailData.siteName}</OrderTitleH2>
@@ -169,19 +236,9 @@ export const DetailContnets = ({
         </InfoLabelDiv>
         <InfoDataDiv3>
           <DataLabelDiv>
-            <OrderInfoP>페이지 추가</OrderInfoP>
+            <OrderInfoP>페이지 수</OrderInfoP>
           </DataLabelDiv>
-          <CheckBoxDiv>
-            <CheckImgDiv additional={detailData && detailData.page}>
-              <Image
-                src={checkIcon}
-                alt="icon"
-                width={21}
-                height={21}
-                style={{ margin: "auto" }}
-              ></Image>
-            </CheckImgDiv>
-          </CheckBoxDiv>
+          {detailData && detailData.page}
         </InfoDataDiv3>
         <InfoDataDiv3>
           <DataLabelDiv>
@@ -204,7 +261,7 @@ export const DetailContnets = ({
             <OrderInfoP>DB</OrderInfoP>
           </DataLabelDiv>
           <CheckBoxDiv>
-            <CheckImgDiv additional={detailData && detailData.db}>
+            <CheckImgDiv additional={detailData && detailData.database}>
               <Image
                 src={checkIcon}
                 alt="icon"
@@ -221,7 +278,18 @@ export const DetailContnets = ({
           <OrderInfoP>별점</OrderInfoP>
         </InfoLabelDiv>
         <InfoDataDiv1>
-          {/* <button onClick={onClickRatingButton}>별점별점</button> */}
+          <StarRatings
+            rating={(detailData && detailData.rating) || 0}
+            starRatedColor="gold"
+            starEmptyColor="lightgray"
+            starHoverColor="gold"
+            starDimension="30px"
+            starSpacing="2px"
+            changeRating={(newRating: number) => {
+              mutation.mutate(newRating);
+            }}
+            numberOfStars={5}
+          ></StarRatings>
         </InfoDataDiv1>
       </OrderInfoDiv>
       <OrderInfoDiv progress={""}>
@@ -302,6 +370,8 @@ const PreviewLabelDiv = styled.div`
 `;
 
 const InfoDataDiv1 = styled.div`
+  display: flex;
+  align-items: center;
   padding-left: 25px;
   height: 50px;
   width: 600px;
@@ -320,6 +390,7 @@ const InfoDataDiv3 = styled.div`
   height: 50px;
   width: 200px;
   border-right: 1px solid black;
+  font-size: 20px;
   float: left;
   display: flex;
   align-items: center;
@@ -340,6 +411,9 @@ const OrderInfoP = styled.p`
 const CheckBoxDiv = styled.div`
   width: 25px;
   height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 1px solid black;
 `;
 

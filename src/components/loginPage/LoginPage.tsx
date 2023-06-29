@@ -54,7 +54,7 @@ export const LoginPage = () => {
         <br />
         다양한 서비스를 이용하세요
         <Logins>
-          <Link href="http://localhost:8080/oauth2/authorization/kakao">
+          <Link href="https://www.developorderservice.store/oauth2/authorization/kakao">
             <KakaoLogin>
               <Image
                 src={"/img/login/kakaoLogin.png"}
@@ -64,7 +64,7 @@ export const LoginPage = () => {
               />
             </KakaoLogin>
           </Link>
-          <Link href="http://localhost:8080/oauth2/authorization/google">
+          <Link href="https://www.developorderservice.store/oauth2/authorization/google">
             <GoogleLogin>
               <Image
                 src={"/img/login/google.png"}
