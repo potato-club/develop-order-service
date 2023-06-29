@@ -13,6 +13,7 @@ interface Props {
   database: boolean | undefined;
   etc: string | undefined;
   meeting: string | undefined;
+  isLoading: boolean;
 }
 
 export const SignUpAddInfo = (props: Props) => {
@@ -29,13 +30,13 @@ export const SignUpAddInfo = (props: Props) => {
         <BoxItem>
           <BoxItemLabel>브랜드 컬러1</BoxItemLabel>
           <BoxItemContent>
-            <ColorPalette data={props.mainColor!} />
+            <ColorPalette data={props.isLoading ? [] : props.mainColor!} />
           </BoxItemContent>
         </BoxItem>
         <BoxItem>
           <BoxItemLabel>브랜드 컬러2</BoxItemLabel>
           <BoxItemContent>
-            <ColorPalette data={props.subColor!} />
+            <ColorPalette data={props.isLoading ? [] : props.subColor!} />
           </BoxItemContent>
         </BoxItem>
         <BoxItem>
@@ -60,12 +61,13 @@ export const SignUpAddInfo = (props: Props) => {
         </BoxItem>
         <BoxItem>
           <BoxItemLabel>기타사항</BoxItemLabel>
-          <BoxItemContent>{props.etc}</BoxItemContent>
+          <BoxItemContent>{props.isLoading && props.etc}</BoxItemContent>
         </BoxItem>
         <BoxItem>
           <BoxItemLabel>*첫 미팅 희망날짜</BoxItemLabel>
           <BoxItemContent>
-            {date![0]}({daysOfWeek[time.getDay()]}) / {date![1].slice(0, 5)}
+            {date !== undefined && date?.[0]}({daysOfWeek[time.getDay()]}) /{" "}
+            {date?.[1].slice(0, 5)}
           </BoxItemContent>
         </BoxItem>
       </Box>

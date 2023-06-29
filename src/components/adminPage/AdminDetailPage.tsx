@@ -20,11 +20,13 @@ export const AdminDetailPage = () => {
           email={data?.email}
           hotLine={data?.hotLine}
           subLine={data?.subLine}
+          isLoading={isLoading}
         />
         <SignUpSiteInfo
           siteName={data?.siteName}
           purpose={data?.purpose}
           owner={data?.owner}
+          isLoading={isLoading}
         />
         <SignUpAddInfo
           mainColor={data?.mainColor}
@@ -34,6 +36,7 @@ export const AdminDetailPage = () => {
           database={data?.database}
           etc={data?.etc}
           meeting={data?.meeting}
+          isLoading={isLoading}
         />
       </WrapperInner>
     </Wrapper>

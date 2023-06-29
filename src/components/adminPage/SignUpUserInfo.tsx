@@ -7,6 +7,7 @@ interface Props {
   email: string | undefined;
   hotLine: string | undefined;
   subLine: string | undefined;
+  isLoading: boolean;
 }
 
 export const SignUpUserInfo = (props: Props) => {

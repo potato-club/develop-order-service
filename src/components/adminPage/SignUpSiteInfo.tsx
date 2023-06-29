@@ -7,6 +7,7 @@ interface Props {
   siteName: string | undefined;
   purpose: string | undefined;
   owner: "COMPANY" | "PERSONAL" | "PUBLIC" | undefined;
+  isLoading: boolean;
 }
 
 export const SignUpSiteInfo = (props: Props) => {
@@ -28,7 +29,7 @@ export const SignUpSiteInfo = (props: Props) => {
         <BoxItem>
           <BoxItemLabel>*사이트 운영자</BoxItemLabel>
           <BoxItemContent>
-            <OrdererRadioBoxs data={props.owner!} />
+            <OrdererRadioBoxs data={props.isLoading ? null : props.owner!} />
           </BoxItemContent>
         </BoxItem>
       </Box>
