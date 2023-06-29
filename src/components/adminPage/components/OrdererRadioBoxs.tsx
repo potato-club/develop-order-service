@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { customColor } from "../../customColor";
 
 interface Props {
-  data: "COMPANY" | "PUBLIC" | "PERSONAL";
+  data: "COMPANY" | "PUBLIC" | "PERSONAL" | null;
 }
 
 export const OrdererRadioBoxs = ({ data }: Props) => {

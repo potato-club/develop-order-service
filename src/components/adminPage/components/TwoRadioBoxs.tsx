@@ -4,7 +4,7 @@ import { customColor } from "../../customColor";
 interface Props {
   value1: string;
   value2: string;
-  data: string;
+  data: boolean | null;
 }
 
 export const TwoRadioBoxs = (props: Props) => {
@@ -15,7 +15,7 @@ export const TwoRadioBoxs = (props: Props) => {
           <RadioBox
             type="radio"
             disabled
-            checked={props.data === props.value1}
+            checked={props.data !== null && props.data}
           />
           {props.value1}
         </RadioBoxs>
@@ -23,7 +23,7 @@ export const TwoRadioBoxs = (props: Props) => {
           <RadioBox
             type="radio"
             disabled
-            checked={props.data === props.value2}
+            checked={props.data !== null && !props.data}
           />
           {props.value2}
         </RadioBoxs>

@@ -4,7 +4,6 @@ import { customColor } from "../src/components/customColor";
 export const ScrollLogin = createGlobalStyle`
 html {
     overflow: overlay;
-    scroll-behavior: smooth;
     ::-webkit-scrollbar {
     width: 14px;
     }
