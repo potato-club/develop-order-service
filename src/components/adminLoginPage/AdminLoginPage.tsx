@@ -26,7 +26,7 @@ export const AdminLoginPage = () => {
   }) => {
     localStorage.setItem("token", data.accessToken);
     localStorage.setItem("refreshToken", data.refreshToken);
-    setUserInfo({ email: "", name: "관리자", picture: "", role: "admin" });
+    localStorage.setItem("role", "ADMIN");
     handleGoPrevPath();
   };
   const failLogin = () => {
@@ -35,10 +35,11 @@ export const AdminLoginPage = () => {
   const { mutate } = useQueryPostLogin(completeLogin, failLogin);
 
   useEffect(() => {
-    if (userInfo.role === "USER") {
+    if (localStorage.getItem("role") === "USER") {
       localStorage.removeItem("token");
       localStorage.removeItem("refreshToken");
-    } else if (userInfo.role === "ADMIN") {
+      localStorage.removeItem("role");
+    } else if (localStorage.getItem("role") === "ADMIN") {
       handleGoPrevPath();
     }
   }, []);
@@ -55,7 +56,9 @@ export const AdminLoginPage = () => {
   };
   const handleGoPrevPath = () => {
     const prevPath = localStorage.getItem("prevPath");
-    prevPath !== null && isContainPathName(prevPath)
+    prevPath !== null &&
+    isContainPathName(prevPath) &&
+    prevPath.includes(pathName.CHECK_SIGNUP.LIST)
       ? Router.push(prevPath)
       : Router.push(pathName.CHECK_SIGNUP.LIST);
   };
