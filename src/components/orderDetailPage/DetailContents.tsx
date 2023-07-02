@@ -73,8 +73,6 @@ export const DetailContnets = ({
     });
   };
 
-  const queryClient = new QueryClient();
-
   const mutation = useMutationPutStarRatings({
     id: detailData && detailData.id,
     getModalState,
@@ -112,30 +110,30 @@ export const DetailContnets = ({
   //   }
   // );
 
-  // // 이거는 발주 상태 변경 테스트용
-  // const onClickModifyButton = async () => {
-  //   const formData = new FormData();
+  // 이거는 발주 상태 변경 테스트용
+  const onClickModifyButton = async () => {
+    const formData = new FormData();
 
-  //   const requestDto = { database: true, login: true, page: 8, stateKey: 6 };
-  //   if (requestDto) {
-  //     formData.append(
-  //       "orderDetail",
-  //       new Blob([JSON.stringify(requestDto)], { type: "application/json" })
-  //     );
-  //   }
-  //   const headers = {
-  //     Authorization: localStorage.getItem("token"),
-  //     "Content-Type": "multipart/form-data",
-  //   };
+    const requestDto = { database: true, login: true, page: 8, stateKey: 6 };
+    if (requestDto) {
+      formData.append(
+        "orderDetail",
+        new Blob([JSON.stringify(requestDto)], { type: "application/json" })
+      );
+    }
+    const headers = {
+      Authorization: localStorage.getItem("token"),
+      "Content-Type": "multipart/form-data",
+    };
 
-  //   const response = await axios.put(
-  //     `http://localhost:8080/orders/detail/${detailData.id}`,
-  //     formData,
-  //     { headers }
-  //   );
+    const response = await axios.put(
+      `https://www.developorderservice.store/orders/detail/${detailData.id}`,
+      formData,
+      { headers }
+    );
 
-  //   router.back();
-  // };
+    router.back();
+  };
 
   // 이거는 별점 부여 버튼 테스트용
   // const onClickRatingButton = async () => {
@@ -185,9 +183,9 @@ export const DetailContnets = ({
 
   return (
     <WrapperContents>
-      {/* <div>
+      <div>
         <button onClick={onClickModifyButton}>발주 상태 변경</button>
-      </div> */}
+      </div>
       {/* <input type="file" onChange={handleImageChange} multiple /> */}
       <OrderTitleWrapper>
         <OrderTitleDiv>
