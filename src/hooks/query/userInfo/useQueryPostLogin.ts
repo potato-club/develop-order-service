@@ -8,8 +8,6 @@ export const useQueryPostLogin = (
 ) => {
   const register = useCallback(
     async (data: { adminId: string; adminPw: string }) => {
-      console.log(data);
-
       const response = await AdminLogAPI.login(data);
       return response;
     },

@@ -3,8 +3,7 @@ import { customColor } from "../src/components/customColor";
 
 export const ScrollLogout = createGlobalStyle`
 html {
-    overflow: overlay;
-    scroll-behavior: smooth;
+    overflow:overlay;
     ::-webkit-scrollbar {
     width: 14px;
     }
