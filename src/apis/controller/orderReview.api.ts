@@ -13,8 +13,10 @@ export const OrderReviewApi = {
     const response = await sendApi.reviewGet(
       `${
         url +
-        (pageState !== 1 ? "?page=" + pageState : "") +
-        (contentsFilterState === "finished" ? "?state=complete" : "")
+        (pageState !== 1 || contentsFilterState === "finished" ? "?" : "") +
+        (pageState !== 1 ? "page=" + pageState : "") +
+        (pageState !== 1 && contentsFilterState === "finished" ? "&" : "") +
+        (contentsFilterState === "finished" ? "state=complete" : "")
       }`
     );
 
