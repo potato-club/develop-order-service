@@ -19,9 +19,15 @@ export const MyInfo = () => {
   const [userInfo, setUserInfo] = useRecoilState(userInformation);
 
   useEffect(() => {
-    setIsLoginState(localStorage?.getItem("token") !== null);
-    if (localStorage?.getItem("token") !== null) {
-      getUserInfo();
+    if (!Router.asPath.includes("/admin")) {
+      setIsLoginState(localStorage?.getItem("token") !== null);
+      if (localStorage?.getItem("token") !== null) {
+        if (localStorage.getItem("role") === "ADMIN") {
+          handleLogout();
+        } else {
+          getUserInfo();
+        }
+      }
     }
   }, []);
 
@@ -35,7 +41,6 @@ export const MyInfo = () => {
           email: data.data.email,
           name: data.data.name,
           picture: data.data.picture,
-          role: data.data.role,
         });
       })
       .catch((error) => {
@@ -50,6 +55,7 @@ export const MyInfo = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
+    localStorage.removeItem("role");
     setIsLoginState(false);
     Router.reload();
   };
