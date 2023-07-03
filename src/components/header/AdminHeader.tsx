@@ -1,9 +1,7 @@
 import Router from "next/router";
 import { useEffect } from "react";
-import { useRecoilValue } from "recoil";
 import styled, { css } from "styled-components";
 import { pathName } from "../../config/adminPathName";
-import { userInformation } from "../../recoil/userInfo";
 import { customColor } from "../customColor";
 import { MdLogout } from "react-icons/md";
 
@@ -12,16 +10,18 @@ interface MenuProps {
 }
 
 export const AdminHeader = () => {
-  const userInfo = useRecoilValue(userInformation);
   useEffect(() => {
-    if (localStorage.getItem("token") === null || userInfo.role === "USER") {
+    if (
+      localStorage.getItem("token") === null ||
+      localStorage.getItem("role") === "USER"
+    )
       handleLogout();
-    }
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
+    localStorage.removeItem("role");
     localStorage.setItem("prevPath", Router.asPath.replace(/\/\d+$/, ""));
     Router.push(pathName.LOGIN);
   };
@@ -46,9 +46,7 @@ export const AdminHeader = () => {
         <MenuButton isPath={false}>직원정보수정</MenuButton>
         <MenuButton isPath={false}>통계추출</MenuButton>
       </WrapperInner>
-      {!(
-        localStorage.getItem("token") === null || userInfo.role === "USER"
-      ) && (
+      {!(localStorage.getItem("token") === null) && (
         <Logout onClick={handleLogout}>
           로그아웃
           <LogoutIcon />

@@ -16,7 +16,7 @@ interface Props {
 export const Layout = ({ children }: Props) => {
   const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
-    setIsAdmin(Router.asPath.includes("/admin"));
+    setIsAdmin(Router.asPath.includes(pathName.CHECK_SIGNUP.LIST));
   }, []);
 
   return (
