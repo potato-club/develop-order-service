@@ -61,7 +61,6 @@ export const DetailContnets = ({
       text: "정말로 발주를 취소하시겠습니까?",
       onClickConfirmButton: async () => {
         mutationDeleteOrder.mutate();
-        router.back();
       },
     });
   };
