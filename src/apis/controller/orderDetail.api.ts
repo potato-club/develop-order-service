@@ -17,4 +17,12 @@ export const OrderDetailApi = {
 
     return response;
   },
+
+  deleteOrder: async (id: number) => {
+    const response = await sendApi.delete(
+      `https://www.developorderservice.store/orders/${id}`
+    );
+
+    return response;
+  },
 };

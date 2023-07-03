@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import StarRatings from "react-star-ratings";
 import { QueryClient, useMutation, useQuery } from "react-query";
 import { useMutationPutStarRatings } from "../../hooks/query/orderDetail/useMutationPutStarRatings";
+import { useMutationDeleteOrder } from "../../hooks/query/orderDetail/useMutationDeleteOrder";
 
 type detailDataTypes = {
   siteName: string;
@@ -49,66 +50,26 @@ export const DetailContnets = ({
 }: propTypes) => {
   const router = useRouter();
 
+  const mutationDeleteOrder = useMutationDeleteOrder(
+    detailData && detailData.id
+  );
+
   const onClickOrderCancelButton = async () => {
     getModalState({
       modalRole: "confirm",
       state: true,
       text: "정말로 발주를 취소하시겠습니까?",
       onClickConfirmButton: async () => {
-        try {
-          const response = await axios.delete(
-            `https://www.developorderservice.store/${detailData.id}`,
-            {
-              headers: {
-                Authorization: `${localStorage.getItem("token")}`,
-              },
-            }
-          );
-          console.log(response);
-        } catch (err) {
-          console.log(err);
-        }
+        mutationDeleteOrder.mutate();
         router.back();
       },
     });
   };
 
-  const mutation = useMutationPutStarRatings({
+  const mutationPutStarRatings = useMutationPutStarRatings({
     id: detailData && detailData.id,
     getModalState,
   });
-
-  // const mutation = useMutation(
-  //   "setStarRatings",
-  //   (newRating: number) =>
-  //     axios.put(
-  //       `http://localhost:8080/orders/detail/${detailData.id}/rating`,
-  //       {
-  //         rating: newRating,
-  //       },
-  //       {
-  //         headers: {
-  //           Authorization: `${localStorage.getItem("token")}`,
-  //         },
-  //       }
-  //     ),
-  //   {
-  //     onSuccess: (data) => {
-  //       queryClient.invalidateQueries("getOrderDetail");
-  //       console.log("onSuccess", data);
-  //     },
-  //     onError: (error: { response: { data: { error: string } } }) => {
-  //       console.log(error);
-  //       getModalState({
-  //         modalRole: "alreadyRated",
-  //         state: true,
-  //         text: error.response.data.error,
-  //         onClickConfirmButton: () => {},
-  //       });
-  //       console.log("onError", error);
-  //     },
-  //   }
-  // );
 
   // 이거는 발주 상태 변경 테스트용
   const onClickModifyButton = async () => {
@@ -284,7 +245,7 @@ export const DetailContnets = ({
             starDimension="30px"
             starSpacing="2px"
             changeRating={(newRating: number) => {
-              mutation.mutate(newRating);
+              mutationPutStarRatings.mutate(newRating);
             }}
             numberOfStars={5}
           ></StarRatings>
