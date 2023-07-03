@@ -1,27 +1,60 @@
 import styled from "styled-components";
 import Image from "next/image";
 import heartIcon from "../../../public/img/detail/heart.png";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { pathName } from "./../../config/pathName";
+import { useMutationPostLikes } from "../../hooks/query/orderDetail/useMutationPostLikes";
+
+type propTypes = {
+  id: number;
+  like: number;
+  state: string;
+  modalState: {
+    modalRole: string;
+    state: boolean;
+    text: string;
+    onClickConfirmButton: () => void;
+  };
+  getModalState: (modalState: {
+    modalRole: string;
+    state: boolean;
+    text: string;
+    onClickConfirmButton: () => void;
+  }) => void;
+};
 
 export const DetailBottm = ({
+  id,
   like,
-  progress,
-}: {
-  like: number;
-  progress: string;
-}) => {
+  state,
+  modalState,
+  getModalState,
+}: propTypes) => {
+  //
+  const router = useRouter();
+
+  const mutationPostLikes = useMutationPostLikes(id, getModalState);
+
+  const onClickLikeButton = async () => {
+    mutationPostLikes.mutate();
+  };
+
+  const onClickBackToListButton = () => {
+    router.push(pathName.ORDERREVIEW);
+  };
+
   return (
     <BottomWrapper>
-      <LikeButton progress={progress}>
+      <LikeButton state={state} onClick={onClickLikeButton}>
         좋아요
         <LikeButtonP>
-          {/* <VerticalContainer></VerticalContainer> */}
-          {/* 원래는 VerticalContainer 안에 Image를 넣어놓는 형식이지만 VerticalContainer에서 오류가 발생해서 일단 */}
           <Image src={heartIcon} alt="icon" width={23} height={23}></Image>
           {like}
         </LikeButtonP>
       </LikeButton>
-      {/* usenavigate를 이용해서 목록으로 돌아갈 예정 */}
-      <ListButton>목록</ListButton>
+
+      <ListButton onClick={onClickBackToListButton}>목록</ListButton>
     </BottomWrapper>
   );
 };
@@ -44,8 +77,8 @@ const ListButton = styled.button`
   border: 1px solid black;
 `;
 
-const LikeButton = styled.button<{ progress: String }>`
-  display: ${(props) => (props.progress === "WORKING" ? "none" : "")};
+const LikeButton = styled.button<{ state: String }>`
+  display: ${(props) => (props.state !== "COMPLETED" ? "none" : "")};
   width: 150px;
   height: 80px;
   border-radius: 10px;

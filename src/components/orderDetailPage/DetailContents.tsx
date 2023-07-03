@@ -2,46 +2,170 @@ import styled from "styled-components";
 import Image from "next/image";
 import checkIcon from "../../../public/img/detail/check.png";
 import { PreviewSwiper } from "./PreviewSwiper";
+import axios from "axios";
+import { useRouter } from "next/router";
+import StarRatings from "react-star-ratings";
+import { QueryClient, useMutation, useQuery } from "react-query";
+import { useMutationPutStarRatings } from "../../hooks/query/orderDetail/useMutationPutStarRatings";
+import { useMutationDeleteOrder } from "../../hooks/query/orderDetail/useMutationDeleteOrder";
 
-// 상위 컴포넌트 orderDetail에서 데이터 받아오도록 변경하자
-// review.png arrow.png 경로 public으로변경됐다고 함
-export const DetailContnets = ({
-  title,
-  id,
-  purpose,
-  startDate,
-  endDate,
-  progress,
-  page,
-  login,
-  db,
-  starRating,
-}: {
-  title: any;
+type detailDataTypes = {
+  siteName: string;
   id: number;
   purpose: string;
-  startDate: string;
-  endDate: string;
-  progress: string;
-  page: any;
-  login: any;
-  db: any;
-  starRating: any;
-}) => {
+  createdDate: string;
+  completedDate?: string;
+  images: Array<{
+    id: number;
+    imageName: string;
+    imageUrl: string;
+  }>;
+  state: string;
+  page: number;
+  login: boolean;
+  database: boolean;
+  rating?: number;
+};
+
+type propTypes = {
+  detailData: detailDataTypes;
+  modalState: {
+    modalRole: string;
+    state: boolean;
+    text: string;
+    onClickConfirmButton: () => void;
+  };
+  getModalState: (modalState: {
+    modalRole: string;
+    state: boolean;
+    text: string;
+    onClickConfirmButton: () => void;
+  }) => void;
+};
+
+export const DetailContnets = ({
+  detailData,
+  modalState,
+  getModalState,
+}: propTypes) => {
+  const router = useRouter();
+
+  const mutationDeleteOrder = useMutationDeleteOrder(
+    detailData && detailData.id
+  );
+
+  const onClickOrderCancelButton = async () => {
+    getModalState({
+      modalRole: "confirm",
+      state: true,
+      text: "정말로 발주를 취소하시겠습니까?",
+      onClickConfirmButton: async () => {
+        mutationDeleteOrder.mutate();
+      },
+    });
+  };
+
+  const mutationPutStarRatings = useMutationPutStarRatings({
+    id: detailData && detailData.id,
+    getModalState,
+  });
+
+  // 이거는 발주 상태 변경 테스트용
+  const onClickModifyButton = async () => {
+    const formData = new FormData();
+
+    const requestDto = { database: true, login: true, page: 8, stateKey: 6 };
+    if (requestDto) {
+      formData.append(
+        "orderDetail",
+        new Blob([JSON.stringify(requestDto)], { type: "application/json" })
+      );
+    }
+    const headers = {
+      Authorization: localStorage.getItem("token"),
+      "Content-Type": "multipart/form-data",
+    };
+
+    const response = await axios.put(
+      `https://www.developorderservice.store/orders/detail/${detailData.id}`,
+      formData,
+      { headers }
+    );
+
+    router.back();
+  };
+
+  // 이거는 별점 부여 버튼 테스트용
+  // const onClickRatingButton = async () => {
+  //   try {
+  //     const response = await axios.put(
+  //       `http://localhost:8080/orders/detail/${detailData.id}/rating`,
+  //       {
+  //         rating: 3.5,
+  //       },
+  //       {
+  //         headers: {
+  //           Authorization: `${localStorage.getItem("token")}`,
+  //         },
+  //       }
+  //     );
+  //     console.log(response);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  // 이거는 이미지 업로드 하는거 테스트
+  // const handleImageChange = (e: any) => {
+  //   const formData = new FormData();
+  //   const test = e.target.files[0];
+
+  //   const requestDto = { database: true, login: true, page: 8, stateKey: 4 };
+  //   if (requestDto) {
+  //     formData.append(
+  //       "orderDetail",
+  //       new Blob([JSON.stringify(requestDto)], { type: "application/json" })
+  //     );
+  //     formData.append("images", test);
+  //   }
+
+  //   const headers = {
+  //     Authorization: localStorage.getItem("token"),
+  //   };
+
+  //   const response = axios.put(
+  //     `http://localhost:8080/orders/detail/${detailData.id}`,
+  //     formData,
+  //     { headers }
+  //   );
+  //   console.log(response);
+  // };
+
   return (
     <WrapperContents>
-      <OrderTitleDiv>
-        <OrderTitleH2>{title}</OrderTitleH2>
-      </OrderTitleDiv>
-      <OrderInfoDiv data={""}>
+      <div>
+        <button onClick={onClickModifyButton}>발주 상태 변경</button>
+      </div>
+      {/* <input type="file" onChange={handleImageChange} multiple /> */}
+      <OrderTitleWrapper>
+        <OrderTitleDiv>
+          <OrderTitleH2>{detailData && detailData.siteName}</OrderTitleH2>
+        </OrderTitleDiv>
+        <OrderCanaleButtonDiv progress={detailData && detailData.state}>
+          <OrderCanaleButton onClick={onClickOrderCancelButton}>
+            발주 취소
+          </OrderCanaleButton>
+        </OrderCanaleButtonDiv>
+      </OrderTitleWrapper>
+      <OrderInfoDiv progress={""}>
         <InfoLabelDiv>
           <OrderInfoP>목적</OrderInfoP>
         </InfoLabelDiv>
         <InfoDataDiv1>
-          <OrderInfoP>{purpose}</OrderInfoP>
+          <OrderInfoP>{detailData && detailData.purpose}</OrderInfoP>
         </InfoDataDiv1>
       </OrderInfoDiv>
-      <OrderInfoDiv data={""}>
+      <OrderInfoDiv progress={""}>
         <InfoLabelDiv>
           <OrderInfoP>제작기간</OrderInfoP>
         </InfoLabelDiv>
@@ -49,36 +173,44 @@ export const DetailContnets = ({
           <DataLabelDiv>
             <OrderInfoP>시작일</OrderInfoP>
           </DataLabelDiv>
-          <OrderInfoP>{startDate}</OrderInfoP>
+          <OrderInfoP>
+            {detailData && detailData.createdDate.split("T")[0]}
+          </OrderInfoP>
         </InfoDataDiv2>
         <InfoDataDiv2>
           <DataLabelDiv>
             <OrderInfoP>종료일</OrderInfoP>
           </DataLabelDiv>
-          <OrderInfoP>{endDate}</OrderInfoP>
+          <OrderInfoP>
+            {detailData &&
+              detailData.completedDate &&
+              detailData.completedDate.split("T")[0]}
+          </OrderInfoP>
         </InfoDataDiv2>
       </OrderInfoDiv>
-      <OrderInfoDiv data={progress}>
+      <OrderInfoDiv progress={""}>
         <InfoLabelDiv>
           <OrderInfoP>추가 옵션</OrderInfoP>
         </InfoLabelDiv>
         <InfoDataDiv3>
           <DataLabelDiv>
-            <OrderInfoP>페이지 추가</OrderInfoP>
+            <OrderInfoP>페이지 수</OrderInfoP>
           </DataLabelDiv>
-          <CheckBoxDiv>
-            <CheckImgDiv additional={page}>
-              <Image src={checkIcon} alt="icon" width={16} height={16}></Image>
-            </CheckImgDiv>
-          </CheckBoxDiv>
+          {detailData && detailData.page}
         </InfoDataDiv3>
         <InfoDataDiv3>
           <DataLabelDiv>
             <OrderInfoP>로그인 기능</OrderInfoP>
           </DataLabelDiv>
           <CheckBoxDiv>
-            <CheckImgDiv additional={login}>
-              <Image src={checkIcon} alt="icon" width={16} height={16}></Image>
+            <CheckImgDiv additional={detailData && detailData.login}>
+              <Image
+                src={checkIcon}
+                alt="icon"
+                width={21}
+                height={21}
+                style={{ margin: "auto" }}
+              ></Image>
             </CheckImgDiv>
           </CheckBoxDiv>
         </InfoDataDiv3>
@@ -87,24 +219,43 @@ export const DetailContnets = ({
             <OrderInfoP>DB</OrderInfoP>
           </DataLabelDiv>
           <CheckBoxDiv>
-            <CheckImgDiv additional={db}>
-              <Image src={checkIcon} alt="icon" width={16} height={16}></Image>
+            <CheckImgDiv additional={detailData && detailData.database}>
+              <Image
+                src={checkIcon}
+                alt="icon"
+                width={21}
+                height={21}
+                style={{ margin: "auto" }}
+              ></Image>
             </CheckImgDiv>
           </CheckBoxDiv>
         </InfoDataDiv3>
       </OrderInfoDiv>
-      <OrderInfoDiv data={progress}>
+      <OrderInfoDiv progress={detailData && detailData.state}>
         <InfoLabelDiv>
           <OrderInfoP>별점</OrderInfoP>
         </InfoLabelDiv>
-        <InfoDataDiv1></InfoDataDiv1>
+        <InfoDataDiv1>
+          <StarRatings
+            rating={(detailData && detailData.rating) || 0}
+            starRatedColor="gold"
+            starEmptyColor="lightgray"
+            starHoverColor="gold"
+            starDimension="30px"
+            starSpacing="2px"
+            changeRating={(newRating: number) => {
+              mutationPutStarRatings.mutate(newRating);
+            }}
+            numberOfStars={5}
+          ></StarRatings>
+        </InfoDataDiv1>
       </OrderInfoDiv>
-      <OrderInfoDiv data={""}>
+      <OrderInfoDiv progress={""}>
         <PreviewLabelDiv>
           <OrderInfoP>웹페이지 미리보기</OrderInfoP>
         </PreviewLabelDiv>
       </OrderInfoDiv>
-      <PreviewSwiper></PreviewSwiper>
+      <PreviewSwiper images={detailData && detailData.images}></PreviewSwiper>
     </WrapperContents>
   );
 };
@@ -117,20 +268,45 @@ const WrapperContents = styled.div`
   padding-bottom: 50px;
 `;
 
-const OrderTitleDiv = styled.div`
+const OrderTitleWrapper = styled.div`
+  display: flex;
   width: 100%;
   height: 70px;
   border-top: 1px solid black;
+`;
+
+const OrderTitleDiv = styled.div`
   padding-left: 21px;
+  height: 70px;
+  width: 795px;
+  border-right: 1px solid black;
 `;
 
 const OrderTitleH2 = styled.h2`
+  flex-grow: 1;
   font-size: 27px;
   line-height: 70px;
 `;
 
-const OrderInfoDiv = styled.div<{ data: String }>`
-  display: ${(props) => (props.data === "WORKING" ? "none" : "")};
+const OrderCanaleButtonDiv = styled.div<{ progress: string }>`
+  display: ${(props) => (props.progress === "START" ? "flex" : "none")};
+  align-items: center;
+  height: 70px;
+  width: 205px;
+`;
+
+const OrderCanaleButton = styled.button`
+  width: 100px;
+  height: 40px;
+  border-radius: 7px;
+  font-size: 17px;
+  border: 1px solid black;
+  margin: auto;
+`;
+
+const OrderInfoDiv = styled.div<{ progress: String }>`
+  display: ${(props) =>
+    props.progress === "" || props.progress === "COMPLETED" ? "" : "none"};
   width: 100%;
   height: 50px;
   border-top: 1px solid black;
@@ -152,6 +328,8 @@ const PreviewLabelDiv = styled.div`
 `;
 
 const InfoDataDiv1 = styled.div`
+  display: flex;
+  align-items: center;
   padding-left: 25px;
   height: 50px;
   width: 600px;
@@ -170,6 +348,7 @@ const InfoDataDiv3 = styled.div`
   height: 50px;
   width: 200px;
   border-right: 1px solid black;
+  font-size: 20px;
   float: left;
   display: flex;
   align-items: center;
@@ -190,14 +369,17 @@ const OrderInfoP = styled.p`
 const CheckBoxDiv = styled.div`
   width: 25px;
   height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 1px solid black;
 `;
 
-const CheckImgDiv = styled.div<{ additional: Boolean }>`
-  visibility: ${(props) => (props.additional === false ? "hidden" : "")};
+const CheckImgDiv = styled.div<{ additional: any }>`
+  visibility: ${(props) =>
+    props.additional !== true || props.additional === 0 ? "hidden" : ""};
   width: 23px;
   height: 23px;
   display: flex;
   align-items: center;
-  padding: 0 0;
 `;

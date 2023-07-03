@@ -2,39 +2,60 @@ import styled from "styled-components";
 import Image from "next/image";
 import { customColor } from "../customColor";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { EmployeeLoginModal } from "./components/EmployeeLoginModal";
-import { useSetRecoilState } from "recoil";
-import { isLoginState } from "../../recoil/userInfo";
+import { useEffect } from "react";
+import Router from "next/router";
+import { pathName } from "../../config/pathName";
 
 export const LoginPage = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const setIsLogin = useSetRecoilState(isLoginState);
+  const isContainPathName = (prevPath: string) => {
+    let isContain = Object.values(pathName).map((i, id) => {
+      if (id > 0) {
+        if (prevPath.includes(i)) {
+          return "true";
+        } else {
+          return "false";
+        }
+      }
+    });
+    return isContain.includes("true");
+  };
+
+  const handleGoPrevPath = () => {
+    const prevPath = localStorage.getItem("prevPath");
+    prevPath !== null &&
+    !prevPath.includes(pathName.LOGIN) &&
+    isContainPathName(prevPath)
+      ? Router.push(prevPath)
+      : Router.push(pathName.MAIN);
+  };
 
   useEffect(() => {
-    const token = new URL(window.location.href).searchParams.get("accesstoken");
-    const refreshToken = new URL(window.location.href).searchParams.get(
-      "refresh"
-    );
-    if (token && refreshToken) {
-      localStorage.setItem("token", token);
-      localStorage.setItem("refreshToken", refreshToken);
-      localStorage.getItem("token") !== undefined && setIsLogin(true);
+    if (localStorage.getItem("token") !== null) {
+      handleGoPrevPath();
+    } else {
+      const token = new URL(window.location.href).searchParams.get(
+        "accesstoken"
+      );
+      const refreshToken = new URL(window.location.href).searchParams.get(
+        "refresh"
+      );
+      if (token && refreshToken) {
+        localStorage.setItem("token", token);
+        localStorage.setItem("refreshToken", refreshToken);
+        localStorage.setItem("role", "USER");
+        handleGoPrevPath();
+      }
     }
   }, []);
 
   return (
     <Wrapper>
-      <EmployeeLoginModal
-        isOpen={isModalOpen}
-        closeModal={() => setIsModalOpen(false)}
-      />
       <Content>
         간편하게 로그인하고
         <br />
         다양한 서비스를 이용하세요
         <Logins>
-          <Link href="http://localhost:8080/oauth2/authorization/kakao">
+          <Link href="https://www.developorderservice.store/oauth2/authorization/kakao">
             <KakaoLogin>
               <Image
                 src={"/img/login/kakaoLogin.png"}
@@ -44,7 +65,7 @@ export const LoginPage = () => {
               />
             </KakaoLogin>
           </Link>
-          <Link href="http://localhost:8080/oauth2/authorization/google">
+          <Link href="https://www.developorderservice.store/oauth2/authorization/google">
             <GoogleLogin>
               <Image
                 src={"/img/login/google.png"}
@@ -55,9 +76,6 @@ export const LoginPage = () => {
               <GoogleText>구글 로그인</GoogleText>
             </GoogleLogin>
           </Link>
-          <EmployeeLogin onClick={() => setIsModalOpen(true)}>
-            직원 로그인
-          </EmployeeLogin>
         </Logins>
       </Content>
     </Wrapper>
@@ -130,14 +148,4 @@ const GoogleText = styled.p`
   transform: translate(calc(-50% + 10px), -50%);
   letter-spacing: -0.5px;
   font-family: Roboto;
-`;
-const EmployeeLogin = styled.button`
-  display: flex;
-  width: max-content;
-  font-size: 14px;
-  color: ${customColor.darkGray};
-  justify-content: center;
-  padding: 0 4px;
-  border-bottom: 1px solid ${customColor.darkGray};
-  margin-top: 20px;
 `;

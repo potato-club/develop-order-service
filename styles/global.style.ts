@@ -1,5 +1,7 @@
+import { useRecoilValue } from "recoil";
 import { createGlobalStyle } from "styled-components";
 import { customColor } from "../src/components/customColor";
+import { isLogin } from "../src/recoil/userInfo";
 
 export const GlobalStyle = createGlobalStyle`
 @font-face {
@@ -15,32 +17,6 @@ export const GlobalStyle = createGlobalStyle`
   padding: 0;
   margin: 0;
   font-family: "Pretendard-Regular";
-}
-
-html {
-  overflow: overlay;
-  scroll-behavior: smooth;
-  ::-webkit-scrollbar {
-  width: 14px;
-  }
-  ::-webkit-scrollbar-thumb {
-  background-color: ${customColor.indigo1};
-  border-radius: 10px;
-  background-clip: padding-box;
-  border: 4px solid transparent;
-  }
-  ::-webkit-scrollbar-track {
-  background-color: transparent;
-  border-radius: 10px;
-  }
-  ::-webkit-scrollbar-button:start:decrement {
-  background-color: transparent;
-  height: 80px;
-  }
-  ::-webkit-scrollbar-button:end:increment {
-  background-color: transparent;
-  height: 185px;
-  }
 }
 
 html,
@@ -119,32 +95,20 @@ height:20px;
   filter: grayscale(0%);
   height:max-content;
 }
+.fc-event-main{
+  pointer-events: none;
+}
 .selected{
   filter:drop-shadow(0px 0px 6px ${customColor.blue});
 }
 /* react-transition-group */
 .modal-enter{
   opacity: 0;
-  transform: translate(-50%,12px);
+  transform: translate(0,12px);
 }
 .modal-enter-active {
   opacity: 1;
-  transform: translate(-50%,0);
-  transition: all 0.3s ease;
-}.loginModal-enter{
-  opacity: 0;
-  transform: translate(-50%,calc(-50% + 16px));
-}
-.loginModal-enter-active {
-  opacity: 1;
-  transform: translate(-50%,-50%);
+  transform: translate(0,0);
   transition: all 0.3s ease;
 }
-.time_modal-enter {
-  width:1px;
-  }
-  .time_modal-enter-active {
-    width:137px;
-    transition: all 0.4s ease-out;
-  }
 `;
