@@ -10,8 +10,6 @@ import { useQueryGetMainRankings } from "../../../hooks/query/main/useQueryGetMa
 
 export const SiteRanking = () => {
   const { isLoading, data } = useQueryGetMainRankings();
-  console.log(data);
-
   SwiperCore.use([EffectCoverflow, Autoplay]);
   return (
     <Wrapper>
