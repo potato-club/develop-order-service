@@ -3,7 +3,6 @@ import { FooterCompany } from "./FooterCompany";
 import { FooterLogin } from "./FooterLogin";
 import { customColor } from "../customColor";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { isLogin } from "../../recoil/userInfo";
 
