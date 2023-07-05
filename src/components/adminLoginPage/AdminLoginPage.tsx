@@ -7,8 +7,6 @@ import { useQueryPostLogin } from "../../hooks/query/userInfo/useQueryPostLogin"
 import { pathName } from "../../config/adminPathName";
 import { Alert } from "../modal/alert";
 import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import { userInformation } from "../../recoil/userInfo";
 
 export const AdminLoginPage = () => {
   const {
@@ -17,7 +15,6 @@ export const AdminLoginPage = () => {
     handleSubmit,
   } = useForm();
 
-  const [userInfo, setUserInfo] = useRecoilState(userInformation);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const completeLogin = (data: {
