@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import { SchedulerApi } from "../../../apis/controller/scheduler.api";
 
 export interface ScheduleType {
+  id : string,
   name: string;
   start: string;
   end: string;

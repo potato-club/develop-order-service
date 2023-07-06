@@ -7,7 +7,7 @@ import Scheduler from "./components/Scheduler";
 import InfoCardWrapp from "./components/InfoCardWrapp";
 import { Link } from "react-scroll";
 import { BsChevronCompactDown } from "react-icons/bs";
-import { useQueryGetSchedules } from "../../hooks/query/scheduler/useQueryGetSchedules";
+import { useQueryGetSchedules } from "../../hooks/query/scheduler/useGetSchedules";
 
 const InformationPage = () => {
   const { data, isLoading, error } = useQueryGetSchedules();

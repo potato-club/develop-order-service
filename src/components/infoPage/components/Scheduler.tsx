@@ -16,7 +16,7 @@ import character from "../../../../public/img/information/character.png";
 import Image from "next/image";
 import { useRecoilState } from "recoil";
 import { personState, PersonState } from "../../../recoil/infoCard";
-import { useQueryGetSchedules } from "../../../hooks/query/scheduler/useQueryGetSchedules";
+import { useQueryGetSchedules } from "../../../hooks/query/scheduler/useGetSchedules";
 
 setOptions({
   locale: localeKo,

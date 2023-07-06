@@ -1,28 +1,26 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { SchedulerApi } from "../../../apis/controller/scheduler.api";
+import { ScheduleType } from "../../../hooks/query/scheduler/useGetSchedules";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onAddSchedule: (schedule: ScheduleType) => void;
 }
 
-interface ScheduleType {
-  name: string;
-  title: string;
-  start: string;
-  end: string;
-}
 
-const AddModal: React.FC<ModalProps> = ({ isOpen, onClose, onAddSchedule }) => {
+
+const AddModal: React.FC<ModalProps> = ({ isOpen, onClose}) => {
   const [newSchedule, setNewSchedule] = useState<ScheduleType>({
+    id : "",
     name: "",
     title: "",
     start: "",
     end: "",
+    color: "",
   });
 
-  const employeeOptions = ["김효성", "박청조", "박해연", "조금주", "최준형"];
+  const employeeOptions = ["hyoseong", "cheongjo", "haeyeon", "geumju", "junhyung"];
 
   const handleNameChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedName = e.target.value;
@@ -39,15 +37,24 @@ const AddModal: React.FC<ModalProps> = ({ isOpen, onClose, onAddSchedule }) => {
       [name]: value,
     }));
   };
+  
+  const handleAddSchedule = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await SchedulerApi.createSchedule(newSchedule);
 
-  const handleAddSchedule = () => {
-    onAddSchedule(newSchedule);
-    setNewSchedule({
-      name: "",
-      title: "",
-      start: "",
-      end: "",
-    });
+      setNewSchedule({
+        id : "",
+        name: "",
+        title: "",
+        start: "",
+        end: "",
+        color: "",
+      });
+      onClose();
+    } catch (error) {
+      console.log("Failed to create schedule:", error);
+    }
   };
 
   const handleClose = () => {
@@ -70,7 +77,7 @@ const AddModal: React.FC<ModalProps> = ({ isOpen, onClose, onAddSchedule }) => {
                 name="name"
                 value={newSchedule.name}
                 onChange={handleNameChange}
-                required = {true}
+                required
               >
                 <option value="">직원을 선택해주세요</option>
                 {employeeOptions.map((employee) => (
@@ -87,17 +94,17 @@ const AddModal: React.FC<ModalProps> = ({ isOpen, onClose, onAddSchedule }) => {
                 name="title"
                 value={newSchedule.title}
                 onChange={handleInputChange}
-                required={true}
+                required
               />
             </Label>
             <Label>
               시작일:
               <Input
-                 type="datetime-local"
+                type="datetime-local"
                 name="start"
                 value={newSchedule.start}
                 onChange={handleInputChange}
-                required={true}
+                required
               />
             </Label>
             <Label>
@@ -107,7 +114,17 @@ const AddModal: React.FC<ModalProps> = ({ isOpen, onClose, onAddSchedule }) => {
                 name="end"
                 value={newSchedule.end}
                 onChange={handleInputChange}
-                required={true}
+                required
+              />
+            </Label>
+            <Label>
+              색상:
+              <Input
+                type="text"
+                name="color"
+                value={newSchedule.color}
+                onChange={handleInputChange}
+                required
               />
             </Label>
 
