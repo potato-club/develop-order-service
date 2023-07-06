@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { SchedulerApi } from "../../../apis/controller/scheduler.api";
-import { ScheduleType } from "../../../hooks/query/scheduler/useGetSchedules";
+import {
+  ScheduleType,
+  useQueryGetSchedules,
+} from "../../../hooks/query/scheduler/useGetSchedules";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-
-
-const AddModal: React.FC<ModalProps> = ({ isOpen, onClose}) => {
+const AddModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [newSchedule, setNewSchedule] = useState<ScheduleType>({
-    id : "",
+    id: "",
     name: "",
     title: "",
     start: "",
@@ -20,7 +21,15 @@ const AddModal: React.FC<ModalProps> = ({ isOpen, onClose}) => {
     color: "",
   });
 
-  const employeeOptions = ["hyoseong", "cheongjo", "haeyeon", "geumju", "junhyung"];
+  const employeeOptions = [
+    "hyoseong",
+    "cheongjo",
+    "haeyeon",
+    "geumju",
+    "junhyung",
+  ];
+
+  const { refetch } = useQueryGetSchedules(); // useQueryGetSchedules 훅을 사용하여 스케줄 데이터를 가져옵니다.
 
   const handleNameChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedName = e.target.value;
@@ -37,14 +46,13 @@ const AddModal: React.FC<ModalProps> = ({ isOpen, onClose}) => {
       [name]: value,
     }));
   };
-  
+
   const handleAddSchedule = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await SchedulerApi.createSchedule(newSchedule);
-
+      await SchedulerApi.createSchedule(newSchedule); // 스케줄 생성 API 호출
       setNewSchedule({
-        id : "",
+        id: "",
         name: "",
         title: "",
         start: "",
@@ -52,6 +60,7 @@ const AddModal: React.FC<ModalProps> = ({ isOpen, onClose}) => {
         color: "",
       });
       onClose();
+      refetch(); // 스케줄 데이터 재로딩
     } catch (error) {
       console.log("Failed to create schedule:", error);
     }
