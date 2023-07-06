@@ -6,7 +6,7 @@ import AddModal from './AddModal';
 import { useDeleteSchedule } from '../../../hooks/query/scheduler/useDeleteSchedule';
 
 const Schedule: React.FC = () => {
-  const { isLoading, error, data } = useQueryGetSchedules();
+  const { isLoading, error, data, refetch } = useQueryGetSchedules();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const deleteSchedule = useDeleteSchedule();
 
@@ -18,9 +18,9 @@ const Schedule: React.FC = () => {
     setIsModalOpen(false);
   };
 
-  const handleDeleteSchedule = (id: string) => {
-    deleteSchedule(id);
-    // 삭제 후 필요한 로직 추가
+  const handleDeleteSchedule = async (id: string) => {
+    await deleteSchedule(id);
+    refetch();
   };
 
   if (isLoading) {
@@ -96,7 +96,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const Button = styled.button`
-  background-color: #ccc;
+  background-color:#ccc;
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
@@ -109,4 +109,4 @@ const Button = styled.button`
   &:hover {
     background-color: #0056b3;
   }
-`;
+`
