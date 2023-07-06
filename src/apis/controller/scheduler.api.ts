@@ -1,4 +1,4 @@
-import { ScheduleType } from "../../hooks/query/scheduler/useQueryGetSchedules";
+import { ScheduleType } from "../../hooks/query/scheduler/useGetSchedules";
 import sendApi from "../sendApi";
 
 export const SchedulerApi = {
@@ -7,7 +7,16 @@ export const SchedulerApi = {
     return response.data;
   },
   createSchedule: async (scheduleData: ScheduleType) => {
-    const response = await sendApi.post("/admin/schedule/register", scheduleData);
+    const response = await sendApi.post(
+      "/admin/schedule/register",
+      scheduleData
+    );
     return response.data;
-  }
-}
+  },
+  deleteSchedule: async (id: string) => {
+    const response = await sendApi.delete(
+      `/admin/schedule/delete?AdminScheduleId=${id}`
+    );
+    return response.data;
+  },
+};
