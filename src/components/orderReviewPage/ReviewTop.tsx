@@ -1,23 +1,20 @@
 import styled from "styled-components";
 import { Title } from "../orderDetailPage/Title";
 import React, { useEffect, useState } from "react";
-
-type contentsFilterType = "onGoing" | "finished" | "myOrder";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import {
+  reviewSortOptionState,
+  reviewContentsFilterState,
+  reviewPageState,
+} from "../../recoil/reviewPageState";
 
 type propTypes = {
-  getContentsFilterState: (contentFilterState: contentsFilterType) => void;
-  getSortOptionState: (sortOptionState: string) => void;
-  getConceptOptionState: (conceptOptionState: string) => void;
-  getPageState: (pageState: number) => void;
   getModalState: (modalState: {
     modalRole: string;
     state: boolean;
     text: string;
     onClickConfirmButton: () => void;
   }) => void;
-  contentsFilterState: contentsFilterType;
-  sortOptionState: string;
-  conceptOptionState: string;
   modalState: {
     modalRole: string;
     state: boolean;
@@ -26,46 +23,37 @@ type propTypes = {
   };
 };
 
-export const ReviewTop = ({
-  getContentsFilterState,
-  getSortOptionState,
-  getConceptOptionState,
-  getPageState,
-  getModalState,
-  contentsFilterState,
-  sortOptionState,
-  conceptOptionState,
-  modalState,
-}: propTypes) => {
+export const ReviewTop = ({ getModalState, modalState }: propTypes) => {
   const PAGETITLE = "발주 현황 및 후기";
   const EXPLAIN = "발주 현황을 확인하고 완료된 발주에 평가를 남겨보세요";
+  const [sortOptionState, setSortOptionState] = useRecoilState(
+    reviewSortOptionState
+  );
+  const [contentsFilterState, setContentsFilterState] = useRecoilState(
+    reviewContentsFilterState
+  );
+
+  const setPageState = useSetRecoilState(reviewPageState);
 
   function handleFilterChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    getSortOptionState(event.target.value);
-  }
-
-  function handleConceptChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    getConceptOptionState(event.target.value);
+    setSortOptionState(event.target.value);
   }
 
   const onGoingOrderButton = () => {
-    getContentsFilterState("onGoing");
-    getSortOptionState("noSort");
-    getConceptOptionState("concept1");
-    getPageState(1);
+    setContentsFilterState("onGoing");
+    setPageState(1);
+    setSortOptionState("noSort");
   };
   const finishedOrderButton = () => {
-    getContentsFilterState("finished");
-    getSortOptionState("noSort");
-    getConceptOptionState("concept1");
-    getPageState(1);
+    setContentsFilterState("finished");
+    setPageState(1);
+    setSortOptionState("noSort");
   };
   const myOrderButton = () => {
     if (localStorage.getItem("token")) {
-      getContentsFilterState("myOrder");
-      getSortOptionState("noSort");
-      getConceptOptionState("concept1");
-      getPageState(1);
+      setContentsFilterState("myOrder");
+      setSortOptionState("noSort");
+      setPageState(1);
     } else {
       getModalState({
         modalRole: "noLogin",
@@ -84,7 +72,6 @@ export const ReviewTop = ({
           <FilterLabelP>정렬</FilterLabelP>
           <FilterSelect value={sortOptionState} onChange={handleFilterChange}>
             <option value={"noSort"}>정렬 없음</option>
-            <option value={"concept"}>컨셉별</option>
             <FilterOption
               value={"starRate"}
               contentsFilterState={contentsFilterState}
@@ -99,17 +86,6 @@ export const ReviewTop = ({
             </FilterOption>
           </FilterSelect>
         </FilterDiv>
-        <FilterDiv2 selectedSortOptionState={sortOptionState}>
-          <FilterSelect2
-            value={conceptOptionState}
-            onChange={handleConceptChange}
-          >
-            <option value={"concept1"}>컨셉1</option>
-            <option value={"concept2"}>컨셉2</option>
-            <option value={"concept3"}>컨셉3</option>
-            <option value={"concept4"}>컨셉4</option>
-          </FilterSelect2>
-        </FilterDiv2>
       </FilterWrapper>
       <ButtonDiv>
         <Button1
@@ -160,17 +136,6 @@ const FilterDiv = styled.div`
   margin-right: 29px;
 `;
 
-const FilterDiv2 = styled.div<{ selectedSortOptionState: string }>`
-  display: ${(props) =>
-    props.selectedSortOptionState !== "concept" ? "none" : "flex"};
-  min-width: 100px;
-  height: 40px;
-  border: 1px solid black;
-  border-radius: 7px;
-  align-items: center;
-  padding: 0 auto;
-`;
-
 const FilterSelect = styled.select`
   width: 140px;
   height: 30px;
@@ -178,15 +143,6 @@ const FilterSelect = styled.select`
   appearance: none;
   font-size: 20px;
   margin-left: 10px;
-`;
-
-const FilterSelect2 = styled.select`
-  min-width: 100px;
-  height: 30px;
-  border: none;
-  appearance: none;
-  text-align: center;
-  font-size: 20px;
 `;
 
 const FilterLabelP = styled.p`

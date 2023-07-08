@@ -1,26 +1,11 @@
 import styled from "styled-components";
 import Image from "next/image";
 import arrowIcon from "../../../public/img/review/arrow.png";
-import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { reviewPageState } from "../../recoil/reviewPageState";
 
-type getPageStateProps = {
-  pageState: number;
-  contentsData: any;
-  getPageState: (pageState: number) => void;
-};
-
-export const ReviewBottm = ({
-  getPageState,
-  contentsData,
-  pageState,
-}: getPageStateProps) => {
-  const prevPageButton = () => {
-    getPageState(pageState - 1);
-  };
-
-  const nextPageButton = () => {
-    getPageState(pageState + 1);
-  };
+export const ReviewBottm = ({ contentsData }: { contentsData: any }) => {
+  const [pageState, setPageState] = useRecoilState(reviewPageState);
 
   return (
     <BottomWrapper>
@@ -30,7 +15,11 @@ export const ReviewBottm = ({
           pageState={pageState}
           totalPages={contentsData.totalPages}
         >
-          <ArrowA onClick={prevPageButton}>
+          <ArrowA
+            onClick={() => {
+              setPageState(pageState - 1);
+            }}
+          >
             <Image
               src={arrowIcon}
               alt="arrowIcon"
@@ -47,7 +36,11 @@ export const ReviewBottm = ({
           pageState={pageState}
           totalPages={contentsData.totalPages}
         >
-          <ArrowA onClick={nextPageButton}>
+          <ArrowA
+            onClick={() => {
+              setPageState(pageState + 1);
+            }}
+          >
             <Image
               src={arrowIcon}
               alt="arrowIcon"
