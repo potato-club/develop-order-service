@@ -126,9 +126,9 @@ export const DetailContnets = ({
 
   return (
     <WrapperContents>
-      <div>
+      {/* <div>
         <button onClick={onClickModifyButton}>발주 상태 변경</button>
-      </div>
+      </div> */}
       {/* <input type="file" onChange={handleImageChange} multiple /> */}
       <OrderTitleWrapper>
         <OrderTitleDiv>

@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Title } from "./Title";
-import axios from "axios";
 
 export const DetailTop = () => {
   const PAGETITLE = "발주 상세";

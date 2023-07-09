@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import Image from "next/image";
 import heartIcon from "../../../public/img/detail/heart.png";
-import axios from "axios";
 import { useRouter } from "next/router";
 import { pathName } from "./../../config/pathName";
 import { useMutationPostLikes } from "../../hooks/query/orderDetail/useMutationPostLikes";
+import { useQueryGetOrderDetail } from "../../hooks/query/orderDetail/useQueryGetOrderDetail";
 
 type propTypes = {
   id: number;
