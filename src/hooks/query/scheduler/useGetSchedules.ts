@@ -16,6 +16,7 @@ export const useQueryGetSchedules = () => {
     try {
       const response = await SchedulerApi.loadSchedules();
       const schedulesRes: ScheduleType[] = response.map((item: ScheduleType) => ({
+        id : item.id,
         name: item.name,
         start: item.start,
         end: item.end,
