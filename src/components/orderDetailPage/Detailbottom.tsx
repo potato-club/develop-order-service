@@ -8,7 +8,7 @@ import { useMutationPostLikes } from "../../hooks/query/orderDetail/useMutationP
 
 type propTypes = {
   id: number;
-  like: number;
+  likes: number;
   state: string;
   modalState: {
     modalRole: string;
@@ -26,7 +26,7 @@ type propTypes = {
 
 export const DetailBottm = ({
   id,
-  like,
+  likes,
   state,
   modalState,
   getModalState,
@@ -49,8 +49,13 @@ export const DetailBottm = ({
       <LikeButton state={state} onClick={onClickLikeButton}>
         좋아요
         <LikeButtonP>
-          <Image src={heartIcon} alt="icon" width={23} height={23}></Image>
-          {like}
+          <StyledImage
+            src={heartIcon}
+            alt="icon"
+            width={23}
+            height={23}
+          ></StyledImage>
+          {likes}
         </LikeButtonP>
       </LikeButton>
 
@@ -88,13 +93,12 @@ const LikeButton = styled.button<{ state: String }>`
 `;
 
 const LikeButtonP = styled.p`
-  line-height: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
-// 현재 이 컴포넌트를 활성화시키면 버그가 발생함
-const VerticalContainer = styled.div`
-  width: auto;
-  height: auto;
-  display: inline-block;
-  vertical-align: middle;
+const StyledImage = styled(Image)`
+  display: block;
+  margin-right: 3px;
 `;

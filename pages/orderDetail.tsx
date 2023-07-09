@@ -80,7 +80,7 @@ export default function OrderDetail() {
       />
       <DetailBottm
         id={detailDataState && detailDataState.id}
-        like={detailDataState && detailDataState.like}
+        likes={detailDataState && detailDataState.likes}
         state={detailDataState && detailDataState.state}
         modalState={modalState}
         getModalState={getModalState}
