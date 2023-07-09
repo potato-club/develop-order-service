@@ -20,7 +20,7 @@ export type detailDataTypes = {
   purpose: string;
   rating?: number;
   siteName: string;
-  state: string;
+  state: "START" | "DESIGN" | "PUBLISH" | "IMPLEMENT" | "FINAL" | "COMPLETED";
 };
 
 export default function OrderDetail() {
