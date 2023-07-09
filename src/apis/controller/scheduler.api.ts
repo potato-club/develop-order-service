@@ -14,10 +14,10 @@ export const SchedulerApi = {
     return response.data;
   },
   deleteSchedule: async (id: string) => {
-    const Id = "8";
-    const response = await sendApi.delete(
-      `/admin/schedule/delete?AdminScheduleId=${id}`
-    );
+    const response = await sendApi.delete(`/admin/schedule?AdminScheduleId=${id}`);
     return response.data;
   },
+  
+
+
 };

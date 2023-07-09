@@ -9,10 +9,8 @@ export const useDeleteSchedule = () => {
   const deleteSchedule = async (id: string) => {
     try {
       await deleteScheduleMutation.mutateAsync(id);
-    
     } catch (error) {
-    
-      throw new Error('삭제 중에 오류가 발생했습니다.');
+      throw new Error('스케줄 삭제 중에 오류가 발생했습니다.');
     }
   };
 
