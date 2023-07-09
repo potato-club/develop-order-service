@@ -8,6 +8,21 @@ import { ReviewModal } from "../src/components/modal/ReviewModal";
 import { useQueryGetOrderDetail } from "../src/hooks/query/orderDetail/useQueryGetOrderDetail";
 import { pathName } from "../src/config/pathName";
 
+export type detailDataTypes = {
+  completedDate?: string;
+  createdDate: string;
+  database: boolean;
+  id: number;
+  images: { id: number; imageName: string; imageUrl: string }[];
+  likes?: number;
+  login: boolean;
+  page?: number;
+  purpose: string;
+  rating?: number;
+  siteName: string;
+  state: string;
+};
+
 export default function OrderDetail() {
   const router = useRouter();
   const id: string | string[] | undefined = router.query.id;

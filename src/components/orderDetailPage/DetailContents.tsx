@@ -8,24 +8,7 @@ import StarRatings from "react-star-ratings";
 import { QueryClient, useMutation, useQuery } from "react-query";
 import { useMutationPutStarRatings } from "../../hooks/query/orderDetail/useMutationPutStarRatings";
 import { useMutationDeleteOrder } from "../../hooks/query/orderDetail/useMutationDeleteOrder";
-
-type detailDataTypes = {
-  siteName: string;
-  id: number;
-  purpose: string;
-  createdDate: string;
-  completedDate?: string;
-  images: Array<{
-    id: number;
-    imageName: string;
-    imageUrl: string;
-  }>;
-  state: string;
-  page: number;
-  login: boolean;
-  database: boolean;
-  rating?: number;
-};
+import { detailDataTypes } from "../../../pages/orderDetail";
 
 type propTypes = {
   detailData: detailDataTypes;
