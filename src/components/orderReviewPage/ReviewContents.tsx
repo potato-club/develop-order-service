@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
 import { customColor } from "../customColor";
 import styled from "styled-components";
+import { contentsDataType } from "../../../pages/orderReview";
 
 type propTypes = {
-  contentsData: any;
+  contentsData?: contentsDataType;
   modalState: {
     modalRole: string;
     state: boolean;
@@ -27,7 +28,7 @@ export const ReviewContnets = ({
 
   return (
     <WrapperContents>
-      {contentsData.numberOfElements === 0 ? (
+      {contentsData === undefined || contentsData.numberOfElements === 0 ? (
         <AlertDiv>항목에 해당하는 발주가 없습니다.</AlertDiv>
       ) : (
         contentsData.content &&

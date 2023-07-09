@@ -4,7 +4,7 @@ import arrowIcon from "../../../public/img/review/arrow.png";
 import { useRecoilState } from "recoil";
 import { reviewPageState } from "../../recoil/reviewPageState";
 
-export const ReviewBottm = ({ contentsData }: { contentsData: any }) => {
+export const ReviewBottm = ({ totalPages }: { totalPages?: number }) => {
   const [pageState, setPageState] = useRecoilState(reviewPageState);
 
   return (
@@ -13,7 +13,7 @@ export const ReviewBottm = ({ contentsData }: { contentsData: any }) => {
         <ArrowImgDiv
           arrow={"left"}
           pageState={pageState}
-          totalPages={contentsData.totalPages}
+          totalPages={totalPages}
         >
           <ArrowA
             onClick={() => {
@@ -34,7 +34,7 @@ export const ReviewBottm = ({ contentsData }: { contentsData: any }) => {
         <ArrowImgDiv
           arrow={"right"}
           pageState={pageState}
-          totalPages={contentsData.totalPages}
+          totalPages={totalPages}
         >
           <ArrowA
             onClick={() => {
@@ -68,9 +68,9 @@ const PagenationDiv = styled.div`
 `;
 
 const ArrowImgDiv = styled.div<{
-  arrow: String;
-  pageState: Number;
-  totalPages: Number;
+  arrow: string;
+  pageState: number;
+  totalPages?: number;
 }>`
   width: 36px;
   height: 100%;

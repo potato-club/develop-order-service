@@ -12,12 +12,31 @@ import {
   reviewSortOptionState,
 } from "../src/recoil/reviewPageState";
 
+export type contentType = {
+  id: number;
+  createdDate: string;
+  completedDate?: string;
+  likes?: number;
+  purpose: string;
+  rating?: number;
+  siteName: string;
+  state: string;
+  thumbnail?: boolean;
+};
+
+export type contentsDataType = {
+  content: contentType[];
+  numberOfElements: number;
+  totalPages?: number;
+};
+
 export default function OrderReview() {
-  const [contentsDataState, setContentsDataState] = useState<object>({});
+  const [contentsDataState, setContentsDataState] = useState<
+    contentsDataType | undefined
+  >(undefined);
 
   const pageState = useRecoilValue(reviewPageState);
   const contentsFilterState = useRecoilValue(reviewContentsFilterState);
-
   const sortOptionState = useRecoilValue(reviewSortOptionState);
 
   // 모달 출력 state ReviewTop과 ReviewContents에서 값을 받아옴
@@ -28,7 +47,7 @@ export default function OrderReview() {
     onClickConfirmButton: () => void;
   }>({ modalRole: "", state: false, text: "", onClickConfirmButton: () => {} });
 
-  function getContentsDataState(contentsDataState: object) {
+  function getContentsDataState(contentsDataState: contentsDataType) {
     setContentsDataState(contentsDataState);
   }
 
@@ -65,7 +84,9 @@ export default function OrderReview() {
         modalState={modalState}
         getModalState={getModalState}
       />
-      <ReviewBottm contentsData={contentsDataState} />
+      <ReviewBottm
+        totalPages={contentsDataState && contentsDataState.totalPages}
+      />
     </Wrapper>
   );
 }
