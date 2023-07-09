@@ -59,8 +59,9 @@ const AddModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         end: "",
         color: "",
       });
+      refetch(); 
       onClose();
-      refetch(); // 스케줄 데이터 재로딩
+     // 스케줄 데이터 재로딩
     } catch (error) {
       console.log("Failed to create schedule:", error);
     }
