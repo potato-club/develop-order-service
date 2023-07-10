@@ -76,7 +76,12 @@ export const MyInfo = () => {
               <ActionButton isHover={isHover} onClick={handleLogout}>
                 로그아웃
               </ActionButton>
-              <ActionButton isHover={isHover}>내정보</ActionButton>
+              <ActionButton
+                isHover={isHover}
+                onClick={() => Router.push(pathName.MY)}
+              >
+                내정보
+              </ActionButton>
             </>
           ) : (
             <ActionButton onClick={handleGoLoginPage}>로그인</ActionButton>
