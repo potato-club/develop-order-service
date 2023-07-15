@@ -85,7 +85,7 @@ export const ReviewContnets = ({
                 {item.completedDate?.split("T")[0]}
               </OrderInfoP>
               <OrderStateDiv state={item.stae}>
-                <OrderInfoP2>진행도 </OrderInfoP2>
+                <OrderInfoP>진행도 </OrderInfoP>
                 <OrderStateCircle
                   circleNumber={1}
                   convertedState={convertedState()}
@@ -126,82 +126,122 @@ export const ReviewContnets = ({
 const WrapperContents = styled.div`
   display: flex;
   flex-direction: column;
-  height: 1200px;
   width: 100%;
   position: relative;
 `;
 
 const ContentDiv = styled.div`
+  @media screen and (min-width: 1024px) {
+    height: 300px;
+    padding: 50px 0 50px 50px;
+  }
+  @media screen and (max-width: 1023px) {
+    height: 225px;
+    padding: 37.5px 0 37.5px 37.5px;
+  }
   width: 100%;
-  height: 300px;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
-  padding: 50px 0 50px 50px;
 `;
 
 const AlertDiv = styled.div`
+  @media screen and (min-width: 1024px) {
+    height: 300px;
+    font-size: 25px;
+  }
+  @media screen and (max-width: 1023px) {
+    height: 225px;
+    font-size: 19px;
+  }
   width: 100%;
-  height: 300px;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
-  text-align: center;
-  line-height: 300px;
-  font-size: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const PreviewImg = styled.div`
+  @media screen and (min-width: 1024px) {
+    width: 150px;
+    height: 200px;
+    font-size: 20px;
+    margin-right: 30px;
+  }
+  @media screen and (max-width: 1023px) {
+    width: 112.5px;
+    height: 150px;
+    font-size: 15px;
+    margin-right: 22.5px;
+  }
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 20px;
-  width: 150px;
-  height: 200px;
   background-color: ${customColor.blue};
-  margin-right: 30px;
   float: left;
 `;
 
 const OrderTitleH2 = styled.h2`
-  font-size: 27px;
-  line-height: 50px;
+  @media screen and (min-width: 1024px) {
+    font-size: 27px;
+    line-height: 50px;
+  }
+  @media screen and (max-width: 1023px) {
+    font-size: 20px;
+    line-height: 37.5px;
+  }
 `;
 
 const OrderInfoP = styled.p`
-  font-size: 20px;
-  line-height: 50px;
+  display: flex;
+  align-items: center;
+  @media screen and (min-width: 1024px) {
+    font-size: 20px;
+    height: 50px;
+  }
+  @media screen and (max-width: 1023px) {
+    font-size: 15px;
+    height: 37.5px;
+  }
 `;
 
 const OrderStateDiv = styled.div<{ state: string }>`
+  @media screen and (min-width: 1024px) {
+    height: 50px;
+  }
+  @media screen and (max-width: 1023px) {
+    height: 37.5px;
+  }
+  /* width: 770px; */
   display: ${(props) => (props.state === "COMPLETED" ? "none" : "flex")};
-  width: 770px;
-  height: 50px;
 `;
 
 const OrderStateCircle = styled.div<{
   convertedState: number;
   circleNumber: number;
 }>`
+  @media screen and (min-width: 1024px) {
+    width: 50px;
+    height: 50px;
+    font-size: 13px;
+    margin-left: 25px;
+  }
+  @media screen and (max-width: 1023px) {
+    width: 37.5px;
+    height: 37.5px;
+    font-size: 9px;
+    margin-left: 18.5px;
+  }
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  width: 50px;
-  height: 50px;
-  font-size: 13px;
-  margin-left: 25px;
   border-radius: 50%;
   background-color: ${(props) =>
     props.circleNumber <= props.convertedState
       ? customColor.blue
       : customColor.lightGray};
-`;
-
-const OrderInfoP2 = styled.p`
-  display: flex;
-  align-items: center;
-  height: 50px;
-  font-size: 20px;
 `;
 
 const RouterA = styled.a`

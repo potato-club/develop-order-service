@@ -88,71 +88,107 @@ export const ReviewTop = ({ getModalState, modalState }: propTypes) => {
         </FilterDiv>
       </FilterWrapper>
       <ButtonDiv>
-        <Button1
+        <Button
           onClick={onGoingOrderButton}
+          buttonRole={"onGoing"}
           contentsFilterState={contentsFilterState}
         >
           진행중
-        </Button1>
-        <Button2
+        </Button>
+        <Button
           onClick={finishedOrderButton}
+          buttonRole={"finished"}
           contentsFilterState={contentsFilterState}
         >
           완료
-        </Button2>
-        <Button3
+        </Button>
+        <Button
           onClick={myOrderButton}
+          buttonRole={"myOrder"}
           contentsFilterState={contentsFilterState}
         >
           내 발주
-        </Button3>
+        </Button>
       </ButtonDiv>
     </WrapperTop>
   );
 };
 
 const WrapperTop = styled.div`
+  @media screen and (min-width: 1024px) {
+    height: 277px;
+    padding-top: 40px;
+  }
+  @media screen and (max-width: 1023px) {
+    height: 208px;
+    padding-top: 30px;
+  }
   display: flex;
   width: 100%;
-  height: 277px;
-  padding-top: 40px;
   position: relative;
 `;
 
 const FilterWrapper = styled.div`
-  height: 40px;
+  @media screen and (min-width: 1024px) {
+    height: 40px;
+    bottom: 15px;
+  }
+  @media screen and (max-width: 1023px) {
+    height: 30px;
+    bottom: 12px;
+  }
   position: absolute;
-  bottom: 15px;
 `;
 
 const FilterDiv = styled.div`
-  width: 200px;
-  height: 40px;
+  @media screen and (min-width: 1024px) {
+    width: 200px;
+    height: 40px;
+    margin-right: 29px;
+  }
+  @media screen and (max-width: 1023px) {
+    width: 150px;
+    height: 30px;
+    margin-right: 22px;
+  }
   border: 1px solid black;
   border-radius: 7px;
   display: flex;
   align-items: center;
-  float: left;
-  margin-right: 29px;
 `;
 
 const FilterSelect = styled.select`
-  width: 140px;
-  height: 30px;
+  @media screen and (min-width: 1024px) {
+    width: 140px;
+    height: 30px;
+    margin-left: 10px;
+    font-size: 20px;
+  }
+  @media screen and (max-width: 1023px) {
+    width: 105px;
+    height: 22.5px;
+    margin-left: 7.5px;
+    font-size: 15px;
+  }
   border: none;
   appearance: none;
-  font-size: 20px;
-  margin-left: 10px;
 `;
 
 const FilterLabelP = styled.p`
-  display: block;
-  width: 50px;
-  height: 30px;
+  @media screen and (min-width: 1024px) {
+    width: 50px;
+    height: 30px;
+    font-size: 20px;
+  }
+  @media screen and (max-width: 1023px) {
+    width: 37.5px;
+    height: 22.5px;
+    font-size: 15px;
+  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-right: 1px solid black;
-  font-size: 20px;
-  text-align: center;
-  line-height: 30px;
 `;
 
 const FilterOption = styled.option<{ contentsFilterState: String }>`
@@ -161,45 +197,53 @@ const FilterOption = styled.option<{ contentsFilterState: String }>`
 `;
 
 const ButtonDiv = styled.div`
+  @media screen and (min-width: 1024px) {
+    width: 300px;
+    height: 60px;
+    bottom: 15px;
+  }
+  @media screen and (max-width: 1023px) {
+    width: 225px;
+    height: 45px;
+    bottom: 12px;
+  }
+  display: flex;
   position: absolute;
-  width: 300px;
-  height: 60px;
   border: 1px solid black;
   border-radius: 7px;
-  bottom: 15px;
   right: 0;
 `;
 
-const Button1 = styled.button<{ contentsFilterState: String }>`
-  width: 99px;
-  height: 60px;
-  font-size: 20px;
-  border-right: 1px solid black;
-  border-top-left-radius: 7px;
-  border-bottom-left-radius: 7px;
-  background-color: ${(props) =>
-    props.contentsFilterState === "onGoing" ? "black" : ""};
-  color: ${(props) => (props.contentsFilterState === "onGoing" ? "white" : "")};
-`;
+const Button = styled.button<{
+  contentsFilterState: "onGoing" | "finished" | "myOrder";
+  buttonRole: "onGoing" | "finished" | "myOrder";
+}>`
+  @media screen and (min-width: 1024px) {
+    width: 99px;
+    height: 60px;
+    font-size: 20px;
+  }
+  @media screen and (max-width: 1023px) {
+    width: 75px;
+    height: 45px;
+    font-size: 15px;
+  }
 
-const Button2 = styled.button<{ contentsFilterState: String }>`
-  width: 99px;
-  height: 60px;
-  font-size: 20px;
-  border-right: 1px solid black;
+  border-right: ${(props) =>
+    props.buttonRole !== "myOrder" ? "1px solid black" : ""};
+
+  border-top-left-radius: ${(props) =>
+    props.buttonRole === "onGoing" ? "7px" : ""};
+  border-bottom-left-radius: ${(props) =>
+    props.buttonRole === "onGoing" ? "7px" : ""};
+
+  border-top-right-radius: ${(props) =>
+    props.buttonRole === "myOrder" ? "7px" : ""};
+  border-bottom-right-radius: ${(props) =>
+    props.buttonRole === "myOrder" ? "7px" : ""};
+
   background-color: ${(props) =>
-    props.contentsFilterState === "finished" ? "black" : ""};
+    props.contentsFilterState === props.buttonRole ? "black" : ""};
   color: ${(props) =>
-    props.contentsFilterState === "finished" ? "white" : ""};
-`;
-
-const Button3 = styled.button<{ contentsFilterState: String }>`
-  width: 100px;
-  height: 60px;
-  font-size: 20px;
-  border-top-right-radius: 7px;
-  border-bottom-right-radius: 7px;
-  background-color: ${(props) =>
-    props.contentsFilterState === "myOrder" ? "black" : ""};
-  color: ${(props) => (props.contentsFilterState === "myOrder" ? "white" : "")};
+    props.contentsFilterState === props.buttonRole ? "white" : ""};
 `;
