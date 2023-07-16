@@ -3,7 +3,7 @@ import { TbWorld } from "react-icons/tb";
 import { FieldValues, useForm } from "react-hook-form";
 import Router from "next/router";
 import { customColor } from "../customColor";
-import { useQueryPostLogin } from "../../hooks/query/userInfo/useQueryPostLogin";
+import { useQueryPostLogin } from "../../hooks/query/user/useQueryPostLogin";
 import { pathName } from "../../config/adminPathName";
 import { Alert } from "../modal/alert";
 import { useEffect, useState } from "react";

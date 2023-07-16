@@ -12,7 +12,6 @@ interface Props {
 }
 export const SideMenuBar = ({ currentMenu, setCurrentMenu }: Props) => {
   const userInfo = useRecoilValue(userInformation);
-  console.log(currentMenu);
 
   return (
     <Wrapper>

@@ -25,7 +25,7 @@ export const MyInfo = () => {
         if (localStorage.getItem("role") === "ADMIN") {
           handleLogout();
         } else {
-          getUserInfo();
+          userInfo.picture === "" && getUserInfo();
         }
       }
     }
@@ -44,7 +44,7 @@ export const MyInfo = () => {
         });
       })
       .catch((error) => {
-        handleLogout();
+        // handleLogout();
       });
   };
 
