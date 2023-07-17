@@ -14,15 +14,14 @@ html {
     border: 4px solid transparent;
     }
     ::-webkit-scrollbar-track {
-    background-color: transparent;
-    border-radius: 10px;
+    background-color: ${customColor.lightGray};
     }
     ::-webkit-scrollbar-button:start:decrement {
-    background-color: transparent;
+    background-color: ${customColor.lightGray};
     height: 80px;
     }
     ::-webkit-scrollbar-button:end:increment {
-    background-color: transparent;
+    background-color: ${customColor.lightGray};
     height: 130px;
     }
   }
