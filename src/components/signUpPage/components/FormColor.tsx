@@ -31,13 +31,13 @@ export const FormColor = (props: Props) => {
   const handlePlusBtn = () => {
     setColorList((prev) => [...prev, `${count}`]);
     setIsHover((prev) => [...prev, false]);
-    event.preventDefault();
+    event?.preventDefault();
     setCount(count + 1);
   };
   const handleDeleteBtn = (i: string, id: number) => {
     setColorList(colorList.filter((i, idx) => id !== idx));
     setIsHover(isHover.filter((i, idx) => id !== idx));
-    event.preventDefault();
+    event?.preventDefault();
     props.unregister(props.value + `-${i}`);
   };
   const onMouseEnter = (id: number) => {

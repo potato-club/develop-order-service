@@ -38,7 +38,7 @@ export const ReviewModal = ({ modalState, getModalState }: propTypes) => {
   return (
     <ModalWrapper modalState={modalState.state}>
       <ModalHeaderDiv>
-        <XButton onClick={onClickXbutton}>
+        <XButton onClick={onClickXbutton} modalRole={modalState.modalRole}>
           <Image src={cross} alt="x" width={20} height={20}></Image>
         </XButton>
       </ModalHeaderDiv>
@@ -53,12 +53,14 @@ export const ReviewModal = ({ modalState, getModalState }: propTypes) => {
         <ConfirmButton
           onClick={modalState.onClickConfirmButton}
           modalRole={modalState.modalRole}
+          buttonRole={"confirm"}
         >
           확인
         </ConfirmButton>
         <ConfirmButton
           onClick={onClickXbutton}
           modalRole={modalState.modalRole}
+          buttonRole={"cancel"}
         >
           취소
         </ConfirmButton>
@@ -86,7 +88,9 @@ const ModalHeaderDiv = styled.div`
   height: 30px;
 `;
 
-const XButton = styled.button`
+const XButton = styled.button<{ modalRole: string }>`
+  display: ${(props) =>
+    props.modalRole === "backToOrderReview" ? "none" : ""};
   width: 30px;
   height: 30px;
 `;
@@ -117,8 +121,15 @@ const GoToLoginButton = styled.button<{ modalRole: string }>`
   margin-bottom: 20px;
 `;
 
-const ConfirmButton = styled.button<{ modalRole: string }>`
-  display: ${(props) => (props.modalRole === "confirm" ? "" : "none")};
+const ConfirmButton = styled.button<{
+  modalRole: string;
+  buttonRole: "cancel" | "confirm";
+}>`
+  display: ${(props) =>
+    props.modalRole === "confirm" ||
+    (props.buttonRole === "confirm" && props.modalRole === "backToOrderReview")
+      ? ""
+      : "none"};
   background-color: black;
   color: white;
   width: 75px;

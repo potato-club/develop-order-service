@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { ReviewModal } from "../src/components/modal/ReviewModal";
 import { useQueryGetOrderDetail } from "../src/hooks/query/orderDetail/useQueryGetOrderDetail";
+import { pathName } from "../src/config/pathName";
 
 export default function OrderDetail() {
   const router = useRouter();
@@ -36,6 +37,18 @@ export default function OrderDetail() {
     getDetailDataState
   );
 
+  useEffect(() => {
+    if (localStorage.getItem("token") === null) {
+      getModalState({
+        modalRole: "backToOrderReview",
+        state: true,
+        text: "로그인 상태가 아니므로 게시물에 접근할 수 없습니다.",
+        onClickConfirmButton: () => {
+          router.push(pathName.ORDERREVIEW);
+        },
+      });
+    }
+  }, [router]);
   console.log(id);
 
   return (
