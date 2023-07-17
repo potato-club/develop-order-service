@@ -13,9 +13,14 @@ export const DetailTop = () => {
 };
 
 const WrapperTop = styled.div`
+  @media screen and (min-width: 1024px) {
+    height: 277px;
+  }
+  @media screen and (max-width: 1023px) {
+    height: 208px;
+  }
   display: flex;
   width: 100%;
-  height: 277px;
   padding-top: 40px;
   position: relative;
 `;
