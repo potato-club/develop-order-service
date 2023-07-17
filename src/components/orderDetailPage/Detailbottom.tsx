@@ -4,6 +4,7 @@ import heartIcon from "../../../public/img/detail/heart.png";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { pathName } from "./../../config/pathName";
+import { useMutationPostLikes } from "../../hooks/query/orderDetail/useMutationPostLikes";
 
 type propTypes = {
   id: number;
@@ -32,29 +33,11 @@ export const DetailBottm = ({
 }: propTypes) => {
   //
   const router = useRouter();
-  const onClickLikeButton = async () => {
-    console.log(localStorage.getItem("token"));
 
-    try {
-      const response = await axios.post(
-        `http://localhost:8080/orders/detail/${id}/likes`,
-        {},
-        {
-          headers: {
-            Authorization: `${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      console.log(response);
-    } catch (err: any) {
-      getModalState({
-        modalRole: "likeMyOrder",
-        state: true,
-        text: err.response.data.error,
-        onClickConfirmButton: () => {},
-      });
-      console.log(err.response.data.error);
-    }
+  const mutationPostLikes = useMutationPostLikes(id, getModalState);
+
+  const onClickLikeButton = async () => {
+    mutationPostLikes.mutate();
   };
 
   const onClickBackToListButton = () => {
@@ -66,8 +49,6 @@ export const DetailBottm = ({
       <LikeButton state={state} onClick={onClickLikeButton}>
         좋아요
         <LikeButtonP>
-          {/* <VerticalContainer></VerticalContainer> */}
-          {/* 원래는 VerticalContainer 안에 Image를 넣어놓는 형식이지만 VerticalContainer에서 오류가 발생해서 일단 */}
           <Image src={heartIcon} alt="icon" width={23} height={23}></Image>
           {like}
         </LikeButtonP>
