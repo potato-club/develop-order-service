@@ -17,6 +17,11 @@ export const SchedulerApi = {
     const response = await sendApi.delete(`/admin/schedule?AdminScheduleId=${id}`);
     return response.data;
   },
+
+  updateSchedule: async (id: string, scheduleData: ScheduleType) => {
+    const response = await sendApi.put(`/admin/schedule?AdminScheduleId=${id}`,scheduleData);
+    return response.data;
+  },
   
 
 
