@@ -22,21 +22,27 @@ const AddModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   });
 
   const employeeOptions = [
-    "hyoseong",
-    "cheongjo",
-    "haeyeon",
-    "geumju",
-    "junhyung",
+    { name: "hyoseong", color: "#328e39" },
+    { name: "cheongjo", color: "#ea72c0" },
+    { name: "haeyeon", color: "#eae125" },
+    { name: "geumju", color: "#00aabb" },
+    { name: "junhyung", color: "#adf123" },
   ];
 
-  const { refetch } = useQueryGetSchedules(); // useQueryGetSchedules 훅을 사용하여 스케줄 데이터를 가져옵니다.
+  const { refetch } = useQueryGetSchedules();
 
   const handleNameChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedName = e.target.value;
-    setNewSchedule((prevSchedule) => ({
-      ...prevSchedule,
-      name: selectedName,
-    }));
+    const selectedEmployee = employeeOptions.find(
+      (employee) => employee.name === selectedName
+    );
+    if (selectedEmployee) {
+      setNewSchedule((prevSchedule) => ({
+        ...prevSchedule,
+        name: selectedEmployee.name,
+        color: selectedEmployee.color,
+      }));
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,7 +56,7 @@ const AddModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const handleAddSchedule = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await SchedulerApi.createSchedule(newSchedule); // 스케줄 생성 API 호출
+      await SchedulerApi.createSchedule(newSchedule);
       setNewSchedule({
         id: "",
         name: "",
@@ -59,9 +65,8 @@ const AddModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         end: "",
         color: "",
       });
-      refetch(); 
+      refetch();
       onClose();
-     // 스케줄 데이터 재로딩
     } catch (error) {
       console.log("Failed to create schedule:", error);
     }
@@ -91,8 +96,8 @@ const AddModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               >
                 <option value="">직원을 선택해주세요</option>
                 {employeeOptions.map((employee) => (
-                  <option key={employee} value={employee}>
-                    {employee}
+                  <option key={employee.name} value={employee.name}>
+                    {employee.name}
                   </option>
                 ))}
               </Select>
@@ -127,17 +132,6 @@ const AddModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 required
               />
             </Label>
-            <Label>
-              색상:
-              <Input
-                type="text"
-                name="color"
-                value={newSchedule.color}
-                onChange={handleInputChange}
-                required
-              />
-            </Label>
-
             <ButtonWrapper>
               <Button onClick={handleAddSchedule}>Add</Button>
               <Button onClick={handleClose}>Cancel</Button>

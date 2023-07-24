@@ -1,27 +1,42 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { ReactQueryDevtools } from 'react-query/devtools';
 import { useQueryGetSchedules } from "../../../hooks/query/scheduler/useGetSchedules";
 import AddModal from './AddModal';
 import { useDeleteSchedule } from '../../../hooks/query/scheduler/useDeleteSchedule';
+import { useUpdateSchedule } from '../../../hooks/query/scheduler/useUpdateSchedule';
+import { ScheduleType } from '../../../hooks/query/scheduler/useGetSchedules';
+import EditModal from './EditModal';
 
 const Schedule: React.FC = () => {
   const { isLoading, error, data, refetch } = useQueryGetSchedules();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedSchedule, setSelectedSchedule] = useState<ScheduleType | null>(null);
   const deleteSchedule = useDeleteSchedule();
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
+
+  const handleOpenAddModal = () => {
+    setIsAddModalOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const handleCloseAddModal = () => { 
+    setIsAddModalOpen(false);
+  };
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
   };
 
   const handleDeleteSchedule = async (id: string) => {
     await deleteSchedule(id);
     refetch();
   };
+
+  const handleUpdateSchedule = (schedule: ScheduleType) => {
+    setSelectedSchedule(schedule);
+    setIsEditModalOpen(true);
+  };
+ 
 
   if (isLoading) {
     return <LoadingText>Loading...</LoadingText>;
@@ -34,7 +49,7 @@ const Schedule: React.FC = () => {
   return (
     <RealWrapper>
       <ButtonWrapper>
-        <Button onClick={handleOpenModal}>일정 추가</Button>
+        <Button onClick={handleOpenAddModal}>일정 추가</Button>
       </ButtonWrapper>
       <ScheduleList>
         {data &&
@@ -44,15 +59,13 @@ const Schedule: React.FC = () => {
               <ScheduleText>{schedule.start}</ScheduleText>
               <ScheduleText>{schedule.end}</ScheduleText>
               <ScheduleText>{schedule.title}</ScheduleText>
-              <ScheduleText>{schedule.color}</ScheduleText>
               <Button onClick={() => handleDeleteSchedule(schedule.id)}>삭제</Button>
+              <Button onClick={() => handleUpdateSchedule(schedule)}>수정</Button>
             </ScheduleItem>
           ))}
       </ScheduleList>
-      <AddModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-      />
+      <AddModal isOpen={isAddModalOpen} onClose={handleCloseAddModal} />
+      <EditModal isOpen={isEditModalOpen} onClose={handleCloseEditModal} schedule={selectedSchedule} />
     </RealWrapper>
   );
 };
@@ -109,4 +122,4 @@ const Button = styled.button`
   &:hover {
     background-color: #0056b3;
   }
-`
+`;

@@ -1,55 +1,82 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { SchedulerApi } from "../../../apis/controller/scheduler.api";
+import {
+  ScheduleType,
+  useQueryGetSchedules,
+} from "../../../hooks/query/scheduler/useGetSchedules";
 
-interface ScheduleType {
-  name: string;
-  title: string;
-  start: string;
-  end: string;
-}
-
-interface EditModalProps {
+interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   schedule: ScheduleType | null;
-  onUpdateSchedule: (updatedSchedule: ScheduleType) => void;
 }
 
-const EditModal: React.FC<EditModalProps> = ({
-  isOpen,
-  onClose,
-  schedule,
-  onUpdateSchedule,
-}) => {
-  const [updatedSchedule, setUpdatedSchedule] = useState<ScheduleType>({
+const EditModal: React.FC<ModalProps> = ({ isOpen, onClose, schedule }) => {
+  const [editedSchedule, setEditedSchedule] = useState<ScheduleType>({
+    id: "",
     name: "",
     title: "",
     start: "",
     end: "",
+    color: "",
   });
 
+  const employeeOptions = [
+    { name: "hyoseong", color: "#328e39" },
+    { name: "cheongjo", color: "#ea72c0" },
+    { name: "haeyeon", color: "#eae125" },
+    { name: "geumju", color: "#00aabb" },
+    { name: "junhyung", color: "#adf123" },
+  ];
 
-  const employeeOptions = ["김효성", "박청조", "박해연", "조금주", "최준형"];
-
-  // 선택된 스케줄이 변경될 때마다 폼 데이터 업데이트
   useEffect(() => {
-    if (schedule) {
-      setUpdatedSchedule({ ...schedule });
+    if (isOpen && schedule) {
+      setEditedSchedule(schedule);
     }
-  }, [schedule]);
+  }, [isOpen, schedule]);
+  
 
- const handleInputChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+  const handleNameChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedName = e.target.value;
+    const selectedEmployee = employeeOptions.find(
+      (employee) => employee.name === selectedName
+    );
+    if (selectedEmployee) {
+      setEditedSchedule((prevSchedule) => ({
+        ...prevSchedule,
+        name: selectedEmployee.name,
+        color: selectedEmployee.color,
+      }));
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setUpdatedSchedule((prevSchedule) => ({
+    setEditedSchedule((prevSchedule) => ({
       ...prevSchedule,
       [name]: value,
     }));
   };
 
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleUpdateSchedule = async (e: React.FormEvent) => {
     e.preventDefault();
-    onUpdateSchedule(updatedSchedule);
+    if (schedule) {
+      try {
+        const updatedSchedule = {
+          ...editedSchedule,
+          id: schedule.id, // 기존 스케줄의 ID 사용
+        };
+        await SchedulerApi.updateSchedule(String(schedule.id), updatedSchedule);
+        onClose();
+      } catch (error) {
+        console.log("Failed to update schedule:", error);
+      }
+    }
+  };
+
+  const handleClose = () => {
+    onClose();
   };
 
   if (!isOpen || !schedule) {
@@ -57,70 +84,71 @@ const EditModal: React.FC<EditModalProps> = ({
   }
 
   return (
-    <ModalWrapper>
-      <ModalContent>
-        <h2>일정 수정</h2>
-        <form onSubmit={handleSubmit}>
-        <Label>
-            이름:
-            <Select
-              name="name"
-              value={updatedSchedule.name}
-              onChange={handleInputChange}
-              required={true}
-            >
-              <option value="">직원을 선택해주세요</option>
-              {employeeOptions.map((employee) => (
-                <option key={employee} value={employee}>
-                  {employee}
-                </option>
-              ))}
-            </Select>
-          </Label>
-
-          <Label>
-            제목:
-            <Input
-              type="text"
-              name="title"
-              value={updatedSchedule.title}
-              onChange={handleInputChange}
-              required={true}
-            />
-          </Label>
-          <Label>
-            시작일:
-            <Input
-              type="datetime-local"
-              name="start"
-              value={updatedSchedule.start}
-              onChange={handleInputChange}
-              required={true}
-            />
-          </Label>
-          <Label>
-            종료일:
-            <Input
-              type="datetime-local"
-              name="end"
-              value={updatedSchedule.end}
-              onChange={handleInputChange}
-              required={true}
-            />
-          </Label>
-          <ButtonWrapper>
-            <Button type="submit">저장</Button>
-            <Button onClick={onClose}>닫기</Button>
-          </ButtonWrapper>
-        </form>
-      </ModalContent>
-    </ModalWrapper>
+    <ModalOverlay>
+      <ModalWrapper>
+        <ModalContent>
+          <h2>일정 수정</h2>
+          <form>
+            <Label>
+              이름:
+              <Select
+                name="name"
+                value={editedSchedule.name}
+                onChange={handleNameChange}
+                required
+              >
+                <option value="">직원을 선택해주세요</option>
+                {employeeOptions.map((employee) => (
+                  <option key={employee.name} value={employee.name}>
+                    {employee.name}
+                  </option>
+                ))}
+              </Select>
+            </Label>
+            <Label>
+              제목:
+              <Input
+                type="text"
+                name="title"
+                value={editedSchedule.title}
+                onChange={handleInputChange}
+                required
+              />
+            </Label>
+            <Label>
+              시작일:
+              <Input
+                type="datetime-local"
+                name="start"
+                value={editedSchedule.start}
+                onChange={handleInputChange}
+                required
+              />
+            </Label>
+            <Label>
+              종료일:
+              <Input
+                type="datetime-local"
+                name="end"
+                value={editedSchedule.end}
+                onChange={handleInputChange}
+                required
+              />
+            </Label>
+            <ButtonWrapper>
+              <Button onClick={handleUpdateSchedule}>Update</Button>
+              <Button onClick={handleClose}>Cancel</Button>
+            </ButtonWrapper>
+          </form>
+        </ModalContent>
+      </ModalWrapper>
+    </ModalOverlay>
   );
 };
 
 export default EditModal;
 
-const ModalWrapper = styled.div`
+const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -128,14 +156,18 @@ const ModalWrapper = styled.div`
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+`;
+
+const ModalWrapper = styled.div`
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
 `;
 
 const ModalContent = styled.div`
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
+  align-items: center;
 `;
 
 const Label = styled.label`
@@ -146,18 +178,18 @@ const Label = styled.label`
 const Input = styled.input`
   width: 100%;
   padding: 8px;
-  border: 1px solid #ccc;
   border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
 `;
 
 const ButtonWrapper = styled.div`
   display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
+  justify-content: space-between;
+  margin-top: 10px;
 `;
 
 const Button = styled.button`
-  margin-left: 10px;
   background-color: #ccc;
   padding: 8px 16px;
   border: none;
@@ -168,5 +200,7 @@ const Button = styled.button`
 const Select = styled.select`
   width: 100%;
   padding: 8px;
+  border-radius: 4px;
   border: 1px solid #ccc;
-  border-radius: 4px;`;
+  margin-top: 5px;
+`;
