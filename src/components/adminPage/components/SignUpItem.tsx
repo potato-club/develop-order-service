@@ -4,23 +4,34 @@ import { IoDocumentTextOutline } from "react-icons/io5";
 import Router from "next/router";
 import { pathName } from "../../../config/adminPathName";
 
-export const SignUpItem = () => {
+export interface ResponseType {
+  clientName: string;
+  createdDate: string;
+  id: number;
+  purpose: string;
+  siteName: string;
+}
+export interface Props {
+  data: ResponseType;
+}
+
+export const SignUpItem = ({ data }: Props) => {
   const handleRouteDetail = (id: number) => {
     Router.push(`${pathName.CHECK_SIGNUP.DETAIL.replace(":id", String(id))}`);
   };
 
   return (
-    <Wrapper onClick={() => handleRouteDetail(1)}>
+    <Wrapper onClick={() => handleRouteDetail(data.id)}>
       <Name>
         <DocumentIcon />
-        <Highlighting>김민주</Highlighting>님의 발주신청
+        <Highlighting>{data.clientName}</Highlighting>님의 발주신청
       </Name>
       <SiteInfo>
-        <SiteName>DOS</SiteName>
-        <SitePurpose>발주신청을 위한 사이트</SitePurpose>
+        <SiteName>{data.siteName}</SiteName>
+        <SitePurpose>{data.purpose}</SitePurpose>
       </SiteInfo>
-      <ID>ID 13532</ID>
-      <Date>2023-05-03 16:12</Date>
+      <ID>ID {data.id}</ID>
+      <Date>{data.createdDate}</Date>
     </Wrapper>
   );
 };
@@ -30,8 +41,8 @@ const Wrapper = styled.button`
   flex-direction: column;
   position: relative;
   background: ${customColor.indigo3};
-  padding: 20px;
-  gap: 8px;
+  padding: 18px;
+  gap: 12px;
 `;
 const DocumentIcon = styled(IoDocumentTextOutline)`
   font-size: 28px;
@@ -56,11 +67,10 @@ const SiteInfo = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  padding: 0 8px 0 32px;
-  gap: 8px;
+  gap: 10px;
   align-items: flex-end;
-  justify-content: flex-end;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  margin-left: 36px;
 `;
 const SiteName = styled.p`
   font-size: 20px;
@@ -75,14 +85,14 @@ const ID = styled.p`
   position: absolute;
   color: ${customColor.gray};
   font-size: 12px;
-  top: 8px;
-  right: 12px;
+  top: 10px;
+  right: 14px;
 `;
 const Date = styled.p`
   display: flex;
   position: absolute;
   color: ${customColor.gray};
   font-size: 12px;
-  bottom: 12px;
-  left: 18px;
+  bottom: 10px;
+  right: 14px;
 `;

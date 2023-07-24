@@ -17,4 +17,21 @@ export const OrderDetailApi = {
 
     return response;
   },
+
+  deleteOrder: async (id: number) => {
+    const response = await sendApi.delete(
+      `https://www.developorderservice.store/orders/${id}`
+    );
+
+    return response;
+  },
+
+  postLikes: async (id: number) => {
+    const response = await sendApi.post(
+      `https://www.developorderservice.store/orders/detail/${id}/likes`,
+      {}
+    );
+
+    return response;
+  },
 };

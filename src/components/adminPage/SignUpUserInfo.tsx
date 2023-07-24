@@ -2,7 +2,15 @@ import styled from "styled-components";
 import { HiOutlineUser } from "react-icons/hi";
 import { customColor } from "../customColor";
 
-export const SignUpUserInfo = () => {
+interface Props {
+  name: string | undefined;
+  email: string | undefined;
+  hotLine: string | undefined;
+  subLine: string | undefined;
+  isLoading: boolean;
+}
+
+export const SignUpUserInfo = (props: Props) => {
   return (
     <Content>
       <Label>
@@ -12,19 +20,29 @@ export const SignUpUserInfo = () => {
       <Box>
         <BoxItem>
           <BoxItemLabel>*성함 또는 회사명(단체명)</BoxItemLabel>
-          <BoxItemContent>조금주</BoxItemContent>
+          <BoxItemContent>{props.name}</BoxItemContent>
         </BoxItem>
         <BoxItem>
           <BoxItemLabel>*이메일</BoxItemLabel>
-          <BoxItemContent>ccho8702@naver.com</BoxItemContent>
+          <BoxItemContent>{props.email}</BoxItemContent>
         </BoxItem>
         <BoxItem>
           <BoxItemLabel>*전화번호1</BoxItemLabel>
-          <BoxItemContent>010-3474-8702</BoxItemContent>
+          <BoxItemContent>
+            {props.hotLine?.replace(
+              /^(\+82|0)(\d{2})(\d{4})(\d{4})$/,
+              "0$2-$3-$4"
+            )}
+          </BoxItemContent>
         </BoxItem>
         <BoxItem>
           <BoxItemLabel>전화번호2</BoxItemLabel>
-          <BoxItemContent>010-1234-5678</BoxItemContent>
+          <BoxItemContent>
+            {props.subLine?.replace(
+              /^(\+82|0)(\d{2})(\d{4})(\d{4})$/,
+              "0$2-$3-$4"
+            )}
+          </BoxItemContent>
         </BoxItem>
       </Box>
     </Content>

@@ -8,6 +8,7 @@ export * from "./loginPage/LoginPage";
 export * from "./signUpPage/SignUpPage";
 export * from "./infoPage/InformationPage";
 export * from "./mainPage/MainPage";
+export * from "./myPage/MyPage";
 export * from "./adminPage/AdminPage";
 export * from "./adminModifyOrderPage/AdminModifyOrderPage";
 export * from "./adminLoginPage/AdminLoginPage";

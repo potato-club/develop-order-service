@@ -4,7 +4,6 @@ export interface UserInfo {
   email: string;
   name: string;
   picture: string;
-  role: string;
 }
 
 export const isLogin = atom<boolean>({
@@ -14,5 +13,5 @@ export const isLogin = atom<boolean>({
 
 export const userInformation = atom<UserInfo>({
   key: "userInformation",
-  default: { email: "", name: "", picture: "", role: "" },
+  default: { email: "", name: "", picture: "" },
 });

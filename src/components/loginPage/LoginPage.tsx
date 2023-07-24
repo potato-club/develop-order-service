@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Image from "next/image";
 import { customColor } from "../customColor";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Router from "next/router";
 import { pathName } from "../../config/pathName";
 
@@ -23,7 +23,7 @@ export const LoginPage = () => {
   const handleGoPrevPath = () => {
     const prevPath = localStorage.getItem("prevPath");
     prevPath !== null &&
-    prevPath !== pathName.LOGIN &&
+    !prevPath.includes(pathName.LOGIN) &&
     isContainPathName(prevPath)
       ? Router.push(prevPath)
       : Router.push(pathName.MAIN);
@@ -42,6 +42,7 @@ export const LoginPage = () => {
       if (token && refreshToken) {
         localStorage.setItem("token", token);
         localStorage.setItem("refreshToken", refreshToken);
+        localStorage.setItem("role", "USER");
         handleGoPrevPath();
       }
     }

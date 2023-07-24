@@ -3,7 +3,14 @@ import { CgWebsite } from "react-icons/cg";
 import { customColor } from "../customColor";
 import { OrdererRadioBoxs } from "./components/OrdererRadioBoxs";
 
-export const SignUpSiteInfo = () => {
+interface Props {
+  siteName: string | undefined;
+  purpose: string | undefined;
+  owner: "COMPANY" | "PERSONAL" | "PUBLIC" | undefined;
+  isLoading: boolean;
+}
+
+export const SignUpSiteInfo = (props: Props) => {
   return (
     <Content>
       <Label>
@@ -13,16 +20,16 @@ export const SignUpSiteInfo = () => {
       <Box>
         <BoxItem>
           <BoxItemLabel>*사이트 이름</BoxItemLabel>
-          <BoxItemContent>DOS</BoxItemContent>
+          <BoxItemContent>{props.siteName}</BoxItemContent>
         </BoxItem>
         <BoxItem>
           <BoxItemLabel>*사이트 목적</BoxItemLabel>
-          <BoxItemContent>웹 발주를 위한 사이트</BoxItemContent>
+          <BoxItemContent>{props.purpose}</BoxItemContent>
         </BoxItem>
         <BoxItem>
           <BoxItemLabel>*사이트 운영자</BoxItemLabel>
           <BoxItemContent>
-            <OrdererRadioBoxs data="COMPANY" />
+            <OrdererRadioBoxs data={props.isLoading ? null : props.owner!} />
           </BoxItemContent>
         </BoxItem>
       </Box>
