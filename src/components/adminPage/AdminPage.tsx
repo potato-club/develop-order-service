@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import { useQueryGetSignUps } from "../../hooks/query/adminSignUp/useQueryGetSignUps";
 import { customColor } from "../customColor";
-import { SignUpItem } from "./components/SignUpItem";
+import { SignUpItemListCheck } from "./components/SignUpItemList";
+import { SignUpItemListUncheck } from "./components/SignUpItemListUncheck";
 
 export interface ResponseType {
   clientName: string;
@@ -16,12 +16,11 @@ interface ToggleProps {
 }
 
 export const AdminPage = () => {
-  const { isLoading, data } = useQueryGetSignUps();
   const [isNew, setIsNew] = useState(true);
+
   return (
     <Wrapper>
-      {!isLoading && data?.map((i, id) => <SignUpItem data={i} key={id} />)}
-      {!isLoading && data?.map((i, id) => <SignUpItem data={i} key={id} />)}
+      {isNew ? <SignUpItemListUncheck /> : <SignUpItemListCheck />}
       <ToggleButton onClick={() => setIsNew(!isNew)}>
         <ToggleButtonInner>
           <ButtonThumb isNew={isNew} />

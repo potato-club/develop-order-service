@@ -11,6 +11,8 @@ export const AdminDetailPage = () => {
   const { id } = Router.query;
   const { isLoading, data } = useQueryGetSignUpDetail(Number(id));
 
+  console.log(data);
+
   return (
     <Wrapper>
       <WrapperInner>
