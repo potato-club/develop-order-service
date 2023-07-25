@@ -10,9 +10,6 @@ import { useQueryGetSignUpDetail } from "../../hooks/query/adminSignUp/useQueryG
 export const AdminDetailPage = () => {
   const { id } = Router.query;
   const { isLoading, data } = useQueryGetSignUpDetail(Number(id));
-
-  console.log(data);
-
   return (
     <Wrapper>
       <WrapperInner>
@@ -36,6 +33,7 @@ export const AdminDetailPage = () => {
           page={data?.page}
           login={data?.login}
           database={data?.database}
+          files={data?.files}
           etc={data?.etc}
           meeting={data?.meeting}
           isLoading={isLoading}

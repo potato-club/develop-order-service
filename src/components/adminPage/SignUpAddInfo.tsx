@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { MdTune } from "react-icons/md";
-import { useEffect, useState } from "react";
 import { customColor } from "../customColor";
 import { TwoRadioBoxs } from "./components/TwoRadioBoxs";
 import { ColorPalette } from "./components/ColorPalette";
+import { saveAs } from "file-saver";
 
 interface Props {
   mainColor: string[] | undefined;
@@ -11,6 +11,7 @@ interface Props {
   page: number | undefined;
   login: boolean | undefined;
   database: boolean | undefined;
+  files: { fileName: string; id: number; s3Url: string }[] | undefined;
   etc: string | undefined;
   meeting: string | undefined;
   isLoading: boolean;
@@ -20,6 +21,17 @@ export const SignUpAddInfo = (props: Props) => {
   const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
   const date = props.meeting?.split("T");
   const time = new Date(props.meeting!);
+
+  const handleDownload = (url: string) => {
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "downloaded_image.jpg";
+    link.target = "_blank"; // Optional: 이미지를 새 탭에서 열기
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <Content>
       <Lbel>
@@ -57,7 +69,14 @@ export const SignUpAddInfo = (props: Props) => {
         </BoxItem>
         <BoxItem>
           <BoxItemLabel>사이트 컨셉 참고자료 첨부</BoxItemLabel>
-          <BoxItemContent>&[수정필요]&</BoxItemContent>
+          <BoxItemContent>
+            {date !== undefined &&
+              props.files?.map((i, id) => (
+                <FileButton key={id} onClick={() => handleDownload(i.s3Url)}>
+                  {i.fileName}
+                </FileButton>
+              ))}
+          </BoxItemContent>
         </BoxItem>
         <BoxItem>
           <BoxItemLabel>기타사항</BoxItemLabel>
@@ -104,6 +123,7 @@ const BoxItem = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  width: 100%;
   gap: 6px 0;
 `;
 const BoxItemLabel = styled.div`
@@ -126,4 +146,17 @@ const BoxItemContent = styled.div`
   padding: 10px 12px 9px 32px;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
+`;
+const FileButton = styled.button`
+  display: block;
+  width: calc(100vw - 402px);
+  font-size: 14px;
+  color: ${customColor.white};
+  letter-spacing: -1px;
+  text-decoration: underline;
+  cursor: pointer;
+  text-align: start;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `;
