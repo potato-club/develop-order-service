@@ -3,7 +3,6 @@ import { MdTune } from "react-icons/md";
 import { customColor } from "../customColor";
 import { TwoRadioBoxs } from "./components/TwoRadioBoxs";
 import { ColorPalette } from "./components/ColorPalette";
-import { saveAs } from "file-saver";
 
 interface Props {
   mainColor: string[] | undefined;
