@@ -12,7 +12,6 @@ interface Props {
 }
 export const SideMenuBar = ({ currentMenu, setCurrentMenu }: Props) => {
   const userInfo = useRecoilValue(userInformation);
-  console.log(currentMenu);
 
   return (
     <Wrapper>
@@ -50,6 +49,12 @@ export const SideMenuBar = ({ currentMenu, setCurrentMenu }: Props) => {
           >
             내 좋아요
           </MenuButton>
+          <MenuButton
+            onClick={() => setCurrentMenu(4)}
+            isCurrentMenu={currentMenu === 4}
+          >
+            회원탈퇴
+          </MenuButton>
           <MenuBar />
         </MenuBox>
       </WrapperInner>
@@ -62,21 +67,22 @@ const Wrapper = styled.div`
   position: relative;
   min-width: 240px;
   height: 100%;
+  box-shadow: 4px 0px 4px ${customColor.black + "16"};
 `;
 const WrapperInner = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
-  padding: 0 24px;
+  padding: 24px;
   width: 240px;
   height: 100%;
-  justify-content: center;
-  box-shadow: 4px 0px 4px ${customColor.black + "16"};
+  justify-content: space-between;
+  gap: 20px;
 `;
 const UserInfo = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 160px 0;
+  padding: px 0;
   align-items: center;
 `;
 const UserName = styled.div`
@@ -125,7 +131,7 @@ const WWW = styled(TbWorld)`
   position: absolute;
   color: ${customColor.lightGray};
   font-size: 260px;
-  top: 50%;
+  top: 0%;
   opacity: 0.6;
-  transform: translate(-80px, calc(-50% - 160px));
+  transform: translate(-80px, 0);
 `;

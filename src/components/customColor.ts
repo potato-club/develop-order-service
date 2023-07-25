@@ -11,6 +11,7 @@ export type customColorType = {
   indigo1: string;
   indigo2: string;
   indigo3: string;
+  red: string;
 };
 
 export const customColor: customColorType = {
@@ -27,4 +28,5 @@ export const customColor: customColorType = {
   indigo1: "#17181D",
   indigo2: "#212329",
   indigo3: "#292C33",
+  red: "#e00000",
 };
