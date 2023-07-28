@@ -1,15 +1,9 @@
 import { useCallback } from "react";
 import { useQuery } from "react-query";
 import { SchedulerApi } from "../../../apis/controller/scheduler.api";
+import { ScheduleType } from "../../../apis/controller/scheduler.api.type";
 
-export interface ScheduleType {
-  id : string,
-  name: string;
-  start: string;
-  end: string;
-  title: string;
-  color: string;
-}
+
 
 export const useQueryGetSchedules = () => {
   const load = useCallback(async () => {
