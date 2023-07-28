@@ -2,11 +2,11 @@ import { useMutation } from 'react-query';
 import { SchedulerApi } from '../../../apis/controller/scheduler.api';
 
 export const useDeleteSchedule = () => {
-  const deleteScheduleMutation = useMutation((id: string) =>
+  const deleteScheduleMutation = useMutation((id: number) =>
     SchedulerApi.deleteSchedule(id)
   );
 
-  const deleteSchedule = async (id: string) => {
+  const deleteSchedule = async (id: number) => {
     try {
       await deleteScheduleMutation.mutateAsync(id);
     } catch (error) {
