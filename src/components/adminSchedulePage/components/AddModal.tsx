@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { SchedulerApi } from "../../../apis/controller/scheduler.api";
+import { ScheduleType } from "../../../apis/controller/scheduler.api.type";
 import {
-  ScheduleType,
   useQueryGetSchedules,
 } from "../../../hooks/query/scheduler/useGetSchedules";
 
@@ -13,7 +13,7 @@ interface ModalProps {
 
 const AddModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [newSchedule, setNewSchedule] = useState<ScheduleType>({
-    id: "",
+    id: 0,
     name: "",
     title: "",
     start: "",
@@ -58,7 +58,7 @@ const AddModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     try {
       await SchedulerApi.createSchedule(newSchedule);
       setNewSchedule({
-        id: "",
+        id: 0,
         name: "",
         title: "",
         start: "",
