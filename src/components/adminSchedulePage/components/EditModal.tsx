@@ -1,206 +1,167 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { SchedulerApi } from "../../../apis/controller/scheduler.api";
-import {
-  ScheduleType,
-  useQueryGetSchedules,
-} from "../../../hooks/query/scheduler/useGetSchedules";
+import { SchedulePostType } from "../../../apis/controller/scheduler.api.type";
 
-interface ModalProps {
+interface EditModalProps {
   isOpen: boolean;
   onClose: () => void;
-  schedule: ScheduleType | null;
+  schedule: SchedulePostType; 
+  onSubmit: (editedSchedule: SchedulePostType) => void;
 }
 
-const EditModal: React.FC<ModalProps> = ({ isOpen, onClose, schedule }) => {
-  const [editedSchedule, setEditedSchedule] = useState<ScheduleType>({
-    id: "",
-    name: "",
-    title: "",
-    start: "",
-    end: "",
-    color: "",
+const EditModal: React.FC<EditModalProps> = ({
+  isOpen,
+  onClose,
+  schedule,
+  onSubmit,
+}) => {
+  const [editedSchedule, setEditedSchedule] = useState<SchedulePostType>({
+    name: schedule.name,
+    start: schedule.start,
+    end: schedule.end,
+    title: schedule.title,
+    color : schedule.color
   });
 
-  const employeeOptions = [
-    { name: "hyoseong", color: "#328e39" },
-    { name: "cheongjo", color: "#ea72c0" },
-    { name: "haeyeon", color: "#eae125" },
-    { name: "geumju", color: "#00aabb" },
-    { name: "junhyung", color: "#adf123" },
-  ];
-
-  useEffect(() => {
-    if (isOpen && schedule) {
-      setEditedSchedule(schedule);
-    }
-  }, [isOpen, schedule]);
-  
-
-  const handleNameChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedName = e.target.value;
-    const selectedEmployee = employeeOptions.find(
-      (employee) => employee.name === selectedName
-    );
-    if (selectedEmployee) {
-      setEditedSchedule((prevSchedule) => ({
-        ...prevSchedule,
-        name: selectedEmployee.name,
-        color: selectedEmployee.color,
-      }));
-    }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setEditedSchedule((prevSchedule) => ({
-      ...prevSchedule,
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setEditedSchedule((prev) => ({
+      ...prev,
       [name]: value,
     }));
   };
 
-  const handleUpdateSchedule = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (schedule) {
-      try {
-        const updatedSchedule = {
-          ...editedSchedule,
-          id: schedule.id, // 기존 스케줄의 ID 사용
-        };
-        await SchedulerApi.updateSchedule(String(schedule.id), updatedSchedule);
-        onClose();
-      } catch (error) {
-        console.log("Failed to update schedule:", error);
-      }
-    }
-  };
-
-  const handleClose = () => {
+  const handleSubmit = () => {
+    onSubmit(editedSchedule);
     onClose();
   };
 
-  if (!isOpen || !schedule) {
-    return null;
-  }
-
   return (
-    <ModalOverlay>
-      <ModalWrapper>
-        <ModalContent>
-          <h2>일정 수정</h2>
-          <form>
-            <Label>
-              이름:
-              <Select
-                name="name"
-                value={editedSchedule.name}
-                onChange={handleNameChange}
-                required
-              >
-                <option value="">직원을 선택해주세요</option>
-                {employeeOptions.map((employee) => (
-                  <option key={employee.name} value={employee.name}>
-                    {employee.name}
-                  </option>
-                ))}
-              </Select>
-            </Label>
-            <Label>
-              제목:
-              <Input
-                type="text"
-                name="title"
-                value={editedSchedule.title}
-                onChange={handleInputChange}
-                required
-              />
-            </Label>
-            <Label>
-              시작일:
-              <Input
-                type="datetime-local"
-                name="start"
-                value={editedSchedule.start}
-                onChange={handleInputChange}
-                required
-              />
-            </Label>
-            <Label>
-              종료일:
-              <Input
-                type="datetime-local"
-                name="end"
-                value={editedSchedule.end}
-                onChange={handleInputChange}
-                required
-              />
-            </Label>
-            <ButtonWrapper>
-              <Button onClick={handleUpdateSchedule}>Update</Button>
-              <Button onClick={handleClose}>Cancel</Button>
-            </ButtonWrapper>
-          </form>
-        </ModalContent>
-      </ModalWrapper>
-    </ModalOverlay>
+    <ModalWrapper isOpen={isOpen}>
+      <ModalContent>
+        <ModalHeader>
+          <h2>Edit Schedule</h2>
+          <CloseButton onClick={onClose}>X</CloseButton>
+        </ModalHeader>
+        <ModalBody>
+          <Label>Name</Label>
+          <Input
+            type="text"
+            name="name"
+            value={editedSchedule.name}
+            onChange={handleChange}
+          />
+          <Label>Start</Label>
+          <Input
+            type="text"
+            name="start"
+            value={editedSchedule.start}
+            onChange={handleChange}
+          />
+          <Label>End</Label>
+          <Input
+            type="text"
+            name="end"
+            value={editedSchedule.end}
+            onChange={handleChange}
+          />
+          <Label>Title</Label>
+          <Input
+            type="text"
+            name="title"
+            value={editedSchedule.title}
+            onChange={handleChange}
+          />
+        </ModalBody>
+        <ModalFooter>
+          <Button onClick={handleSubmit}>Submit</Button>
+          <Button onClick={onClose}>Cancel</Button>
+        </ModalFooter>
+      </ModalContent>
+    </ModalWrapper>
   );
 };
 
 export default EditModal;
 
-const ModalOverlay = styled.div`
+const ModalWrapper = styled.div<{ isOpen: boolean }>`
+  display: ${(props) => (props.isOpen ? "block" : "none")};
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ModalWrapper = styled.div`
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
+  z-index: 9999;
 `;
 
 const ModalContent = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  width: 300px;
+`;
+
+const ModalHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
   align-items: center;
+`;
+
+const CloseButton = styled.button`
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+`;
+
+const ModalBody = styled.div`
+  margin-top: 16px;
 `;
 
 const Label = styled.label`
   display: block;
-  margin-bottom: 10px;
+  font-weight: bold;
+  margin-bottom: 4px;
 `;
 
 const Input = styled.input`
   width: 100%;
   padding: 8px;
-  border-radius: 4px;
   border: 1px solid #ccc;
-  margin-top: 5px;
+  border-radius: 4px;
+  margin-bottom: 8px;
 `;
 
-const ButtonWrapper = styled.div`
+const ModalFooter = styled.div`
   display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
+  justify-content: flex-end;
+  margin-top: 16px;
 `;
 
 const Button = styled.button`
-  background-color: #ccc;
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-`;
+  font-size: 14px;
+  margin-left: 8px;
 
-const Select = styled.select`
-  width: 100%;
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  margin-top: 5px;
+  &:first-child {
+    background-color: #007bff;
+    color: white;
+  }
+
+  &:last-child {
+    background-color: #ccc;
+  }
+
+  &:hover {
+    background-color: #0056b3;
+  }
 `;

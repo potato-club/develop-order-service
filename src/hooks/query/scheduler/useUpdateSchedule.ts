@@ -1,23 +1,22 @@
+import { useCallback } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { SchedulerApi } from '../../../apis/controller/scheduler.api';
-import { ScheduleType } from './useGetSchedules';
+import { SchedulePostType } from "../../../apis/controller/scheduler.api.type";
+
 
 export const useUpdateSchedule = () => {
-  const queryClient = useQueryClient();
+  
+  const register = useCallback(async ( data :{id:number, body:SchedulePostType}) => {
+    const response = await SchedulerApi.updateSchedule(data.id,data.body)
+    return response;
+  }, []);
 
-  const updateScheduleMutation = useMutation((scheduleData: ScheduleType) =>
-    SchedulerApi.updateSchedule(scheduleData.id, scheduleData) 
-  );
-
-  const updateSchedule = async (scheduleData: ScheduleType) => {
-    try {
-      await updateScheduleMutation.mutateAsync(scheduleData);
-      queryClient.invalidateQueries('schedules');
-    } catch (error) {
-      throw new Error('에러');
-    }
-  };
-
-  return updateSchedule;
+  return useMutation(register, {
+    onSuccess: () => {
+      
+    },
+    onError: () => {
+      
+    },
+  });
 };
-
