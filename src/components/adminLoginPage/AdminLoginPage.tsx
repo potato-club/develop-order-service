@@ -37,7 +37,7 @@ export const AdminLoginPage = () => {
       localStorage.removeItem("refreshToken");
       localStorage.removeItem("role");
     } else if (localStorage.getItem("role") === "ADMIN") {
-      handleGoPrevPath();
+      // handleGoPrevPath();
     }
   }, []);
 

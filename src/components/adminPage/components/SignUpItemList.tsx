@@ -5,7 +5,10 @@ import { SignUpItem } from "./SignUpItem";
 export const SignUpItemListCheck = () => {
   const { isLoading, data } = useQueryGetSignUps(true);
   return (
-    <>{!isLoading && data?.map((i, id) => <SignUpItem data={i} key={id} />)}</>
+    <>
+      {!isLoading &&
+        data?.map((i, id) => <SignUpItem data={i} key={id} isNew={false} />)}
+    </>
   );
 };
 

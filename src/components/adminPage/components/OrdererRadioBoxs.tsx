@@ -10,15 +10,21 @@ export const OrdererRadioBoxs = ({ data }: Props) => {
     <Wrapper>
       <Box>
         <RadioBoxs>
-          <RadioBox type="radio" disabled checked={data == "COMPANY"} />
+          <RadioBox>
+            <CheckBox checked={data == "COMPANY"} />
+          </RadioBox>
           회사
         </RadioBoxs>
         <RadioBoxs>
-          <RadioBox type="radio" disabled checked={data == "PUBLIC"} />
+          <RadioBox>
+            <CheckBox checked={data == "PUBLIC"} />
+          </RadioBox>
           공공단체
         </RadioBoxs>
         <RadioBoxs>
-          <RadioBox type="radio" disabled checked={data == "PERSONAL"} />
+          <RadioBox>
+            <CheckBox checked={data == "PERSONAL"} />
+          </RadioBox>
           개인
         </RadioBoxs>
       </Box>
@@ -50,27 +56,19 @@ const RadioBoxs = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const RadioBox = styled.input`
+const RadioBox = styled.div`
   display: flex;
   position: relative;
   border: 1px solid ${customColor.darkGray};
   border-radius: 4px;
   width: 18px;
   height: 18px;
-  outline: none;
-  outline: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  :checked:after {
-    display: flex;
-    position: absolute;
-    content: "";
-    width: 10px;
-    height: 10px;
-    background: ${customColor.white};
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 2px;
-  }
+  align-items: center;
+  justify-content: center;
+`;
+const CheckBox = styled.div<{ checked: boolean }>`
+  display: flex;
+  background: ${(props) => (props.checked ? customColor.white : "transparent")};
+  width: 10px;
+  height: 10px;
 `;
