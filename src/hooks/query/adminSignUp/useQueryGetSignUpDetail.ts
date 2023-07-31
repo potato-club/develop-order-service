@@ -1,3 +1,4 @@
+import { FieldErrors } from "react-hook-form";
 import { useCallback } from "react";
 import { useQuery } from "react-query";
 import { AdminSignUpAPI } from "../../../apis/controller/adminSignUp.api";
@@ -17,6 +18,7 @@ export interface ResponseType {
   siteName: string;
   subColor: string[];
   subLine: string;
+  files: { fileName: string; id: number; s3Url: string }[];
 }
 
 export const useQueryGetSignUpDetail = (id: number) => {
@@ -37,6 +39,7 @@ export const useQueryGetSignUpDetail = (id: number) => {
       siteName: response.siteName,
       subColor: response.subColor,
       subLine: response.subLine,
+      files: response.files,
     };
     return signUpsRes;
   }, []);
