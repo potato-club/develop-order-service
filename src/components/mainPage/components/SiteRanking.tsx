@@ -22,7 +22,7 @@ export const SiteRanking = () => {
             spaceBetween={50}
             slideToClickedSlide
             centeredSlides
-            // autoplay={{ delay: 5000, disableOnInteraction: false }}
+            autoplay={{ delay: 5000, disableOnInteraction: false }}
             modules={[EffectCoverflow]}
             effect={"coverflow"}
             coverflowEffect={{
@@ -33,28 +33,37 @@ export const SiteRanking = () => {
               slideShadows: false,
             }}
           >
-            {data?.map((i, id) => (
-              <StyledSwiperSlide key={id}>
-                <SiteInfo>
-                  <SiteImg>
-                    {i.thumbnail != null && (
-                      <Image
-                        src={"/img/dummy/2.jpeg"}
-                        alt="1"
-                        fill
-                        style={{ objectFit: "cover", borderRadius: "inherit" }}
-                      />
-                    )}
-                  </SiteImg>
-                  <SiteSlideInfo
-                    rank={id < 3 ? `medal${id + 1}` : null}
-                    like={i.likes}
-                    star={i.rating}
-                    title={i.siteName}
-                  />
-                </SiteInfo>
+            {data?.length == 0 ? (
+              <StyledSwiperSlide>
+                사이트 랭킹 데이터가 없습니다
               </StyledSwiperSlide>
-            ))}
+            ) : (
+              data?.map((i, id) => (
+                <StyledSwiperSlide key={id}>
+                  <SiteInfo>
+                    <SiteImg>
+                      {i.thumbnail != null && (
+                        <Image
+                          src={"/img/dummy/2.jpeg"}
+                          alt="1"
+                          fill
+                          style={{
+                            objectFit: "cover",
+                            borderRadius: "inherit",
+                          }}
+                        />
+                      )}
+                    </SiteImg>
+                    <SiteSlideInfo
+                      rank={id < 3 ? `medal${id + 1}` : null}
+                      like={i.likes}
+                      star={i.rating}
+                      title={i.siteName}
+                    />
+                  </SiteInfo>
+                </StyledSwiperSlide>
+              ))
+            )}
           </StyledSwiper>
         )}
       </WrapperInner>
