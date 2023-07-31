@@ -25,7 +25,10 @@ export const MainPage = () => {
   const scrollUp = (e: WheelEvent) => {
     let index = scrollIDArray.indexOf(scrollID);
     if (index !== 0 && index !== -1) {
-      scroller.scrollTo(scrollIDArray[index - 1], { smooth: "easeInOutQuart" });
+      scroller.scrollTo(scrollIDArray[index - 1], {
+        smooth: "easeInOutQuart",
+        disableBodyScroll: true,
+      });
       setScrollID(scrollIDArray[index - 1]);
     }
   };
@@ -35,6 +38,7 @@ export const MainPage = () => {
       index !== scrollIDArray.length - 2 &&
         scroller.scrollTo(scrollIDArray[index + 1], {
           smooth: "easeInOutQuart",
+          disableBodyScroll: true,
         });
       setScrollID(scrollIDArray[index + 1]);
     }
@@ -50,7 +54,7 @@ export const MainPage = () => {
           <Head id="head">
             <Title />
             <SiteRanking />
-            <Link to="design_meeting" smooth spy>
+            <Link to="design_meeting" smooth="easeInOutQuart" spy>
               <ScrollContent>
                 웹 페이지가 만들어지는 과정이 궁금하신가요?
               </ScrollContent>
