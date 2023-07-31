@@ -8,6 +8,21 @@ import { ReviewModal } from "../src/components/modal/ReviewModal";
 import { useQueryGetOrderDetail } from "../src/hooks/query/orderDetail/useQueryGetOrderDetail";
 import { pathName } from "../src/config/pathName";
 
+export type detailDataTypes = {
+  completedDate?: string;
+  createdDate: string;
+  database: boolean;
+  id: number;
+  images: { id: number; imageName: string; imageUrl: string }[];
+  likes?: number;
+  login: boolean;
+  page?: number;
+  purpose: string;
+  rating?: number;
+  siteName: string;
+  state: "START" | "DESIGN" | "PUBLISH" | "IMPLEMENT" | "FINAL" | "COMPLETED";
+};
+
 export default function OrderDetail() {
   const router = useRouter();
   const id: string | string[] | undefined = router.query.id;
@@ -65,7 +80,7 @@ export default function OrderDetail() {
       />
       <DetailBottm
         id={detailDataState && detailDataState.id}
-        like={detailDataState && detailDataState.like}
+        likes={detailDataState && detailDataState.likes}
         state={detailDataState && detailDataState.state}
         modalState={modalState}
         getModalState={getModalState}
@@ -75,11 +90,19 @@ export default function OrderDetail() {
 }
 
 const Wrapper = styled.div`
+  @media screen and (min-width: 1024px) {
+    width: 1024px;
+    padding: 0 12px;
+    height: 1800px;
+  }
+  @media screen and (max-width: 1023px) {
+    width: 767px;
+    padding: 0 10px;
+    height: 1350px;
+  }
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 1024px;
-  height: 1800px;
-  padding: 0 12px;
+  /* justify-content: flex-start; */
   margin-top: 80px;
 `;
