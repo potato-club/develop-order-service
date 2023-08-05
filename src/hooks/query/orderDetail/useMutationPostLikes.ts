@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useMutation } from "react-query";
+import { useQueryClient, useMutation } from "react-query";
 import { OrderDetailApi } from "../../../apis/controller/orderDetail.api";
 
 export const useMutationPostLikes = (
@@ -15,9 +15,11 @@ export const useMutationPostLikes = (
     const response = await OrderDetailApi.postLikes(id);
     return response;
   }, [id]);
+  const queryClient = useQueryClient();
 
   return useMutation("postLikes", load, {
     onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["getOrderDetail"] });
       console.log("onSuccess", data);
     },
     onError: (error: any) => {

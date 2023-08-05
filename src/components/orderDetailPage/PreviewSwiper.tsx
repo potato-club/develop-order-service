@@ -34,11 +34,9 @@ export const PreviewSwiper = ({
               <StyledSwiperSlide key={item}>
                 {" "}
                 <NoPreviewImgDiv>
-                  <NoPrevImgP>
-                    웹페이지
-                    <br />
-                    미리보기
-                  </NoPrevImgP>
+                  웹페이지
+                  <br />
+                  미리보기
                 </NoPreviewImgDiv>
               </StyledSwiperSlide>
             ))}
@@ -54,8 +52,7 @@ export const PreviewSwiper = ({
                     <Image
                       src={item.imageUrl}
                       alt={item.imageName}
-                      width={450}
-                      height={600}
+                      fill
                     ></Image>
                   </StyledSwiperSlide>
                 ))}
@@ -68,8 +65,13 @@ export const PreviewSwiper = ({
 };
 
 const PreviewSiperWrapper = styled.div`
+  @media screen and (min-width: 1024px) {
+    height: 945px;
+  }
+  @media screen and (max-width: 1023px) {
+    height: 721px;
+  }
   width: 100%;
-  height: 945px;
   background-color: beige;
   display: flex;
   align-items: center;
@@ -80,28 +82,39 @@ const SwiperContainer = styled.div`
 `;
 
 const NoPreviewImgDiv = styled.div`
-  width: 448px;
-  height: 598px;
+  @media screen and (min-width: 1024px) {
+    width: 448px;
+    height: 598px;
+    font-size: 40px;
+  }
+  @media screen and (max-width: 1023px) {
+    width: 336px;
+    height: 448.5px;
+    font-size: 30px;
+  }
   margin: 0 auto;
   background-color: ${customColor.blue};
   border: 1px solid white;
   display: flex;
   align-items: center;
-`;
-
-const NoPrevImgP = styled.p`
-  font-size: 40px;
+  justify-content: center;
   color: white;
-  margin: 0 auto;
 `;
 
 const StyledSwiperSlide = styled(SwiperSlide)`
+  @media screen and (min-width: 1024px) {
+    width: 450px;
+    height: 600px;
+  }
+  @media screen and (max-width: 1023px) {
+    width: 337.5px;
+    height: 450px;
+  }
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  width: 450px;
-  height: 600px;
+
   visibility: hidden;
   &.swiper-slide-prev {
     visibility: visible;
@@ -122,10 +135,17 @@ const StyledRoot = styled.div`
   .swiper {
     &-wrapper,
     &-container {
+      @media screen and (min-width: 1024px) {
+        width: 1000px;
+        height: 945px;
+      }
+      @media screen and (max-width: 1023px) {
+        width: 750px;
+        height: 705px;
+      }
       display: flex;
       align-items: center;
-      width: 1000px;
-      height: 945px;
+
       margin: 0 auto;
     }
     &-button-disabled {

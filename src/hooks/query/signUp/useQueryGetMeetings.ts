@@ -19,8 +19,6 @@ export const useQueryGetMeetings = () => {
   }, []);
 
   return useQuery<ResponseType[]>(["getMeetings"], load, {
-    onError: (e) => {
-      console.log(e);
-    },
+    onError: () => {},
   });
 };
