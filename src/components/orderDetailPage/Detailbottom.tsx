@@ -46,7 +46,7 @@ export const DetailBottm = ({
 
   return (
     <BottomWrapper>
-      <LikeButton onClick={onClickLikeButton}>
+      <LikeButton state={state} onClick={onClickLikeButton}>
         좋아요
         <LikeButtonBottomDiv>
           <LikeImageDiv>
@@ -91,7 +91,7 @@ const ListButton = styled.button`
   border: 1px solid black;
 `;
 
-const LikeButton = styled.button`
+const LikeButton = styled.button<{ state: string }>`
   @media screen and (min-width: 1024px) {
     width: 150px;
     height: 80px;
@@ -104,10 +104,23 @@ const LikeButton = styled.button`
     font-size: 17px;
     padding: 7.5px;
   }
-
+  display: ${(props) => (props.state !== "COMPLETED" ? "none" : "")};
   border-radius: 10px;
   border: 1px solid black;
   margin: 0 auto;
+`;
+
+const LikeImageDiv = styled.div`
+  @media screen and (min-width: 1024px) {
+    width: 23px;
+    height: 23px;
+  }
+  @media screen and (max-width: 1023px) {
+    width: 17px;
+    height: 17px;
+  }
+  margin-right: 3px;
+  position: relative;
 `;
 
 const LikeButtonBottomDiv = styled.div`
@@ -122,17 +135,4 @@ const LikeButtonBottomDiv = styled.div`
   @media screen and (max-width: 1023px) {
     height: 30px;
   }
-`;
-
-const LikeImageDiv = styled.div`
-  @media screen and (min-width: 1024px) {
-    width: 23px;
-    height: 23px;
-  }
-  @media screen and (max-width: 1023px) {
-    width: 17px;
-    height: 17px;
-  }
-  margin-right: 3px;
-  position: relative;
 `;
