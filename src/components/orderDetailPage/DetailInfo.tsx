@@ -1,8 +1,9 @@
+import React, { useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import checkIcon from "../../../public/img/detail/check.png";
 import { useRouter } from "next/router";
-import StarRatings from "react-star-ratings";
+import { Rating } from "react-simple-star-rating";
 import { useMutationPutStarRatings } from "../../hooks/query/orderDetail/useMutationPutStarRatings";
 import { useMutationDeleteOrder } from "../../hooks/query/orderDetail/useMutationDeleteOrder";
 import { detailDataTypes } from "../../../pages/orderDetail";
@@ -50,6 +51,12 @@ export const DetailInfo = ({
     id: detailData && detailData.id,
     getModalState,
   });
+
+  const [rating, setRating] = useState(0);
+
+  const handleOnClickRating = (newRating: number) => {
+    mutationPutStarRatings.mutate(newRating);
+  };
 
   return (
     <WrapperInfo>
@@ -114,18 +121,7 @@ export const DetailInfo = ({
         preview={false}
       >
         <InfoDataDiv type={1}>
-          <StarRatings
-            rating={(detailData && detailData.rating) || 0}
-            starRatedColor="gold"
-            starEmptyColor="lightgray"
-            starHoverColor="gold"
-            starDimension="30px"
-            starSpacing="2px"
-            changeRating={(newRating: number) => {
-              mutationPutStarRatings.mutate(newRating);
-            }}
-            numberOfStars={5}
-          ></StarRatings>
+          <Rating onClick={handleOnClickRating} transition allowFraction />
         </InfoDataDiv>
       </OrderInfo>
       <OrderInfo

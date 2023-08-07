@@ -64,7 +64,6 @@ export default function OrderDetail() {
       });
     }
   }, [router]);
-  console.log(id);
 
   return (
     <Wrapper>
