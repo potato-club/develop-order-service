@@ -19,10 +19,6 @@ export const SchedulerApi = {
     return response.data;
   },
 
-  updateSchedule: async (id: number, schedulePostData: SchedulePostType) => {
-    const response = await sendApi.put(`/admin/schedule?AdminScheduleId=${id}`, schedulePostData);
-    return response.data;
-  },
   
 
 
