@@ -3,22 +3,67 @@ import styled from "styled-components";
 import { useQueryGetSchedules } from "../../../hooks/query/scheduler/useGetSchedules";
 import AddModal from "./AddModal";
 import { useDeleteSchedule } from "../../../hooks/query/scheduler/useDeleteSchedule";
-import {
-  SchedulePostType,
-  ScheduleType,
-} from "../../../apis/controller/scheduler.api.type";
 import EditModal from "./EditModal";
-import { useUpdateSchedule } from "../../../hooks/query/scheduler/useUpdateSchedule";
+import { SchedulePostType } from "../../../apis/controller/scheduler.api.type";
+import axios from "axios";
+import { tokenService } from "../../../libs/tokenService";
 
 const Schedule: React.FC = () => {
   const { isLoading, error, data, refetch } = useQueryGetSchedules();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [selectedSchedule, setSelectedSchedule] = useState<ScheduleType | null>(
-    null
-  );
 
-  const updateScheduleMutation = useUpdateSchedule();
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedSchedule, setSelectedSchedule] = useState<SchedulePostType>({
+    id : 0,
+    name: "",
+    title: "",
+    start: "",
+    end: "",
+    color: "",
+  });
+  const token = tokenService.getToken();
+
+  const handleOpenEditModal = (schedule: any) => {
+    setSelectedSchedule(schedule);
+    setIsEditModalOpen(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setSelectedSchedule({
+      id :0,
+      name: "",
+      title: "",
+      start: "",
+      end: "",
+      color: "",
+    });
+    setIsEditModalOpen(false);
+  };
+
+  const handleUpdateSchedule = async (id: number, updatedSchedule: SchedulePostType) => {
+    console.log(token);
+    try {
+      const response = await axios.put(
+        `https://www.developorderservice.store/admin/schedule?AdminScheduleId=${id}`,
+        updatedSchedule,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        console.log("Schedule updated successfully");
+        refetch(); // 스케줄 목록 다시 불러오기
+        handleCloseEditModal();
+      } else {
+        console.log("이건 다른 오류");
+      }
+    } catch (error) {
+      console.error("실패:", error);
+    }
+  };
+  
 
   const deleteSchedule = useDeleteSchedule();
 
@@ -30,31 +75,9 @@ const Schedule: React.FC = () => {
     setIsAddModalOpen(false);
   };
 
-  const handleOpenEditModal = (schedule: ScheduleType) => {
-    setSelectedSchedule(schedule);
-    setIsEditModalOpen(true);
-  };
-
-  const handleCloseEditModal = () => {
-    setSelectedSchedule(null);
-    setIsEditModalOpen(false);
-  };
   const handleDeleteSchedule = async (id: number) => {
     await deleteSchedule(id);
     refetch();
-  };
-  const handleEditSchedule = async (editedSchedule: SchedulePostType) => {
-    if (selectedSchedule !== null) {
-      try {
-        await updateScheduleMutation.mutateAsync({
-          id: selectedSchedule.id,
-          body: editedSchedule,
-        });
-        refetch();
-      } catch (error) {
-        console.error("Error updating schedule:", error);
-      }
-    }
   };
 
   if (isLoading) {
@@ -81,15 +104,19 @@ const Schedule: React.FC = () => {
               <Button onClick={() => handleDeleteSchedule(schedule.id)}>
                 삭제
               </Button>
+              <Button onClick={() => handleOpenEditModal(schedule)}>
+                수정
+              </Button>
             </ScheduleItem>
           ))}
       </ScheduleList>
+
       <AddModal isOpen={isAddModalOpen} onClose={handleCloseAddModal} />
       <EditModal
         isOpen={isEditModalOpen}
         onClose={handleCloseEditModal}
-        schedule={selectedSchedule || ({} as ScheduleType)} // Pass the selected schedule
-        onSubmit={handleEditSchedule} // Pass the function to handle the submission of edited schedule
+        initialSchedule={selectedSchedule}
+        onUpdate={(updatedSchedule) => handleUpdateSchedule(selectedSchedule.id, updatedSchedule)}
       />
     </RealWrapper>
   );
