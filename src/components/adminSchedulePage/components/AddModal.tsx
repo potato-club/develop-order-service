@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { SchedulerApi } from "../../../apis/controller/scheduler.api";
 import { ScheduleType } from "../../../apis/controller/scheduler.api.type";
 import {
   useQueryGetSchedules,
 } from "../../../hooks/query/scheduler/useGetSchedules";
+import { createSchedule } from "../../../hooks/query/scheduler/usePostSchedules";
+import { useQueryClient } from 'react-query';
 
 interface ModalProps {
   isOpen: boolean;
@@ -52,25 +53,26 @@ const AddModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       [name]: value,
     }));
   };
-
-  const handleAddSchedule = async (e: React.FormEvent) => {
+  const handleAddSchedule = (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await SchedulerApi.createSchedule(newSchedule);
-      setNewSchedule({
-        id: 0,
-        name: "",
-        title: "",
-        start: "",
-        end: "",
-        color: "",
+  
+    createSchedule(newSchedule)
+      .then(() => {
+        setNewSchedule({
+          id: 0,
+          name: "",
+          title: "",
+          start: "",
+          end: "",
+          color: "",
+        });
+        onClose();
+      })
+      .catch((error) => {
+        console.log("Failed to create schedule:", error);
       });
-      refetch();
-      onClose();
-    } catch (error) {
-      console.log("Failed to create schedule:", error);
-    }
   };
+  
 
   const handleClose = () => {
     onClose();
