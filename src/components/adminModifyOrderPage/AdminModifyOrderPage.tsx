@@ -32,19 +32,16 @@ export const AdminModifyOrderPage = () => {
 
   useEffect(() => {
     refetch();
-    console.log(data);
-  }, [pageState, contentsFilterState, refetch, data]);
+    console.log(contentsDataState);
+  }, [pageState, contentsFilterState, refetch, data, contentsDataState]);
 
   return (
     <Wrapper>
       <SearchBar />
       <WrapperInner>
-        <ModifyOrderItem />
-        <ModifyOrderItem />
-        <ModifyOrderItem />
-        <ModifyOrderItem />
-        <ModifyOrderItem />
-        <ModifyOrderItem />
+        {contentsDataState?.content.map((item, index) => (
+          <ModifyOrderItem key={index} contentsData={item} />
+        ))}
       </WrapperInner>
       <Pagenation
         totalPages={contentsDataState && contentsDataState.totalPages}
