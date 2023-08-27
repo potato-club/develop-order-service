@@ -7,9 +7,9 @@ import { useMutationPostLikes } from "../../hooks/query/orderDetail/useMutationP
 import { useQueryGetOrderDetail } from "../../hooks/query/orderDetail/useQueryGetOrderDetail";
 
 type propTypes = {
-  id: number;
-  likes: number;
-  state: string;
+  id?: number;
+  likes?: number;
+  state?: string;
   modalState: {
     modalRole: string;
     state: boolean;
@@ -34,7 +34,7 @@ export const DetailBottm = ({
   //
   const router = useRouter();
 
-  const mutationPostLikes = useMutationPostLikes(id, getModalState);
+  const mutationPostLikes = useMutationPostLikes(getModalState, id);
 
   const onClickLikeButton = async () => {
     mutationPostLikes.mutate();
@@ -91,7 +91,7 @@ const ListButton = styled.button`
   border: 1px solid black;
 `;
 
-const LikeButton = styled.button<{ state: string }>`
+const LikeButton = styled.button<{ state?: string }>`
   @media screen and (min-width: 1024px) {
     width: 150px;
     height: 80px;

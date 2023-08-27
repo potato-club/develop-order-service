@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { detailDataTypes } from "../../../pages/orderDetail";
 
 type propTypes = {
-  detailData: detailDataTypes;
+  detailData?: detailDataTypes;
   modalState: {
     modalRole: string;
     state: boolean;
@@ -45,7 +45,9 @@ export const DetailContnets = ({
     };
 
     const response = await axios.put(
-      `https://www.developorderservice.store/orders/detail/${detailData.id}`,
+      `https://www.developorderservice.store/orders/detail/${
+        detailData && detailData.id
+      }`,
       formData,
       { headers }
     );

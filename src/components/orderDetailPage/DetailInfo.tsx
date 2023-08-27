@@ -10,7 +10,7 @@ import { detailDataTypes } from "../../../pages/orderDetail";
 import { OrderInfo } from "./OrderInfo";
 
 type propTypes = {
-  detailData: detailDataTypes;
+  detailData?: detailDataTypes;
   modalState: {
     modalRole: string;
     state: boolean;
@@ -166,7 +166,7 @@ const OrderTitleDiv = styled.div`
   font-weight: bold;
 `;
 
-const OrderCanaleButtonDiv = styled.div<{ progress: string }>`
+const OrderCanaleButtonDiv = styled.div<{ progress?: string }>`
   @media screen and (min-width: 1024px) {
     height: 70px;
     width: 205px;

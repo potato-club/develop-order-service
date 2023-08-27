@@ -26,7 +26,7 @@ export type detailDataTypes = {
 export default function OrderDetail() {
   const router = useRouter();
   const id: string | string[] | undefined = router.query.id;
-  const [detailDataState, setDetailDataState] = useState<any>();
+  const [detailDataState, setDetailDataState] = useState<detailDataTypes>();
   const [modalState, setModalState] = useState<{
     modalRole: string;
     state: boolean;

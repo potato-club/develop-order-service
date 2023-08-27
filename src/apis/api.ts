@@ -19,7 +19,8 @@ const api = axios.create({
 });
 
 function getBaseUrl() {
-  return "https://www.developorderservice.store/";
+  // return "https://www.developorderservice.store/";
+  return "http://www.developorderservice.store/";
 }
 
 api.interceptors.request.use(applyDefaultParams);

@@ -1,24 +1,24 @@
 import sendApi from "../sendApi";
 
 export const OrderDetailApi = {
-  getOrderDetail: async (id: string | string[] | undefined) => {
+  getOrderDetail: async (id?: string | string[]) => {
     const response = await sendApi.get(`orders/detail/${id}`);
 
     return response.data;
   },
 
   putStarRating: async (
-    id: number,
     newRating: {
       rating: number;
-    }
+    },
+    id?: number
   ) => {
     const response = await sendApi.put(`orders/detail/${id}/rating`, newRating);
 
     return response;
   },
 
-  deleteOrder: async (id: number) => {
+  deleteOrder: async (id?: number) => {
     const response = await sendApi.delete(
       `https://www.developorderservice.store/orders/${id}`
     );
@@ -26,7 +26,7 @@ export const OrderDetailApi = {
     return response;
   },
 
-  postLikes: async (id: number) => {
+  postLikes: async (id?: number) => {
     const response = await sendApi.post(
       `https://www.developorderservice.store/orders/detail/${id}/likes`,
       {}
