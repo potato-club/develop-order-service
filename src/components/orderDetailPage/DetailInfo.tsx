@@ -55,7 +55,14 @@ export const DetailInfo = ({
   const [rating, setRating] = useState(0);
 
   const handleOnClickRating = (newRating: number) => {
-    mutationPutStarRatings.mutate(newRating);
+    getModalState({
+      modalRole: "confirm",
+      state: true,
+      text: `해당 발주에 ${newRating}점을 부여하시겠습니까?`,
+      onClickConfirmButton: async () => {
+        mutationPutStarRatings.mutate(newRating);
+      },
+    });
   };
 
   return (
@@ -121,6 +128,7 @@ export const DetailInfo = ({
         preview={false}
       >
         <InfoDataDiv type={1}>
+          {/* <Rating onClick={handleOnClickRating} transition allowFraction /> */}
           <Rating onClick={handleOnClickRating} transition allowFraction />
         </InfoDataDiv>
       </OrderInfo>

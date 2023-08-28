@@ -45,7 +45,8 @@ export const ModifyOrderItem = ({
           <WebPurpose>{contentsData?.purpose}</WebPurpose>
           <WebOrderer>{"발주자 이름은 어케 출력하지"}</WebOrderer>
           <WebPeriod>
-            {contentsData.createdDate?.split("T")[0]}~
+            {contentsData.createdDate?.split("T")[0]}
+            {" ~ "}
             {contentsData.completedDate?.split("T")[0]}
           </WebPeriod>
           <WebState>

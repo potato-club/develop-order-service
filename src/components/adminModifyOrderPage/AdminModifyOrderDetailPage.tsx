@@ -1,14 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { customColor } from "../customColor";
 import { OptionButton } from "./components/OptionButton";
 import StarRatings from "react-star-ratings";
 import { SiteImagesSwiper } from "./components/SiteImagesSwiper";
 import { EditButton } from "./components/EditButton";
+import { useRouter } from "next/router";
+import { detailDataTypes } from "../../../pages/orderDetail";
+import { useQueryGetOrderDetail } from "../../hooks/query/orderDetail/useQueryGetOrderDetail";
 
 export const AdminModifyOrderDetailPage = () => {
+  const router = useRouter();
+  const id: string | string[] | undefined = router.query.id;
+
+  const [detailDataState, setDetailDataState] = useState<detailDataTypes>();
+  function getDetailDataState(detailDataState: detailDataTypes) {
+    setDetailDataState(detailDataState);
+  }
+
   const [option, setOption] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+
+  const { isSuccess, isError, data, refetch } = useQueryGetOrderDetail(
+    id,
+    getDetailDataState
+  );
+
+  useEffect(() => {
+    console.log(id);
+  });
+
   return (
     <Wrapper>
       <WebInfo>
