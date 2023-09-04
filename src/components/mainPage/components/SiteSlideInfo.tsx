@@ -1,21 +1,23 @@
 import Image from "next/image";
 import styled from "styled-components";
 import { customColor } from "../../customColor";
-import { AiFillHeart, AiFillStar, AiOutlineStar } from "react-icons/ai";
+import { AiFillHeart } from "react-icons/ai";
+import StarRatings from "react-star-ratings";
 
 interface Props {
-  rank?: string;
+  rank: string | null;
   title: string;
-  like?: number;
-  star?: number;
-  tag?: string[];
+  like: number;
+  star: number;
+}
+interface TitleProps {
+  isImage: boolean;
 }
 
-export const SiteSlideInfo = ({ rank, title, like, star, tag }: Props) => {
+export const SiteSlideInfo = ({ rank, title, like, star }: Props) => {
   return (
     <Wrapper>
       <WrapperInner>
-        <Title>{title}</Title>
         {rank && (
           <Rank>
             <Image
@@ -27,23 +29,20 @@ export const SiteSlideInfo = ({ rank, title, like, star, tag }: Props) => {
           </Rank>
         )}
         <RatingInfo>
-          <Tags>
-            {tag?.map((i) => (
-              <Tag key={i}>#{i}</Tag>
-            ))}
-          </Tags>
+          <Title>{title}</Title>
           <Rating>
             <Like>
               <AiFillHeart color="#fc4646" size={18} />
               {like}
             </Like>
-            <Star>
-              <AiFillStar size={20} />
-              <AiFillStar size={20} />
-              <AiFillStar size={20} />
-              <AiOutlineStar size={20} />
-              <AiOutlineStar size={20} />
-            </Star>
+            <StarRatingsStyle
+              rating={star / 2}
+              starRatedColor={customColor.yellow}
+              starEmptyColor={customColor.lightGray}
+              starDimension="20px"
+              starSpacing="0px"
+              numberOfStars={5}
+            />
           </Rating>
         </RatingInfo>
       </WrapperInner>
@@ -68,25 +67,8 @@ const WrapperInner = styled.article`
 const Rank = styled.div`
   display: flex;
   position: absolute;
-  top: -20px;
+  top: -24px;
   left: 16px;
-`;
-const Title = styled.p`
-  display: flex;
-  position: absolute;
-  top: -16px;
-  left: 50%;
-  font-size: 18px;
-  letter-spacing: -0.5px;
-  white-space: nowrap;
-  color: white;
-  transform: translateX(calc(-50%));
-  width: calc(100% - 32px);
-  padding: 12px 0 10px 16px;
-  background: ${customColor.indigo3 + "99"};
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
-  justify-content: center;
 `;
 const RatingInfo = styled.div`
   display: flex;
@@ -97,17 +79,15 @@ const RatingInfo = styled.div`
   bottom: 0;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 16px 12px;
+  padding: 10px 16px 12px;
 `;
-const Tags = styled.div`
+const Title = styled.div`
   display: flex;
   flex-direction: row;
   height: 100%;
   align-items: flex-start;
-  gap: 0 6px;
-`;
-const Tag = styled.p`
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: bold;
 `;
 const Rating = styled.div`
   display: flex;
@@ -118,16 +98,13 @@ const Rating = styled.div`
 const Like = styled.p`
   display: flex;
   height: 100%;
-  font-size: 16px;
+  font-size: 15px;
   align-items: flex-end;
-  gap: 2px;
+  gap: 3px;
   justify-content: center;
 `;
-const Star = styled.p`
-  display: flex;
-  height: 100%;
-  font-size: 16px;
-  align-items: flex-end;
-  justify-content: center;
-  color: #f0f06a;
+const StarRatingsStyle = styled(StarRatings)`
+  &.CustomStarRating .fa-star:before {
+    border-radius: 50%;
+  }
 `;

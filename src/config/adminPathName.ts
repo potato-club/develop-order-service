@@ -5,4 +5,5 @@ export const pathName = {
     DETAIL: "/admin/modifyOrder/:id",
   },
   CHECK_SIGNUP: { LIST: "/admin", DETAIL: "/admin/:id" },
+  SCHEDULE : "/admin/schedule"
 };

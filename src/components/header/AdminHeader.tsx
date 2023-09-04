@@ -14,8 +14,9 @@ export const AdminHeader = () => {
     if (
       localStorage.getItem("token") === null ||
       localStorage.getItem("role") === "USER"
-    )
-      handleLogout();
+    ) {
+      // handleLogout();
+    }
   }, []);
 
   const handleLogout = () => {
@@ -43,7 +44,12 @@ export const AdminHeader = () => {
         >
           발주상태·내용수정
         </MenuButton>
-        <MenuButton isPath={false}>직원정보수정</MenuButton>
+        <MenuButton
+          isPath={false}
+          onClick={() => Router.push(pathName.SCHEDULE)}
+        >
+          직원정보수정
+        </MenuButton>
         <MenuButton isPath={false}>통계추출</MenuButton>
       </WrapperInner>
       {!(localStorage.getItem("token") === null) && (

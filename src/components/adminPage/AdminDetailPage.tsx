@@ -6,11 +6,11 @@ import { SignUpSiteInfo } from "./SignUpSiteInfo";
 import { SignUpUserInfo } from "./SignUpUserInfo";
 import Router from "next/router";
 import { useQueryGetSignUpDetail } from "../../hooks/query/adminSignUp/useQueryGetSignUpDetail";
+import { ButtonForCheckOrDelete } from "./components/ButtonForCheckOrDelete";
 
-export const AdminDetailPage = () => {
+export const AdminDetailPage = (props: { isNew: boolean }) => {
   const { id } = Router.query;
   const { isLoading, data } = useQueryGetSignUpDetail(Number(id));
-
   return (
     <Wrapper>
       <WrapperInner>
@@ -34,11 +34,13 @@ export const AdminDetailPage = () => {
           page={data?.page}
           login={data?.login}
           database={data?.database}
+          files={data?.files}
           etc={data?.etc}
           meeting={data?.meeting}
           isLoading={isLoading}
         />
       </WrapperInner>
+      {props.isNew && <ButtonForCheckOrDelete />}
     </Wrapper>
   );
 };
@@ -47,9 +49,9 @@ const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   flex: auto;
-  padding: 16px 28px 28px 28px;
+  padding: 16px 28px 160px 28px;
   color: ${customColor.white};
-  gap: 12px;
+  gap: 80px;
   overflow-y: overlay;
   scroll-behavior: smooth;
   ::-webkit-scrollbar {
