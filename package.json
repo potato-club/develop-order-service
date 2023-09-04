@@ -39,6 +39,7 @@
     "react-query": "^3.39.3",
     "react-scroll": "^1.8.9",
     "react-scroll-wheel-handler": "^2.2.0",
+    "react-simple-star-rating": "^5.1.7",
     "react-star-ratings": "^2.3.0",
     "react-transition-group": "^4.4.5",
     "recoil": "^0.7.7",

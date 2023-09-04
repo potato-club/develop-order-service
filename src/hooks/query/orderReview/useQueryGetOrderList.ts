@@ -1,13 +1,14 @@
 import { useQuery } from "react-query";
 import { useCallback } from "react";
 import { OrderReviewApi } from "../../../apis/controller/orderReview.api";
+import { contentsDataType } from "../../../../pages/orderReview";
 
 type contentsFilterType = "onGoing" | "finished" | "myOrder";
 
 export const useQueryGetOrderList = (
   contentsFilterState: contentsFilterType,
   pageState: number,
-  getContentsDataState: (contentsDataState: object) => void
+  getContentsDataState: (contentsDataState: contentsDataType) => void
 ) => {
   const load = useCallback(async () => {
     const response = await OrderReviewApi.getOrderList(

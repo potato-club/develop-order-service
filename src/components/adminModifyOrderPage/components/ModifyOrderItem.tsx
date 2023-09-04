@@ -74,7 +74,7 @@ const WebInfoInner = styled.div`
   padding-left: 10px;
   gap: 8px;
   align-items: flex-start;
-  border-left: 1px solid ${customColor.gray};
+  border-left: 2px solid ${customColor.darkGray};
 `;
 const WebPurpose = styled.p`
   color: ${customColor.lightGray};
