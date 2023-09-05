@@ -1,16 +1,15 @@
 import { useCallback } from "react";
-import { useQueryClient, useMutation } from "react-query";
+import { useMutation } from "react-query";
 import { AdminSignUpAPI } from "../../../apis/controller/adminSignUp.api";
 import Router from "next/router";
 
-export const useMutationPutCheckSignUp = (id: number) => {
+export const useMutationDeleteSignUp = (id: number) => {
   const load = useCallback(async () => {
-    const response = await AdminSignUpAPI.checkSignUp(id);
+    const response = await AdminSignUpAPI.deleteSignUp(id);
     return response;
   }, [id]);
-  const queryClient = useQueryClient();
 
-  return useMutation("", load, {
+  return useMutation("deleteOrder", load, {
     onSuccess: (data) => {
       Router.back();
     },

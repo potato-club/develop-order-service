@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useMutationDeleteSignUp } from "../../../hooks/query/adminSignUp/useMutationDeleteSignUp";
 import { useMutationPutCheckSignUp } from "../../../hooks/query/adminSignUp/useMutationPutCheckSignUp";
 import { customColor } from "../../customColor";
 
@@ -6,9 +7,12 @@ export const ButtonForCheckOrDelete = (props: {
   id: string | string[] | undefined;
 }) => {
   const mutationCheckSignUp = useMutationPutCheckSignUp(Number(props.id));
+  const mutationDeleteSignUp = useMutationDeleteSignUp(Number(props.id));
   return (
     <Wrapper>
-      <DeleteButton>신청취소</DeleteButton>
+      <DeleteButton onClick={() => mutationDeleteSignUp.mutate()}>
+        신청취소
+      </DeleteButton>
       <CheckButton onClick={() => mutationCheckSignUp.mutate()}>
         신청접수
       </CheckButton>
