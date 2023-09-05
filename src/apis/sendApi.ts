@@ -84,7 +84,7 @@ export default {
           headers: {},
         });
   },
-  put: async (url: string, params: any) => {
+  put: async (url: string, params?: any) => {
     const token = await tokenService.getToken();
 
     return params !== undefined
