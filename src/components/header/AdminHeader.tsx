@@ -15,7 +15,7 @@ export const AdminHeader = () => {
       localStorage.getItem("token") === null ||
       localStorage.getItem("role") === "USER"
     ) {
-      // handleLogout();
+      handleLogout();
     }
   }, []);
 

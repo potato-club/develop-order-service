@@ -8,8 +8,9 @@ import Router from "next/router";
 import { useQueryGetSignUpDetail } from "../../hooks/query/adminSignUp/useQueryGetSignUpDetail";
 import { ButtonForCheckOrDelete } from "./components/ButtonForCheckOrDelete";
 
-export const AdminDetailPage = (props: { isNew: boolean }) => {
+export const AdminDetailPage = () => {
   const { id } = Router.query;
+  const isNew = Router.query.isNew === "true";
   const { isLoading, data } = useQueryGetSignUpDetail(Number(id));
   return (
     <Wrapper>
@@ -40,7 +41,7 @@ export const AdminDetailPage = (props: { isNew: boolean }) => {
           isLoading={isLoading}
         />
       </WrapperInner>
-      {props.isNew && <ButtonForCheckOrDelete />}
+      {isNew && <ButtonForCheckOrDelete id={id} />}
     </Wrapper>
   );
 };
