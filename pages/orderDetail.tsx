@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { ReviewModal } from "../src/components/modal/ReviewModal";
 import { useQueryGetOrderDetail } from "../src/hooks/query/orderDetail/useQueryGetOrderDetail";
 import { pathName } from "../src/config/pathName";
+import { tokenService } from "../src/libs/tokenService";
 
 export type detailDataTypes = {
   completedDate?: string;
@@ -53,7 +54,7 @@ export default function OrderDetail() {
   );
 
   useEffect(() => {
-    if (localStorage.getItem("token") === null) {
+    if (tokenService.getToken() === null) {
       getModalState({
         modalRole: "backToOrderReview",
         state: true,

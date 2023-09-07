@@ -5,7 +5,7 @@ import api from "./api";
 export default {
   get: async (url: string, params?: any) => {
     const token = await tokenService.getToken();
-
+    const refresh = await tokenService.getRefresh();
     return params !== undefined
       ? token !== null
         ? api({
@@ -14,6 +14,7 @@ export default {
             params: params,
             headers: {
               Authorization: `${token}`,
+              refresh: `${refresh}`,
             },
           })
         : api({
@@ -27,6 +28,7 @@ export default {
           method: "get",
           headers: {
             Authorization: `${token}`,
+            refresh: `${refresh}`,
           },
         })
       : api({

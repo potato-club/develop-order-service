@@ -11,6 +11,7 @@ import Router from "next/router";
 import { useQueryPostSignUp } from "../../hooks/query/signUp/useQueryPostSignUp";
 import { Modal } from "../modal/modal";
 import { IsLoginModal } from "../modal/IsLoginModal";
+import { tokenService } from "../../libs/tokenService";
 
 export const SignUpPage = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -31,7 +32,7 @@ export const SignUpPage = () => {
   } = useForm();
 
   useEffect(() => {
-    if (localStorage.getItem("token") === null) {
+    if (tokenService.getToken() === null) {
       setIsLoginModalOpen(true);
     }
   }, []);

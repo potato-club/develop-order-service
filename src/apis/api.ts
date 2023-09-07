@@ -1,4 +1,7 @@
+import { tokenService } from "./../libs/tokenService";
 import axios from "axios";
+import Router from "next/router";
+import { pathName } from "../config/pathName";
 import applyDefaultParams from "./applyDefaultParams";
 import { TokenAPI } from "./controller/token.api";
 
@@ -23,24 +26,28 @@ function getBaseUrl() {
 }
 
 api.interceptors.request.use(applyDefaultParams);
-// api.interceptors.response.use(
-//   (response) => response,
-//   async function (error) {
-//     const originalRequest = error.config;
-//     if ((error.response.data.code = 444)) {
-//       const token = await TokenAPI.tokenRefresh();
-//       if (token) {
-//         localStorage.setItem("token", `${token}`);
+api.interceptors.response.use(
+  (response) => response,
+  async function (error) {
+    const originalRequest = error.config;
+    if (error.response && error.response.data.code == 444) {
+      const token = await TokenAPI.tokenRefresh();
+      console.log(token);
 
-//         return api(originalRequest);
-//       }
-//     }
-
-//     // If the error is not related to token expiration, handle it as usual
-//     return Promise.reject(normalizeAxiosError(error));
-//   }
-// );
-api.interceptors.response.use(undefined, normalizeAxiosError);
+      if (token) {
+        tokenService.setToken(`${token}`);
+        return api(originalRequest);
+      }
+    } else if (error.response && error.response.data.code == 445) {
+      tokenService.resetToken();
+      tokenService.resetRefresh();
+      tokenService.resetRole();
+      Router.push(pathName.MAIN);
+      return;
+    }
+  }
+);
+// api.interceptors.response.use(undefined, normalizeAxiosError);
 api.interceptors.response.use(undefined, function (err) {
   console.log("ERR :: ", err);
 

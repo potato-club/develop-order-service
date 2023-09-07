@@ -4,6 +4,7 @@ import { DetailInfo } from "./DetailInfo";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { detailDataTypes } from "../../../pages/orderDetail";
+import { tokenService } from "../../libs/tokenService";
 
 type propTypes = {
   detailData: detailDataTypes;
@@ -40,7 +41,7 @@ export const DetailContnets = ({
       );
     }
     const headers = {
-      Authorization: localStorage.getItem("token"),
+      Authorization: tokenService.getToken(),
       "Content-Type": "multipart/form-data",
     };
 
@@ -63,7 +64,7 @@ export const DetailContnets = ({
   //       },
   //       {
   //         headers: {
-  //           Authorization: `${localStorage.getItem("token")}`,
+  // Authorization: tokenService.getToken(),
   //         },
   //       }
   //     );
@@ -88,7 +89,7 @@ export const DetailContnets = ({
   //   }
 
   //   const headers = {
-  //     Authorization: localStorage.getItem("token"),
+  // Authorization: tokenService.getToken(),
   //   };
 
   //   const response = axios.put(
