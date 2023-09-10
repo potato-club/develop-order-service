@@ -3,7 +3,6 @@ import axios from "axios";
 import Router from "next/router";
 import { pathName } from "../config/pathName";
 import applyDefaultParams from "./applyDefaultParams";
-import { TokenAPI } from "./controller/token.api";
 
 import normalizeAxiosError, {
   SERVER_ERROR,
@@ -30,15 +29,27 @@ api.interceptors.response.use(
   (response) => response,
   async function (error) {
     const originalRequest = error.config;
-    if (error.response && error.response.data.code == 444) {
-      const token = await TokenAPI.tokenRefresh();
-      console.log(token);
+    console.log(error.response.data.code);
 
-      if (token) {
-        tokenService.setToken(`${token}`);
-        return api(originalRequest);
-      }
-    } else if (error.response && error.response.data.code == 445) {
+    if (error.response.data && error.response.data.code == 444) {
+      await axios
+        .get("http://www.developorderservice.store/token/refresh", {
+          headers: { refresh: tokenService.getRefresh() },
+        })
+        .then((data) => {
+          if (data) {
+            tokenService.setToken(`${data.data["accessToken"]}`);
+            tokenService.setRefresh(`${data.data["refreshToken"]}`);
+            originalRequest.headers["Authorization"] = tokenService.getToken();
+            originalRequest.headers["refresh"] = tokenService.getRefresh();
+            return api(originalRequest);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          throw error;
+        });
+    } else if (error.response.data && error.response.data.code == 445) {
       tokenService.resetToken();
       tokenService.resetRefresh();
       tokenService.resetRole();

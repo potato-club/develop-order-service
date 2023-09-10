@@ -45,6 +45,7 @@ export const MyInfo = () => {
         });
       })
       .catch((error) => {
+        console.log(error.response);
         // handleLogout();
       });
   };
@@ -89,7 +90,7 @@ export const MyInfo = () => {
           )}
         </LogAction>
         <Img>
-          {isLoginState && (
+          {isLoginState && userInfo.picture && (
             <Image
               src={userInfo.picture}
               fill
