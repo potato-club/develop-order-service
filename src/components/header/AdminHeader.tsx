@@ -12,9 +12,9 @@ interface MenuProps {
 
 export const AdminHeader = () => {
   useEffect(() => {
-    // if (tokenService.getToken() === null || tokenService.getRole() === "USER") {
-    //   handleLogout();
-    // }
+    if (tokenService.getRole() !== "ADMIN") {
+      handleLogout();
+    }
   }, []);
 
   const handleLogout = () => {

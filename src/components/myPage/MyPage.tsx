@@ -10,7 +10,7 @@ export const MyPage = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   useEffect(() => {
-    if (tokenService.getToken() === null) {
+    if (tokenService.getRole() === "USER") {
       setIsLoginModalOpen(true);
     }
   }, []);

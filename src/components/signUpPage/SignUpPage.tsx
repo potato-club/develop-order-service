@@ -32,7 +32,7 @@ export const SignUpPage = () => {
   } = useForm();
 
   useEffect(() => {
-    if (tokenService.getToken() === null) {
+    if (tokenService.getRole() !== "USER") {
       setIsLoginModalOpen(true);
     }
   }, []);
