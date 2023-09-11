@@ -9,6 +9,7 @@ interface StateProps {
 
 type contentsDataType = {
   id: number;
+  clientName: string;
   createdDate: string;
   completedDate?: string;
   likes?: number;
@@ -43,7 +44,7 @@ export const ModifyOrderItem = ({
         <WebName>{contentsData?.siteName}</WebName>
         <WebInfoInner>
           <WebPurpose>{contentsData?.purpose}</WebPurpose>
-          <WebOrderer>{"발주자 이름은 어케 출력하지"}</WebOrderer>
+          <WebOrderer>{contentsData?.clientName}</WebOrderer>
           <WebPeriod>
             {contentsData.createdDate?.split("T")[0]}
             {" ~ "}

@@ -14,6 +14,7 @@ import {
 
 export type contentType = {
   id: number;
+  clientName: string;
   createdDate: string;
   completedDate?: string;
   likes?: number;
