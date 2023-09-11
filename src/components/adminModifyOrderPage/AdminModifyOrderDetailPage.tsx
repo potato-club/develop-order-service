@@ -31,6 +31,34 @@ export const AdminModifyOrderDetailPage = () => {
     console.log(data);
   }, [data]);
 
+  // 발주 상태 변경 테스트 코드
+  const onClickModifyButton = async () => {
+    const formData = new FormData();
+
+    const requestDto = { database: true, login: true, page: 8, stateKey: 6 };
+    if (requestDto) {
+      formData.append(
+        "orderDetail",
+        new Blob([JSON.stringify(requestDto)], { type: "application/json" })
+      );
+    }
+    const headers = {
+      Authorization: localStorage.getItem("token"),
+      "Content-Type": "multipart/form-data",
+    };
+
+    const response = await axios.put(
+      `https://www.developorderservice.store/orders/detail/${
+        detailData && detailData.id
+      }`,
+      formData,
+      { headers }
+    );
+
+    router.back();
+  };
+
+  //이미지 업로드 테스트 코드
   const handleImageChange = (e: any) => {
     const formData = new FormData();
     const test = e.target.files[0];
