@@ -5,6 +5,7 @@ import { UserAPI } from "../../../apis/controller/user.api";
 import { useRecoilState } from "recoil";
 import { isLogin } from "../../../recoil/userInfo";
 import { pathName } from "../../../config/pathName";
+import { tokenService } from "../../../libs/tokenService";
 
 export const useQueryDeleteUser = (failFunc: (error: string) => void) => {
   const [isLoginState, setIsLoginState] = useRecoilState(isLogin);
@@ -15,9 +16,9 @@ export const useQueryDeleteUser = (failFunc: (error: string) => void) => {
 
   return useMutation("deleteUser", load, {
     onSuccess: () => {
-      localStorage.removeItem("token");
-      localStorage.removeItem("refreshToken");
-      localStorage.removeItem("role");
+      tokenService.resetToken();
+      tokenService.resetRefresh();
+      tokenService.resetRole();
       setIsLoginState(false);
       Router.push(pathName.MAIN);
     },

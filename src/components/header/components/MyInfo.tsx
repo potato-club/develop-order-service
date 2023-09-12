@@ -7,6 +7,7 @@ import { pathName } from "../../../config/pathName";
 import { useRecoilState } from "recoil";
 import { isLogin, userInformation } from "../../../recoil/userInfo";
 import axios from "axios";
+import { tokenService } from "../../../libs/tokenService";
 
 interface ButtonProps {
   isHover?: boolean;
@@ -20,9 +21,9 @@ export const MyInfo = () => {
 
   useEffect(() => {
     if (!Router.asPath.includes("/admin")) {
-      setIsLoginState(localStorage?.getItem("token") !== null);
-      if (localStorage?.getItem("token") !== null) {
-        if (localStorage.getItem("role") === "ADMIN") {
+      setIsLoginState(tokenService.getToken() !== null);
+      if (tokenService.getToken() !== null) {
+        if (tokenService.getRole() === "ADMIN") {
           handleLogout();
         } else {
           userInfo.picture === "" && getUserInfo();
@@ -33,8 +34,8 @@ export const MyInfo = () => {
 
   const getUserInfo = async () => {
     await axios
-      .get("https://www.developorderservice.store/users", {
-        headers: { Authorization: localStorage.getItem("token") },
+      .get("http://www.developorderservice.store/users", {
+        headers: { Authorization: tokenService.getToken() },
       })
       .then((data) => {
         setUserInfo({
@@ -44,6 +45,7 @@ export const MyInfo = () => {
         });
       })
       .catch((error) => {
+        console.log(error.response);
         // handleLogout();
       });
   };
@@ -53,9 +55,9 @@ export const MyInfo = () => {
     Router.push(pathName.LOGIN);
   };
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("role");
+    tokenService.resetToken();
+    tokenService.resetRefresh();
+    tokenService.resetRole();
     setIsLoginState(false);
     Router.reload();
   };
@@ -88,7 +90,7 @@ export const MyInfo = () => {
           )}
         </LogAction>
         <Img>
-          {isLoginState && (
+          {isLoginState && userInfo.picture && (
             <Image
               src={userInfo.picture}
               fill

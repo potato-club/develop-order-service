@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { customColor } from "../customColor";
 import styled from "styled-components";
 import { contentsDataType } from "../../../pages/orderReview";
+import { tokenService } from "../../libs/tokenService";
 
 type propTypes = {
   contentsData?: contentsDataType;
@@ -54,7 +55,7 @@ export const ReviewContnets = ({
             <ContentDiv key={item.id}>
               <RouterA
                 onClick={() => {
-                  if (localStorage.getItem("token")) {
+                  if (tokenService.getToken()) {
                     router.push({
                       pathname: "orderDetail",
                       query: { id: `${item.id}` },

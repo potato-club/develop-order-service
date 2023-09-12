@@ -7,6 +7,7 @@ import { useQueryPostLogin } from "../../hooks/query/user/useQueryPostLogin";
 import { pathName } from "../../config/adminPathName";
 import { Alert } from "../modal/alert";
 import { useEffect, useState } from "react";
+import { tokenService } from "../../libs/tokenService";
 
 export const AdminLoginPage = () => {
   const {
@@ -21,9 +22,9 @@ export const AdminLoginPage = () => {
     accessToken: string;
     refreshToken: string;
   }) => {
-    localStorage.setItem("token", data.accessToken);
-    localStorage.setItem("refreshToken", data.refreshToken);
-    localStorage.setItem("role", "ADMIN");
+    tokenService.setToken(data.accessToken);
+    tokenService.setRefresh(data.refreshToken);
+    tokenService.setRole("ADMIN");
     handleGoPrevPath();
   };
   const failLogin = () => {
@@ -32,11 +33,11 @@ export const AdminLoginPage = () => {
   const { mutate } = useQueryPostLogin(completeLogin, failLogin);
 
   useEffect(() => {
-    if (localStorage.getItem("role") === "USER") {
-      localStorage.removeItem("token");
-      localStorage.removeItem("refreshToken");
-      localStorage.removeItem("role");
-    } else if (localStorage.getItem("role") === "ADMIN") {
+    if (tokenService.getRole() === "USER") {
+      tokenService.resetToken();
+      tokenService.resetRefresh();
+      tokenService.resetRole();
+    } else if (tokenService.getRole() === "ADMIN") {
       // handleGoPrevPath();
     }
   }, []);

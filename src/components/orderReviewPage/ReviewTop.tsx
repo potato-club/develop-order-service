@@ -7,6 +7,7 @@ import {
   reviewContentsFilterState,
   reviewPageState,
 } from "../../recoil/reviewPageState";
+import { tokenService } from "../../libs/tokenService";
 
 type propTypes = {
   getModalState: (modalState: {
@@ -50,7 +51,7 @@ export const ReviewTop = ({ getModalState, modalState }: propTypes) => {
     setSortOptionState("noSort");
   };
   const myOrderButton = () => {
-    if (localStorage.getItem("token")) {
+    if (tokenService.getToken()) {
       setContentsFilterState("myOrder");
       setSortOptionState("noSort");
       setPageState(1);

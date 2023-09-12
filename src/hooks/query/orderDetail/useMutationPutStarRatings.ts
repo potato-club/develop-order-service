@@ -1,3 +1,4 @@
+import { tokenService } from "./../../../libs/tokenService";
 import { useQueryClient, useMutation } from "react-query";
 import { OrderDetailApi } from "../../../apis/controller/orderDetail.api";
 import axios from "axios";
@@ -27,7 +28,7 @@ export const useMutationPutStarRatings = ({
         },
         {
           headers: {
-            Authorization: `${localStorage.getItem("token")}`,
+            Authorization: tokenService.getToken(),
           },
         }
       ),

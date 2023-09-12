@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 import Router from "next/router";
 import { pathName } from "../../config/pathName";
+import { tokenService } from "../../libs/tokenService";
 
 export const LoginPage = () => {
   const isContainPathName = (prevPath: string) => {
@@ -30,7 +31,7 @@ export const LoginPage = () => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("token") !== null) {
+    if (tokenService.getToken() !== null) {
       handleGoPrevPath();
     } else {
       const token = new URL(window.location.href).searchParams.get(
@@ -40,9 +41,9 @@ export const LoginPage = () => {
         "refresh"
       );
       if (token && refreshToken) {
-        localStorage.setItem("token", token);
-        localStorage.setItem("refreshToken", refreshToken);
-        localStorage.setItem("role", "USER");
+        tokenService.setToken(token);
+        tokenService.setRefresh(refreshToken);
+        tokenService.setRole("USER");
         handleGoPrevPath();
       }
     }
