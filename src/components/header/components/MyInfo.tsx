@@ -7,6 +7,7 @@ import { pathName } from "../../../config/pathName";
 import { useRecoilState } from "recoil";
 import { isLogin, userInformation } from "../../../recoil/userInfo";
 import axios from "axios";
+import { tokenService } from "../../../libs/tokenService";
 
 interface ButtonProps {
   isHover?: boolean;
@@ -20,12 +21,12 @@ export const MyInfo = () => {
 
   useEffect(() => {
     if (!Router.asPath.includes("/admin")) {
-      setIsLoginState(localStorage?.getItem("token") !== null);
-      if (localStorage?.getItem("token") !== null) {
-        if (localStorage.getItem("role") === "ADMIN") {
+      setIsLoginState(tokenService.getToken() !== null);
+      if (tokenService.getToken() !== null) {
+        if (tokenService.getRole() === "ADMIN") {
           handleLogout();
         } else {
-          getUserInfo();
+          userInfo.picture === "" && getUserInfo();
         }
       }
     }
@@ -33,8 +34,8 @@ export const MyInfo = () => {
 
   const getUserInfo = async () => {
     await axios
-      .get("https://www.developorderservice.store/users", {
-        headers: { Authorization: localStorage.getItem("token") },
+      .get("http://www.developorderservice.store/users", {
+        headers: { Authorization: tokenService.getToken() },
       })
       .then((data) => {
         setUserInfo({
@@ -44,7 +45,8 @@ export const MyInfo = () => {
         });
       })
       .catch((error) => {
-        handleLogout();
+        console.log(error.response);
+        // handleLogout();
       });
   };
 
@@ -53,9 +55,9 @@ export const MyInfo = () => {
     Router.push(pathName.LOGIN);
   };
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("role");
+    tokenService.resetToken();
+    tokenService.resetRefresh();
+    tokenService.resetRole();
     setIsLoginState(false);
     Router.reload();
   };
@@ -76,14 +78,19 @@ export const MyInfo = () => {
               <ActionButton isHover={isHover} onClick={handleLogout}>
                 로그아웃
               </ActionButton>
-              <ActionButton isHover={isHover}>내정보</ActionButton>
+              <ActionButton
+                isHover={isHover}
+                onClick={() => Router.push(pathName.MY)}
+              >
+                내정보
+              </ActionButton>
             </>
           ) : (
             <ActionButton onClick={handleGoLoginPage}>로그인</ActionButton>
           )}
         </LogAction>
         <Img>
-          {isLoginState && (
+          {isLoginState && userInfo.picture && (
             <Image
               src={userInfo.picture}
               fill

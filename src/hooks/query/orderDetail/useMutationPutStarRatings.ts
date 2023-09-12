@@ -1,4 +1,5 @@
-import { QueryClient, useMutation } from "react-query";
+import { tokenService } from "./../../../libs/tokenService";
+import { useQueryClient, useMutation } from "react-query";
 import { OrderDetailApi } from "../../../apis/controller/orderDetail.api";
 import axios from "axios";
 
@@ -16,8 +17,7 @@ export const useMutationPutStarRatings = ({
   id: number;
   getModalState: (modalState: modalStateTypes) => void;
 }) => {
-  const queryClient = new QueryClient();
-
+  const queryClient = useQueryClient();
   return useMutation(
     "putStarRatings",
     (newRating: number) =>
@@ -28,14 +28,14 @@ export const useMutationPutStarRatings = ({
         },
         {
           headers: {
-            Authorization: `${localStorage.getItem("token")}`,
+            Authorization: tokenService.getToken(),
           },
         }
       ),
     {
       onSuccess: (data) => {
-        queryClient.invalidateQueries("getOrderDetail");
         console.log("onSuccess", data);
+        return queryClient.invalidateQueries("getOrderDetail");
       },
       onError: (error: { response: { data: { error: string } } }) => {
         console.log(error);

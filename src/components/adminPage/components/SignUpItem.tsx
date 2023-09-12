@@ -13,11 +13,15 @@ export interface ResponseType {
 }
 export interface Props {
   data: ResponseType;
+  isNew: boolean;
 }
 
-export const SignUpItem = ({ data }: Props) => {
+export const SignUpItem = ({ data, isNew }: Props) => {
   const handleRouteDetail = (id: number) => {
-    Router.push(`${pathName.CHECK_SIGNUP.DETAIL.replace(":id", String(id))}`);
+    Router.push({
+      pathname: `${pathName.CHECK_SIGNUP.DETAIL.replace(":id", String(id))}`,
+      query: { isNew: isNew },
+    });
   };
 
   return (

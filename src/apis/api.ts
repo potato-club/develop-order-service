@@ -1,4 +1,7 @@
+import { tokenService } from "./../libs/tokenService";
 import axios from "axios";
+import Router from "next/router";
+import { pathName } from "../config/pathName";
 import applyDefaultParams from "./applyDefaultParams";
 
 import normalizeAxiosError, {
@@ -18,11 +21,44 @@ const api = axios.create({
 });
 
 function getBaseUrl() {
-  return "https://www.developorderservice.store/";
+  return "http://www.developorderservice.store/";
 }
 
 api.interceptors.request.use(applyDefaultParams);
-api.interceptors.response.use(undefined, normalizeAxiosError);
+api.interceptors.response.use(
+  (response) => response,
+  async function (error) {
+    const originalRequest = error.config;
+    console.log(error.response.data.code);
+
+    if (error.response.data && error.response.data.code == 444) {
+      await axios
+        .get("http://www.developorderservice.store/token/refresh", {
+          headers: { refresh: tokenService.getRefresh() },
+        })
+        .then((data) => {
+          if (data) {
+            tokenService.setToken(`${data.data["accessToken"]}`);
+            tokenService.setRefresh(`${data.data["refreshToken"]}`);
+            originalRequest.headers["Authorization"] = tokenService.getToken();
+            originalRequest.headers["refresh"] = tokenService.getRefresh();
+            return api(originalRequest);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          throw error;
+        });
+    } else if (error.response.data && error.response.data.code == 445) {
+      tokenService.resetToken();
+      tokenService.resetRefresh();
+      tokenService.resetRole();
+      Router.push(pathName.MAIN);
+      return;
+    }
+  }
+);
+// api.interceptors.response.use(undefined, normalizeAxiosError);
 api.interceptors.response.use(undefined, function (err) {
   console.log("ERR :: ", err);
 

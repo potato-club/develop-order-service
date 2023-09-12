@@ -4,6 +4,7 @@ import styled, { css } from "styled-components";
 import { pathName } from "../../config/adminPathName";
 import { customColor } from "../customColor";
 import { MdLogout } from "react-icons/md";
+import { tokenService } from "../../libs/tokenService";
 
 interface MenuProps {
   isPath: boolean;
@@ -11,17 +12,15 @@ interface MenuProps {
 
 export const AdminHeader = () => {
   useEffect(() => {
-    if (
-      localStorage.getItem("token") === null ||
-      localStorage.getItem("role") === "USER"
-    )
+    if (tokenService.getRole() !== "ADMIN") {
       handleLogout();
+    }
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("role");
+    tokenService.resetToken();
+    tokenService.resetRefresh();
+    tokenService.resetRole();
     localStorage.setItem("prevPath", Router.asPath.replace(/\/\d+$/, ""));
     Router.push(pathName.LOGIN);
   };
@@ -43,10 +42,15 @@ export const AdminHeader = () => {
         >
           발주상태·내용수정
         </MenuButton>
-        <MenuButton isPath={false}>직원정보수정</MenuButton>
+        <MenuButton
+          isPath={false}
+          onClick={() => Router.push(pathName.SCHEDULE)}
+        >
+          직원정보수정
+        </MenuButton>
         <MenuButton isPath={false}>통계추출</MenuButton>
       </WrapperInner>
-      {!(localStorage.getItem("token") === null) && (
+      {tokenService.getToken() !== null && (
         <Logout onClick={handleLogout}>
           로그아웃
           <LogoutIcon />

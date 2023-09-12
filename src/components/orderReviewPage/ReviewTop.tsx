@@ -1,23 +1,21 @@
 import styled from "styled-components";
 import { Title } from "../orderDetailPage/Title";
 import React, { useEffect, useState } from "react";
-
-type contentsFilterType = "onGoing" | "finished" | "myOrder";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import {
+  reviewSortOptionState,
+  reviewContentsFilterState,
+  reviewPageState,
+} from "../../recoil/reviewPageState";
+import { tokenService } from "../../libs/tokenService";
 
 type propTypes = {
-  getContentsFilterState: (contentFilterState: contentsFilterType) => void;
-  getSortOptionState: (sortOptionState: string) => void;
-  getConceptOptionState: (conceptOptionState: string) => void;
-  getPageState: (pageState: number) => void;
   getModalState: (modalState: {
     modalRole: string;
     state: boolean;
     text: string;
     onClickConfirmButton: () => void;
   }) => void;
-  contentsFilterState: contentsFilterType;
-  sortOptionState: string;
-  conceptOptionState: string;
   modalState: {
     modalRole: string;
     state: boolean;
@@ -26,46 +24,37 @@ type propTypes = {
   };
 };
 
-export const ReviewTop = ({
-  getContentsFilterState,
-  getSortOptionState,
-  getConceptOptionState,
-  getPageState,
-  getModalState,
-  contentsFilterState,
-  sortOptionState,
-  conceptOptionState,
-  modalState,
-}: propTypes) => {
+export const ReviewTop = ({ getModalState, modalState }: propTypes) => {
   const PAGETITLE = "발주 현황 및 후기";
   const EXPLAIN = "발주 현황을 확인하고 완료된 발주에 평가를 남겨보세요";
+  const [sortOptionState, setSortOptionState] = useRecoilState(
+    reviewSortOptionState
+  );
+  const [contentsFilterState, setContentsFilterState] = useRecoilState(
+    reviewContentsFilterState
+  );
+
+  const setPageState = useSetRecoilState(reviewPageState);
 
   function handleFilterChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    getSortOptionState(event.target.value);
-  }
-
-  function handleConceptChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    getConceptOptionState(event.target.value);
+    setSortOptionState(event.target.value);
   }
 
   const onGoingOrderButton = () => {
-    getContentsFilterState("onGoing");
-    getSortOptionState("noSort");
-    getConceptOptionState("concept1");
-    getPageState(1);
+    setContentsFilterState("onGoing");
+    setPageState(1);
+    setSortOptionState("noSort");
   };
   const finishedOrderButton = () => {
-    getContentsFilterState("finished");
-    getSortOptionState("noSort");
-    getConceptOptionState("concept1");
-    getPageState(1);
+    setContentsFilterState("finished");
+    setPageState(1);
+    setSortOptionState("noSort");
   };
   const myOrderButton = () => {
-    if (localStorage.getItem("token")) {
-      getContentsFilterState("myOrder");
-      getSortOptionState("noSort");
-      getConceptOptionState("concept1");
-      getPageState(1);
+    if (tokenService.getToken()) {
+      setContentsFilterState("myOrder");
+      setSortOptionState("noSort");
+      setPageState(1);
     } else {
       getModalState({
         modalRole: "noLogin",
@@ -84,7 +73,6 @@ export const ReviewTop = ({
           <FilterLabelP>정렬</FilterLabelP>
           <FilterSelect value={sortOptionState} onChange={handleFilterChange}>
             <option value={"noSort"}>정렬 없음</option>
-            <option value={"concept"}>컨셉별</option>
             <FilterOption
               value={"starRate"}
               contentsFilterState={contentsFilterState}
@@ -99,104 +87,109 @@ export const ReviewTop = ({
             </FilterOption>
           </FilterSelect>
         </FilterDiv>
-        <FilterDiv2 selectedSortOptionState={sortOptionState}>
-          <FilterSelect2
-            value={conceptOptionState}
-            onChange={handleConceptChange}
-          >
-            <option value={"concept1"}>컨셉1</option>
-            <option value={"concept2"}>컨셉2</option>
-            <option value={"concept3"}>컨셉3</option>
-            <option value={"concept4"}>컨셉4</option>
-          </FilterSelect2>
-        </FilterDiv2>
       </FilterWrapper>
       <ButtonDiv>
-        <Button1
+        <Button
           onClick={onGoingOrderButton}
+          buttonRole={"onGoing"}
           contentsFilterState={contentsFilterState}
         >
           진행중
-        </Button1>
-        <Button2
+        </Button>
+        <Button
           onClick={finishedOrderButton}
+          buttonRole={"finished"}
           contentsFilterState={contentsFilterState}
         >
           완료
-        </Button2>
-        <Button3
+        </Button>
+        <Button
           onClick={myOrderButton}
+          buttonRole={"myOrder"}
           contentsFilterState={contentsFilterState}
         >
           내 발주
-        </Button3>
+        </Button>
       </ButtonDiv>
     </WrapperTop>
   );
 };
 
 const WrapperTop = styled.div`
+  @media screen and (min-width: 1024px) {
+    height: 277px;
+    padding-top: 40px;
+  }
+  @media screen and (max-width: 1023px) {
+    height: 208px;
+    padding-top: 30px;
+  }
   display: flex;
   width: 100%;
-  height: 277px;
-  padding-top: 40px;
   position: relative;
 `;
 
 const FilterWrapper = styled.div`
-  height: 40px;
+  @media screen and (min-width: 1024px) {
+    height: 40px;
+    bottom: 15px;
+  }
+  @media screen and (max-width: 1023px) {
+    height: 30px;
+    bottom: 12px;
+  }
   position: absolute;
-  bottom: 15px;
 `;
 
 const FilterDiv = styled.div`
-  width: 200px;
-  height: 40px;
+  @media screen and (min-width: 1024px) {
+    width: 200px;
+    height: 40px;
+    margin-right: 29px;
+  }
+  @media screen and (max-width: 1023px) {
+    width: 150px;
+    height: 30px;
+    margin-right: 22px;
+  }
   border: 1px solid black;
   border-radius: 7px;
   display: flex;
   align-items: center;
-  float: left;
-  margin-right: 29px;
-`;
-
-const FilterDiv2 = styled.div<{ selectedSortOptionState: string }>`
-  display: ${(props) =>
-    props.selectedSortOptionState !== "concept" ? "none" : "flex"};
-  min-width: 100px;
-  height: 40px;
-  border: 1px solid black;
-  border-radius: 7px;
-  align-items: center;
-  padding: 0 auto;
 `;
 
 const FilterSelect = styled.select`
-  width: 140px;
-  height: 30px;
+  @media screen and (min-width: 1024px) {
+    width: 140px;
+    height: 30px;
+    margin-left: 10px;
+    font-size: 20px;
+  }
+  @media screen and (max-width: 1023px) {
+    width: 105px;
+    height: 22.5px;
+    margin-left: 7.5px;
+    font-size: 15px;
+  }
   border: none;
   appearance: none;
-  font-size: 20px;
-  margin-left: 10px;
-`;
-
-const FilterSelect2 = styled.select`
-  min-width: 100px;
-  height: 30px;
-  border: none;
-  appearance: none;
-  text-align: center;
-  font-size: 20px;
 `;
 
 const FilterLabelP = styled.p`
-  display: block;
-  width: 50px;
-  height: 30px;
+  @media screen and (min-width: 1024px) {
+    width: 50px;
+    height: 30px;
+    font-size: 20px;
+  }
+  @media screen and (max-width: 1023px) {
+    width: 37.5px;
+    height: 22.5px;
+    font-size: 15px;
+  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-right: 1px solid black;
-  font-size: 20px;
-  text-align: center;
-  line-height: 30px;
 `;
 
 const FilterOption = styled.option<{ contentsFilterState: String }>`
@@ -205,45 +198,53 @@ const FilterOption = styled.option<{ contentsFilterState: String }>`
 `;
 
 const ButtonDiv = styled.div`
+  @media screen and (min-width: 1024px) {
+    width: 300px;
+    height: 60px;
+    bottom: 15px;
+  }
+  @media screen and (max-width: 1023px) {
+    width: 225px;
+    height: 45px;
+    bottom: 12px;
+  }
+  display: flex;
   position: absolute;
-  width: 300px;
-  height: 60px;
   border: 1px solid black;
   border-radius: 7px;
-  bottom: 15px;
   right: 0;
 `;
 
-const Button1 = styled.button<{ contentsFilterState: String }>`
-  width: 99px;
-  height: 60px;
-  font-size: 20px;
-  border-right: 1px solid black;
-  border-top-left-radius: 7px;
-  border-bottom-left-radius: 7px;
-  background-color: ${(props) =>
-    props.contentsFilterState === "onGoing" ? "black" : ""};
-  color: ${(props) => (props.contentsFilterState === "onGoing" ? "white" : "")};
-`;
+const Button = styled.button<{
+  contentsFilterState: "onGoing" | "finished" | "myOrder";
+  buttonRole: "onGoing" | "finished" | "myOrder";
+}>`
+  @media screen and (min-width: 1024px) {
+    width: 99px;
+    height: 60px;
+    font-size: 20px;
+  }
+  @media screen and (max-width: 1023px) {
+    width: 75px;
+    height: 45px;
+    font-size: 15px;
+  }
 
-const Button2 = styled.button<{ contentsFilterState: String }>`
-  width: 99px;
-  height: 60px;
-  font-size: 20px;
-  border-right: 1px solid black;
+  border-right: ${(props) =>
+    props.buttonRole !== "myOrder" ? "1px solid black" : ""};
+
+  border-top-left-radius: ${(props) =>
+    props.buttonRole === "onGoing" ? "7px" : ""};
+  border-bottom-left-radius: ${(props) =>
+    props.buttonRole === "onGoing" ? "7px" : ""};
+
+  border-top-right-radius: ${(props) =>
+    props.buttonRole === "myOrder" ? "7px" : ""};
+  border-bottom-right-radius: ${(props) =>
+    props.buttonRole === "myOrder" ? "7px" : ""};
+
   background-color: ${(props) =>
-    props.contentsFilterState === "finished" ? "black" : ""};
+    props.contentsFilterState === props.buttonRole ? "black" : ""};
   color: ${(props) =>
-    props.contentsFilterState === "finished" ? "white" : ""};
-`;
-
-const Button3 = styled.button<{ contentsFilterState: String }>`
-  width: 100px;
-  height: 60px;
-  font-size: 20px;
-  border-top-right-radius: 7px;
-  border-bottom-right-radius: 7px;
-  background-color: ${(props) =>
-    props.contentsFilterState === "myOrder" ? "black" : ""};
-  color: ${(props) => (props.contentsFilterState === "myOrder" ? "white" : "")};
+    props.contentsFilterState === props.buttonRole ? "white" : ""};
 `;

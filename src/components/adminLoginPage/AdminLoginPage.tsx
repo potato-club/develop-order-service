@@ -3,12 +3,11 @@ import { TbWorld } from "react-icons/tb";
 import { FieldValues, useForm } from "react-hook-form";
 import Router from "next/router";
 import { customColor } from "../customColor";
-import { useQueryPostLogin } from "../../hooks/query/userInfo/useQueryPostLogin";
+import { useQueryPostLogin } from "../../hooks/query/user/useQueryPostLogin";
 import { pathName } from "../../config/adminPathName";
 import { Alert } from "../modal/alert";
 import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import { userInformation } from "../../recoil/userInfo";
+import { tokenService } from "../../libs/tokenService";
 
 export const AdminLoginPage = () => {
   const {
@@ -17,16 +16,15 @@ export const AdminLoginPage = () => {
     handleSubmit,
   } = useForm();
 
-  const [userInfo, setUserInfo] = useRecoilState(userInformation);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const completeLogin = (data: {
     accessToken: string;
     refreshToken: string;
   }) => {
-    localStorage.setItem("token", data.accessToken);
-    localStorage.setItem("refreshToken", data.refreshToken);
-    localStorage.setItem("role", "ADMIN");
+    tokenService.setToken(data.accessToken);
+    tokenService.setRefresh(data.refreshToken);
+    tokenService.setRole("ADMIN");
     handleGoPrevPath();
   };
   const failLogin = () => {
@@ -35,12 +33,12 @@ export const AdminLoginPage = () => {
   const { mutate } = useQueryPostLogin(completeLogin, failLogin);
 
   useEffect(() => {
-    if (localStorage.getItem("role") === "USER") {
-      localStorage.removeItem("token");
-      localStorage.removeItem("refreshToken");
-      localStorage.removeItem("role");
-    } else if (localStorage.getItem("role") === "ADMIN") {
-      handleGoPrevPath();
+    if (tokenService.getRole() === "USER") {
+      tokenService.resetToken();
+      tokenService.resetRefresh();
+      tokenService.resetRole();
+    } else if (tokenService.getRole() === "ADMIN") {
+      // handleGoPrevPath();
     }
   }, []);
 

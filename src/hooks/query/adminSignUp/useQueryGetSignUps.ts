@@ -10,9 +10,9 @@ export interface ResponseType {
   siteName: string;
 }
 
-export const useQueryGetSignUps = () => {
+export const useQueryGetSignUps = (isCheck: boolean) => {
   const load = useCallback(async () => {
-    const response = await AdminSignUpAPI.getSignUps();
+    const response = await AdminSignUpAPI.getSignUps(isCheck);
     const signUpsRes: ResponseType[] = [];
     response.content.map((i: ResponseType) => {
       signUpsRes.push({
@@ -27,6 +27,8 @@ export const useQueryGetSignUps = () => {
   }, []);
 
   return useQuery<ResponseType[]>(["getSignUps"], load, {
-    onError: (e) => {},
+    onError: (error: any) => {
+      console.log(error);
+    },
   });
 };

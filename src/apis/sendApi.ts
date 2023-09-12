@@ -3,9 +3,9 @@ import api from "./api";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-  get: async (url: string, params?: any) => {
-    const token = await tokenService.getToken();
-
+  get: (url: string, params?: any) => {
+    const token = tokenService.getToken();
+    const refresh = tokenService.getRefresh();
     return params !== undefined
       ? token !== null
         ? api({
@@ -14,6 +14,7 @@ export default {
             params: params,
             headers: {
               Authorization: `${token}`,
+              refresh: `${refresh}`,
             },
           })
         : api({
@@ -27,6 +28,7 @@ export default {
           method: "get",
           headers: {
             Authorization: `${token}`,
+            refresh: `${refresh}`,
           },
         })
       : api({
@@ -37,10 +39,9 @@ export default {
   },
 
   // orderReview 페이지에서 로그인 하지 않은 상태에서는 토큰이 필요없고 로그인 되어있는 상태에서는 토큰이 필요해서 만든 메소드
-  reviewGet: async (url: string, params?: any) => {
-    const token = await tokenService.getToken();
+  reviewGet: (url: string, params?: any) => {
+    const token = tokenService.getToken();
     const headers: { [key: string]: string } = {};
-
     if (token) {
       headers["Authorization"] = `${token}`;
     }
@@ -51,9 +52,9 @@ export default {
       headers: headers,
     });
   },
-  post: async (url: string, params: any) => {
-    const token = await tokenService.getToken();
 
+  post: (url: string, params: any) => {
+    const token = tokenService.getToken();
     return params !== undefined
       ? token !== null
         ? api({
@@ -84,9 +85,8 @@ export default {
           headers: {},
         });
   },
-  put: async (url: string, params: any) => {
-    const token = await tokenService.getToken();
-
+  put: (url: string, params?: any) => {
+    const token = tokenService.getToken();
     return params !== undefined
       ? token !== null
         ? api({
@@ -117,9 +117,8 @@ export default {
           headers: {},
         });
   },
-  delete: async (url: string, params?: any) => {
-    const token = await tokenService.getToken();
-
+  delete: (url: string, params?: any) => {
+    const token = tokenService.getToken();
     return params !== undefined
       ? token !== null
         ? api({
