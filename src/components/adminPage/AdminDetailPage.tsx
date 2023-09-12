@@ -41,7 +41,7 @@ export const AdminDetailPage = () => {
           isLoading={isLoading}
         />
       </WrapperInner>
-      {isNew && <ButtonForCheckOrDelete id={id} />}
+      <ButtonForCheckOrDelete id={id} isNew={isNew} />
     </Wrapper>
   );
 };
