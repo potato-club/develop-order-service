@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { tokenService } from "../../libs/tokenService";
 import { IsLoginModal } from "../modal/IsLoginModal";
 import { SideMenuBar } from "./components/SideMenuBar";
 import { WithdrawalContainer } from "./components/WithdrawalContainer";
@@ -9,7 +10,7 @@ export const MyPage = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem("token") === null) {
+    if (tokenService.getRole() === "USER") {
       setIsLoginModalOpen(true);
     }
   }, []);

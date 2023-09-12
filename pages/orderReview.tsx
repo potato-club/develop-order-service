@@ -11,6 +11,7 @@ import {
   reviewContentsFilterState,
   reviewSortOptionState,
 } from "../src/recoil/reviewPageState";
+import { tokenService } from "../src/libs/tokenService";
 
 export type contentType = {
   id: number;
@@ -67,7 +68,7 @@ export default function OrderReview() {
   );
 
   useEffect(() => {
-    console.log(localStorage.getItem("token"));
+    console.log(tokenService.getToken());
     refetch();
     console.log(data);
   }, [pageState, contentsFilterState, sortOptionState, refetch, data]);

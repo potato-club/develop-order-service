@@ -148,7 +148,7 @@ const BoxItemContent = styled.div`
 `;
 const FileButton = styled.button`
   display: block;
-  width: calc(100vw - 402px);
+  width: calc(100vw - 420px);
   font-size: 14px;
   color: ${customColor.white};
   letter-spacing: -1px;

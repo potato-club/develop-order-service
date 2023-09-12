@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 import Router from "next/router";
 import { pathName } from "../../config/pathName";
+import { tokenService } from "../../libs/tokenService";
 
 export const LoginPage = () => {
   const isContainPathName = (prevPath: string) => {
@@ -30,7 +31,7 @@ export const LoginPage = () => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("token") !== null) {
+    if (tokenService.getToken() !== null) {
       handleGoPrevPath();
     } else {
       const token = new URL(window.location.href).searchParams.get(
@@ -40,9 +41,9 @@ export const LoginPage = () => {
         "refresh"
       );
       if (token && refreshToken) {
-        localStorage.setItem("token", token);
-        localStorage.setItem("refreshToken", refreshToken);
-        localStorage.setItem("role", "USER");
+        tokenService.setToken(token);
+        tokenService.setRefresh(refreshToken);
+        tokenService.setRole("USER");
         handleGoPrevPath();
       }
     }
@@ -55,7 +56,7 @@ export const LoginPage = () => {
         <br />
         다양한 서비스를 이용하세요
         <Logins>
-          <Link href="https://www.developorderservice.store/oauth2/authorization/kakao">
+          <Link href="http://www.developorderservice.store/oauth2/authorization/kakao">
             <KakaoLogin>
               <Image
                 src={"/img/login/kakaoLogin.png"}
@@ -65,7 +66,7 @@ export const LoginPage = () => {
               />
             </KakaoLogin>
           </Link>
-          <Link href="https://www.developorderservice.store/oauth2/authorization/google">
+          <Link href="http://www.developorderservice.store/oauth2/authorization/google">
             <GoogleLogin>
               <Image
                 src={"/img/login/google.png"}

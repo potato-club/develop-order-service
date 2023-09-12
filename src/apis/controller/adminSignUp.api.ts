@@ -9,4 +9,12 @@ export const AdminSignUpAPI = {
     const response = await sendApi.get(`/orders/${id}`);
     return response.data;
   },
+  checkSignUp: async (id: number) => {
+    const response = await sendApi.put(`/orders/${id}/checked`);
+    return response.data;
+  },
+  deleteSignUp: async (id: number) => {
+    const response = await sendApi.delete(`/orders/${id}`);
+    return response.data;
+  },
 };
