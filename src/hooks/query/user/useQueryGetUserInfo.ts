@@ -30,7 +30,6 @@ export const useQueryGetUserInfo = () => {
           if (tokenService.getRole() === "ADMIN") {
             logout();
             localStorage.setItem("prevPath", Router.asPath);
-            Router.push(pathName.LOGIN);
           } else {
             userInfo.picture === "" &&
               setUserInfo({

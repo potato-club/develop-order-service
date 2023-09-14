@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import Router from "next/router";
 import { customColor } from "../../../../customColor";
-import { MySignUpType } from "../../../../../hooks/query/signUp/useQueryGetMySignUp";
+import { MySignUpType } from "../../../../../hooks/query/user/useQueryGetMySignUp";
 import { SignUpUserInfo } from "./SignUpUserInfo";
 import { SignUpSiteInfo } from "./SignUpSiteInfo";
 import { SignUpAddInfo } from "./SignUpAddInfo";

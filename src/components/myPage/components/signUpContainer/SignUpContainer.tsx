@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useQueryGetMySignUp } from "../../../../hooks/query/signUp/useQueryGetMySignUp";
+import { useQueryGetMySignUp } from "../../../../hooks/query/user/useQueryGetMySignUp";
 
 export const SignUpContainer = () => {
   const { isLoading, data } = useQueryGetMySignUp();
