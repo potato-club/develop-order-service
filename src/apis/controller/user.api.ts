@@ -9,4 +9,8 @@ export const UserAPI = {
     const response = await sendApi.delete("/users");
     return response.data;
   },
+  getMyOrders: async () => {
+    const response = await sendApi.get("/users/orders");
+    return response.data;
+  },
 };

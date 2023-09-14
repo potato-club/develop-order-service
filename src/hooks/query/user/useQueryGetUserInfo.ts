@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import Router from "next/router";
 import { useQuery } from "react-query";
 import { UserAPI } from "../../../apis/controller/user.api";
-import { tokenService } from "../../../libs/tokenService";
+import { logout, tokenService } from "../../../libs/tokenService";
 import { pathName } from "../../../config/pathName";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { userInformation } from "../../../recoil/userInfo";
@@ -28,6 +28,7 @@ export const useQueryGetUserInfo = () => {
         setIsLoginState(tokenService.getToken() !== null);
         if (tokenService.getToken() !== null) {
           if (tokenService.getRole() === "ADMIN") {
+            logout();
             localStorage.setItem("prevPath", Router.asPath);
             Router.push(pathName.LOGIN);
           } else {

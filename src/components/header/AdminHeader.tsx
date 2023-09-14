@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 import { pathName } from "../../config/adminPathName";
 import { customColor } from "../customColor";
 import { MdLogout } from "react-icons/md";
-import { tokenService } from "../../libs/tokenService";
+import { logout, tokenService } from "../../libs/tokenService";
 
 interface MenuProps {
   isPath: boolean;
@@ -18,9 +18,7 @@ export const AdminHeader = () => {
   }, []);
 
   const handleLogout = () => {
-    tokenService.resetToken();
-    tokenService.resetRefresh();
-    tokenService.resetRole();
+    logout();
     localStorage.setItem("prevPath", Router.asPath.replace(/\/\d+$/, ""));
     Router.push(pathName.LOGIN);
   };

@@ -3,10 +3,12 @@ import styled from "styled-components";
 import { tokenService } from "../../libs/tokenService";
 import { IsLoginModal } from "../modal/IsLoginModal";
 import { SideMenuBar } from "./components/SideMenuBar";
+import { SignUpContainer } from "./components/signUpContainer/SignUpContainer";
 import { WithdrawalContainer } from "./components/WithdrawalContainer";
 
-export const MyPage = () => {
-  const [currentMenu, setCurrentMenu] = useState(1);
+export const MyPage = (props: {
+  currentMenu: "order" | "likes" | "withdrawal";
+}) => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   useEffect(() => {
@@ -18,9 +20,11 @@ export const MyPage = () => {
   return (
     <Wrapper>
       <IsLoginModal isOpen={isLoginModalOpen} />
-      <SideMenuBar currentMenu={currentMenu} setCurrentMenu={setCurrentMenu} />
+      <SideMenuBar currentMenu={props.currentMenu} />
       <WrapperInner>
-        {currentMenu === 4 && <WithdrawalContainer />}
+        {props.currentMenu === "order" && <WithdrawalContainer />}
+        {props.currentMenu === "likes" && <WithdrawalContainer />}
+        {props.currentMenu === "withdrawal" && <WithdrawalContainer />}
       </WrapperInner>
     </Wrapper>
   );

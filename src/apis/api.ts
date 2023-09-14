@@ -1,4 +1,4 @@
-import { tokenService } from "./../libs/tokenService";
+import { logout, tokenService } from "./../libs/tokenService";
 import axios from "axios";
 import Router from "next/router";
 import { pathName } from "../config/pathName";
@@ -50,9 +50,7 @@ api.interceptors.response.use(
           throw error;
         });
     } else if (error.response.data && error.response.data.code == 445) {
-      tokenService.resetToken();
-      tokenService.resetRefresh();
-      tokenService.resetRole();
+      logout();
       Router.push(pathName.MAIN);
       return;
     }

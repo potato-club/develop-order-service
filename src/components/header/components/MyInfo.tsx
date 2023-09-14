@@ -6,7 +6,7 @@ import Router from "next/router";
 import { pathName } from "../../../config/pathName";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { isLogin, userInformation } from "../../../recoil/userInfo";
-import { tokenService } from "../../../libs/tokenService";
+import { logout, tokenService } from "../../../libs/tokenService";
 import { useQueryGetUserInfo } from "../../../hooks/query/user/useQueryGetUserInfo";
 
 interface ButtonProps {
@@ -21,9 +21,7 @@ export const MyInfo = () => {
   useQueryGetUserInfo();
 
   const handleLogout = () => {
-    tokenService.resetToken();
-    tokenService.resetRefresh();
-    tokenService.resetRole();
+    logout();
     setIsLoginState(false);
     Router.reload();
   };
@@ -46,9 +44,9 @@ export const MyInfo = () => {
               </ActionButton>
               <ActionButton
                 isHover={isHover}
-                onClick={() => Router.push(pathName.MY)}
+                onClick={() => Router.push(pathName.MY_ORDER)}
               >
-                내정보
+                내 정보
               </ActionButton>
             </>
           ) : (
