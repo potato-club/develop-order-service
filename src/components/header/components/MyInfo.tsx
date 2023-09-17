@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import { customColor } from "../../customColor";
 import Router from "next/router";
 import { pathName } from "../../../config/pathName";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { isLogin, userInformation } from "../../../recoil/userInfo";
-import axios from "axios";
-import { tokenService } from "../../../libs/tokenService";
+import { logout, tokenService } from "../../../libs/tokenService";
+import { useQueryGetUserInfo } from "../../../hooks/query/user/useQueryGetUserInfo";
 
 interface ButtonProps {
   isHover?: boolean;
@@ -17,47 +17,11 @@ interface ButtonProps {
 export const MyInfo = () => {
   const [isHover, setIsHover] = useState(false);
   const [isLoginState, setIsLoginState] = useRecoilState(isLogin);
-  const [userInfo, setUserInfo] = useRecoilState(userInformation);
+  const userInfo = useRecoilValue(userInformation);
+  useQueryGetUserInfo();
 
-  useEffect(() => {
-    if (!Router.asPath.includes("/admin")) {
-      setIsLoginState(tokenService.getToken() !== null);
-      if (tokenService.getToken() !== null) {
-        if (tokenService.getRole() === "ADMIN") {
-          handleLogout();
-        } else {
-          userInfo.picture === "" && getUserInfo();
-        }
-      }
-    }
-  }, []);
-
-  const getUserInfo = async () => {
-    await axios
-      .get("http://www.developorderservice.store/users", {
-        headers: { Authorization: tokenService.getToken() },
-      })
-      .then((data) => {
-        setUserInfo({
-          email: data.data.email,
-          name: data.data.name,
-          picture: data.data.picture,
-        });
-      })
-      .catch((error) => {
-        console.log(error.response);
-        // handleLogout();
-      });
-  };
-
-  const handleGoLoginPage = () => {
-    localStorage.setItem("prevPath", Router.asPath);
-    Router.push(pathName.LOGIN);
-  };
   const handleLogout = () => {
-    tokenService.resetToken();
-    tokenService.resetRefresh();
-    tokenService.resetRole();
+    logout();
     setIsLoginState(false);
     Router.reload();
   };
@@ -80,13 +44,20 @@ export const MyInfo = () => {
               </ActionButton>
               <ActionButton
                 isHover={isHover}
-                onClick={() => Router.push(pathName.MY)}
+                onClick={() => Router.push(pathName.MY_ORDER)}
               >
-                내정보
+                내 정보
               </ActionButton>
             </>
           ) : (
-            <ActionButton onClick={handleGoLoginPage}>로그인</ActionButton>
+            <ActionButton
+              onClick={() => {
+                localStorage.setItem("prevPath", Router.asPath);
+                Router.push(pathName.LOGIN);
+              }}
+            >
+              로그인
+            </ActionButton>
           )}
         </LogAction>
         <Img>

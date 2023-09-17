@@ -34,7 +34,7 @@ export const WithdrawalContainer = () => {
             <WillDelete>내 발주현황</WillDelete>
             <WillDelete>내 좋아요</WillDelete>
           </SubTitleInner>
-          정보는 계속 남아있지만,
+          의 정보는 계속 남아있지만,
           <br />더 이상 고객님의 계정과 연동되지 않아요
         </SubTitle>
       </Title>

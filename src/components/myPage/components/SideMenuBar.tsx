@@ -3,20 +3,19 @@ import { useRecoilValue } from "recoil";
 import { userInformation } from "../../../recoil/userInfo";
 import styled from "styled-components";
 import { customColor } from "../../customColor";
-import { Dispatch, SetStateAction } from "react";
+import Router from "next/router";
 import { TbWorld } from "react-icons/tb";
+import { pathName } from "../../../config/pathName";
 
-interface Props {
-  currentMenu: number;
-  setCurrentMenu: Dispatch<SetStateAction<number>>;
-}
-export const SideMenuBar = ({ currentMenu, setCurrentMenu }: Props) => {
+export const SideMenuBar = (props: {
+  currentMenu: "order" | "likes" | "withdrawal";
+}) => {
   const userInfo = useRecoilValue(userInformation);
 
   return (
     <Wrapper>
-      <WWW />
-      <WrapperInner>
+      <UserInfoBox>
+        <WWW />
         <UserInfo>
           <Image
             src={userInfo.picture}
@@ -30,59 +29,57 @@ export const SideMenuBar = ({ currentMenu, setCurrentMenu }: Props) => {
           </UserName>
           <UserEmail>{userInfo.email}</UserEmail>
         </UserInfo>
-        <MenuBox>
-          <MenuButton
-            onClick={() => setCurrentMenu(1)}
-            isCurrentMenu={currentMenu === 1}
-          >
-            내 발주신청
-          </MenuButton>
-          <MenuButton
-            onClick={() => setCurrentMenu(2)}
-            isCurrentMenu={currentMenu === 2}
-          >
-            내 발주현황
-          </MenuButton>
-          <MenuButton
-            onClick={() => setCurrentMenu(3)}
-            isCurrentMenu={currentMenu === 3}
-          >
-            내 좋아요
-          </MenuButton>
-          <MenuButton
-            onClick={() => setCurrentMenu(4)}
-            isCurrentMenu={currentMenu === 4}
-          >
-            회원탈퇴
-          </MenuButton>
-          <MenuBar />
-        </MenuBox>
-      </WrapperInner>
+      </UserInfoBox>{" "}
+      <MenuBox>
+        <MenuButton
+          onClick={() => Router.replace(pathName.MY_ORDER)}
+          isCurrentMenu={props.currentMenu === "order"}
+        >
+          내 발주현황
+        </MenuButton>
+        <MenuButton
+          onClick={() => Router.replace(pathName.MY_LIKES)}
+          isCurrentMenu={props.currentMenu === "likes"}
+        >
+          내 좋아요
+        </MenuButton>
+        <MenuButton
+          onClick={() => Router.replace(pathName.MY_WITHDRAWAL)}
+          isCurrentMenu={props.currentMenu === "withdrawal"}
+        >
+          회원탈퇴
+        </MenuButton>
+        <MenuBar />
+      </MenuBox>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
   display: flex;
-  position: relative;
+  flex-direction: column;
   min-width: 240px;
-  height: 100%;
+  width: fit-content;
+  min-height: 100%;
   box-shadow: 4px 0px 4px ${customColor.black + "16"};
+  justify-content: space-between;
+  padding: 28px 20px;
+  gap: 32px;
 `;
-const WrapperInner = styled.div`
+const UserInfoBox = styled.div`
   display: flex;
   flex-direction: column;
-  position: absolute;
-  padding: 24px;
-  width: 240px;
-  height: 100%;
+  position: relative;
+  width: 100%;
+  height: 224px;
   justify-content: space-between;
   gap: 20px;
 `;
 const UserInfo = styled.div`
   display: flex;
   flex-direction: column;
-  padding: px 0;
+  position: absolute;
+  padding: 0;
   align-items: center;
 `;
 const UserName = styled.div`
@@ -105,6 +102,8 @@ const MenuBox = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  height: fit-content;
+  width: 100%;
   padding: 10px 20px 10px 0;
   align-items: flex-end;
   gap: 28px;
