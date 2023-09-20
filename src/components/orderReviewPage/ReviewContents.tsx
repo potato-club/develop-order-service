@@ -41,7 +41,7 @@ export const ReviewContnets = ({
               return 1;
             } else if (item.state === "PUBLISH") {
               return 2;
-            } else if (item.state === "IMPLEMEN") {
+            } else if (item.state === "IMPLEMENT") {
               return 3;
             } else if (item.state === "FINAL") {
               return 4;

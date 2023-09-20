@@ -3,13 +3,13 @@ import { useQueryClient, useMutation } from "react-query";
 import { OrderDetailApi } from "../../../apis/controller/orderDetail.api";
 
 export const useMutationPostLikes = (
-  id: number,
   getModalState: (modalState: {
     modalRole: string;
     state: boolean;
     text: string;
     onClickConfirmButton: () => void;
-  }) => void
+  }) => void,
+  id?: number
 ) => {
   const load = useCallback(async () => {
     const response = await OrderDetailApi.postLikes(id);

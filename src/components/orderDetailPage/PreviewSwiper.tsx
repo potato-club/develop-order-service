@@ -10,7 +10,7 @@ import Image from "next/image";
 export const PreviewSwiper = ({
   images,
 }: {
-  images: Array<{
+  images?: Array<{
     id: number;
     imageName: string;
     imageUrl: string;

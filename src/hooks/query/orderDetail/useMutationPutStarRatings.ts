@@ -14,7 +14,7 @@ export const useMutationPutStarRatings = ({
   id,
   getModalState,
 }: {
-  id: number;
+  id?: number;
   getModalState: (modalState: modalStateTypes) => void;
 }) => {
   const queryClient = useQueryClient();

@@ -7,7 +7,24 @@ interface StateProps {
   isComplete: boolean;
 }
 
-export const ModifyOrderItem = () => {
+type contentsDataType = {
+  id: number;
+  clientName: string;
+  createdDate: string;
+  completedDate?: string;
+  likes?: number;
+  purpose: string;
+  rating?: number;
+  siteName: string;
+  state: "START" | "DESIGN" | "PUBLISH" | "IMPLEMENT" | "FINAL" | "COMPLETED";
+  thumbnail?: boolean;
+};
+
+export const ModifyOrderItem = ({
+  contentsData,
+}: {
+  contentsData: contentsDataType;
+}) => {
   const WebStateValue = [
     "디자인 회의",
     "퍼블리싱",
@@ -21,16 +38,21 @@ export const ModifyOrderItem = () => {
   };
 
   return (
-    <Wrapper onClick={() => handleRouteDetail(1)}>
+    <Wrapper onClick={() => handleRouteDetail(contentsData.id)}>
       <Thumbnail />
       <WebInfo>
-        <WebName>Develop-Order-Service</WebName>
+        <WebName>{contentsData?.siteName}</WebName>
         <WebInfoInner>
-          <WebPurpose>웹사이트 발주를 위한 사이트</WebPurpose>
-          <WebOrderer>조금주</WebOrderer>
-          <WebPeriod>2023-05-10 ~</WebPeriod>
+          <WebPurpose>{contentsData?.purpose}</WebPurpose>
+          <WebOrderer>{contentsData?.clientName}</WebOrderer>
+          <WebPeriod>
+            {contentsData.createdDate?.split("T")[0]}
+            {" ~ "}
+            {contentsData.completedDate?.split("T")[0]}
+          </WebPeriod>
           <WebState>
             {WebStateValue.map((i, id) => (
+              // 이거는 천천히 수정
               <WebStateButton key={i} isComplete={id === TestStateValue}>
                 {i}
               </WebStateButton>
