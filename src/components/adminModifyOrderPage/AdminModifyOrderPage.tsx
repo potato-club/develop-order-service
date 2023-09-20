@@ -2,19 +2,50 @@ import styled from "styled-components";
 import { customColor } from "../customColor";
 import { ModifyOrderItem } from "./components/ModifyOrderItem";
 import { SearchBar } from "./components/SearchBar";
+import { contentsDataType } from "../../../pages/orderReview";
+import { useEffect, useState } from "react";
+import { Pagenation } from "./components/Pagenation";
+import { useQueryGetOrderList } from "../../hooks/query/orderReview/useQueryGetOrderList";
+import { useRecoilValue } from "recoil";
+import {
+  modifyOrderContentsFilterState,
+  modifyOrderPageState,
+} from "../../recoil/modifyOrderPageState";
 
 export const AdminModifyOrderPage = () => {
+  const [contentsDataState, setContentsDataState] = useState<
+    contentsDataType | undefined
+  >(undefined);
+
+  function getContentsDataState(contentsDataState: contentsDataType) {
+    setContentsDataState(contentsDataState);
+  }
+
+  const pageState = useRecoilValue(modifyOrderPageState);
+  const contentsFilterState = useRecoilValue(modifyOrderContentsFilterState);
+
+  const { data, refetch } = useQueryGetOrderList(
+    contentsFilterState,
+    pageState,
+    getContentsDataState
+  );
+
+  useEffect(() => {
+    refetch();
+    console.log(contentsDataState);
+  }, [pageState, contentsFilterState, refetch, data, contentsDataState]);
+
   return (
     <Wrapper>
       <SearchBar />
       <WrapperInner>
-        <ModifyOrderItem />
-        <ModifyOrderItem />
-        <ModifyOrderItem />
-        <ModifyOrderItem />
-        <ModifyOrderItem />
-        <ModifyOrderItem />
+        {contentsDataState?.content.map((item, index) => (
+          <ModifyOrderItem key={index} contentsData={item} />
+        ))}
       </WrapperInner>
+      <Pagenation
+        totalPages={contentsDataState && contentsDataState.totalPages}
+      />
     </Wrapper>
   );
 };
