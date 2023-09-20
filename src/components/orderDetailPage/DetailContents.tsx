@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { PreviewSwiper } from "./PreviewSwiper";
 import { DetailInfo } from "./DetailInfo";
-
 import { detailDataTypes } from "../../../pages/orderDetail";
 
 type propTypes = {
@@ -25,6 +24,7 @@ export const DetailContnets = ({
   modalState,
   getModalState,
 }: propTypes) => {
+
   return (
     <WrapperContents>
       <DetailInfo
