@@ -48,9 +48,7 @@ export const AdminModifyOrderDetailPage = () => {
     };
 
     const response = await axios.put(
-      `https://www.developorderservice.store/orders/detail/${
-        detailData && detailData.id
-      }`,
+      `https://www.developorderservice.store/orders/detail/${id}`,
       formData,
       { headers }
     );
@@ -125,12 +123,12 @@ export const AdminModifyOrderDetailPage = () => {
         <WebState>
           <WebInfoWrapper>발주 상태</WebInfoWrapper>
           <select>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
+            <option>발주 시작</option>
+            <option>디자인 회의</option>
+            <option>퍼블리싱</option>
+            <option>페이지 기능 구현</option>
+            <option>최종 수정</option>
+            <option>발주 완료</option>
           </select>
         </WebState>
         <WebAddImage>
