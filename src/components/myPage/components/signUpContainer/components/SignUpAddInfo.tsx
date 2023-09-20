@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { MdTune } from "react-icons/md";
-import { customColor } from "../customColor";
-import { TwoRadioBoxs } from "./components/TwoRadioBoxs";
-import { ColorPalette } from "./components/ColorPalette";
+import { ColorPalette } from "./ColorPalette";
+import { TwoRadioBoxs } from "./TwoRadioBoxs";
+import { customColor } from "../../../../customColor";
 
 interface Props {
   mainColor: string[] | undefined;

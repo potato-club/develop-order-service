@@ -1,4 +1,4 @@
-import { atom } from 'recoil';
+import { atom } from "recoil";
 
 export interface PersonState {
   hyoseong: boolean;
@@ -10,13 +10,12 @@ export interface PersonState {
 }
 
 export const personState = atom<PersonState>({
-  key: 'personState',
+  key: "atomPersonState",
   default: {
     hyoseong: true,
     geumju: true,
     haeyeon: true,
     cheongjo: false,
     junhyung: false,
-   
   },
 });

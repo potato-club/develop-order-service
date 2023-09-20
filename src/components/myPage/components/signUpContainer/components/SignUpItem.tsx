@@ -1,24 +1,26 @@
-import { useEffect } from "react";
 import styled from "styled-components";
-import { customColor } from "../customColor";
-import { SignUpAddInfo } from "./SignUpAddInfo";
-import { SignUpSiteInfo } from "./SignUpSiteInfo";
-import { SignUpUserInfo } from "./SignUpUserInfo";
+import { IoDocumentTextOutline } from "react-icons/io5";
 import Router from "next/router";
-import { useQueryGetSignUpDetail } from "../../hooks/query/adminSignUp/useQueryGetSignUpDetail";
-import { ButtonForCheckOrDelete } from "./components/ButtonForCheckOrDelete";
+import { customColor } from "../../../../customColor";
+import { MySignUpType } from "../../../../../hooks/query/user/useQueryGetMySignUp";
+import { SignUpUserInfo } from "./SignUpUserInfo";
+import { SignUpSiteInfo } from "./SignUpSiteInfo";
+import { SignUpAddInfo } from "./SignUpAddInfo";
 
-export const AdminDetailPage = () => {
-  const { id } = Router.query;
-  const isNew = Router.query.isNew === "true";
-  const { isLoading, data } = useQueryGetSignUpDetail(Number(id));
+export const SignUpItem = (props: { data: MySignUpType }) => {
+  const handleRouteDetail = (id: number) => {
+    // Router.push({
+    //   pathname: `${pathName.CHECK_SIGNUP.DETAIL.replace(":id", String(id))}`,
+    // });
+  };
+
   return (
     <Wrapper>
       <WrapperInner>
         <Division />
-        <SignUpUserInfo
-          name={data?.name}
-          email={data?.email}
+        {/* <SignUpUserInfo
+          name={props.data.clientName}
+          email={props.data.}
           hotLine={data?.hotLine}
           subLine={data?.subLine}
           isLoading={isLoading}
@@ -39,9 +41,8 @@ export const AdminDetailPage = () => {
           etc={data?.etc}
           meeting={data?.meeting}
           isLoading={isLoading}
-        />
+        /> */}
       </WrapperInner>
-      <ButtonForCheckOrDelete id={id} isNew={isNew} />
     </Wrapper>
   );
 };

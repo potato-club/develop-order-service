@@ -27,6 +27,8 @@ export const useQueryGetSignUps = (isCheck: boolean) => {
   }, []);
 
   return useQuery<ResponseType[]>(["getSignUps"], load, {
-    onError: (e) => {},
+    onError: (error: any) => {
+      console.log(error);
+    },
   });
 };
