@@ -8,17 +8,22 @@ import { EditButton } from "./components/EditButton";
 import { useRouter } from "next/router";
 import { detailDataTypes } from "../../../pages/orderDetail";
 import { useQueryGetOrderDetail } from "../../hooks/query/orderDetail/useQueryGetOrderDetail";
+import { useForm } from "react-hook-form";
 import axios from "axios";
 
 export const AdminModifyOrderDetailPage = () => {
   const router = useRouter();
+  const { register, handleSubmit, getValues } = useForm<{
+    login?: boolean;
+    database?: boolean;
+    state?: number;
+  }>();
   const id: string | string[] | undefined = router.query.id;
 
   const [detailDataState, setDetailDataState] = useState<detailDataTypes>();
   function getDetailDataState(detailDataState: detailDataTypes) {
     setDetailDataState(detailDataState);
   }
-
   const [option, setOption] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
@@ -31,11 +36,15 @@ export const AdminModifyOrderDetailPage = () => {
     console.log(data);
   }, [data]);
 
-  // 발주 상태 변경 테스트 코드
-  const onClickModifyButton = async () => {
+  const ModifyOrder = async () => {
     const formData = new FormData();
 
-    const requestDto = { database: true, login: true, page: 8, stateKey: 6 };
+    const requestDto = {
+      database: getValues("database"),
+      login: getValues("login"),
+      page: 0,
+      stateKey: getValues("state"),
+    };
     if (requestDto) {
       formData.append(
         "orderDetail",
@@ -48,18 +57,18 @@ export const AdminModifyOrderDetailPage = () => {
     };
 
     const response = await axios.put(
-      `https://www.developorderservice.store/orders/detail/${id}`,
+      `http://www.developorderservice.store/orders/detail/${id}`,
       formData,
       { headers }
     );
 
-    router.back();
+    console.log(response);
   };
 
   //이미지 업로드 테스트 코드
   const handleImageChange = (e: any) => {
     const formData = new FormData();
-    const test = e.target.files[0];
+    const test = e.target.files[1];
 
     const requestDto = { database: true, login: true, page: 8, stateKey: 4 };
     if (requestDto) {
@@ -82,6 +91,41 @@ export const AdminModifyOrderDetailPage = () => {
     console.log(response);
   };
 
+  const stateOption = [
+    "발주 시작",
+    "디자인 회의",
+    "퍼블리싱",
+    "페이지 기능 구현",
+    "최종 수정",
+    "발주 완료",
+  ];
+
+  function convertedState(): number {
+    if (data.state === "START") {
+      return 1;
+    } else if (data.state === "DESIGN") {
+      return 2;
+    } else if (data.state === "PUBLISH") {
+      return 3;
+    } else if (data.state === "IMPLEMENT") {
+      return 4;
+    } else if (data.state === "FINAL") {
+      return 5;
+    } else if (data.state === "COMPLETED") {
+      return 6;
+    } else {
+      return data.state;
+    }
+  }
+
+  const onClickEdit = () => {
+    if (isEdit) {
+      console.log(getValues(), option);
+      ModifyOrder();
+    }
+    setIsEdit(!isEdit);
+  };
+
   return (
     <Wrapper>
       <WebInfo>
@@ -97,13 +141,25 @@ export const AdminModifyOrderDetailPage = () => {
         </WebPeriod>
         <WebAddInfo>
           <WebInfoWrapper>추가 옵션</WebInfoWrapper>
-          <OptionButton
-            name="페이지"
-            value={option}
-            setValue={(data: boolean) => setOption(data)}
-          />
-          {/* <OptionButton name="로그인" />
-          <OptionButton name="DB" /> */}
+          {!isEdit ? (
+            <>
+              페이지 {data && data.page} 로그인 {data && data.login ? "O" : "X"}{" "}
+              DB {data && data.database ? "O" : "X"}
+            </>
+          ) : (
+            <>
+              <OptionButton
+                name="페이지"
+                value={option}
+                setValue={(data: boolean) => setOption(data)}
+              />
+
+              {"로그인"}
+              <input type="checkbox" {...register("login")}></input>
+              {"DB"}
+              <input type="checkbox" {...register("database")}></input>
+            </>
+          )}
         </WebAddInfo>
         <WebStarRating>
           <WebInfoWrapper>주문자 별점</WebInfoWrapper>
@@ -120,25 +176,37 @@ export const AdminModifyOrderDetailPage = () => {
             <>별점 없음</>
           )}
         </WebStarRating>
-        <WebState>
-          <WebInfoWrapper>발주 상태</WebInfoWrapper>
-          <select>
-            <option>발주 시작</option>
-            <option>디자인 회의</option>
-            <option>퍼블리싱</option>
-            <option>페이지 기능 구현</option>
-            <option>최종 수정</option>
-            <option>발주 완료</option>
-          </select>
-        </WebState>
-        <WebAddImage>
-          <WebInfoWrapper>이미지 추가</WebInfoWrapper>
-          <input type="file" onChange={handleImageChange} multiple />
-        </WebAddImage>
+        {!isEdit ? (
+          <></>
+        ) : (
+          <WebState>
+            <WebInfoWrapper>발주 상태</WebInfoWrapper>
+            <select {...register("state")}>
+              <option value={0}>선택 없음</option>
+              {stateOption.map((item, index) => {
+                if (convertedState() <= index) {
+                  return (
+                    <option key={index} value={index + 1}>
+                      {item}
+                    </option>
+                  );
+                }
+              })}
+            </select>
+          </WebState>
+        )}
+        {!isEdit ? (
+          <></>
+        ) : (
+          <WebAddImage>
+            <WebInfoWrapper>이미지 추가</WebInfoWrapper>
+            <input type="file" onChange={handleImageChange} multiple />
+          </WebAddImage>
+        )}
       </WebInfo>
       <WebImages>
         <SiteImagesSwiper />
-        <EditButton onClick={() => setIsEdit(!isEdit)} isEdit={isEdit} />
+        <EditButton onClick={() => onClickEdit()} isEdit={isEdit} />
       </WebImages>
     </Wrapper>
   );
