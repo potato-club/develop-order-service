@@ -54,7 +54,9 @@ export default function OrderDetail() {
   );
 
   useEffect(() => {
-    if (tokenService.getRole() === "USER") {
+    console.log(tokenService.getRole());
+
+    if (tokenService.getRole() !== "USER") {
       getModalState({
         modalRole: "backToOrderReview",
         state: true,
