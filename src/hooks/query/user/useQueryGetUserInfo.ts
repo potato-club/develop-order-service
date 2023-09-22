@@ -27,7 +27,7 @@ export const useQueryGetUserInfo = () => {
       if (!Router.asPath.includes("/admin")) {
         setIsLoginState(tokenService.getToken() !== null);
         if (tokenService.getToken() !== null) {
-          if (tokenService.getRole() === "ADMIN") {
+          if (tokenService.getRole() !== "USER") {
             logout();
             localStorage.setItem("prevPath", Router.asPath);
           } else {
