@@ -2,13 +2,18 @@ import styled from "styled-components";
 import { customColor } from "../../customColor";
 import { BsSearch } from "react-icons/bs";
 import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { modifyOrderContentsFilterState } from "../../../recoil/modifyOrderPageState";
 
 interface ButtonProps {
   selected: boolean;
 }
 
 export const SearchBar = () => {
-  const [stateButtonValue, setStateButtonValue] = useState("in-progress"); // or 'complete'
+  const [stateButtonValue, setStateButtonValue] = useRecoilState(
+    modifyOrderContentsFilterState
+  );
+
   return (
     <Wrapper>
       <Search>
@@ -18,14 +23,14 @@ export const SearchBar = () => {
       <State>
         <StateButtons>
           <StateButton
-            selected={stateButtonValue === "in-progress"}
-            onClick={() => setStateButtonValue("in-progress")}
+            selected={stateButtonValue === "onGoing"}
+            onClick={() => setStateButtonValue("onGoing")}
           >
             진행중
           </StateButton>
           <StateButton
-            selected={stateButtonValue === "complete"}
-            onClick={() => setStateButtonValue("complete")}
+            selected={stateButtonValue === "finished"}
+            onClick={() => setStateButtonValue("finished")}
           >
             완료
           </StateButton>

@@ -16,7 +16,11 @@ export const ButtonForCheckOrDelete = (props: {
   return (
     <Wrapper>
       <Modal
-        content={isSubmit ? "" : "발주신청을 취소하시겠습니까?"}
+        content={
+          isSubmit
+            ? "발주신청을 수락하시겠습니까?"
+            : "발주신청을 취소하시겠습니까?"
+        }
         isOpen={isModalOpen}
         closeModal={() => setIsModalOpen(false)}
         yesEventFunc={() =>
@@ -36,7 +40,7 @@ export const ButtonForCheckOrDelete = (props: {
       {props.isNew && (
         <CheckButton
           onClick={() => {
-            setIsSubmit(false);
+            setIsSubmit(true);
             setIsModalOpen(true);
           }}
         >

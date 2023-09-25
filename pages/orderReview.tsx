@@ -15,6 +15,7 @@ import { tokenService } from "../src/libs/tokenService";
 
 export type contentType = {
   id: number;
+  clientName: string;
   createdDate: string;
   completedDate?: string;
   likes?: number;

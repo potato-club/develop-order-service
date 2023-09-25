@@ -1,4 +1,6 @@
+import Image from "next/image";
 import React from "react";
+import WWWIcon from "../../../public/img/www.png";
 import styled from "styled-components";
 import { customColor } from "../customColor";
 
