@@ -7,7 +7,6 @@ interface Props {
   siteName: string | undefined;
   purpose: string | undefined;
   owner: "COMPANY" | "PERSONAL" | "PUBLIC" | undefined;
-  isLoading: boolean;
 }
 
 export const SignUpSiteInfo = (props: Props) => {
@@ -29,7 +28,7 @@ export const SignUpSiteInfo = (props: Props) => {
         <BoxItem>
           <BoxItemLabel>*사이트 운영자</BoxItemLabel>
           <BoxItemContent>
-            <OrdererRadioBoxs data={props.isLoading ? null : props.owner!} />
+            <OrdererRadioBoxs data={props.owner!} />
           </BoxItemContent>
         </BoxItem>
       </Box>
@@ -46,9 +45,10 @@ const Content = styled.div`
 `;
 const Label = styled.p`
   display: flex;
-  width: 120px;
+  min-width: 120px;
+  height: 21px;
   font-size: 18px;
-  color: ${customColor.lightGray};
+  color: ${customColor.black};
   letter-spacing: -0.5px;
   font-weight: bold;
   gap: 0 4px;
@@ -58,19 +58,19 @@ const Label = styled.p`
 const Box = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 28px 0;
+  gap: 16px 0;
   flex: auto;
-  padding-top: 36px;
+  padding-top: 12px;
 `;
 const BoxItem = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 6px 0;
+  gap: 2px 0;
 `;
 const BoxItemLabel = styled.div`
   display: flex;
-  font-size: 16px;
-  color: ${customColor.gray};
+  font-size: 14px;
+  color: ${customColor.indigo3};
   letter-spacing: -0.5px;
   padding-left: 12px;
   justify-content: space-between;
@@ -80,11 +80,11 @@ const BoxItemLabel = styled.div`
 const BoxItemContent = styled.div`
   display: flex;
   flex-direction: row;
-  background-color: ${customColor.indigo3};
+  background-color: ${customColor.darkGray};
   min-height: 38px;
   width: 100%;
   align-items: center;
-  padding-left: 32px;
+  padding-left: 20px;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
   overflow: hidden;

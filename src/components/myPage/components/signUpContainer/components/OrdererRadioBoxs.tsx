@@ -41,15 +41,15 @@ const Wrapper = styled.article`
 const Box = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 0 24px;
+  gap: 0 20px;
   align-items: center;
   justify-content: center;
 `;
 const RadioBoxs = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 0 6px;
-  font-size: 16px;
+  gap: 0 4px;
+  font-size: 14px;
   color: ${customColor.lightGray};
   letter-spacing: -0.5px;
   align-items: center;
@@ -58,7 +58,7 @@ const RadioBoxs = styled.div`
 const RadioBox = styled.div`
   display: flex;
   position: relative;
-  border: 1px solid ${customColor.darkGray};
+  border: 1px solid ${customColor.lightGray};
   border-radius: 4px;
   width: 18px;
   height: 18px;

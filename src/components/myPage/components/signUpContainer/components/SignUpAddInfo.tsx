@@ -13,7 +13,6 @@ interface Props {
   files: { fileName: string; id: number; s3Url: string }[] | undefined;
   etc: string | undefined;
   meeting: string | undefined;
-  isLoading: boolean;
 }
 
 export const SignUpAddInfo = (props: Props) => {
@@ -41,13 +40,13 @@ export const SignUpAddInfo = (props: Props) => {
         <BoxItem>
           <BoxItemLabel>브랜드 컬러1</BoxItemLabel>
           <BoxItemContent>
-            <ColorPalette data={props.isLoading ? [] : props.mainColor!} />
+            <ColorPalette data={props.mainColor!} />
           </BoxItemContent>
         </BoxItem>
         <BoxItem>
           <BoxItemLabel>브랜드 컬러2</BoxItemLabel>
           <BoxItemContent>
-            <ColorPalette data={props.isLoading ? [] : props.subColor!} />
+            <ColorPalette data={props.subColor!} />
           </BoxItemContent>
         </BoxItem>
         <BoxItem>
@@ -79,7 +78,7 @@ export const SignUpAddInfo = (props: Props) => {
         </BoxItem>
         <BoxItem>
           <BoxItemLabel>기타사항</BoxItemLabel>
-          <BoxItemContent>{props.isLoading && props.etc}</BoxItemContent>
+          <BoxItemContent>{props.etc}</BoxItemContent>
         </BoxItem>
         <BoxItem>
           <BoxItemLabel>*첫 미팅 희망날짜</BoxItemLabel>
@@ -103,8 +102,9 @@ const Content = styled.div`
 const Lbel = styled.p`
   display: flex;
   min-width: 120px;
+  height: 21px;
   font-size: 18px;
-  color: ${customColor.lightGray};
+  color: ${customColor.black};
   letter-spacing: -0.5px;
   font-weight: bold;
   gap: 0 4px;
@@ -114,21 +114,21 @@ const Lbel = styled.p`
 const Box = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 28px 0;
+  gap: 16px 0;
   flex: auto;
-  padding-top: 36px;
+  padding-top: 12px;
 `;
 const BoxItem = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
   width: 100%;
-  gap: 6px 0;
+  gap: 2px 0;
 `;
 const BoxItemLabel = styled.div`
   display: flex;
-  font-size: 16px;
-  color: ${customColor.gray};
+  font-size: 14px;
+  color: ${customColor.indigo3};
   letter-spacing: -0.5px;
   padding-left: 12px;
   justify-content: space-between;
@@ -138,11 +138,11 @@ const BoxItemLabel = styled.div`
 const BoxItemContent = styled.div`
   display: flex;
   flex-direction: row;
-  background-color: ${customColor.indigo3};
+  background-color: ${customColor.darkGray};
   min-height: 38px;
   width: 100%;
   align-items: center;
-  padding: 10px 12px 9px 32px;
+  padding: 10px 12px 9px 20px;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
 `;
