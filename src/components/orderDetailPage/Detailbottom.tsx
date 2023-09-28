@@ -7,7 +7,7 @@ import { useMutationPostLikes } from "../../hooks/query/orderDetail/useMutationP
 import { useQueryGetOrderDetail } from "../../hooks/query/orderDetail/useQueryGetOrderDetail";
 
 type propTypes = {
-  id?: number;
+  id: number;
   likes?: number;
   state?: string;
   modalState: {

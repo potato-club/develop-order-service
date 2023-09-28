@@ -19,16 +19,15 @@ export const OrderDetailApi = {
   },
 
   deleteOrder: async (id?: number) => {
-    const response = await sendApi.delete(
-      `https://www.developorderservice.store/orders/${id}`
-    );
+    const response = await sendApi.delete(`orders/${id}`);
 
     return response;
   },
 
   postLikes: async (id?: number) => {
     const response = await sendApi.post(
-      `https://www.developorderservice.store/orders/detail/${id}/likes`,
+      //
+      `orders/detail/${id}/likes`,
       {}
     );
 
