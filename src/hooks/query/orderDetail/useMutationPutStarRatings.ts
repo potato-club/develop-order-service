@@ -36,6 +36,12 @@ export const useMutationPutStarRatings = ({
     {
       onSuccess: (data) => {
         console.log("onSuccess", data);
+        getModalState({
+          modalRole: "",
+          state: false,
+          text: "",
+          onClickConfirmButton: () => {},
+        });
         return queryClient.invalidateQueries("getOrderDetail");
       },
       onError: (error: { response: { data: { error: string } } }) => {
