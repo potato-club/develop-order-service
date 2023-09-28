@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { tokenService } from "../../libs/tokenService";
 import { IsLoginModal } from "../modal/IsLoginModal";
-import { LikesContainer } from "./components/likesContainer/likesContainer";
+import { LikesContainer } from "./components/likesContainer/LikesContainer";
 import { SideMenuBar } from "./components/SideMenuBar";
 import { SignUpContainer } from "./components/signUpContainer/SignUpContainer";
 import { WithdrawalContainer } from "./components/WithdrawalContainer";

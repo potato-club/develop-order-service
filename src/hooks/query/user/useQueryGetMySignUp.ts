@@ -27,7 +27,6 @@ export const useQueryGetMySignUp = () => {
         state: i.state,
       });
     });
-    console.log(signUps);
     return signUps;
   }, []);
 

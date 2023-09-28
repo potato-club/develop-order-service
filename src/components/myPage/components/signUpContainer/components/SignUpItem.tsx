@@ -85,27 +85,6 @@ const Wrapper = styled.button<{ isFold: boolean }>`
   @media screen and (max-width: 920px) {
     height: ${(props) => (props.isFold ? 409 : 1276)}px;
   }
-  ::-webkit-scrollbar {
-    width: 14px;
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: ${customColor.gray};
-    border-radius: 10px;
-    background-clip: padding-box;
-    border: 4px solid transparent;
-  }
-  ::-webkit-scrollbar-track {
-    background-color: transparent;
-    border-radius: 10px;
-  }
-  ::-webkit-scrollbar-button:start:decrement {
-    background-color: transparent;
-    height: 12px;
-  }
-  ::-webkit-scrollbar-button:end:increment {
-    background-color: transparent;
-    height: 24px;
-  }
 `;
 const WrapperInner = styled.div`
   display: flex;
@@ -148,7 +127,7 @@ const DetailText = styled.div`
     }
   }
 `;
-const LinkButton = styled.button`
+const LinkButton = styled.div`
   display: flex;
   position: absolute;
   color: ${customColor.lightGray};

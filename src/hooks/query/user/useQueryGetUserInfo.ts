@@ -4,7 +4,6 @@ import Router from "next/router";
 import { useQuery } from "react-query";
 import { UserAPI } from "../../../apis/controller/user.api";
 import { logout, tokenService } from "../../../libs/tokenService";
-import { pathName } from "../../../config/pathName";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { userInformation } from "../../../recoil/userInfo";
 
