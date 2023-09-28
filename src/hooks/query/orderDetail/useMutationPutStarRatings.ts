@@ -22,7 +22,8 @@ export const useMutationPutStarRatings = ({
     "putStarRatings",
     (newRating: number) =>
       axios.put(
-        `https://www.developorderservice.store/orders/detail/${id}/rating`,
+        // `https://www.developorderservice.store/orders/detail/${id}/rating`,
+        `http://www.developorderservice.store/orders/detail/${id}/rating`,
         {
           rating: newRating,
         },
