@@ -55,7 +55,7 @@ const ColorBox = styled.div`
   margin-right: 26px;
   width: 94px;
   height: 26px;
-  border: 1px solid ${customColor.darkGray};
+  border: 1px solid ${customColor.lightGray};
   border-radius: 4px;
   padding-right: 28px;
   padding-left: 5px;
@@ -70,7 +70,7 @@ const ColorInput = styled.div`
   right: 1px;
   top: 50%;
   transform: translate(0, -50%);
-  border-left: 1px solid ${customColor.darkGray};
+  border-left: 1px solid ${customColor.lightGray};
   padding-left: 1px;
   align-items: center;
   justify-content: center;

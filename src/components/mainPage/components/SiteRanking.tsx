@@ -18,7 +18,8 @@ export const SiteRanking = () => {
           <StyledSwiper
             speed={1000}
             slidesPerView={"auto"}
-            loop={true}
+            loop
+            loopedSlides={1}
             spaceBetween={50}
             slideToClickedSlide
             centeredSlides
@@ -35,7 +36,7 @@ export const SiteRanking = () => {
           >
             {data?.length == 0 ? (
               <StyledSwiperSlide>
-                사이트 랭킹 데이터가 없습니다
+                사이트 랭킹 데이터가 없습니다 :(
               </StyledSwiperSlide>
             ) : (
               data?.map((i, id) => (
@@ -44,8 +45,8 @@ export const SiteRanking = () => {
                     <SiteImg>
                       {i.thumbnail != null && (
                         <Image
-                          src={"/img/dummy/2.jpeg"}
-                          alt="1"
+                          src={i.thumbnail.imageUrl}
+                          alt={i.thumbnail.imageName}
                           fill
                           style={{
                             objectFit: "cover",
@@ -101,6 +102,11 @@ const StyledSwiperSlide = styled(SwiperSlide)`
   width: 100%;
   height: 100%;
   padding: 14px 0;
+  filter: brightness(94%);
+  transition: all 0.3s ease;
+  &.swiper-slide-active {
+    filter: brightness(100%);
+  }
 `;
 const SiteInfo = styled.button`
   display: flex;
@@ -129,5 +135,5 @@ const SiteImg = styled.div`
   transform: translateY(-44px);
   box-shadow: 0px 2px 4px 3px ${customColor.black + "22"};
   border-radius: 6px;
-  background: ${customColor.white};
+  background: ${customColor.lightGray};
 `;

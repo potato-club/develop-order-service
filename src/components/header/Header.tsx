@@ -1,12 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { logout, tokenService } from "../../libs/tokenService";
 import { customColor } from "../customColor";
 import { HeaderMenu } from "./HeaderMenu";
 import { HeaderTitle } from "./HeaderTitle";
 
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
-
+  useEffect(() => {
+    if (tokenService.getRole() !== "USER") {
+      logout();
+    }
+  }, []);
   return (
     <Wrapper>
       {!isScrolled && <HeaderTitle />}

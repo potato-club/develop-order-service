@@ -55,7 +55,7 @@ const RadioBoxs = styled.div`
 const RadioBox = styled.div`
   display: flex;
   position: relative;
-  border: 1px solid ${customColor.darkGray};
+  border: 1px solid ${customColor.lightGray};
   border-radius: 4px;
   width: 18px;
   height: 18px;
