@@ -3,17 +3,33 @@ import styled from "styled-components";
 import { customColor } from "../../../../customColor";
 import StarRatings from "react-star-ratings";
 import { AiFillHeart } from "react-icons/ai";
+import { MyLikeType } from "../../../../../hooks/query/user/useQueryGetMyLikes";
+import Router from "next/router";
 
-export const LikeItem = () => {
+export const LikeItem = (props: { data: MyLikeType }) => {
+  console.log("asda" + props.data);
+
   return (
-    <Wrapper onClick={() => {}}>
+    <Wrapper
+      onClick={() => {
+        Router.push(`/orderDetail?id=${props.data.id}`);
+      }}
+    >
       <ThumbnailBox>
-        <Image src={""} alt={""} />
+        {props.data.thumbnail != null && (
+          <Image
+            src={props.data.thumbnail.imageUrl}
+            alt={props.data.thumbnail.imageName}
+            fill
+            style={{ objectFit: "cover" }}
+          />
+        )}
       </ThumbnailBox>
-      <SiteName>제목어쩌고저쩌고</SiteName>
+      <SiteName>{props.data.siteName}</SiteName>
       <Rating>
         <Like>
-          <AiFillHeart color="#fc4646" size={18} />5
+          <AiFillHeart color="#fc4646" size={18} />
+          {props.data.likes}
         </Like>
         <StarRatingsStyle
           rating={10 / 2}
@@ -21,7 +37,7 @@ export const LikeItem = () => {
           starEmptyColor={customColor.lightGray}
           starDimension="20px"
           starSpacing="0px"
-          numberOfStars={5}
+          numberOfStars={props.data.rating}
         />
       </Rating>
     </Wrapper>
@@ -49,12 +65,13 @@ const Wrapper = styled.button`
 `;
 const ThumbnailBox = styled.div`
   display: flex;
-  background: ${customColor.gray};
+  background: ${customColor.lightGray};
   height: 100%;
   width: 100%;
   transform: translateY(-40px);
   border-radius: 4px;
   box-shadow: 0px 1px 4px 0px ${customColor.black + "33"};
+  overflow: hidden;
 `;
 const SiteName = styled.div`
   display: flex;
@@ -76,10 +93,12 @@ const Rating = styled.div`
 const Like = styled.p`
   display: flex;
   height: 100%;
-  font-size: 15px;
+  font-size: 14px;
   align-items: flex-end;
-  gap: 3px;
+  gap: 4px;
   justify-content: center;
+  color: ${customColor.black};
+  align-items: center;
 `;
 const StarRatingsStyle = styled(StarRatings)`
   &.CustomStarRating .fa-star:before {

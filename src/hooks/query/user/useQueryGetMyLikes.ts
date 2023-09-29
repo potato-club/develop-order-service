@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useQuery } from "react-query";
 import { UserAPI } from "../../../apis/controller/user.api";
 
-export interface MySignUpType {
+export interface MyLikeType {
   clientName: string;
   id: number;
   completedDated: string;
@@ -25,8 +25,8 @@ export interface MySignUpType {
 export const useQueryGetMyLikes = (page: number = 1) => {
   const load = useCallback(async () => {
     const response = await UserAPI.getMyLikes(page);
-    const likes: MySignUpType[] = [];
-    response["content"].map((i: MySignUpType) => {
+    const likes: MyLikeType[] = [];
+    response["content"].map((i: MyLikeType) => {
       likes.push({
         clientName: i.clientName,
         id: i.id,
@@ -40,11 +40,10 @@ export const useQueryGetMyLikes = (page: number = 1) => {
         state: i.state,
       });
     });
-    console.log(likes);
     return likes;
   }, []);
 
-  return useQuery<MySignUpType[]>(["getMeetings"], load, {
+  return useQuery<MyLikeType[]>(["getMeetings"], load, {
     onError: () => {},
   });
 };
