@@ -41,7 +41,9 @@ export const SideMenuBar = (props: {
           내 발주현황
         </MenuButton>
         <MenuButton
-          onClick={() => Router.replace({ pathname: pathName.MY_LIKES })}
+          onClick={() =>
+            Router.replace({ pathname: pathName.MY_LIKES, query: { page: 1 } })
+          }
           isCurrentMenu={props.currentMenu === "likes"}
         >
           내 좋아요

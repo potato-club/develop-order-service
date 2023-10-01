@@ -5,17 +5,11 @@ import { LikeItem } from "./components/LikeItem";
 import { Pagination } from "./components/Pagination";
 import { BsQuestionCircle } from "react-icons/bs";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { useRecoilValue } from "recoil";
-import { myLikesPageState } from "../../../../recoil/myPageState";
 
 export const LikesContainer = () => {
-  const pageState = useRecoilValue(myLikesPageState);
-  const { isLoading, data, refetch } = useQueryGetMyLikes(pageState);
-  useEffect(() => {
-    refetch();
-  }, [pageState, refetch, data]);
-
+  const router = useRouter();
+  var page = router.query.page;
+  const { isLoading, data } = useQueryGetMyLikes(Number(page));
   return (
     <Wrapper>
       <WrapperInner>
@@ -28,7 +22,9 @@ export const LikesContainer = () => {
           좋아요를 누른 발주가 없습니다
         </NullBox>
       )}
-      {data?.totalPage != 0 && <Pagination totalPage={data?.totalPage} />}
+      {data?.totalPage != 0 && (
+        <Pagination totalPage={data?.totalPage} page={Number(page)} />
+      )}
     </Wrapper>
   );
 };
