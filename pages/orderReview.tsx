@@ -33,10 +33,6 @@ export type contentsDataType = {
 };
 
 export default function OrderReview() {
-  const [contentsDataState, setContentsDataState] = useState<
-    contentsDataType | undefined
-  >(undefined);
-
   const pageState = useRecoilValue(reviewPageState);
   const contentsFilterState = useRecoilValue(reviewContentsFilterState);
   const sortOptionState = useRecoilValue(reviewSortOptionState);
@@ -49,10 +45,6 @@ export default function OrderReview() {
     onClickConfirmButton: () => void;
   }>({ modalRole: "", state: false, text: "", onClickConfirmButton: () => {} });
 
-  function getContentsDataState(contentsDataState: contentsDataType) {
-    setContentsDataState(contentsDataState);
-  }
-
   function getModalState(modalState: {
     modalRole: string;
     state: boolean;
@@ -64,8 +56,7 @@ export default function OrderReview() {
 
   const { data, refetch } = useQueryGetOrderList(
     contentsFilterState,
-    pageState,
-    getContentsDataState
+    pageState
   );
 
   useEffect(() => {
@@ -82,13 +73,11 @@ export default function OrderReview() {
       ></ReviewModal>
       <ReviewTop modalState={modalState} getModalState={getModalState} />
       <ReviewContnets
-        contentsData={contentsDataState}
+        contentsData={data}
         modalState={modalState}
         getModalState={getModalState}
       />
-      <ReviewBottm
-        totalPages={contentsDataState && contentsDataState.totalPages}
-      />
+      <ReviewBottm totalPages={data && data.totalPages} />
     </Wrapper>
   );
 }

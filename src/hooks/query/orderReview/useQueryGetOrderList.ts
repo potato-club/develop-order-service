@@ -7,8 +7,8 @@ type contentsFilterType = "onGoing" | "finished" | "myOrder";
 
 export const useQueryGetOrderList = (
   contentsFilterState: contentsFilterType,
-  pageState: number,
-  getContentsDataState: (contentsDataState: contentsDataType) => void
+  pageState: number
+  // getContentsDataState: (contentsDataState: contentsDataType) => void
 ) => {
   const load = useCallback(async () => {
     const response = await OrderReviewApi.getOrderList(
@@ -20,7 +20,7 @@ export const useQueryGetOrderList = (
 
   return useQuery("getOrderList", load, {
     onSuccess(data) {
-      getContentsDataState(data);
+      // getContentsDataState(data);
       console.log(data);
     },
     onError: (e) => {
