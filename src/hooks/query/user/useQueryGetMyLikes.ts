@@ -22,9 +22,10 @@ export interface MyLikeType {
     | "COMPLETED";
 }
 
-export const useQueryGetMyLikes = (page: number = 1) => {
+export const useQueryGetMyLikes = (page: number) => {
   const load = useCallback(async () => {
     const response = await UserAPI.getMyLikes(page);
+    const totalPage: number = response["totalPages"];
     const likes: MyLikeType[] = [];
     response["content"].map((i: MyLikeType) => {
       likes.push({
@@ -40,10 +41,13 @@ export const useQueryGetMyLikes = (page: number = 1) => {
         state: i.state,
       });
     });
-    return likes;
-  }, []);
+    return { likes, totalPage };
+  }, [page]);
 
-  return useQuery<MyLikeType[]>(["getMeetings"], load, {
+  return useQuery<{
+    likes: MyLikeType[];
+    totalPage: number;
+  }>(["getMeetings", page], load, {
     onError: () => {},
   });
 };

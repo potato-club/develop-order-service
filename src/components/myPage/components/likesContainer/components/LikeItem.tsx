@@ -7,8 +7,6 @@ import { MyLikeType } from "../../../../../hooks/query/user/useQueryGetMyLikes";
 import Router from "next/router";
 
 export const LikeItem = (props: { data: MyLikeType }) => {
-  console.log("asda" + props.data);
-
   return (
     <Wrapper
       onClick={() => {
@@ -37,7 +35,7 @@ export const LikeItem = (props: { data: MyLikeType }) => {
           starEmptyColor={customColor.lightGray}
           starDimension="20px"
           starSpacing="0px"
-          numberOfStars={props.data.rating}
+          numberOfStars={props.data.rating ?? 0}
         />
       </Rating>
     </Wrapper>
