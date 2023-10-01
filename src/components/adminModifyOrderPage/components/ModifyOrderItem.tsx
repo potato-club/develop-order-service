@@ -33,6 +33,24 @@ export const ModifyOrderItem = ({
   ];
   const TestStateValue = 1;
 
+  function convertedState(): number {
+    if (contentsData.state === "START") {
+      return 1;
+    } else if (contentsData.state === "DESIGN") {
+      return 2;
+    } else if (contentsData.state === "PUBLISH") {
+      return 3;
+    } else if (contentsData.state === "IMPLEMENT") {
+      return 4;
+    } else if (contentsData.state === "FINAL") {
+      return 5;
+    } else if (contentsData.state === "COMPLETED") {
+      return 6;
+    } else {
+      return contentsData.state;
+    }
+  }
+
   const handleRouteDetail = (id: number) => {
     Router.push(`${pathName.MODIFY_ORDER.DETAIL.replace(":id", String(id))}`);
   };
@@ -51,10 +69,13 @@ export const ModifyOrderItem = ({
             {contentsData.completedDate?.split("T")[0]}
           </WebPeriod>
           <WebState>
-            {WebStateValue.map((i, id) => (
+            {WebStateValue.map((item, index) => (
               // 이거는 천천히 수정
-              <WebStateButton key={i} isComplete={id === TestStateValue}>
-                {i}
+              <WebStateButton
+                key={item}
+                isComplete={index + 1 < convertedState()}
+              >
+                {item}
               </WebStateButton>
             ))}
           </WebState>
