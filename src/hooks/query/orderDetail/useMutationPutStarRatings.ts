@@ -42,7 +42,7 @@ export const useMutationPutStarRatings = ({
           text: "",
           onClickConfirmButton: () => {},
         });
-        return queryClient.invalidateQueries("getOrderDetail");
+        queryClient.invalidateQueries("getOrderDetail");
       },
       onError: (error: { response: { data: { error: string } } }) => {
         console.log(error);
