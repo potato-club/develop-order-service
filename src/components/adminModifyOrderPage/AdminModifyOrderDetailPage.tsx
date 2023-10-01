@@ -160,7 +160,7 @@ export const AdminModifyOrderDetailPage = () => {
           <WebState>
             <WebInfoWrapper>발주 상태</WebInfoWrapper>
             <select {...register("state")}>
-              <option value={0}>선택 없음</option>
+              <option value={convertedState()}>선택 없음</option>
               {stateOption.map((item, index) => {
                 if (convertedState() <= index) {
                   return (
