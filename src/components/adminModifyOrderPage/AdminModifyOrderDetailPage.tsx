@@ -17,6 +17,7 @@ export const AdminModifyOrderDetailPage = () => {
     login?: boolean;
     database?: boolean;
     state?: number;
+    image?: FileList;
   }>();
   const id: string | string[] | undefined = router.query.id;
 
@@ -27,10 +28,7 @@ export const AdminModifyOrderDetailPage = () => {
   const [option, setOption] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
-  const { isSuccess, isError, data, refetch } = useQueryGetOrderDetail(
-    id,
-    getDetailDataState
-  );
+  const { isSuccess, isError, data, refetch } = useQueryGetOrderDetail(id);
 
   useEffect(() => {
     console.log(data);
@@ -38,6 +36,12 @@ export const AdminModifyOrderDetailPage = () => {
 
   const ModifyOrder = async () => {
     const formData = new FormData();
+    const imageList = getValues("image");
+    if (imageList && imageList.length > 0) {
+      for (let i = 0; i < imageList.length; i++) {
+        formData.append("images", imageList[i]);
+      }
+    }
 
     const requestDto = {
       database: getValues("database"),
@@ -62,32 +66,6 @@ export const AdminModifyOrderDetailPage = () => {
       { headers }
     );
 
-    console.log(response);
-  };
-
-  //이미지 업로드 테스트 코드
-  const handleImageChange = (e: any) => {
-    const formData = new FormData();
-    const test = e.target.files[1];
-
-    const requestDto = { database: true, login: true, page: 8, stateKey: 4 };
-    if (requestDto) {
-      formData.append(
-        "orderDetail",
-        new Blob([JSON.stringify(requestDto)], { type: "application/json" })
-      );
-      formData.append("images", test);
-    }
-
-    const headers = {
-      Authorization: localStorage.getItem("token"),
-    };
-
-    const response = axios.put(
-      `http://localhost:8080/orders/detail/${id}`,
-      formData,
-      { headers }
-    );
     console.log(response);
   };
 
@@ -200,7 +178,7 @@ export const AdminModifyOrderDetailPage = () => {
         ) : (
           <WebAddImage>
             <WebInfoWrapper>이미지 추가</WebInfoWrapper>
-            <input type="file" onChange={handleImageChange} multiple />
+            <input type="file" {...register("image")} multiple />
           </WebAddImage>
         )}
       </WebInfo>

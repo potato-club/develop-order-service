@@ -2,10 +2,7 @@ import { useQuery } from "react-query";
 import { useCallback } from "react";
 import { OrderDetailApi } from "../../../apis/controller/orderDetail.api";
 
-export const useQueryGetOrderDetail = (
-  id: string | string[] | undefined,
-  getDetailDataState: (detailDataState: any) => void
-) => {
+export const useQueryGetOrderDetail = (id: string | string[] | undefined) => {
   const load = useCallback(async () => {
     const response = await OrderDetailApi.getOrderDetail(id);
     return response;
@@ -13,9 +10,9 @@ export const useQueryGetOrderDetail = (
 
   return useQuery("getOrderDetail", load, {
     enabled: !!id,
+
     onSuccess: (data) => {
       console.log("onSuccess", data);
-      getDetailDataState(data);
     },
     onError: (error) => {
       console.log(error);

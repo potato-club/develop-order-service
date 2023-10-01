@@ -14,17 +14,17 @@ export const useMutationPostLikes = (
   const load = useCallback(async () => {
     const response = await OrderDetailApi.postLikes(id);
 
-    if (response.status !== 200) {
-      throw new Error(`Request failed with status ${response.status}`);
-    }
+    // if (response.status !== 200) {
+    //   throw new Error(`Request failed with status ${response.status}`);
+    // }
     return response;
   }, [id]);
   const queryClient = useQueryClient();
 
   return useMutation("postLikes", load, {
     onSuccess: (data) => {
-      console.log("onSuccess", data);
       queryClient.invalidateQueries({ queryKey: ["getOrderDetail"] });
+      console.log("onSuccess", data);
     },
     onError: (error) => {
       getModalState({
