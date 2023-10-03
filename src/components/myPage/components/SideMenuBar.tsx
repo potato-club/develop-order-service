@@ -22,14 +22,17 @@ export const SideMenuBar = (props: {
             alt={""}
             width="160"
             height="160"
-            style={{ objectFit: "cover", borderRadius: 80 }}
+            style={{
+              objectFit: "cover",
+              borderRadius: 80,
+            }}
           />
           <UserName>
             <b>{userInfo.name}</b>님 안녕하세요
           </UserName>
           <UserEmail>{userInfo.email}</UserEmail>
         </UserInfo>
-      </UserInfoBox>{" "}
+      </UserInfoBox>
       <MenuBox>
         <MenuButton
           onClick={() => Router.replace(pathName.MY_ORDER)}
@@ -38,7 +41,9 @@ export const SideMenuBar = (props: {
           내 발주현황
         </MenuButton>
         <MenuButton
-          onClick={() => Router.replace(pathName.MY_LIKES)}
+          onClick={() =>
+            Router.replace({ pathname: pathName.MY_LIKES, query: { page: 1 } })
+          }
           isCurrentMenu={props.currentMenu === "likes"}
         >
           내 좋아요

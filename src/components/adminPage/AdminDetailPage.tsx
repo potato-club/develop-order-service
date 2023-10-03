@@ -1,16 +1,17 @@
-import { useEffect } from "react";
 import styled from "styled-components";
 import { customColor } from "../customColor";
 import { SignUpAddInfo } from "./SignUpAddInfo";
 import { SignUpSiteInfo } from "./SignUpSiteInfo";
 import { SignUpUserInfo } from "./SignUpUserInfo";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import { useQueryGetSignUpDetail } from "../../hooks/query/adminSignUp/useQueryGetSignUpDetail";
 import { ButtonForCheckOrDelete } from "./components/ButtonForCheckOrDelete";
+import { url } from "inspector";
 
 export const AdminDetailPage = () => {
-  const { id } = Router.query;
-  const isNew = Router.query.isNew === "true";
+  const router = useRouter();
+  var id = router.query.id;
+  var isNew = router.query.isNew === "true";
   const { isLoading, data } = useQueryGetSignUpDetail(Number(id));
   return (
     <Wrapper>

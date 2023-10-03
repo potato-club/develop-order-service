@@ -80,7 +80,7 @@ const Wrapper = styled.button<{ isFold: boolean }>`
   scroll-behavior: smooth;
   transition: height 0.6s ease;
   background: ${customColor.lightGray};
-  box-shadow: inset 2px 3px 6px 2px ${customColor.black + "22"};
+  box-shadow: inset 2px 3px 6px 0px ${customColor.black + "22"};
   border-radius: 4px;
   @media screen and (max-width: 920px) {
     height: ${(props) => (props.isFold ? 409 : 1276)}px;
