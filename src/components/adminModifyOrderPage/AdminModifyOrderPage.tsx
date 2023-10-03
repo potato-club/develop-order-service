@@ -2,19 +2,39 @@ import styled from "styled-components";
 import { customColor } from "../customColor";
 import { ModifyOrderItem } from "./components/ModifyOrderItem";
 import { SearchBar } from "./components/SearchBar";
+import { contentType, contentsDataType } from "../../../pages/orderReview";
+import { useEffect, useState } from "react";
+import { Pagenation } from "./components/Pagenation";
+import { useQueryGetOrderList } from "../../hooks/query/orderReview/useQueryGetOrderList";
+import { useRecoilValue } from "recoil";
+import {
+  modifyOrderContentsFilterState,
+  modifyOrderPageState,
+} from "../../recoil/modifyOrderPageState";
 
 export const AdminModifyOrderPage = () => {
+  const pageState = useRecoilValue(modifyOrderPageState);
+  const contentsFilterState = useRecoilValue(modifyOrderContentsFilterState);
+
+  const { data, refetch } = useQueryGetOrderList(
+    contentsFilterState,
+    pageState
+  );
+
+  useEffect(() => {
+    refetch();
+    console.log(data);
+  }, [pageState, contentsFilterState, refetch, data]);
+
   return (
     <Wrapper>
       <SearchBar />
       <WrapperInner>
-        <ModifyOrderItem />
-        <ModifyOrderItem />
-        <ModifyOrderItem />
-        <ModifyOrderItem />
-        <ModifyOrderItem />
-        <ModifyOrderItem />
+        {data?.content.map((item: contentType, index: number) => (
+          <ModifyOrderItem key={index} contentsData={item} />
+        ))}
       </WrapperInner>
+      <Pagenation totalPages={data && data.totalPages} />
     </Wrapper>
   );
 };

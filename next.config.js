@@ -6,6 +6,7 @@ const nextConfig = {
       "lh3.googleusercontent.com",
       "k.kakaocdn.net",
       "dosproject.s3.ap-northeast-2.amazonaws.com",
+      "dos-project.s3.ap-northeast-2.amazonaws.com",
     ],
   },
 };

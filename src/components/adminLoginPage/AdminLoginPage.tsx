@@ -7,7 +7,7 @@ import { useQueryPostLogin } from "../../hooks/query/user/useQueryPostLogin";
 import { pathName } from "../../config/adminPathName";
 import { Alert } from "../modal/alert";
 import { useEffect, useState } from "react";
-import { tokenService } from "../../libs/tokenService";
+import { logout, tokenService } from "../../libs/tokenService";
 
 export const AdminLoginPage = () => {
   const {
@@ -34,9 +34,7 @@ export const AdminLoginPage = () => {
 
   useEffect(() => {
     if (tokenService.getRole() === "USER") {
-      tokenService.resetToken();
-      tokenService.resetRefresh();
-      tokenService.resetRole();
+      logout();
     } else if (tokenService.getRole() === "ADMIN") {
       // handleGoPrevPath();
     }

@@ -18,3 +18,9 @@ export const tokenService = {
   setRole: (role: string) => localStorage.setItem(key.role, role),
   resetRole: () => localStorage.removeItem(key.role),
 };
+
+export const logout = () => {
+  tokenService.resetToken();
+  tokenService.resetRefresh();
+  tokenService.resetRole();
+};

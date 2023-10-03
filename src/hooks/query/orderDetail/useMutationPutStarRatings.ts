@@ -14,7 +14,7 @@ export const useMutationPutStarRatings = ({
   id,
   getModalState,
 }: {
-  id: number;
+  id?: number;
   getModalState: (modalState: modalStateTypes) => void;
 }) => {
   const queryClient = useQueryClient();
@@ -22,7 +22,8 @@ export const useMutationPutStarRatings = ({
     "putStarRatings",
     (newRating: number) =>
       axios.put(
-        `https://www.developorderservice.store/orders/detail/${id}/rating`,
+        // `https://www.developorderservice.store/orders/detail/${id}/rating`,
+        `http://www.developorderservice.store/orders/detail/${id}/rating`,
         {
           rating: newRating,
         },
@@ -35,7 +36,13 @@ export const useMutationPutStarRatings = ({
     {
       onSuccess: (data) => {
         console.log("onSuccess", data);
-        return queryClient.invalidateQueries("getOrderDetail");
+        getModalState({
+          modalRole: "",
+          state: false,
+          text: "",
+          onClickConfirmButton: () => {},
+        });
+        queryClient.invalidateQueries("getOrderDetail");
       },
       onError: (error: { response: { data: { error: string } } }) => {
         console.log(error);

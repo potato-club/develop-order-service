@@ -7,7 +7,7 @@ export const OrderInfo = ({
   preview,
   children,
 }: {
-  progress: string;
+  progress?: string;
   label: string;
   preview: boolean;
   children?: ReactNode;
@@ -20,7 +20,7 @@ export const OrderInfo = ({
   );
 };
 
-const OrderInfoDiv = styled.div<{ progress: String }>`
+const OrderInfoDiv = styled.div<{ progress?: String }>`
   @media screen and (min-width: 1024px) {
     height: 50px;
   }

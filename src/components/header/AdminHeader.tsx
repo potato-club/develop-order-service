@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 import { pathName } from "../../config/adminPathName";
 import { customColor } from "../customColor";
 import { MdLogout } from "react-icons/md";
-import { tokenService } from "../../libs/tokenService";
+import { logout, tokenService } from "../../libs/tokenService";
 
 interface MenuProps {
   isPath: boolean;
@@ -18,9 +18,7 @@ export const AdminHeader = () => {
   }, []);
 
   const handleLogout = () => {
-    tokenService.resetToken();
-    tokenService.resetRefresh();
-    tokenService.resetRole();
+    logout();
     localStorage.setItem("prevPath", Router.asPath.replace(/\/\d+$/, ""));
     Router.push(pathName.LOGIN);
   };
@@ -32,19 +30,19 @@ export const AdminHeader = () => {
           isPath={
             Router.asPath.replace(/\/\d+$/, "") === pathName.CHECK_SIGNUP.LIST
           }
-          onClick={() => Router.push(pathName.CHECK_SIGNUP.LIST)}
+          onClick={() => Router.replace(pathName.CHECK_SIGNUP.LIST)}
         >
           발주신청확인
         </MenuButton>
         <MenuButton
           isPath={Router.pathname.includes(pathName.MODIFY_ORDER.LIST)}
-          onClick={() => Router.push(pathName.MODIFY_ORDER.LIST)}
+          onClick={() => Router.replace(pathName.MODIFY_ORDER.LIST)}
         >
           발주상태·내용수정
         </MenuButton>
         <MenuButton
-          isPath={false}
-          onClick={() => Router.push(pathName.SCHEDULE)}
+          isPath={Router.pathname === pathName.SCHEDULE}
+          onClick={() => Router.replace(pathName.SCHEDULE)}
         >
           직원정보수정
         </MenuButton>
