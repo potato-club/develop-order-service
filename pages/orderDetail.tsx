@@ -27,17 +27,12 @@ export type detailDataTypes = {
 export default function OrderDetail() {
   const router = useRouter();
   const id: string | string[] | undefined = router.query.id;
-  const [detailDataState, setDetailDataState] = useState<detailDataTypes>();
   const [modalState, setModalState] = useState<{
     modalRole: string;
     state: boolean;
     text: string;
     onClickConfirmButton: () => void;
   }>({ modalRole: "", state: false, text: "", onClickConfirmButton: () => {} });
-
-  function getDetailDataState(detailDataState: any) {
-    setDetailDataState(detailDataState);
-  }
 
   function getModalState(modalState: {
     modalRole: string;
@@ -48,10 +43,7 @@ export default function OrderDetail() {
     setModalState(modalState);
   }
 
-  const { isSuccess, isError, data, refetch } = useQueryGetOrderDetail(
-    id,
-    getDetailDataState
-  );
+  const { isSuccess, isError, data, refetch } = useQueryGetOrderDetail(id);
 
   useEffect(() => {
     console.log(tokenService.getRole());
@@ -76,14 +68,14 @@ export default function OrderDetail() {
       ></ReviewModal>
       <DetailTop />
       <DetailContnets
-        detailData={detailDataState && detailDataState}
+        detailData={data && data}
         modalState={modalState}
         getModalState={getModalState}
       />
       <DetailBottm
-        id={detailDataState && detailDataState.id}
-        likes={detailDataState && detailDataState.likes}
-        state={detailDataState && detailDataState.state}
+        id={data && data.id}
+        likes={data && data.likes}
+        state={data && data.state}
         modalState={modalState}
         getModalState={getModalState}
       />
