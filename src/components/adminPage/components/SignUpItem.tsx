@@ -19,8 +19,8 @@ export interface Props {
 export const SignUpItem = ({ data, isNew }: Props) => {
   const handleRouteDetail = (id: number) => {
     Router.push({
-      pathname: `${pathName.CHECK_SIGNUP.DETAIL.replace(":id", String(id))}`,
-      query: { isNew: isNew },
+      pathname: pathName.CHECK_SIGNUP.DETAIL,
+      query: { id: id, isNew: isNew },
     });
   };
 

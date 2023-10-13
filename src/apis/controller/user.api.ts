@@ -14,7 +14,7 @@ export const UserAPI = {
     return response.data;
   },
   getMyLikes: async (page: number) => {
-    const response = await sendApi.get("/users/orders/like", page);
+    const response = await sendApi.get(`/users/orders/like?page=${page}`);
     return response.data;
   },
 };
