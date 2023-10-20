@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { PiWechatLogo } from "react-icons/pi";
 import { LuMinimize2 } from "react-icons/lu";
-import { useInquiry } from "../../../hooks/query/inquiry/useQueryGetInquiry";
+import { useInquiry } from "../../hooks/query/inquiry/useQueryGetInquiry";
 import { useRecoilState } from "recoil";
-import { inquiryLog } from "../../../recoil/inquiryLog";
+import { inquiryLog } from "../../recoil/inquiryLog";
 
 interface Props {
   expanded: boolean;

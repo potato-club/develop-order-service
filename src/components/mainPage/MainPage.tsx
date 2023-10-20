@@ -10,7 +10,7 @@ import { Publishing } from "./components/Publishing";
 import { Feating } from "./components/Feating";
 import { FinalEdit } from "./components/FinalEdit";
 import { Finish } from "./components/Finish";
-import Inquiry from "./components/Inquiry";
+import Inquiry from "../inquiry/Inquiry";
 
 export const MainPage = () => {
   const scrollIDArray = [
@@ -54,7 +54,7 @@ export const MainPage = () => {
         <ContainerInner>
           <Head id="head">
             <Title />
-          
+
             <SiteRanking />
             <Link to="design_meeting" smooth="easeInOutQuart" spy>
               <ScrollContent>
@@ -65,7 +65,6 @@ export const MainPage = () => {
                 <BsChevronCompactDown size={18} />
               </ScrollButton>
             </Link>
-            <Inquiry />
           </Head>
           <Body>
             <DesignMeeting />
