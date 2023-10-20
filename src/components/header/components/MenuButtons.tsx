@@ -14,10 +14,9 @@ export const MenuButtons = () => {
       <Button onClick={() => handleRouter(pathName.ORDERREVIEW)}>
         발주현황
       </Button>
-      <Button onClick={() => handleRouter(pathName.INFORMATION)}>
+      <LastButton onClick={() => handleRouter(pathName.INFORMATION)}>
         직원정보
-      </Button>
-      <LastButton>후기</LastButton>
+      </LastButton>
     </Wrapper>
   );
 };
