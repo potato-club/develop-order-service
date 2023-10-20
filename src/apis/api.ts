@@ -49,7 +49,12 @@ api.interceptors.response.use(
           console.log(error);
           throw error;
         });
-    } else if (error.response.data && error.response.data.code == 445) {
+    } else if (
+      error.response.data &&
+      (error.response.data.code == 445 ||
+        error.response.data.code == 482 ||
+        error.response.data.code == 498)
+    ) {
       logout();
       Router.push(pathName.MAIN);
       return;
