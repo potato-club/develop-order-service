@@ -8,22 +8,18 @@ interface Question {
 }
 
 export const useInquiry = () => {
- 
   const loadQuestions = useCallback(async () => {
     const request = await sendApi.get("/inquiry");
     return request.data;
   }, []);
 
-  const loadResponse = useCallback(
-    async (responseKey: string) => {
-      const response = await sendApi.get(`/inquiry?option=${responseKey}`);
-      return response.data;
-    },
-    []
-  );
+  const loadResponse = useCallback(async (responseKey: string) => {
+    const response = await sendApi.get(`/inquiry?option=${responseKey}`);
+    return response.data;
+  }, []);
 
   return {
     questions: useQuery("questions", loadQuestions),
-    loadResponse, 
+    loadResponse,
   };
 };

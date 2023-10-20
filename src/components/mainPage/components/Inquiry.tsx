@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { PiWechatLogo } from "react-icons/pi";
+import { LuMinimize2 } from "react-icons/lu";
 import { useInquiry } from "../../../hooks/query/inquiry/useQueryGetInquiry";
+import { useRecoilState } from "recoil";
+import { inquiryLog } from "../../../recoil/inquiryLog";
 
 interface Props {
   expanded: boolean;
@@ -13,162 +17,122 @@ interface ResponseData {
 }
 
 const Inquiry: React.FC = () => {
+  const [log, setLog] = useRecoilState(inquiryLog);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const endRef = useRef<HTMLDivElement>(null);
+  const { questions, loadResponse } = useInquiry();
   const [isBoxVisible, setIsBoxVisible] = useState(false);
   const [isBoxExpanded, setIsBoxExpanded] = useState(false);
-  const { questions, loadResponse } = useInquiry();
-  const [selectedQuestion, setSelectedQuestion] = useState<string | null>(null);
-  const [selectedQuestionMessage, setSelectedQuestionMessage] = useState<
-    string | null
-  >(null);
-  const [selectedSubquestion, setSelectedSubquestion] = useState<string | null>(
-    null
-  );
-  const [selectedSubquestionMessage, setSelectedSubquestionMessage] = useState<
-    string | null
-  >(null);
-  const [responses, setResponses] = useState<ResponseData[]>([]);
-  const [subResponses, setSubResponses] = useState<ResponseData[]>([]);
 
-  const toggleBoxVisible = () => {
-    if (isBoxVisible && isBoxExpanded) {
-      return;
-    }
-    setIsBoxVisible(!isBoxVisible);
+  const toggleBoxVisible = (visible: boolean) => {
+    !isBoxExpanded && setIsBoxVisible(visible);
   };
-
   const handleBoxClick = () => {
-    if (isBoxVisible && isBoxExpanded) {
-      return;
-    }
-    setIsBoxExpanded(!isBoxExpanded);
+    !isBoxExpanded && setIsBoxExpanded(!isBoxExpanded);
   };
 
-  const handleCloseButtonClick = () => {
-    setIsBoxVisible(false);
-    setIsBoxExpanded(false);
-    setSelectedQuestion(null);
-    setSelectedQuestionMessage(null);
-    setSelectedSubquestion(null);
-    setSelectedSubquestionMessage(null);
-  };
-
-  const handleQuestionClick = async (message: string) => {
-    if (!message) {
-      return;
+  useEffect(() => {
+    if (endRef.current) {
+      endRef.current.scrollIntoView({ behavior: "smooth" });
     }
-    try {
-      const selectedQuestionData = questions.data.find(
-        (question: ResponseData) => question.message === message
-      );
+  }, [log]);
 
-      if (selectedQuestionData) {
-        const responseKey = selectedQuestionData.responseKey;
-
-        setSelectedQuestion(responseKey);
-        setSelectedQuestionMessage(message);
-        setSelectedSubquestion(null);
-        setSelectedSubquestionMessage(null);
-
-        const response = await loadResponse(responseKey);
-        setResponses(response);
-      }
-    } catch (error) {
-      console.error("Error fetching response: ", error);
+  const handleQuestionClick = async (data: any) => {
+    setLog((prev) => [
+      ...prev,
+      { type: "A", content: data.message.split(":")[1] },
+    ]);
+    const response = await loadResponse(data.responseKey);
+    if (response.length > 1) {
+      setLog((prev) => [
+        ...prev,
+        { type: "Q", content: "", questions: response },
+      ]);
+    } else {
+      setLog((prev) => [...prev, { type: "Q", content: response[0].message }]);
     }
   };
-  const handleSubquestionClick = async (message: string) => {
-    if (!message) {
-      return;
-    }
-    try {
-      const selectedSubquestionData = responses.find(
-        (question: ResponseData) => question.message === message
-      );
-      if (selectedSubquestionData) {
-        const responseKey = selectedSubquestionData.responseKey;
-
-        setSelectedSubquestion(responseKey);
-        setSelectedSubquestionMessage(message);
-
-        const response = await loadResponse(responseKey);
-        setSubResponses(response);
-      }
-    } catch (error) {
-      console.error("Error fetching response: ", error);
-    }
+  const handleInitQuestion = async (data: any) => {
+    setLog((prev) => [
+      ...prev,
+      {
+        type: "Q_i",
+        content: "문의하실 내용을 선택해주세요.",
+        questions: questions.data,
+      },
+    ]);
   };
 
   return (
     <Wrapper>
       <CircleContainer
-        onMouseEnter={toggleBoxVisible}
-        onMouseLeave={toggleBoxVisible}
+        onMouseEnter={() => toggleBoxVisible(true)}
+        onMouseLeave={() => toggleBoxVisible(false)}
         onClick={handleBoxClick}
-        expanded={isBoxExpanded}
-        visible={isBoxVisible}
       >
-        <Circle expanded={isBoxExpanded}>문의</Circle>
-        <InquiryBox expanded={isBoxExpanded} visible={isBoxVisible}>
+        <Circle expanded={isBoxExpanded} visible={isBoxVisible}>
+          {isBoxExpanded ? (
+            <LuMinimize2
+              onClick={() => setIsBoxExpanded(false)}
+              style={{ width: "100%", height: "100%", padding: "22px" }}
+            />
+          ) : (
+            <>
+              <PiWechatLogo size={24} />
+              문의
+            </>
+          )}
+        </Circle>
+        <InquiryBox
+          expanded={isBoxExpanded}
+          visible={isBoxVisible}
+          ref={scrollContainerRef}
+        >
           {isBoxVisible && isBoxExpanded ? (
             <>
-              <CloseButton onClick={handleCloseButtonClick}>X</CloseButton>
-              <ReturnBtn>처음으로</ReturnBtn>
               <Div1>
-                <p>문의하실 내용을 선택해주세요.</p>
+                문의하실 내용을 선택해주세요.
                 {questions.data &&
-                  questions.data.map((question: any) => (
-                    <div
-                      key={question.message}
-                      onClick={() => handleQuestionClick(question.message)}
+                  questions.data.map((item: any, id: number) => (
+                    <QuestionButton
+                      key={id}
+                      onClick={() => handleQuestionClick(item)}
                     >
-                      <P>{question.message.split(":")[0]}</P>
-                    </div>
+                      {item.message.split(":")[0]}
+                    </QuestionButton>
                   ))}
               </Div1>
-              <div>
-                {selectedQuestionMessage && (
-                  <Div2 key={selectedQuestion}>
-                    <p>{selectedQuestionMessage.split(":")[1]}</p>
-                  </Div2>
-                )}
-              </div>
-              <QuestionDiv selectedQuestion={selectedQuestion}>
-                {selectedQuestion &&
-                  responses
-                    .filter(
-                      (response: ResponseData) =>
-                        response.requestKey === selectedQuestion
-                    )
-                    .map((response: ResponseData) => (
-                      <div
-                        key={response.message}
-                        onClick={() => handleSubquestionClick(response.message)}
-                      >
-                        <p>{response.message.split(":")[0]}</p>
-                      </div>
-                    ))}
-              </QuestionDiv>
-              <div>
-                {selectedSubquestionMessage && (
-                  <Div2 key={selectedSubquestion}>
-                    <p>{selectedSubquestionMessage.split(":")[1]}</p>
-                  </Div2>
-                )}
-              </div>
-              <SubquestionDiv selectedSubquestion={selectedSubquestion}>
-                {selectedSubquestion &&
-                  subResponses
-                    .filter(
-                      (subResponse: ResponseData) =>
-                        subResponse.requestKey === selectedSubquestion
-                    )
-                    .map((subResponse: ResponseData) => (
-                      <div key={subResponse.requestKey}>
-                        <p>{subResponse.message}</p>
-                      </div>
-                    ))}
-              </SubquestionDiv>
-            
+              {log.map((item, id) => {
+                if (item.type.includes("Q")) {
+                  return (
+                    <Div1 key={id}>
+                      {item.content}
+                      {item.questions &&
+                        item.questions.map((i: ResponseData, id: number) => {
+                          return (
+                            <QuestionButton
+                              key={id}
+                              onClick={() => handleQuestionClick(i)}
+                            >
+                              {i.message.split(":")[0]}
+                            </QuestionButton>
+                          );
+                        })}
+                    </Div1>
+                  );
+                } else {
+                  return <Div2 key={id}>{item["content"]}</Div2>;
+                }
+              })}
+              {log.length > 1 && log[log.length]?.content != "Q_i" && (
+                <Div3>
+                  <QuestionButton onClick={handleInitQuestion}>
+                    처음으로
+                  </QuestionButton>
+                </Div3>
+              )}
+
+              <EndBox ref={endRef}></EndBox>
             </>
           ) : (
             "문의할 내용이 있으신가요?"
@@ -183,12 +147,15 @@ export default Inquiry;
 
 const Wrapper = styled.div`
   position: fixed;
-  bottom: 60px;
-  left: 300px;
+  bottom: 28px;
+  right: calc(50% - 476px);
   z-index: 100;
+  @media screen and (max-width: 1024px) {
+    right: 28px;
+  }
 `;
 
-const CircleContainer = styled.div<Props>``;
+const CircleContainer = styled.div``;
 
 const Circle = styled.div<Props>`
   width: 68px;
@@ -196,94 +163,116 @@ const Circle = styled.div<Props>`
   border-radius: 100%;
   background-color: rgb(145, 216, 247);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
   z-index: 100;
+  font-weight: bold;
+  font-size: 14px;
+  box-shadow: 1px 1px 4px 0px #00000033;
   cursor: ${(props) => (props.expanded ? "" : "pointer")};
-  bottom: ${(props) => (props.expanded ? "330px" : "0px")};
+  animation: ${(props) =>
+    !props.visible && !props.expanded && "shake 10s ease infinite"};
+  @keyframes shake {
+    90% {
+      transform: rotate(0deg);
+    }
+    92.3% {
+      transform: rotate(30deg);
+    }
+    94.5% {
+      transform: rotate(-10deg);
+    }
+    95.8% {
+      transform: rotate(18deg);
+    }
+    97% {
+      transform: rotate(-7deg);
+    }
+    97.5% {
+      transform: rotate(7deg);
+    }
+    98% {
+      transform: rotate(0deg);
+    }
+  }
 `;
 
 const InquiryBox = styled.div<Props>`
   position: absolute;
-  bottom: -40px;
-  left: 40px;
+  bottom: 8px;
+  right: 12px;
   height: 100%;
   background-color: rgb(236, 236, 236);
+  box-shadow: 1px 1px 4px 0px #00000033;
   border-radius: 20px;
-  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
-  padding: ${(props) => (props.expanded ? "20px" : "0px")};
-  transition: width 0.3s, height 0.3s ease;
+  padding: ${(props) => (props.expanded ? "20px 16px" : "0px")};
+  transition: all 0.4s ease, scroll-behavior 0.5s;
   display: flex;
   flex-direction: column;
   align-items: ${(props) => (props.expanded ? "flex-start" : "center")};
   justify-content: ${(props) => (props.expanded ? "flex-start" : "center")};
-  width: ${(props) => (props.visible ? "400px" : "0")};
-  height: ${(props) => (props.expanded ? "400px" : "70px")};
+  width: ${(props) => (props.visible ? "300px" : "0")};
+  height: ${(props) => (props.expanded ? "400px" : "52px")};
   cursor: ${(props) => (props.expanded ? "" : "pointer")};
+  padding-right: ${(props) => !props.expanded && props.visible && "32px"};
+  gap: 16px;
   overflow-y: scroll;
+  overflow-x: hidden;
+  white-space: ${(props) => (props.expanded ? "normal" : "nowrap")};
+  font-size: 14px;
   &::-webkit-scrollbar {
     display: none;
   }
 `;
 
-const CloseButton = styled.button`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-  border: none;
-  background-color: transparent;
-  font-size: 16px;
-`;
-
 const Div1 = styled.div`
-  width: 215px;
+  display: flex;
+  flex-direction: column;
+  max-width: 215px;
   background-color: white;
-  border-radius: 10px;
-  padding: 10px;
-  margin-bottom: 20px;
+  border-radius: 8px;
+  padding: 8px;
+  gap: 4px;
+  align-self: flex-start;
 `;
-const P = styled.div`
+const QuestionButton = styled.button`
+  display: flex;
   border-radius: 4px;
   background: var(--white, #fff);
   box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.15);
-  display: flexbox;
-  margin: 5px 0px 5px 0px;
-  height: 20px;
+  height: 24px;
   justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0 12px;
 `;
 
 const Div2 = styled.div`
-  width: 215px;
+  display: flex;
+  flex-direction: column;
+  max-width: 215px;
   background-color: rgb(160, 222, 249);
-  border-radius: 10px;
-  padding: 10px;
+  border-radius: 8px;
+  padding: 8px;
   justify-content: flex-end;
-  position: relative;
-  left: 150px;
-  margin-bottom: 20px;
+  align-self: flex-end;
 `;
 
-const QuestionDiv = styled.div<{ selectedQuestion: string | null }>`
-  width: 215px;
+const EndBox = styled.div`
+  display: flex;
+  height: 0px;
+  width: 100%;
+`;
+const Div3 = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  max-width: 215px;
   background-color: white;
-  border-radius: 10px;
-  padding: 10px;
-  display: ${(props) => (props.selectedQuestion ? "" : "none")};
-  margin-bottom: 20px;
-  justify-content: center;
+  border-radius: 8px;
+  padding: 8px;
+  gap: 8px;
+  align-self: flex-start;
 `;
-
-const SubquestionDiv = styled.div<{ selectedSubquestion: string | null }>`
-  width: 215px;
-  background-color: white;
-  border-radius: 10px;
-  padding: 10px;
-  display: ${(props) => (props.selectedSubquestion ? "" : "none")};
-`;
-
-const ReturnBtn = styled.div`
-  width : 50px;
-  height : 50px;
-`
