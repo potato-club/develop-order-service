@@ -2,7 +2,7 @@
 FROM node:alpine AS deps
 RUN apk add --no-cache libc6-compat python3 build-base
 WORKDIR /app
-COPY package.json yarn.lock ./
+COPY package.json ./
 RUN yarn install --frozen-lockfile
 
 # 필요할 때만 소스 코드를 다시 빌드함.
