@@ -8,6 +8,7 @@ import { ScrollCSS } from "./ScrollCSS";
 import { useEffect, useState } from "react";
 import { AdminHeader } from "../header/AdminHeader";
 import { pathName } from "../../config/adminPathName";
+import Inquiry from "../inquiry/Inquiry";
 
 interface Props {
   children: React.ReactNode;
@@ -33,6 +34,7 @@ export const Layout = ({ children }: Props) => {
           <ScrollCSS />
           <Header />
           <LayoutWrapper>
+            <Inquiry />
             <LayoutWrapperInner>{children}</LayoutWrapperInner>
           </LayoutWrapper>
           <Footer />

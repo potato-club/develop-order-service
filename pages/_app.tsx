@@ -34,14 +34,11 @@ export default function App({ Component, pageProps }: AppProps) {
     };
   }, []);
 
-
-
   const queryClient = new QueryClient();
 
   return (
-    
     <RecoilRoot>
-       {loading && <LoadingSpinner fixed />}
+      {loading && <LoadingSpinner fixed />}
       <QueryClientProvider client={queryClient}>
         <Layout>
           <Component {...pageProps} />
