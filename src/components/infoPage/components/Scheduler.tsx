@@ -1,16 +1,16 @@
 import React from "react";
-import "@mobiscroll/react/dist/css/mobiscroll.min.css";
-import {
-  Eventcalendar,
-  MbscEventcalendarView,
-  setOptions,
-  CalendarNav,
-  SegmentedGroup,
-  SegmentedItem,
-  CalendarPrev,
-  CalendarNext,
-  localeKo,
-} from "@mobiscroll/react";
+// import "@mobiscroll/react/dist/css/mobiscroll.min.css";
+// import {
+//   Eventcalendar,
+//   MbscEventcalendarView,
+//   setOptions,
+//   CalendarNav,
+//   SegmentedGroup,
+//   SegmentedItem,
+//   CalendarPrev,
+//   CalendarNext,
+//   localeKo,
+// } from "@mobiscroll/react";
 import styled from "styled-components";
 import character from "../../../../public/img/information/character.png";
 import Image from "next/image";
@@ -18,11 +18,11 @@ import { useRecoilState } from "recoil";
 import { personState, PersonState } from "../../../recoil/infoCard";
 import { useQueryGetSchedules } from "../../../hooks/query/scheduler/useGetSchedules";
 
-setOptions({
-  locale: localeKo,
-  theme: "windows",
-  themeVariant: "light",
-});
+// setOptions({
+//   locale: localeKo,
+//   theme: "windows",
+//   themeVariant: "light",
+// });
 
 type MyEventType = {
   name: string;
@@ -41,20 +41,20 @@ const Scheduler = () => {
     setState((prevState) => ({ ...prevState, [key]: !prevState[key] }));
   }
 
-  const [calView] = React.useState<MbscEventcalendarView>({
-    schedule: {
-      type: "week",
-      startDay: 1,
-      endDay: 5,
-      startTime: "09:00",
-      endTime: "22:00",
-    },
-  });
+  // const [calView] = React.useState<MbscEventcalendarView>({
+  //   schedule: {
+  //     type: "week",
+  //     startDay: 1,
+  //     endDay: 5,
+  //     startTime: "09:00",
+  //     endTime: "22:00",
+  //   },
+  // });
 
   const customWithNavButtons = () => {
     return (
       <React.Fragment>
-        <CalendarNav />
+        {/* <CalendarNav />
         <div>
           <SegmentedGroup select="multiple">
             <SegmentedItem
@@ -105,7 +105,7 @@ const Scheduler = () => {
           </SegmentedGroup>
         </div>
         <CalendarPrev />
-        <CalendarNext />
+        <CalendarNext /> */}
       </React.Fragment>
     );
   };
@@ -129,12 +129,12 @@ const Scheduler = () => {
 
   return (
     <Wrapper>
-      <Eventcalendar
+      {/* <Eventcalendar
         renderHeader={customWithNavButtons}
         view={calView}
         data={mapDataToEvent(data)}
         cssClass="md-custom-header-filtering"
-      />
+      /> */}
     </Wrapper>
   );
 };
