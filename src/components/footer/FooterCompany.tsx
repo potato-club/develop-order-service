@@ -22,7 +22,7 @@ export const FooterCompany = () => {
             <CompanyInfo_>
               <Info>Tel. 032-532-1234</Info>
               <Division />
-              <Info>Email. ccho8702@naver.com</Info>
+              <Info>Email. rmawn3245@naver.com</Info>
             </CompanyInfo_>
           </CompanyInfo>
         </Content>
