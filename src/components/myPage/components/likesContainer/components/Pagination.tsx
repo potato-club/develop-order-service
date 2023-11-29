@@ -18,7 +18,7 @@ export const Pagination = (props: {
   const [subPage, setSubPage] = useState(0);
   const generateNumbers = () => {
     const arr = [];
-    if (subPage > parseInt((totalPage - 1) / 5)) {
+    if (subPage > (totalPage - 1) / 5) {
       return [];
     } else {
       for (let i = subPage * 5 + 1; i <= (subPage + 1) * 5; i++) {
@@ -62,7 +62,7 @@ export const Pagination = (props: {
       <ArrowButton
         isActive={props.page != 1}
         onClick={() => {
-          if (props.page % 5 == 1) setSubPage(parseInt(props.page / 5) - 1);
+          if (props.page % 5 == 1) setSubPage(props.page / 5 - 1);
           Router.replace({
             pathname: pathName.MY_LIKES,
             query: { page: props.page - 1 },
@@ -87,10 +87,10 @@ export const Pagination = (props: {
         <PiCaretRightFill />
       </ArrowButton>
       <ArrowButton
-        isActive={props.page <= parseInt((totalPage - 1) / 5) * 5}
+        isActive={props.page <= ((totalPage - 1) / 5) * 5}
         style={{ right: "-52px" }}
         onClick={() => {
-          setSubPage(parseInt((totalPage - 1) / 5));
+          setSubPage((totalPage - 1) / 5);
           Router.replace({
             pathname: pathName.MY_LIKES,
             query: { page: totalPage },
