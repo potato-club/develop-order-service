@@ -3,9 +3,9 @@ import { useQuery } from "react-query";
 import { SignUpApi } from "../../../apis/controller/signUp.api";
 
 export interface ResponseType {
-  date: String;
-  name: String;
-  time: String;
+  date: string;
+  name: string;
+  time: string;
 }
 
 export const useQueryGetMeetings = () => {

@@ -21,8 +21,8 @@ export const QuestionLabel = ({ content, width }: Props) => {
   const [isOver, setIsOver] = useState<boolean>();
   const [dif, setDif] = useState<number>();
   useEffect(() => {
-    setIsOver(w.current?.offsetWidth < t.current?.offsetWidth + 23);
-    isOver && setDif(t.current?.offsetWidth - w.current?.offsetWidth + 23);
+    setIsOver(w.current!.offsetWidth < t.current!.offsetWidth + 23);
+    isOver && setDif(t.current!.offsetWidth - w.current!.offsetWidth + 23);
   }, [w.current, t.current]);
   return (
     <Wrapper ref={w}>
@@ -61,6 +61,7 @@ const moveText = (dif: number) => keyframes`
     
     transform: translate(-${dif + 8}px,0);
   }
+  100%{ transform: translate(-${dif + 8}px,0);}
 `;
 const Wrapper = styled.article`
   display: flex;
@@ -113,7 +114,7 @@ const Text = styled.p<PropsStyle>`
     props.isHover &&
     props.isOver &&
     css`
-      animation: ${moveText(props.dif || 0)} ${(props.dif + 20) / 30}s linear
+      animation: ${moveText(props.dif || 0)} ${(props.dif! + 20) / 30}s linear
         infinite;
     `};
 `;

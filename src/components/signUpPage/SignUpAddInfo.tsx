@@ -19,6 +19,7 @@ import { FormFile } from "./components/FormFile";
 import { FormCalendar } from "./components/FormCalendar";
 import { useQueryGetMeetings } from "../../hooks/query/signUp/useQueryGetMeetings";
 import { useEffect, useState } from "react";
+import { EventInput } from "@fullcalendar/core";
 
 interface Props {
   register: UseFormRegister<FieldValues>;
@@ -36,14 +37,17 @@ export const SignUpAddInfo = ({
   setValue,
 }: Props) => {
   const { isLoading, data, error } = useQueryGetMeetings();
-  const [meetings, setMeetings] = useState<{ title: String; date: String }[]>();
+  const [meetings, setMeetings] = useState<EventInput[]>();
   useEffect(() => {
-    let meetings: { title: String; date: String }[] = [];
+    let meetings: EventInput[] = [];
     data?.map((i) =>
-      meetings.push({ title: `${i.name[0]}**/${i.time}`, date: i.date })
+      meetings.push({
+        title: `${i.name[0]}**/${i.time}`,
+        start: new Date(i.date),
+      })
     );
     setMeetings(meetings);
-  }, [isLoading]);
+  }, [data, isLoading]);
 
   return (
     <Content>

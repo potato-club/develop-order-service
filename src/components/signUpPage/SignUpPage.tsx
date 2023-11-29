@@ -113,6 +113,7 @@ export const SignUpPage = () => {
             register={register}
             errors={errors}
             control={control}
+            watch={watch}
           />
           <SignUpSiteInfo register={register} errors={errors} />
           <SignUpAddInfo

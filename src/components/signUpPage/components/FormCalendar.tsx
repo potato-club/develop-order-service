@@ -4,7 +4,7 @@ import moment from "moment";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interaction, { DateClickArg } from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
-import { EventClickArg, EventContentArg } from "@fullcalendar/core";
+import { EventClickArg, EventContentArg, EventInput } from "@fullcalendar/core";
 import styled from "styled-components";
 import { customColor } from "../../customColor";
 import { BsFillCaretRightFill } from "react-icons/bs";
@@ -18,11 +18,7 @@ interface Props {
   register: UseFormRegister<FieldValues>;
   value: string;
   isLoading: boolean;
-  meetingData: QueryType[] | undefined;
-}
-export interface QueryType {
-  date: String;
-  title: String;
+  meetingData: EventInput[] | undefined;
 }
 
 export const FormCalendar = ({
@@ -41,7 +37,7 @@ export const FormCalendar = ({
   const [isOpen, setIsOpen] = useState(false);
   const [time, setTime] = useState("");
   const [date, setDate] = useState("");
-  const [events, setEvents] = useState<QueryType[]>([]);
+  const [events, setEvents] = useState<EventInput[]>([]);
 
   const renderEvent = (info: EventContentArg) => {
     return (
@@ -88,7 +84,7 @@ export const FormCalendar = ({
       view: info.view,
       dayEl: info.el,
       jsEvent: info.jsEvent,
-      date: info.event.start,
+      date: info.event.start!,
       allDay: info.event.allDay,
     };
     info.view.calendar.trigger("dateClick", dateClickArg);

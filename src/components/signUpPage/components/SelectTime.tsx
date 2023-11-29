@@ -1,11 +1,9 @@
+import { EventInput } from "@fullcalendar/core";
 import styled from "styled-components";
 import { customColor } from "../../customColor";
 
 interface Props {
-  events: {
-    date: String;
-    title: String;
-  }[];
+  events: EventInput[];
   isOpen: boolean;
   xy: number[];
   time: string;
@@ -29,7 +27,7 @@ export const SelectTime = ({ isOpen, xy, time, setTime, events }: Props) => {
           onClick={() => {
             setTime("10:00");
           }}
-          isExist={events.map((i) => i.title.slice(4)).includes("10:00")}
+          isExist={events.map((i) => i.title?.slice(4)).includes("10:00")}
         >
           10:00
         </Button>
@@ -39,7 +37,7 @@ export const SelectTime = ({ isOpen, xy, time, setTime, events }: Props) => {
           onClick={() => {
             setTime("13:00");
           }}
-          isExist={events.map((i) => i.title.slice(4)).includes("13:00")}
+          isExist={events.map((i) => i.title?.slice(4)).includes("13:00")}
         >
           13:00
         </Button>
@@ -49,7 +47,7 @@ export const SelectTime = ({ isOpen, xy, time, setTime, events }: Props) => {
           onClick={() => {
             setTime("16:00");
           }}
-          isExist={events.map((i) => i.title.slice(4)).includes("16:00")}
+          isExist={events.map((i) => i.title?.slice(4)).includes("16:00")}
         >
           16:00
         </Button>

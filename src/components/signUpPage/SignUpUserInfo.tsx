@@ -4,6 +4,7 @@ import {
   FieldErrors,
   FieldValues,
   UseFormRegister,
+  UseFormWatch,
 } from "react-hook-form";
 import { customColor } from "../customColor";
 import { HiOutlineUser } from "react-icons/hi";
@@ -14,9 +15,10 @@ interface Props {
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors<FieldValues>;
   control: Control<FieldValues, any>;
+  watch: UseFormWatch<FieldValues>;
 }
 
-export const SignUpUserInfo = ({ register, errors, control }: Props) => {
+export const SignUpUserInfo = ({ register, errors, control, watch }: Props) => {
   return (
     <Content>
       <Lbel>
@@ -62,6 +64,7 @@ export const SignUpUserInfo = ({ register, errors, control }: Props) => {
               control={control}
               errors={errors}
               required={true}
+              watch={watch}
             />
           </FormItemContent>
         </FormItem>
@@ -74,6 +77,7 @@ export const SignUpUserInfo = ({ register, errors, control }: Props) => {
               control={control}
               errors={errors}
               required={false}
+              watch={watch}
             />
           </FormItemContent>
         </FormItem>
