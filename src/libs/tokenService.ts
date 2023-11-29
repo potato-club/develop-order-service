@@ -6,17 +6,26 @@ const key = {
 
 export const tokenService = {
   //token
-  getToken: () => localStorage.getItem(key.token),
-  setToken: (token: string) => localStorage.setItem(key.token, token),
-  resetToken: () => localStorage.removeItem(key.token),
+  getToken: () =>
+    typeof window !== "undefined" && localStorage.getItem(key.token),
+  setToken: (token: string) =>
+    typeof window !== "undefined" && localStorage.setItem(key.token, token),
+  resetToken: () =>
+    typeof window !== "undefined" && localStorage.removeItem(key.token),
   //refreshToken
-  getRefresh: () => localStorage.getItem(key.refresh),
-  setRefresh: (refresh: string) => localStorage.setItem(key.refresh, refresh),
-  resetRefresh: () => localStorage.removeItem(key.refresh),
+  getRefresh: () =>
+    typeof window !== "undefined" && localStorage.getItem(key.refresh),
+  setRefresh: (refresh: string) =>
+    typeof window !== "undefined" && localStorage.setItem(key.refresh, refresh),
+  resetRefresh: () =>
+    typeof window !== "undefined" && localStorage.removeItem(key.refresh),
   //role
-  getRole: () => localStorage.getItem(key.role),
-  setRole: (role: string) => localStorage.setItem(key.role, role),
-  resetRole: () => localStorage.removeItem(key.role),
+  getRole: () =>
+    typeof window !== "undefined" && localStorage.getItem(key.role),
+  setRole: (role: string) =>
+    typeof window !== "undefined" && localStorage.setItem(key.role, role),
+  resetRole: () =>
+    typeof window !== "undefined" && localStorage.removeItem(key.role),
 };
 
 export const logout = () => {
